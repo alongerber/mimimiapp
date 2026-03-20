@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mimi-v1';
+const CACHE_NAME = 'mimi-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -22,10 +22,14 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  // Network first for fonts, cache first for everything else
-  if (e.request.url.includes('fonts.g')) {
+  // Network first for HTML and fonts, cache first for other assets
+  if (e.request.url.includes('fonts.g') || e.request.mode === 'navigate') {
     e.respondWith(
-      fetch(e.request).catch(() => caches.match(e.request))
+      fetch(e.request).then(r => {
+        const clone = r.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
+        return r;
+      }).catch(() => caches.match(e.request))
     );
   } else {
     e.respondWith(

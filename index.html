@@ -1151,7 +1151,7 @@ const gr=c.createRadialGradient(0,0,r*.2,0,0,r);gr.addColorStop(0,p.color+'cc');
 c.save();c.rotate(a1+sa/2);c.textAlign='center';c.textBaseline='middle';c.font=`800 ${N>6?16:N>4?20:24}px Heebo`;c.fillStyle='#fff';c.shadowColor='rgba(0,0,0,.6)';c.shadowBlur=4;c.fillText(p.name,r*.6,0);c.shadowBlur=0;c.restore();});c.restore();}
 function sliceAt(rot){const N=P.length,sa=TAU/N;let neg=(-rot)%TAU;if(neg<0)neg+=TAU;return Math.floor(neg/sa)%N;}
 let lastSl=-1;
-function doSpin(){if(spinning){return;}const ev=events[curE];if(!ev||ev.type!=='spin')return;spinning=true;document.getElementById('spinB').disabled=true;document.getElementById('gc').innerHTML='';document.getElementById('gc').style.opacity='1';SND.play('spin');lastSl=-1;window._skipSpin=false;if(gS.rounds>4){document.getElementById('gc').innerHTML='<div style="text-align:center;padding:8px"><button onclick="skipRequested=true" style="background:none;border:none;color:var(--t3);font-size:.6rem;cursor:pointer;font-family:inherit">לחצו לדלג ▸</button></div>';}
+function doSpin(){if(spinning){return;}const ev=events[curE];if(!ev||ev.type!=='spin')return;spinning=true;document.getElementById('spinB').disabled=true;document.getElementById('gc').innerHTML='';document.getElementById('gc').style.opacity='1';SND.play('spin');lastSl=-1;window._skipSpin=false;if(gS.rounds>4){document.getElementById('gc').innerHTML='<div style="text-align:center;padding:8px"><button onclick="window._skipSpin=true" style="background:none;border:none;color:var(--t3);font-size:.6rem;cursor:pointer;font-family:inherit">לחצו לדלג ▸</button></div>';}
 const target=ev.pi,N=P.length,sa=TAU/N,midF=.3+Math.random()*.4,desN=(target+midF)*sa,desR=(TAU-desN)%TAU,full=(5+Math.random()*3)*TAU,fin=Math.ceil(wA/TAU)*TAU+desR+full,dur=Math.max(1500,3500-gS.rounds*80)+Math.random()*500,t0=performance.now(),a0=wA,dist=fin-a0;
 function ease(t){return 1-Math.pow(1-t,3.5)}
 (function anim(now){const p=Math.min((now-t0)/dur,1);wA=a0+dist*ease(p);drawWheel(wA);const cs=sliceAt(wA);if(cs!==lastSl){lastSl=cs;if(p<.9)SND.play('wtick');}
@@ -1758,6 +1758,7 @@ function scorePop(pi){// Announce leader
 const sorted=P.map((p,i)=>({n:p.name,s:scores[i]||0,c:p.color})).sort((a,b)=>b.s-a.s);
 if(sorted[0].s>0){const d=document.createElement('div');d.className='score-pop';d.innerHTML=`${sorted[0].n} מוביל/ה עם ${sorted[0].s}!`;d.style.color=sorted[0].c;d.style.borderColor=sorted[0].c+'66';document.body.appendChild(d);setTimeout(()=>d.remove(),3500);}}
 function updateFP(){const strip=document.getElementById('fprog');const spins=events.filter(e=>e.type==='spin');const done=events.slice(0,curE).filter(e=>e.type==='spin').length;
+if(spins.length===0){strip.innerHTML='';return;}
 let html='';const perPhase=Math.ceil(spins.length/3);
 [0,1,2].forEach(phase=>{const pSpins=spins.filter(s=>s.phase===phase).length;const pDone=events.slice(0,curE).filter(e=>e.type==='spin'&&e.phase===phase).length;const pct=pSpins>0?Math.round(pDone/pSpins*100):0;const cp=cPhase();
 html+=`<div class="fprog-s" style="width:${pSpins/spins.length*100}%;background:${cp>phase?PH_C[phase]:cp===phase?PH_C[phase]+'88':'var(--s3)'}"><div style="height:100%;width:${cp>phase?100:pct}%;background:${PH_C[phase]};border-radius:3px;transition:width .5s"></div></div>`;});
@@ -1809,14 +1810,14 @@ const titles=[];voteLog.forEach(v=>{titles.push(`${P[v.winner].name} = "${v.titl
 let txt=`ערב משחק משפחתי!\n${sorted[0].name} ניצח/ה עם ${sorted[0].s} נקודות!\n`;
 if(titles.length>0)txt+=titles.slice(0,3).join('\n')+'\n';
 txt+=`שחקו ב-"מי מי מי?"`;
-genWC();const cv=document.getElementById('wcv');
+genWC(true);const cv=document.getElementById('wcv');
 try{cv.toBlob(function(blob){const file=new File([blob],'mimi-winner.png',{type:'image/png'});
 if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({title:'מי מי מי?',text:txt,files:[file]}).catch(()=>{});}
 else if(navigator.share){navigator.share({title:'מי מי מי?',text:txt}).catch(()=>{});}
 else{const link=document.createElement('a');link.download='mimi-winner.png';link.href=cv.toDataURL('image/png');link.click();navigator.clipboard.writeText(txt).then(()=>alert('הועתק + התמונה ירדה!')).catch(()=>{});}
 },'image/png');}catch(e){if(navigator.share)navigator.share({title:'מי מי מי?',text:txt}).catch(()=>{});else navigator.clipboard.writeText(txt).then(()=>alert('הועתק!')).catch(()=>{});}}
 
-function genWC(){const sorted=P.map((p,i)=>({...p,i,s:scores[i]||0})).sort((a,b)=>b.s-a.s);const w=sorted[0];
+function genWC(noDL){const sorted=P.map((p,i)=>({...p,i,s:scores[i]||0})).sort((a,b)=>b.s-a.s);const w=sorted[0];
 const cv=document.getElementById('wcv');cv.width=720;cv.height=1280;const c=cv.getContext('2d');
 // Background gradient
 const bg=c.createLinearGradient(0,0,0,1280);bg.addColorStop(0,'#0a0a1a');bg.addColorStop(1,'#111128');c.fillStyle=bg;c.fillRect(0,0,720,1280);
@@ -1824,9 +1825,9 @@ const bg=c.createLinearGradient(0,0,0,1280);bg.addColorStop(0,'#0a0a1a');bg.addC
 const gr=c.createLinearGradient(0,0,720,0);gr.addColorStop(0,w.color);gr.addColorStop(1,'#ffc73a');c.fillStyle=gr;c.fillRect(0,0,720,8);c.fillRect(0,1272,720,8);
 // Draw avatar
 const av=AVATARS.find(a=>a.id===P[w.i].avId);
-if(av){const img=new Image();img.onload=function(){c.save();c.beginPath();c.arc(360,250,75,0,TAU);c.clip();c.drawImage(img,285,175,150,150);c.restore();c.beginPath();c.arc(360,250,78,0,TAU);c.strokeStyle=w.color;c.lineWidth=4;c.stroke();finishWC(c,w,sorted);};img.src=av.img;}
-else finishWC(c,w,sorted);}
-function finishWC(c,w,sorted){
+if(av){const img=new Image();img.onload=function(){c.save();c.beginPath();c.arc(360,250,75,0,TAU);c.clip();c.drawImage(img,285,175,150,150);c.restore();c.beginPath();c.arc(360,250,78,0,TAU);c.strokeStyle=w.color;c.lineWidth=4;c.stroke();finishWC(c,w,sorted,noDL);};img.src=av.img;}
+else finishWC(c,w,sorted,noDL);}
+function finishWC(c,w,sorted,noDL){
 c.font='900 48px Heebo';c.textAlign='center';c.fillStyle='#ffc73a';c.fillText('מי מי מי?',360,120);
 // Crown
 c.font='60px serif';c.fillStyle='#ffc73a';c.fillText('★',360,200);
@@ -1839,7 +1840,7 @@ const t=[];voteLog.forEach(v=>{if(v.winner===w.i)t.push(v.title);});
 if(t.length>0){c.font='700 24px Heebo';c.fillStyle='#ffc73a';t.slice(0,3).forEach((x,i)=>{c.fillText('⭐ '+x,360,500+i*36);});}
 // Quotes
 let qy=640;
-if(gS.quotes&&gS.quotes.length>0){c.font='600 20px Heebo';c.fillStyle='var(--t2)';c.fillText('ציטוטים מהערב',360,qy);
+if(gS.quotes&&gS.quotes.length>0){c.font='600 20px Heebo';c.fillStyle='#8888aa';c.fillText('ציטוטים מהערב',360,qy);
 c.font='italic 22px Heebo';c.fillStyle='#ddd';gS.quotes.slice(0,2).forEach((q,i)=>{c.fillText('"'+q.text+'"',360,qy+32+i*30);});qy+=100;}
 // All players
 const py=Math.max(qy+20,760);c.font='600 20px Heebo';c.fillStyle='#8888aa';c.fillText('כל השחקנים:',360,py);
@@ -1848,12 +1849,12 @@ sorted.forEach((p,i)=>{c.font='700 24px Heebo';c.fillStyle=p.color;c.fillText(`$
 c.font='400 18px Heebo';c.fillStyle='#555577';c.fillText(new Date().toLocaleDateString('he-IL'),360,1220);
 c.font='700 16px Heebo';c.fillStyle='#8888aa';c.fillText('מי מי מי?',360,1250);
 // Download
-const link=document.createElement('a');link.download='mimi-winner.png';link.href=document.getElementById('wcv').toDataURL('image/png');link.click();}
+if(!noDL){const link=document.createElement('a');link.download='mimi-winner.png';link.href=document.getElementById('wcv').toDataURL('image/png');link.click();}}
 
 let fbR=0;
 function showFB(){show('scrFB');let h=`<div>${ic('star',40,'var(--gold)')}</div><div class="fin-t">נהנתם?</div><div style="width:100%;max-width:340px"><div class="fb-stars">`;for(let i=1;i<=5;i++)h+=`<div class="fb-star" onclick="setFB(${i})" id="fs${i}"><svg viewBox="0 0 24 24" fill="currentColor" width="36" height="36">${I.star}</svg></div>`;h+=`</div><textarea class="fb-ta" id="fbt" placeholder="מה אהבתם? מה לשפר?"></textarea><div class="acts" style="margin-top:10px"><button class="ab" style="background:var(--gold)" onclick="subFB()">שלח + כרטיס מנצח</button><button class="ab ab-m" onclick="show('scrFin')">חזרה</button></div></div>`;document.getElementById('fbW').innerHTML=h;}
 function setFB(n){fbR=n;for(let i=1;i<=5;i++)document.getElementById('fs'+i).classList.toggle('on',i<=n);}
-function subFB(){try{gtag('event','feedback',{rating:fbR});}catch(e){}genWC();show('scrFin');ptPop('var(--gold)','תודה ❤️');}
+function subFB(){try{gtag('event','feedback',{rating:fbR});}catch(e){}show('scrFin');ptPop('var(--gold)','תודה ❤️');}
 
 // ===== NAV =====
 function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
@@ -1865,15 +1866,10 @@ function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;tur
 (function(){const s=loadState();if(s?.P?.length>0&&s.curE<s.events.length){const ov=document.getElementById('overlay');ov.innerHTML=`<div style="font-size:3rem">${ic('dice',40,'var(--gold)')}</div><div class="ov-t" style="color:var(--gold)">יש משחק שמור!</div><div class="ov-s">${s.P.map(p=>p.name).join(', ')}</div><div style="display:flex;gap:8px;margin-top:12px"><button class="ov-b" style="background:var(--teal)" onclick="closeOv();resumeG(loadState())">המשיכו! ▶</button><button class="ov-b" style="background:var(--coral)" onclick="clearSave();closeOv()">חדש 🆕</button></div>`;ov.classList.add('on');}})();
 window.addEventListener('beforeunload',function(e){if(document.getElementById('scrGame')?.classList.contains('on')){e.preventDefault();e.returnValue='';}});
 
-/* onbNext removed - single page onboarding */
 function closeOnb(){document.getElementById('onb').style.display='none';try{localStorage.setItem('mimi_onb','1');}catch(e){}}
 function checkOnb(){try{if(!localStorage.getItem('mimi_onb')){document.getElementById('onb').style.display='flex';}}catch(e){}}
 checkOnb();
 history.pushState(null,null,location.href);window.addEventListener('popstate',()=>{
-/* onbNext removed - single page onboarding */
-function closeOnb(){document.getElementById('onb').style.display='none';try{localStorage.setItem('mimi_onb','1');}catch(e){}}
-function checkOnb(){try{if(!localStorage.getItem('mimi_onb')){document.getElementById('onb').style.display='flex';}}catch(e){}}
-checkOnb();
 history.pushState(null,null,location.href);});
 
 function shuf(a){for(let i=a.length-1;i>0;i--){const j=0|Math.random()*(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
