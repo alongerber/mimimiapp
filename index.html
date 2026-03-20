@@ -471,7 +471,7 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 <div class="onb-page on" id="onb0">
 <div style="font-size:2rem;font-weight:900;color:var(--gold)">מי מי מי?</div>
 <div style="font-size:.85rem;color:var(--t2);line-height:1.8;margin:12px 0">
-סובבים גלגל → מי שנבחר משחק →<br>
+סובבים את הגלגל → מי שנבחר משחק →<br>
 שאלות, אתגרים, ציורים והצבעות!<br>
 <b style="color:var(--text)">הטלפון עובר ביניכם.</b>
 </div>
@@ -1761,7 +1761,7 @@ function updateFP(){const strip=document.getElementById('fprog');const spins=eve
 let html='';const perPhase=Math.ceil(spins.length/3);
 [0,1,2].forEach(phase=>{const pSpins=spins.filter(s=>s.phase===phase).length;const pDone=events.slice(0,curE).filter(e=>e.type==='spin'&&e.phase===phase).length;const pct=pSpins>0?Math.round(pDone/pSpins*100):0;const cp=cPhase();
 html+=`<div class="fprog-s" style="width:${pSpins/spins.length*100}%;background:${cp>phase?PH_C[phase]:cp===phase?PH_C[phase]+'88':'var(--s3)'}"><div style="height:100%;width:${cp>phase?100:pct}%;background:${PH_C[phase]};border-radius:3px;transition:width .5s"></div></div>`;});
-strip.innerHTML=html;const fpN=document.getElementById('fprogN');if(fpN)fpN.textContent=PH_N[cp()]+' '+done+'/'+spins.length;}
+strip.innerHTML=html;const fpN=document.getElementById('fprogN');if(fpN)fpN.textContent=PH_N[cPhase()]+' '+done+'/'+spins.length;}
 function ptPop(col,txt){const d=document.createElement('div');d.className='pp';d.style.color=col;d.textContent=txt;document.body.appendChild(d);setTimeout(()=>d.remove(),1200);}
 
 // ===== FINISH =====
