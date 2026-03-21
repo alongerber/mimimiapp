@@ -2,33 +2,36 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta property="og:title" content="מי מי מי? 🎲">
 <meta property="og:description" content="משחק משפחתי מלא צחוק והפתעות! 3-8 שחקנים, טלפון אחד.">
-<meta property="og:image" content="https://mimimi-woad.vercel.app/og-image.jpg">
+<meta property="og:image" content="https://mimimiapp.vercel.app/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://mimimi-woad.vercel.app">
+<meta property="og:url" content="https://mimimiapp.vercel.app">
 <meta property="og:locale" content="he_IL">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="מי מי מי? 🎲">
 <meta name="twitter:description" content="משחק משפחתי מלא צחוק והפתעות! 3-8 שחקנים, טלפון אחד.">
-<meta name="twitter:image" content="https://mimimi-woad.vercel.app/og-image.jpg">
+<meta name="twitter:image" content="https://mimimiapp.vercel.app/og-image.jpg">
 <meta name="description" content="משחק משפחתי על טלפון אחד — שאלות, אתגרים, הצבעות וגילויים. 3-8 שחקנים.">
 <meta name="theme-color" content="#0a0a1a">
 <title>מי מי מי?</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="canonical" href="https://mimimiapp.vercel.app">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--bg:#0a0a1a;--s1:#111128;--s2:#1a1a3a;--s3:#252555;--coral:#ff6b6b;--gold:#ffc73a;--teal:#38d9a9;--lav:#b197fc;--sky:#74c0fc;--peach:#ffa94d;--mint:#63e6be;--rose:#f783ac;--text:#eef;--t2:#8888aa;--t3:#555577;--r:14px}
+:root{--bg:#0a0a1a;--s1:#111128;--s2:#1a1a3a;--s3:#252555;--coral:#ff6b6b;--gold:#ffc73a;--teal:#38d9a9;--lav:#b197fc;--sky:#74c0fc;--peach:#ffa94d;--mint:#63e6be;--rose:#f783ac;--text:#eef;--t2:#8888aa;--t3:#666688;--r:14px}
 html,body{height:100%;overflow:hidden}
 body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);overscroll-behavior:none;transition:background .6s ease}
-.app{height:100dvh;max-width:480px;margin:0 auto;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.app{height:100dvh;max-width:480px;margin:0 auto;display:flex;flex-direction:column;position:relative;overflow:hidden;padding-bottom:env(safe-area-inset-bottom,0)}
 .gl{position:fixed;border-radius:50%;filter:blur(120px);opacity:.07;pointer-events:none;transition:background .6s}
 .gl1{width:300px;height:300px;background:var(--lav);top:-100px;right:-120px}
 .gl2{width:250px;height:250px;background:var(--teal);bottom:-80px;left:-100px}
@@ -40,7 +43,7 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 .logo b{display:inline-block;animation:bob 2.5s ease infinite}
 .logo b:nth-child(1){color:var(--coral)}.logo b:nth-child(2){color:var(--gold)}.logo b:nth-child(3){color:var(--sky)}.logo b:nth-child(4){color:var(--teal)}.logo b:nth-child(5){color:var(--lav)}
 @keyframes bob{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-3px)}}
-.hb{position:absolute;top:8px;width:28px;height:28px;border-radius:50%;background:var(--s2);border:1px solid var(--s3);color:var(--t2);font-size:.75rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10}.hb.l{left:16px}.hb.r{right:16px}
+.hb{position:absolute;top:8px;width:36px;height:36px;border-radius:50%;background:var(--s2);border:1px solid var(--s3);color:var(--t2);font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10}.hb.l{left:16px}.hb.r{right:16px}
 
 /* Hero Setup */
 .hero{text-align:center;padding:10px 0 14px}
@@ -50,7 +53,7 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 
 
 .st{font-size:1.05rem;font-weight:800;text-align:center;margin:4px 0}
-.ss{font-size:.65rem;color:var(--t3);text-align:center}
+.ss{font-size:.7rem;color:var(--t3);text-align:center}
 .cgrid{display:flex;justify-content:center;gap:8px;margin:8px 0}
 .cb{width:44px;height:44px;border-radius:12px;border:2px solid var(--s3);background:var(--s1);color:var(--t2);font-size:1rem;font-weight:800;font-family:inherit;cursor:pointer;transition:.25s;display:flex;align-items:center;justify-content:center}
 .cb.on{border-color:var(--lav);color:var(--lav);background:var(--s2);transform:scale(1.1);box-shadow:0 0 16px rgba(177,151,252,.3)}
@@ -99,6 +102,8 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 /* Wheel */
 .warea{position:relative;width:100%;max-width:280px;margin:6px auto;aspect-ratio:1;flex-shrink:0}
 .warea canvas{width:100%;height:100%;border-radius:50%;display:block;filter:drop-shadow(0 4px 20px rgba(0,0,0,.5))}
+.warea::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(177,151,252,.15);animation:wheelGlow 4s ease infinite;pointer-events:none}
+@keyframes wheelGlow{0%,100%{border-color:rgba(177,151,252,.15);box-shadow:0 0 8px rgba(177,151,252,.05)}50%{border-color:rgba(56,217,169,.2);box-shadow:0 0 16px rgba(56,217,169,.08)}}
 .warrow{position:absolute;top:-8px;left:50%;transform:translateX(-50%);z-index:5;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
 .wctr{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;background:linear-gradient(135deg,#fff,#ddd);border-radius:50%;z-index:4;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.4);cursor:pointer}
 .gbtns{display:flex;gap:6px;margin:4px 0;flex-shrink:0}
@@ -112,6 +117,11 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 /* Round card - type DNA via full bg */
 .rc{border-radius:20px;padding:24px 18px;text-align:center;border:1.5px solid var(--s3);margin:6px 0;position:relative;overflow:hidden;animation:rcIn .45s cubic-bezier(.34,1.3,.64,1) both}
 @keyframes rcIn{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+.bg-vote{animation-name:rcSlideR}.bg-hotseat{animation-name:rcZoom}.bg-reveal{animation-name:rcFade}.bg-rapid{animation-name:rcShake}
+@keyframes rcSlideR{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes rcZoom{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+@keyframes rcFade{from{opacity:0;filter:blur(4px)}to{opacity:1;filter:blur(0)}}
+@keyframes rcShake{0%{opacity:0;transform:translateX(-6px)}20%{transform:translateX(4px)}40%{transform:translateX(-3px)}60%{opacity:1;transform:translateX(2px)}80%{transform:translateX(-1px)}100%{transform:translateX(0)}}
 .rc-bar{position:absolute;top:0;left:0;right:0;height:3px}
 .rc-glow{position:absolute;top:-50px;left:50%;transform:translateX(-50%);width:220px;height:100px;border-radius:50%;filter:blur(50px);opacity:.12;pointer-events:none}
 .rc-emoji{font-size:2.2rem;margin-bottom:6px}.rc-icon{width:52px;height:52px;border-radius:16px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.03)}
@@ -120,8 +130,8 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 .bg-vote{background:linear-gradient(180deg,#110e22,var(--s1))}.bg-hotseat{background:linear-gradient(180deg,#1f1010,var(--s1))}.bg-mission{background:linear-gradient(180deg,#1f1808,var(--s1))}.bg-alias{background:linear-gradient(180deg,#0e1f18,var(--s1))}.bg-draw{background:linear-gradient(180deg,#0e1820,var(--s1))}.bg-rapid{background:linear-gradient(180deg,#1f1f08,var(--s1))}.bg-dilemma{background:linear-gradient(180deg,#0e0e1f,var(--s1))}.bg-famtalk{background:linear-gradient(180deg,#0e1f12,var(--s1))}.bg-reveal{background:linear-gradient(180deg,#1f0e1a,var(--s1))}
 
 .cq{font-size:1.45rem;font-weight:800;line-height:1.55;margin:8px 0}
-.csub{font-size:.7rem;color:var(--t2);margin:4px 0}
-.ptag{display:inline-flex;align-items:center;gap:3px;padding:3px 10px;border-radius:10px;font-size:.6rem;font-weight:700;background:rgba(255,199,58,.1);color:var(--gold);margin:4px 0}
+.csub{font-size:.75rem;color:var(--t2);margin:4px 0}
+.ptag{display:inline-flex;align-items:center;gap:3px;padding:3px 10px;border-radius:10px;font-size:.65rem;font-weight:700;background:rgba(255,199,58,.1);color:var(--gold);margin:4px 0}
 
 /* Special badge */
 .special{display:inline-flex;align-items:center;gap:4px;padding:5px 14px;border-radius:14px;font-size:.75rem;font-weight:800;animation:specPulse 1.5s ease infinite}
@@ -218,15 +228,16 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 .ctimer-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:1.8rem;font-weight:900;font-variant-numeric:tabular-nums}
 
 /* Light mode */
-.app.light{--bg:#f5f5f0;--s1:#e8e8e0;--s2:#ddddd5;--s3:#ccccc4;--text:#1a1a2e;--t2:#555566;--t3:#888899}
+.app.light{--bg:#f8f6f1;--s1:#eeeadf;--s2:#e3dfd4;--s3:#ccc8bd;--text:#1a1a2e;--t2:#555566;--t3:#777788}
 .app.light~.gl{opacity:.04}
-.app.light .rc{box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.app.light .rc{box-shadow:0 4px 16px rgba(0,0,0,.08),0 1px 0 rgba(255,255,255,.6) inset}
 .app.light .sb{backdrop-filter:none;background:var(--s1)}
 .app.light .nar{backdrop-filter:none;background:var(--s2)!important}
-.app.light .sni{background:var(--s1);border-color:var(--s3);color:var(--text)}
-.app.light .ov{background:rgba(245,245,240,.96);backdrop-filter:blur(12px)}
+.app.light .sni{background:#fff;border-color:var(--s3);color:var(--text)}
+.app.light .ov{background:rgba(248,246,241,.96);backdrop-filter:blur(12px)}
 .app.light .mbox{background:var(--s1)}
-body.light-body{background:#f5f5f0}
+.app.light .warea canvas{filter:drop-shadow(0 4px 20px rgba(0,0,0,.15)) saturate(.85) brightness(1.1)}
+body.light-body{background:#f8f6f1}
 .theme-toggle{position:absolute;top:8px;left:52px;width:28px;height:28px;border-radius:50%;background:var(--s2);border:1px solid var(--s3);color:var(--t2);font-size:.75rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10}
 
 /* Game history */
@@ -264,7 +275,9 @@ body.light-body{background:#f5f5f0}
 .pod{display:flex;flex-direction:column;align-items:center}
 .pod-m{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:.72rem;margin-bottom:3px}
 .pod-av{width:42px;height:42px;border-radius:12px;overflow:hidden;margin-bottom:2px;border:2px solid}.pod-av img{width:100%;height:100%;object-fit:cover}
-.pod-bar{width:64px;border-radius:12px 12px 0 0;display:flex;align-items:flex-end;justify-content:center;padding:8px 4px;font-weight:900;font-size:.9rem;transition:height .8s cubic-bezier(.34,1.4,.64,1)}
+.pod-bar{width:64px;border-radius:12px 12px 0 0;display:flex;align-items:flex-end;justify-content:center;padding:8px 4px;font-weight:900;font-size:.9rem;transition:height 1.2s cubic-bezier(.34,1.4,.64,1)}
+.fin-section{width:100%;max-width:360px;margin:4px 0;padding:14px;background:var(--s1);border-radius:16px;border:1.5px solid var(--s3);animation:sIn .3s ease both}
+.fin-section-t{font-size:.72rem;font-weight:700;text-align:center;color:var(--t2);margin-bottom:8px}
 .pod-n{font-size:.65rem;font-weight:700;margin-top:3px}.pod-p{font-size:.55rem;color:var(--t3)}
 .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;max-width:360px;margin:6px 0}
 .sc{background:var(--s1);border-radius:12px;padding:10px;border:1px solid var(--s3);text-align:center}
@@ -284,9 +297,9 @@ body.light-body{background:#f5f5f0}
 .fb-ta{width:100%;min-height:60px;background:var(--s1);border:1.5px solid var(--s3);border-radius:12px;padding:10px;color:var(--text);font-family:inherit;font-size:.82rem;resize:none;outline:0}
 
 /* Confetti */
-.cf{position:fixed;z-index:150;pointer-events:none;animation:cfA var(--d) ease-out forwards}
-@keyframes cfA{0%{opacity:1;transform:translateY(0) rotate(0) scale(1)}60%{opacity:1}100%{opacity:0;transform:translateY(100vh) rotate(var(--r)) scale(.5)}}
-.cf-c{border-radius:50%}.cf-s{clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.cf{position:fixed;z-index:150;pointer-events:none;animation:cfA var(--d) ease-out forwards;transform-style:preserve-3d}
+@keyframes cfA{0%{opacity:1;transform:translateY(0) rotate(0) rotateX(0) scale(1)}30%{opacity:1;transform:translateY(30vh) rotate(calc(var(--r) * .4)) rotateX(180deg) translateX(var(--wx,0px)) scale(.9)}60%{opacity:1}100%{opacity:0;transform:translateY(100vh) rotate(var(--r)) rotateX(540deg) translateX(calc(var(--wx,0px) * 1.5)) scale(.4)}}
+.cf-c{border-radius:50%}.cf-s{clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}.cf-t{clip-path:polygon(50% 0%,0% 100%,100% 100%)}
 
 /* Help */
 .mbg{position:fixed;inset:0;z-index:90;background:rgba(10,10,26,.95);display:none;align-items:center;justify-content:center;padding:20px}.mbg.on{display:flex}
@@ -358,9 +371,10 @@ body.light-body{background:#f5f5f0}
 .handoff-msg{font-size:.82rem;color:var(--t2);margin:6px 0}
 
 /* First-time explanation */
-.explain{background:var(--s2);border-radius:14px;padding:14px 16px;margin:8px 0;text-align:center;border:1px solid var(--s3)}
-.explain-title{font-size:.9rem;font-weight:800;margin-bottom:6px}
-.explain-text{font-size:.72rem;color:var(--t2);line-height:1.6}
+.explain{background:var(--s2);border-radius:16px;padding:18px 20px;margin:10px 0;text-align:center;border:1.5px solid var(--s3);animation:explainIn .5s cubic-bezier(.34,1.3,.64,1) both}
+@keyframes explainIn{from{opacity:0;transform:scale(.9) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.explain-title{font-size:.95rem;font-weight:800;margin-bottom:8px}
+.explain-text{font-size:.78rem;color:var(--t2);line-height:1.7}
 
 /* Active player glow on scorebar */
 .sb.active{border-color:currentColor;box-shadow:0 0 12px currentColor;transform:scale(1.05)}
@@ -492,6 +506,7 @@ body.light-body{background:#f5f5f0}
           <circle cx="75" cy="72" r="2.5" fill="var(--peach)" opacity=".4"><animate attributeName="r" values="2.5;4;2.5" dur="2.2s" repeatCount="indefinite"/></circle>
         </svg>
       </div>
+      <div class="logo" style="font-size:1.8rem;margin:8px 0 2px"><b>מ</b><b>י</b> <b>מ</b><b>י</b> <b>מ</b><b>י</b><b>?</b></div>
       <div class="hero-t">ערב משפחתי אחד. טלפון אחד. מלא סיפורים.</div>
       <div class="hero-flow">
         <div class="hf-step"><div class="hf-num" style="background:var(--sky)">1</div><div class="hf-txt">סובבים<br>את הגלגל</div></div>
@@ -503,17 +518,17 @@ body.light-body{background:#f5f5f0}
     </div>
     <div class="st">כמה אתם היום?</div>
     <div class="cgrid" id="cntR"></div>
-    <div class="st" style="margin-top:8px">מי משחק?</div>
-    <div class="ss" style="margin-bottom:4px">בחרו את הגיל של השחקן הצעיר ביותר</div>
+    <div class="st" style="margin-top:8px">מי בפנים?</div>
+    <div class="ss" style="margin-bottom:4px">מי הצעיר ביותר?</div>
     <div class="age-grid" id="ageR">
       <button class="age-btn" onclick="setAge('6-9')"><span class="age-btn-emoji">🧒</span>6-9<span class="age-btn-label">ילדים</span></button>
       <button class="age-btn" onclick="setAge('10-13')"><span class="age-btn-emoji">🎒</span>10-13<span class="age-btn-label">טרום נוער</span></button>
       <button class="age-btn" onclick="setAge('13-18')"><span class="age-btn-emoji">🎧</span>13-18<span class="age-btn-label">נוער</span></button>
       <button class="age-btn on" onclick="setAge('18+')"><span class="age-btn-emoji">🎭</span>18+<span class="age-btn-label">מבוגרים</span></button>
     </div>
-    <div class="st" style="margin-top:8px">אורך משחק</div>
+    <div class="st" style="margin-top:8px">כמה זמן יש לכם?</div>
     <div class="cgrid"><button class="cb" id="mShort" onclick="setMode('short')" style="width:auto;padding:0 14px;font-size:.75rem">קצר</button><button class="cb on" id="mFull" onclick="setMode('full')" style="width:auto;padding:0 14px;font-size:.75rem">מלא</button></div>
-    <div class="st" style="margin-top:8px">איך מצביעים?</div>
+    <div class="st" style="margin-top:8px">מעבירים טלפון או מצביעים ביחד?</div>
     <div class="cgrid"><button class="cb" id="vmPass" onclick="setVM('pass')" style="width:auto;padding:0 12px;font-size:.7rem">מעבירים טלפון</button><button class="cb on" id="vmOpen" onclick="setVM('open')" style="width:auto;padding:0 12px;font-size:.7rem">מצביעים בגלוי</button></div>
     <div class="ss" id="vmDesc">כל אחד מצביע בסתר בטלפון</div>
     <button class="gobtn" onclick="startPS()">בואו נכיר את השחקנים</button>
@@ -537,7 +552,7 @@ body.light-body{background:#f5f5f0}
     <canvas id="cv" width="600" height="600"></canvas>
     <div class="wctr" onclick="doSpin()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div>
   </div>
-  <div class="gbtns"><button class="spinb" id="spinB" onclick="doSpin()" aria-label="סובבו את הגלגל">סובבו!</button><button class="undo-b" id="undoB" disabled onclick="undoStep()" aria-label="שלב אחורה">↩</button></div>
+  <div class="gbtns"><button class="spinb" id="spinB" onclick="doSpin()" aria-label="סובבו את הגלגל">גורלות!</button><button class="undo-b" id="undoB" disabled onclick="undoStep()" aria-label="שלב אחורה">↩</button></div>
   <div id="gc"></div>
 </div>
 
@@ -654,20 +669,24 @@ else if(t==='reveal'){for(let i=0;i<6;i++){this.n(300-i*25,'square',.04,now+i*.0
 
 // ===== NARRATOR =====
 const NAR={
-vote:[(n)=>`יאללה, שומעים את כולם!`,(n)=>`${n}, תקרא בקול.`,(n)=>`רגע, רגע... שקט. ${n} קורא.`],
-vote_qv:[(n)=>`מה אומרים? כולם מצביעים!`,(n)=>`מי מתאים? תחליטו!`,(n)=>`בלי לחשוב יותר מדי — מצביעים!`],
-hotseat:[(n)=>`${n}, עכשיו עליך.`,(n)=>`${n}, מוכן? תנשום עמוק.`,(n)=>`${n} במוקד. בלי רחמים.`,(n)=>`תורך ${n}. אל תתחמק.`],
-alias:[(n)=>`${n}, 30 שניות — תסביר!`,(n)=>`${n} מסביר, כולם מנחשים!`,(n)=>`בלי להגיד את המילה! יאללה ${n}!`],
-draw:[(n)=>`${n}, תצייר! השאר מנחשים.`,(n)=>`מוכנים לניחוש? ${n} מצייר.`,(n)=>`${n} ציירו, כולם שקט!`],
-mission:[(n)=>`${n}, יש לך אתגר.`,(n)=>`אתגר ל-${n}. בחר חכם!`,(n)=>`${n}, תראה מה יש בשבילך.`],
-rapid:[(n)=>`${n}, מהר מהר!`,(n)=>`שאלת ברק! ${n}, מוכן?`,(n)=>`${n} — ענה לפני שנגמר הזמן!`],
-dilemma:[(n)=>`דילמה! כולם מצביעים.`,(n)=>`מה הייתם בוחרים?`,(n)=>`אין תשובה נכונה. בוחרים!`],
-famtalk:[(n)=>`שאלה לכולם!`,(n)=>`רגע לכל המשפחה.`,(n)=>`${n} פותח, כולם מצטרפים.`],
-reveal:[(n,n2)=>`${n} ו-${n2} — רגע שלכם.`,(n,n2)=>`${n}, יש לך משהו ל-${n2}.`,(n,n2)=>`רגע מיוחד בדרך.`],
-win:[(n)=>`${n} לוקח את הכתר!`,(n)=>`אין ויכוח — ${n}!`,(n)=>`${n}, התואר שלך!`],
-tie:[()=>`תיקו! אף אחד לא ניצח.`,()=>`הקולות חלוקים!`,()=>`מחלוקת. ממשיכים.`]
+vote:[(n)=>`יאללה, שומעים את כולם!`,(n)=>`${n}, תקרא בקול.`,(n)=>`רגע, רגע... שקט. ${n} קורא.`,(n)=>`תרימו יד! מי מצביע?`,(n)=>`${n} שואל, כולם עונים.`],
+vote_qv:[(n)=>`מה אומרים? כולם מצביעים!`,(n)=>`מי מתאים? תחליטו!`,(n)=>`בלי לחשוב יותר מדי — מצביעים!`,(n)=>`כולם יודעים את התשובה. תגידו!`,(n)=>`הצביעו מהבטן.`],
+hotseat_warm:[(n)=>`${n}, עכשיו עליך.`,(n)=>`${n}, מוכן? שאלה קלה.`,(n)=>`${n}, בוא נכיר אותך.`],
+hotseat_fire:[(n)=>`${n}, מוכן? תנשום עמוק.`,(n)=>`${n} במוקד. בלי רחמים.`,(n)=>`תורך ${n}. אל תתחמק.`,(n)=>`${n}, הפעם זה אישי.`],
+hotseat_final:[(n)=>`${n}, רגע של כנות.`,(n)=>`${n}, השאלה הזאת חשובה.`,(n)=>`${n}, תענה מהלב.`],
+alias:[(n)=>`${n}, 30 שניות — תסביר!`,(n)=>`${n} מסביר, כולם מנחשים!`,(n)=>`בלי להגיד את המילה! יאללה ${n}!`,(n)=>`${n}, תהיה יצירתי. הזמן רץ.`],
+draw:[(n)=>`${n}, תצייר! השאר מנחשים.`,(n)=>`מוכנים לניחוש? ${n} מצייר.`,(n)=>`${n} ציירו, כולם שקט!`,(n)=>`${n}, העיפרון בידיים שלך.`],
+mission:[(n)=>`${n}, יש לך אתגר.`,(n)=>`אתגר ל-${n}. בחר חכם!`,(n)=>`${n}, תראה מה יש בשבילך.`,(n)=>`${n}, מוכן להוכיח?`],
+rapid:[(n)=>`${n}, מהר מהר!`,(n)=>`שאלת ברק! ${n}, מוכן?`,(n)=>`${n} — ענה לפני שנגמר הזמן!`,(n)=>`${n}, בלי לחשוב — לדבר!`],
+dilemma:[(n)=>`דילמה! כולם מצביעים.`,(n)=>`מה הייתם בוחרים?`,(n)=>`אין תשובה נכונה. בוחרים!`,(n)=>`בואו נראה מי חושב אחרת.`],
+famtalk:[(n)=>`שאלה לכולם!`,(n)=>`רגע לכל המשפחה.`,(n)=>`${n} פותח, כולם מצטרפים.`,(n)=>`שיחה שצריכה לקרות.`,(n)=>`עצרו הכל. רגע ביחד.`],
+reveal:[(n,n2)=>`${n} ו-${n2} — רגע שלכם.`,(n,n2)=>`${n}, יש לך משהו ל-${n2}.`,(n,n2)=>`לפעמים צריך רק שני אנשים.`,(n,n2)=>`רגע שלא חוזר.`,(n,n2)=>`${n} ו-${n2}, תנו לזה מקום.`],
+win:[(n)=>`${n} לוקח את הכתר!`,(n)=>`אין ויכוח — ${n}!`,(n)=>`${n}, התואר שלך!`,(n)=>`${n}, המשפחה בחרה בך.`],
+tie:[()=>`תיקו! אף אחד לא ניצח.`,()=>`הקולות חלוקים!`,()=>`מחלוקת. ממשיכים.`,()=>`הבית חלוק. אבל זה בסדר.`],
+sentence:[(n)=>`${n}, תשלים את המשפט.`,(n)=>`${n}, אומרים הכל בקול.`,(n)=>`כולם מקשיבים ל-${n}.`],
+mic:[(n)=>`${n}, הבמה שלך.`,(n)=>`${n}, 15 שניות לשכנע.`,(n)=>`${n} עולה לדוכן העדים.`]
 };
-function nar(type,n1,n2){const a=NAR[type];return a[Math.floor(Math.random()*a.length)](n1,n2);}
+function nar(type,n1,n2){let key=type;if(type==='hotseat'){const p=pk();key='hotseat_'+p;}const a=NAR[key]||NAR[type];if(!a)return '';return a[Math.floor(Math.random()*a.length)](n1,n2);}
 
 // ===== CONTENT — GRADED =====
 const VOTE={warm:[
@@ -696,6 +715,11 @@ const VOTE={warm:[
 {q:"מי פה הכי מתארגן לאט בבוקר?",tm:"הנסיך של הבוקר",tf:"הנסיכה של הבוקר"},
 {q:"מי פה תמיד רעב?",tm:"הבור ללא תחתית",tf:"הבור ללא תחתית"},
 {q:"מי פה משאיר את האור דלוק בכל חדר?",tm:"חברת החשמל",tf:"חברת החשמל"},
+{q:"מי פה תמיד דואג שלכולם טוב?",tm:"שומר הרווחה",tf:"שומרת הרווחה"},
+{q:"מי פה הכי יודע להפתיע?",tm:"מלך ההפתעות",tf:"מלכת ההפתעות"},
+{q:"מי פה מביא את האנרגיה הכי טובה?",tm:"הסוללה של הבית",tf:"הסוללה של הבית"},
+{q:"מי פה הכי כיף לבשל איתו?",tm:"שותף למטבח",tf:"שותפה למטבח"},
+{q:"מי פה תמיד מוצא את הצד המצחיק?",tm:"מוצא האור",tf:"מוצאת האור"},
 ],fire:[
 {q:"מי פה הכי טוב בלהתחמק ממטלות?",tm:"אלוף ההתחמקות",tf:"אלופת ההתחמקות"},
 {q:"מי פה הכי גדול על תירוצים?",tm:"מלך התירוצים",tf:"מלכת התירוצים"},
@@ -725,6 +749,10 @@ const VOTE={warm:[
 {q:"מי פה עושה סצנות במסעדות?",tm:"יוצר הסצנות",tf:"יוצרת הסצנות"},
 {q:"מי פה שולח הודעה ומתחרט מיד?",tm:"המתחרט",tf:"המתחרטת"},
 {q:"מי פה אומר ׳אמרתי לכם׳ אחרי כל דבר?",tm:"הנביא",tf:"הנביאה"},
+{q:"מי פה הכי יודע לעשות שמח?",tm:"יוצר השמחה",tf:"יוצרת השמחה"},
+{q:"מי פה הכי נאמן למי שאוהב?",tm:"הנאמן",tf:"הנאמנה"},
+{q:"מי פה נותן את העצות הכי טובות?",tm:"היועץ",tf:"היועצת"},
+{q:"מי פה גורם לכם להרגיש הכי בטוחים?",tm:"מגן המשפחה",tf:"מגינת המשפחה"},
 ],final:[
 {q:"מי פה בוכה בסרטים ומכחיש?",tm:"הרגשן הסודי",tf:"הרגשנית הסודית"},
 {q:"למי רצים כשיש בעיה?",tm:"הסלע",tf:"הסלע"},
@@ -1096,7 +1124,7 @@ const SENTENCE={final:[
 "הדבר שהכי רוצה שיזכרו עליי הוא...",
 ]}
 
-const PH_N=["חימום","עכשיו זה נהיה מעניין","הכל על הכל"],PH_C=["var(--sky)","var(--coral)","var(--gold)"],PH_E=["<span style='font-size:3.5rem'>"+ic('star',56,'var(--sky)')+"</span>","<span style='font-size:3.5rem'>"+ic('flame',56,'var(--coral)')+"</span>","<span style='font-size:3.5rem'>"+ic('crown',56,'var(--gold)')+"</span>"],PH_D=["צחוקים קלילים, מתחממים","שאלות חצופות, עקיצות","רגעים אמיתיים, שאלות שנשארות"],PH_K=['warm','fire','final',
+const PH_N=["חימום","עכשיו זה נהיה מעניין","הכל על הכל"],PH_C=["var(--sky)","var(--coral)","var(--gold)"],PH_E=["<span style='font-size:3.5rem'>"+ic('star',56,'var(--sky)')+"</span>","<span style='font-size:3.5rem'>"+ic('flame',56,'var(--coral)')+"</span>","<span style='font-size:3.5rem'>"+ic('crown',56,'var(--gold)')+"</span>"],PH_D=["צחוקים קלילים, מתחממים","שאלות חצופות, עקיצות","רגעים אמיתיים, שאלות שנשארות"],PH_TEASER=["בשלב הבא: שאלות חדות יותר...","הכל נהיה אישי. מוכנים?",""],PH_K=['warm','fire','final',
 {q:"לדעת תמיד מה חושבים עליך, או אף פעם?",a:"לדעת",b:"לא לדעת"},
 {q:"להצליח בלי שאף אחד ידע, או להיכשל ושכולם יראו?",a:"הצלחה בסתר",b:"כישלון בגלוי"},
 {q:"לחיות בלי שקרים, או בלי סודות?",a:"בלי שקרים",b:"בלי סודות"},
@@ -1144,6 +1172,18 @@ let pools={},idx={};
 let prevState=null;
 let gS={aliasW:{},drawW:{},rounds:0,t0:0,drawings:[],quotes:[],micResults:[]};
 let PD=[],curSP=0,seenTypes={},phasesSeen=0,streaks={},lastScorer=-1,comebackUsed={},gameLen='full',voteMode='open',ageGroup='18+';
+const SPIN_CTA=["גורלות!","מי יהיה?","הגלגל מחליט","בואו נראה","מי נבחר?","רגע האמת"];
+const HOST_PROMPTS={
+vote:["שווה לשאול — למה דווקא הוא?","מישהו מופתע? ספרו.","מי שהצביע אחרת — מה ראה?","יש פה סיפור מאחורי ההצבעה?","מי רוצה להגן על הבחירה שלו?"],
+blind:["מה גרם לכם לבחור את זה?","חשבתם על אותו דבר — או סתם מזל?","מה זה אומר על הקשר ביניכם?","יש פה חיבור שלא ציפיתם לו?","מתי הרגשתם ככה לאחרונה?"],
+hotseat:["מישהו הופתע מהתשובה?","יש למישהו תגובה?","מי חשב שהתשובה תהיה אחרת?","זה סוד ששווה לחפור בו עוד."],
+reveal:["אם הייתם חוזרים לרגע הזה — מה הייתם משנים?","מה הרגע הזה אומר עליכם?","מי עוד מרגיש ככה?","תנו לזה רגע נוסף."],
+sentence:["מישהו הופתע?","מי היה הכי קרוב?","מה זה אומר על מה שהם חושבים עליך?"],
+dilemma:["מישהו שינה דעה ברגע האחרון?","מה היה קורה אם כולם בוחרים אחרת?","יש מישהו שרוצה לשכנע את השאר?"],
+general:["רגע, בואו נעצור פה.","יש מישהו שרוצה להגיד משהו?","קחו רגע לפני שממשיכים.","שימו לב מה קרה פה."]
+};
+function hostPrompt(type){const pool=HOST_PROMPTS[type]||HOST_PROMPTS.general;return pool[Math.floor(Math.random()*pool.length)];}
+
 // Microphone round state
 let MIC={};
 // AI summary cache
@@ -1247,7 +1287,9 @@ const ev={type:'spin',pi,roundType:types[i],phase};
 // Assign second player for reveal/pair missions
 if(types[i]==='reveal'){const others=P.map((_,j)=>j).filter(j=>j!==pi);ev.pi2=others[Math.floor(Math.random()*others.length)];}
 if(i===specialIdx)ev.special='double';if(i===goldIdx)ev.special='gold';
-out.push(ev);}return out;}
+out.push(ev);
+// Social validation moment every 5 rounds
+if(i>0&&i%5===4&&phase<2)out.push({type:'social_moment',phase});}return out;}
 events=[];
 events.push({type:'phase_intro',phase:0});events.push(...mkRounds(perPhase,0));events.push({type:'family_challenge',ci:0});
 events.push({type:'phase_intro',phase:1});events.push(...mkRounds(perPhase,1));events.push({type:'family_challenge',ci:1});
@@ -1260,24 +1302,34 @@ pools['vt_'+k]=shuf(filterByAge([...VOTE[k]]));pools['hs_'+k]=shuf(filterByAge([
 pools.sent=shuf([...SENTENCE.final]);
 pools.ra=shuf([...RAPIDS]);pools.di=shuf([...DILEMMAS]);pools.fc=shuf([...FAM_CH]);
 idx={};Object.keys(pools).forEach(k=>idx[k]=0);
-curE=0;wA=0;show('scrGame');drawWheel(0);updateSB();updateFP();saveState();processEvent();
+curE=0;wA=0;show('scrGame');drawWheel(0);updateSB();updateFP();saveState();
+// Game intro moment
+const ov=document.getElementById('overlay');
+ov.innerHTML=`<div style="animation:popIn .5s ease"><div class="logo" style="font-size:2rem;margin-bottom:12px"><b>מ</b><b>י</b> <b>מ</b><b>י</b> <b>מ</b><b>י</b><b>?</b></div></div>
+<div style="font-size:1rem;font-weight:800;color:var(--text);animation:phaseSubIn .5s ease both;animation-delay:.3s;opacity:0">ערב המשפחה מתחיל!</div>
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:12px 0;animation:phaseSubIn .5s ease both;animation-delay:.5s;opacity:0">${P.map(p=>`<span style="color:${p.color};font-weight:700;font-size:.82rem">${p.name}</span>`).join(' • ')}</div>
+<button class="ov-b" style="background:linear-gradient(135deg,var(--lav),var(--coral));animation:phaseSubIn .5s ease both;animation-delay:.7s;opacity:0" onclick="closeOv();processEvent()">יאללה!</button>`;
+ov.classList.add('on');SND.play('tada');
 try{gtag('event','game_start',{player_count:P.length,age_group:ageGroup,game_length:gameLen,vote_mode:voteMode});}catch(e){}
 }
 function pk(){return PH_K[cPhase()];}
 function cPhase(){let p=0;for(let i=0;i<=curE&&i<events.length;i++)if(events[i].type==='phase_intro')p=events[i].phase;return p;}
+function phaseTimer(){const p=cPhase();return p===0?35:p===1?25:40;}
+function phaseMicroBeat(rt){const ri=RT[rt];if(ri)SND.play('pop');vib(20);}
 
 // ===== PROCESS =====
 function processEvent(){
 if(curE>=events.length){clearSave();show('scrFin');buildFin();return;}
 const ev=events[curE];document.getElementById('gc').innerHTML='';
 if(ev.type==='phase_intro')showPI(ev.phase);
+else if(ev.type==='social_moment')showSocialMoment();
 else if(ev.type==='family_challenge')showFC(ev.ci);
 else if(ev.type==='big_question')showBQ();
 else if(ev.type==='spin'){
 document.getElementById('gc').innerHTML='';document.getElementById('gc').style.opacity='1';document.getElementById('gc').style.transform='none';
 document.getElementById('warea').style.display='';document.getElementById('spinB').parentElement.style.display='flex';document.getElementById('spinB').disabled=false;
 try{say(P[events[curE].pi].name);}catch(e){}
-document.getElementById('spinB').textContent='סובבו!';updateFP();}
+document.getElementById('spinB').textContent=SPIN_CTA[Math.floor(Math.random()*SPIN_CTA.length)];updateFP();}
 }
 
 // ===== WHEEL =====
@@ -1301,12 +1353,15 @@ function ease(t){return 1-Math.pow(1-t,3.5)}
 if(p<1&&!window._skipSpin){requestAnimationFrame(anim);return;}if(p<1&&window._skipSpin){wA=a0+dist;drawWheel(wA);}
 if(sliceAt(wA)!==target){const nudge=(target+.5)*sa;wA=-nudge+Math.ceil(wA/TAU)*TAU;drawWheel(wA);}
 SND.play('pop');vib(50);
-// Show who landed
+// Show who landed — dramatic reveal
 const landedP=P[target];
-document.getElementById('gc').innerHTML=`<div style="text-align:center;padding:16px;animation:popIn .3s ease">
-<div style="width:64px;height:64px;border-radius:50%;overflow:hidden;border:3px solid ${landedP.color};margin:0 auto 8px;box-shadow:0 0 20px ${landedP.color}44">${gAv(target,64)}</div>
-<div style="font-size:1.2rem;font-weight:900;color:${landedP.color}">${landedP.name}!</div></div>`;
-document.getElementById('gc').style.opacity='1';
+const LAND_PHRASES=["הגורל בחר:","הגלגל החליט:","הפעם —","הזרקור על:","מי במרכז?"];
+const landPhrase=LAND_PHRASES[Math.floor(Math.random()*LAND_PHRASES.length)];
+document.getElementById('gc').innerHTML=`<div style="text-align:center;padding:16px;animation:popIn .4s cubic-bezier(.34,1.3,.64,1)">
+<div style="font-size:.72rem;font-weight:700;color:var(--t2);margin-bottom:10px;letter-spacing:1px">${landPhrase}</div>
+<div style="width:72px;height:72px;border-radius:50%;overflow:hidden;border:3px solid ${landedP.color};margin:0 auto 8px;box-shadow:0 0 28px ${landedP.color}55">${gAv(target,72)}</div>
+<div style="font-size:1.3rem;font-weight:900;color:${landedP.color}">${landedP.name}</div></div>`;
+document.getElementById('gc').style.opacity='1';confetti(landedP.color);
 setTimeout(()=>{showRound(ev);spinning=false;},1200);})(performance.now());}
 
 // ===== SHOW ROUND =====
@@ -1324,7 +1379,8 @@ document.body.style.background=getComputedStyle(document.documentElement).getPro
 document.querySelector('.gl1').style.background=ri.c;
 const mult=ev.special==='double'?2:ev.special==='gold'?3:ev.special==='comeback'?2:1;
 const spColors={double:['var(--coral)','rgba(255,107,107,.12)'],gold:['var(--gold)','rgba(255,199,58,.12)'],comeback:['var(--teal)','rgba(56,217,169,.12)']};
-const spTexts={double:'כפול! ×2 נקודות!',gold:'שאלת זהב! ×3 נקודות!',comeback:'קאמבק! הנקודות כפולות!'};
+const gapToSecond=maxScore-myScore;const comebackMsg=gapToSecond<=3?`${p.name}, ${gapToSecond} נקודות מהמקום הבא!`:`${p.name}, הכל עוד אפשרי!`;
+const spTexts={double:'כפול! ×2 נקודות!',gold:'שאלת זהב! ×3 נקודות!',comeback:comebackMsg+' ×2 נקודות!'};
 const sp=ev.special&&spColors[ev.special]?`<div class="special" style="color:${spColors[ev.special][0]};background:${spColors[ev.special][1]}">${spTexts[ev.special]}</div>`:'';
 
 if(rt==='vote')startVote(pi,sp,mult,ev);
@@ -1375,7 +1431,7 @@ const qs=tier==='split'?VERD.quips_split:VERD.quips;
 const q=qs[Math.floor(Math.random()*qs.length)];
 return {header:h,explain:e,quip:q,tier};}
 
-const CTA_NEXT=["הבא","נמשיך?","עוד סיבוב","מי הבא?","קדימה","יאללה","ממשיכים"];
+const CTA_NEXT=["הבא","נמשיך?","עוד סיבוב","מי הבא?","קדימה","יאללה","ממשיכים","מה עכשיו?","הבא בתור","עוד?"];
 function nextCTA(){return CTA_NEXT[Math.floor(Math.random()*CTA_NEXT.length)];}
 function startVote(pi,sp,mult,ev){
 const q=nx(pools['vt_'+pk()],idx['vt_'+pk()]++);
@@ -1421,7 +1477,7 @@ gc(`<div class="rc bg-vote"><div class="rc-bar" style="background:var(--lav)"></
 <div class="csub">כולם הצביעו? מי שמחזיק את הטלפון סופר!</div>
 ${grid}
 <div class="csub" id="qvtotal">${total}/${P.length} קולות</div>
-<div class="acts"><button class="ab ab-g" id="qvDone" onclick="qvDone()" ${total===P.length?'':'disabled'} style="width:100%">סיימנו!</button></div></div>`);}
+<div class="acts"><button class="ab ab-g" id="qvDone" onclick="qvDone()" ${total===P.length?'':'disabled'} style="width:100%">נספור?</button></div></div>`);}
 function qvAdd(i){const total=Object.values(VS.counts).reduce((a,b)=>a+b,0);if(total>=P.length)return;VS.counts[i]++;SND.play('vote');vib(30);qvUpd();}
 function qvSub(i){if(VS.counts[i]>0)VS.counts[i]--;qvUpd();}
 function qvUpd(){const total=Object.values(VS.counts).reduce((a,b)=>a+b,0);P.forEach((_,i)=>{const el=document.getElementById('qvc'+i);if(el)el.textContent=VS.counts[i];const item=document.getElementById('qvi'+i);if(item)item.classList.toggle('has',VS.counts[i]>0);});const tel=document.getElementById('qvtotal');if(tel)tel.textContent=total+'/'+P.length+' קולות';const btn=document.getElementById('qvDone');if(btn)btn.disabled=total!==P.length;}
@@ -1497,7 +1553,7 @@ gc(`<div class="pass" onclick="this.querySelector('.verdict-full').style.display
 <div style="font-size:.68rem;color:var(--t3);font-style:italic;margin:4px 0">${v.quip}</div>
 </div>
 ${scoringHTML}
-<div style="font-size:.6rem;color:var(--t3);margin:8px 0">רוצים לדבר על זה? קחו רגע.</div><div class="ptag">+${1*VS.mult} ל${P[w].name}</div>
+<div style="font-size:.68rem;color:var(--t2);margin:8px 0;font-style:italic">${hostPrompt('vote')}</div><div class="ptag">+${1*VS.mult} ל${P[w].name}</div>
 <div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);
 ptPop(P[w].color,'+'+(1*VS.mult));updateSB();scorePop(w);trackStreak(w);SND.play('reveal');
 },400);
@@ -1506,15 +1562,15 @@ ptPop(P[w].color,'+'+(1*VS.mult));updateSB();scorePop(w);trackStreak(w);SND.play
 // ===== HOTSEAT =====
 function showHS(pi,sp,mult){const q=nx(pools['hs_'+pk()],idx['hs_'+pk()]++);const p=P[pi],pts=2*mult;
 const firstTime=!seenTypes['hotseat'];seenTypes['hotseat']=true;
-const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('flame',16,'var(--coral)')} כיסא חם</div><div class="explain-text">שאלה אישית. ענו בקול!<br>עניתם? קבלו ${pts} נקודות. לא בא לכם? אפשר להחליף שאלה.</div></div>`:'';
+const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('flame',16,'var(--coral)')} כיסא חם</div><div class="explain-text">שאלה ישירה. ענה בכנות — או החלף.<br>הבית שומע. ${pts} נקודות למי שמשתף.</div></div>`:'';
 gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,52)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">עכשיו עליך!</div></div></div>
 ${sp}${explain}
 <div class="rc bg-hotseat"><div class="rc-bar" style="background:var(--coral)"></div><div class="rc-glow" style="background:var(--coral)"></div>
 <div class="rc-icon">${ic('flame',36,'var(--coral)')}</div>
 <div class="cq">${q.q}</div>
-<button class="quote-btn" onclick="openQuote()">${ic('chat',12,'var(--gold)')} ציטוט!</button>
-<div class="acts"><button class="ab ab-g" style="width:100%" onclick="hsAnswer(${pi},${pts})">עניתי! (+${pts})</button>
-<div style="display:flex;gap:8px;margin-top:6px;justify-content:center"><button class="ab ab-m" style="font-size:.72rem" onclick="hsSwap(${pi},${mult})">שאלה אחרת</button><button class="ab ab-m" style="font-size:.72rem" onclick="try{gtag('event','round_skip',{round_type:'hotseat',round_number:gS.rounds});}catch(e){}advance()">דלג</button></div></div></div>`);}
+<button class="quote-btn" onclick="openQuote()">${ic('chat',12,'var(--gold)')} שמרו רגע</button>
+<div class="acts"><button class="ab ab-g" style="width:100%" onclick="hsAnswer(${pi},${pts})">שיתפתי. הלאה. (+${pts})</button>
+<div style="display:flex;gap:8px;margin-top:6px;justify-content:center"><button class="ab ab-m" style="font-size:.72rem" onclick="hsSwap(${pi},${mult})">לא? תנו אחרת</button><button class="ab ab-m" style="font-size:.72rem" onclick="try{gtag('event','round_skip',{round_type:'hotseat',round_number:gS.rounds});}catch(e){}advance()">עוברים</button></div></div></div>`);}
 function hsAnswer(pi,pts){scores[pi]+=pts;ptPop(P[pi].color,'+'+pts);updateSB();scorePop(pi);trackStreak(pi);advance();}
 function hsSwap(pi,mult){// Get another question
 const q=nx(pools['hs_'+pk()],idx['hs_'+pk()]++);const p=P[pi],pts=2*mult;
@@ -1531,7 +1587,7 @@ const q=nx(pools['rv_'+pk()],idx['rv_'+pk()]++);
 const qText=q.q.replace(/%1/g,P[pi].name).replace(/%2/g,P[pi2].name);
 const isHeart=q.type==='heart'||q.type==='deep';
 const firstTime=!seenTypes['reveal'];seenTypes['reveal']=true;
-const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('heart',16,'var(--rose)')} גלה/י</div><div class="explain-text">רגע מיוחד בין שני שחקנים!<br>עשו מה שכתוב — אין ניקוד, רק חוויה.</div></div>`:'';
+const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('heart',16,'var(--rose)')} גלה/י</div><div class="explain-text">רגע של שני אנשים. עשו מה שכתוב.<br>אין תחרות פה — רק חיבור.</div></div>`:'';
 gc(`${explain}${sp}
 <div class="rc bg-reveal"><div class="rc-bar" style="background:var(--rose)"></div><div class="rc-glow" style="background:var(--rose)"></div>
 <div style="display:flex;justify-content:center;gap:16px;margin-bottom:8px">
@@ -1540,14 +1596,14 @@ gc(`${explain}${sp}
 <div style="text-align:center"><div class="who-av" style="border-color:${P[pi2].color};width:52px;height:52px">${gAv(pi2,52)}</div><div style="font-size:.72rem;font-weight:700;color:${P[pi2].color};margin-top:4px">${P[pi2].name}</div></div>
 </div>
 <div class="cq">${qText}</div>
-<button class="quote-btn" onclick="openQuote()">${ic('chat',12,'var(--gold)')} ציטוט!</button>
-<div class="acts"><button class="ab ab-g" style="width:100%" onclick="scores[${pi}]++;ptPop(P[${pi}].color,'+1');updateSB();${isHeart?`showBreathe(${pi})`:`advance()`}">${isHeart?'אמרנו! המשך':'עשינו! המשך'} → (+1)</button></div></div>`);}
+<button class="quote-btn" onclick="openQuote()">${ic('chat',12,'var(--gold)')} שמרו רגע</button>
+<div class="acts"><button class="ab ab-g" style="width:100%" onclick="scores[${pi}]++;ptPop(P[${pi}].color,'+1');updateSB();${isHeart?`showBreathe(${pi})`:`advance()`}">${isHeart?'היה רגע':'עשינו'} (+1)</button></div></div>`);}
 
 // Breathe moment
 function showBreathe(pi){
 gc(`<div class="breathe"><div class="breathe-heart">${ic('heart',48,'var(--rose)')}</div>
 <div style="font-size:.95rem;font-weight:700;margin:12px 0">רגע...</div>
-<div style="font-size:.78rem;color:var(--t2)">מישהו רוצה להוסיף משהו?<br>קחו את הזמן.</div>
+<div style="font-size:.78rem;color:var(--t2)">${hostPrompt('reveal')}</div>
 <div class="acts" style="margin-top:20px"><button class="ab ab-g" style="width:100%;max-width:250px" onclick="scores[${pi}]++;ptPop(P[${pi}].color,'+1');updateSB();advance()">המשך כשמוכנים →</button></div></div>`);}
 
 // ===== MISSION =====
@@ -1555,7 +1611,7 @@ let MS={};
 function showMSN(pi,sp,mult,ev){const m=nx(pools['mi_'+pk()],idx['mi_'+pk()]++);MS={pi,d:0,mult};
 const p=P[pi];
 const firstTime=!seenTypes['mission'];seenTypes['mission']=true;
-const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('target',16,'var(--peach)')} משימה</div><div class="explain-text">בחרו אתגר! יותר קשה = יותר נקודות.<br>${p.name} ${g(pi,'מבצע','מבצעת')}, כולם שופטים!</div></div>`:'';
+const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('target',16,'var(--peach)')} משימה</div><div class="explain-text">שלוש רמות. בחרו חכם.<br>${p.name} ${g(pi,'מבצע','מבצעת')}, כולם שופטים!</div></div>`:'';
 let opts='<div class="mopts">';m.o.forEach((o,i)=>{const t=o.t.replace(/%2/g,ev.pi2!==undefined?P[ev.pi2].name:P[(pi+1)%P.length].name);opts+=`<div class="mopt" onclick="mPick(this,${o.d})"><span class="mopt-s">${'⭐'.repeat(o.d)} +${o.d*mult}</span><span>${t}</span></div>`;});opts+='</div>';
 gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,52)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">משימה!</div></div></div>
 ${sp}${explain}
@@ -1573,14 +1629,14 @@ gc(`<div class="pass"><div>${ic('sparkle',40,'var(--peach)')}</div><div class="p
 let AS={};
 function startAlias(pi,sp,mult){const p=P[pi];AS={pi,mult};
 const firstTime=!seenTypes['alias'];seenTypes['alias']=true;
-const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('chat',16,'var(--teal)')} אליאס</div><div class="explain-text">מופיעה מילה על המסך.<br><b>הסבירו אותה בלי להגיד את המילה!</b><br>השאר מנחשים. 30 שניות, עד ${ACAP} נקודות.</div></div>`:'';
+const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('chat',16,'var(--teal)')} אליאס</div><div class="explain-text">מילה על המסך. תסביר בלי להגיד אותה.<br>השאר מנחשים. 30 שניות — מי שמהיר, מרוויח.</div></div>`:'';
 gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,52)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">${g(pi,'מסביר','מסבירה')} מילים!</div></div></div>
 ${sp}${explain}
 <div class="rc bg-alias"><div class="rc-bar" style="background:var(--teal)"></div><div class="rc-glow" style="background:var(--teal)"></div>
 <div class="rc-icon">${ic('chat',36,'var(--teal)')}</div>
-<div class="csub">30 שניות • עד ${ACAP} נקודות${mult>1?' (×'+mult+')':''}</div>
+<div class="csub">${phaseTimer()} שניות • עד ${ACAP} נקודות${mult>1?' (×'+mult+')':''}</div>
 <div class="acts"><button class="ab" style="background:var(--teal);width:100%" onclick="aGo(${pi})">${g(pi,'מוכן','מוכנה')}! מתחילים</button></div></div>`);}
-function aGo(pi){AS={...AS,score:0,time:30,total:30,words:[]};showAW(pi);AS.tmr=setInterval(()=>{AS.time--;SND.play('tick');updateCircle('at','ab',AS.time,AS.total,'var(--teal)');if(AS.time<=0){clearInterval(AS.tmr);vib(300);SND.play('buzz');aEnd();}},1000);}
+function aGo(pi){const pt=phaseTimer();AS={...AS,score:0,time:pt,total:pt,words:[]};showAW(pi);AS.tmr=setInterval(()=>{AS.time--;SND.play('tick');updateCircle('at','ab',AS.time,AS.total,'var(--teal)');if(AS.time<=0){clearInterval(AS.tmr);vib(300);SND.play('buzz');aEnd();}},1000);}
 function showAW(pi){if(AS.score>=ACAP){clearInterval(AS.tmr);aEnd();return;}const w=nx(pools['al_'+pk()],idx['al_'+pk()]++);AS.cw=w;
 gc(`<div class="rc bg-alias"><div class="rc-bar" style="background:var(--teal)"></div>
 ${circleTimer('at',AS.time,AS.total,'var(--teal)')}
@@ -1594,9 +1650,9 @@ gc(`<div class="pass"><div style="font-size:2.5rem;font-weight:900;color:var(--g
 
 // ===== DRAW =====
 let DS={};
-function startDraw(pi,sp,mult){const p=P[pi];const w=nx(pools['dr_'+pk()],idx['dr_'+pk()]++);DS={pi,word:w,time:30,total:30,mult};
+function startDraw(pi,sp,mult){const p=P[pi];const w=nx(pools['dr_'+pk()],idx['dr_'+pk()]++);const pt=phaseTimer();DS={pi,word:w,time:pt,total:pt,mult};
 const firstTime=!seenTypes['draw'];seenTypes['draw']=true;
-const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('brush',16,'var(--sky)')} ציור</div><div class="explain-text">מופיעה מילה. ציירו אותה!<br><b>אל תדברו — השאר מנחשים!</b><br>30 שניות. ניחשו = ${3*mult} נקודות.</div></div>`:'';
+const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('brush',16,'var(--sky)')} ציור</div><div class="explain-text">קיבלת מילה. תצייר — בלי מילים, בלי רמזים.<br>השאר מנחשים. 30 שניות.</div></div>`:'';
 gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,52)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">${g(pi,'מצייר','מציירת')}!</div></div></div>
 ${sp}${explain}
 <div class="rc bg-draw"><div class="rc-bar" style="background:var(--sky)"></div>
@@ -1632,7 +1688,7 @@ gc(`<div class="pass"><div>${ok?ic('star',40,'var(--teal)'):ic('x',40,'var(--cor
 // ===== RAPID =====
 function showRapid(pi,sp,mult){const q=nx(pools.ra,idx.ra++);const p=P[pi];let tl=q.t;const pts=3*mult;
 const firstTime=!seenTypes['rapid'];seenTypes['rapid']=true;
-const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('bolt',16,'var(--gold)')} ברק</div><div class="explain-text">אמרו כמה שיותר תשובות<br>לפני שהזמן נגמר!</div></div>`:'';
+const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('bolt',16,'var(--gold)')} ברק</div><div class="explain-text">השעון רץ. תגידו כמה שיותר תשובות.<br>מי שמדבר מהר — מנצח.</div></div>`:'';
 gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,52)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">שאלת ברק!</div></div></div>
 ${sp}${explain}
 <div class="rc bg-rapid"><div class="rc-bar" style="background:var(--gold)"></div><div class="rc-glow" style="background:var(--gold)"></div>
@@ -1647,14 +1703,14 @@ function rEnd(pi,pts,ok){if(tmrId){clearInterval(tmrId);tmrId=null;}if(ok){score
 let DL={};
 function showDil(pi,sp,mult){const q=nx(pools.di,idx.di++);DL={pi,q,voters:P.map((_,i)=>i),cur:0,picks:{},mult};
 const firstTime=!seenTypes['dilemma'];seenTypes['dilemma']=true;
-const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('scale',16,'var(--sky)')} מה עדיף?</div><div class="explain-text">מה עדיף? כולם בוחרים!<br>בסוף רואים את התוצאות!</div></div>`:'';
+const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('scale',16,'var(--sky)')} מה עדיף?</div><div class="explain-text">שתי אפשרויות. תבחרו צד.<br>אין תשובה נכונה — רק דעות.</div></div>`:'';
 gc(`<div class="who" style="border-color:${P[pi].color}"><div class="who-av" style="border-color:${P[pi].color}">${gAv(pi,52)}</div><div class="who-info"><div class="who-name" style="color:${P[pi].color}">${P[pi].name}</div><div class="who-role">${g(pi,'קורא','קוראת')} את הדילמה</div></div></div>
 ${sp}${explain}
 <div class="rc bg-dilemma"><div class="rc-bar" style="background:var(--sky)"></div>
 <div class="rc-icon">${ic('scale',36,'var(--sky)')}</div>
 <div class="cq">${q.q}</div>
 <div class="csub">${P[pi].name} — ${g(pi,'תקרא','תקראי')} בקול, ואז כל אחד מצביע!</div>
-<div class="acts"><button class="ab ab-g" style="width:100%" onclick="dlNext()">קראתי! מתחילים</button></div></div>`);}
+<div class="acts"><button class="ab ab-g" style="width:100%" onclick="dlNext()">יאללה, מצביעים</button></div></div>`);}
 function dlNext(){const ds=DL;if(ds.cur>=ds.voters.length){dlReveal();return;}const vi=ds.voters[ds.cur],v=P[vi];
 gc(`<div class="handoff"><div class="handoff-av" style="border-color:${v.color}">${gAv(vi,80)}</div>
 <div class="handoff-name" style="color:${v.color}">${v.name}, תורך!</div>
@@ -1672,20 +1728,28 @@ else dlReveal();}
 function dlReveal(){const ds=DL;let cA=0,cB=0;for(const k in ds.picks)ds.picks[k]==='a'?cA++:cB++;const tot=cA+cB;const pA=tot?Math.round(cA/tot*100):50;const pts=1*ds.mult;scores[ds.pi]+=pts;ptPop(P[ds.pi].color,'+'+pts);updateSB();SND.play('pop');
 gc(`<div class="rc bg-dilemma"><div class="rc-bar" style="background:var(--sky)"></div>
 <div style="font-size:.88rem;font-weight:800;margin-bottom:8px">${ic('sparkle',16,'var(--sky)')} תוצאות!</div><div class="csub">${ds.q.q}</div>
-<div class="dilbar"><div class="dil-a" style="width:${pA}%">${ds.q.a} ${pA}%</div><div class="dil-b" style="width:${100-pA}%">${ds.q.b} ${100-pA}%</div></div>
+<div class="dilbar"><div class="dil-a" style="width:${pA}%">${ds.q.a} ${dilLabel(cA,tot)}</div><div class="dil-b" style="width:${100-pA}%">${ds.q.b} ${dilLabel(cB,tot)}</div></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--t2);margin:6px 0">${dilVerdict(cA,cB,tot)}</div>
+<div style="font-size:.68rem;color:var(--t2);margin:4px 0;font-style:italic">${hostPrompt('dilemma')}</div>
 </div><div class="ptag">+${pts} ל${P[ds.pi].name}</div>
 <div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);}
 
+function dilLabel(count,total){if(total<=2)return count>0?'✓':'';if(count===total)return 'כולם!';if(count===0)return '—';if(count===1)return 'יחיד';return count+' מתוך '+total;}
+function dilVerdict(cA,cB,total){if(cA===cB){const s=["המשפחה חלוקה בדיוק!","תיקו מושלם. מי ישבור?","חצי כאן, חצי שם. אין מנצח."];return s[Math.floor(Math.random()*s.length)];}
+const winner=cA>cB?cA:cB;const r=winner/total;
+if(r>=0.8){const s=["כמעט פה אחד.","הרוב המוחלט דיבר.","בלי ויכוח."];return s[Math.floor(Math.random()*s.length)];}
+if(r>=0.6){const s=["רוב קטן, אבל רוב.","היו חילוקי דעות — אבל הכריעו.","לא כולם מסכימים, וזה בסדר."];return s[Math.floor(Math.random()*s.length)];}
+const s=["כמעט שווה. הויכוח רק מתחיל.","הפער קטן — מי ישכנע את מי?","מתח עד הסוף."];return s[Math.floor(Math.random()*s.length)];}
 // ===== FAMTALK =====
 function showFT(pi,sp,mult){const q=nx(pools['ft_'+pk()],idx['ft_'+pk()]++);const p=P[pi],pts=1*mult;
 const firstTime=!seenTypes['famtalk'];seenTypes['famtalk']=true;
-const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('people',16,'var(--mint)')} שיחת משפחה</div><div class="explain-text">שאלה לכולם!<br>${p.name} ${g(pi,'קורא','קוראת')} ומתחיל/ה. כולם מצטרפים!</div></div>`:'';
+const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('people',16,'var(--mint)')} שיחת משפחה</div><div class="explain-text">שיחה שצריכה לקרות.<br>${p.name} פותח, כולם מצטרפים. דברו מהלב.</div></div>`:'';
 gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,52)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">${g(pi,'פותח','פותחת')} שיחה!</div></div></div>
 ${sp}${explain}
 <div class="rc bg-famtalk"><div class="rc-bar" style="background:var(--mint)"></div><div class="rc-glow" style="background:var(--mint)"></div>
 <div class="rc-icon">${ic('people',36,'var(--mint)')}</div>
 <div class="cq">${q.q}</div>
-<div class="acts"><button class="ab ab-g" style="width:100%" onclick="scores[${pi}]+=${pts};ptPop('${p.color}','+${pts}');updateSB();advance()">דיברנו! המשך → (+${pts})</button></div></div>`);}
+<div class="acts"><button class="ab ab-g" style="width:100%" onclick="scores[${pi}]+=${pts};ptPop('${p.color}','+${pts}');updateSB();advance()">סגרנו נושא (+${pts})</button></div></div>`);}
 
 // ===== PHASE INTRO — dramatic =====
 function showPI(phase){const ov=document.getElementById('overlay');SND.play('tada');phasesSeen++;
@@ -1701,12 +1765,23 @@ ov.innerHTML=`<div class="phase-bg" style="background:radial-gradient(circle at 
 <div class="phase-title-reveal" style="color:${PH_C[phase]}">שלב ${phase+1}: ${PH_N[phase]}</div>
 <div class="phase-sub-reveal">${PH_D[phase]}</div>${sumHTML}
 ${phase===2?'<div class="phase-sub-reveal" style="animation-delay:.8s;color:var(--gold);font-weight:700;font-size:.78rem">שאלת זהב מחכה!</div>':''}
+${PH_TEASER[phase]?'<div class="phase-sub-reveal" style="animation-delay:.85s;color:var(--t2);font-size:.72rem;font-style:italic">'+PH_TEASER[phase]+'</div>':''}
 <button class="ov-b" style="background:${PH_C[phase]};animation:phaseSubIn .5s ease both;animation-delay:.9s;opacity:0;margin-top:8px" onclick="closeOv();advanceEvent()">יאללה!</button></div>`;
 spawnParticles(document.getElementById('phaseParticles'),PH_C[phase],15);}
 if(phasesSeen<=1){ov.innerHTML=`<div class="phase-bg" style="background:radial-gradient(circle at 50% 40%,${PH_C[phase]}15,var(--bg))"><div class="phase-num" style="color:${PH_C[phase]}">${phase+1}</div><div class="phase-count" style="color:${PH_C[phase]}">3</div></div>`;ov.classList.add('on');
 let c=3;const ci=setInterval(()=>{c--;if(c>0){const el=ov.querySelector('.phase-count');if(el)el.textContent=c;SND.play('tick');}
 else{clearInterval(ci);showPhaseContent();}},600);}
 else{ov.classList.add('on');showPhaseContent();}}
+
+// ===== SOCIAL MOMENT — group bonding check-in =====
+const SOCIAL_QS=["מי גרם לכם הכי הרבה לצחוק עד עכשיו?","כולם אומרים מילה אחת שמתארת את הערב.","מי הפתיע אתכם הערב?","מה הרגע הכי טוב עד עכשיו?","מי פה הכי שקט? תנו לו רגע."];
+function showSocialMoment(){const ov=document.getElementById('overlay');const q=SOCIAL_QS[Math.floor(Math.random()*SOCIAL_QS.length)];SND.play('reveal');
+ov.innerHTML=`<div style="animation:popIn .5s ease">${ic('heart',48,'var(--rose)')}</div>
+<div style="font-size:1.1rem;font-weight:900;color:var(--rose);margin:8px 0">רגע משפחתי</div>
+<div style="font-size:.88rem;color:var(--text);max-width:280px;line-height:1.6;font-weight:700">${q}</div>
+<div style="font-size:.68rem;color:var(--t2);margin:8px 0">בלי נקודות. בלי תחרות. רק אתם.</div>
+<button class="ov-b" style="background:var(--rose);margin-top:12px" onclick="closeOv();advanceEvent()">המשך</button>`;
+ov.classList.add('on');}
 
 // ===== FAMILY CHALLENGE =====
 function showFC(ci){const phase=cPhase();const ch=nx(pools.fc,idx.fc++);let tl=ch.t;const ov=document.getElementById('overlay');
@@ -1721,13 +1796,18 @@ function fcR(ok){if(tmrId){clearInterval(tmrId);tmrId=null;}if(ok){P.forEach((_,
 let bqi=0;
 function showBQ(){bqi=0;showBQP();}
 function showBQP(){if(bqi>=P.length){closeOv();show('scrFin');buildFin();return;}const p=P[bqi];const ov=document.getElementById('overlay');
-ov.innerHTML=`<div style="animation:popIn .5s ease">${ic('heart',56,'var(--rose)')}</div><div class="ov-t" style="color:${p.color}">${p.name}</div><div class="ov-s" style="font-size:1.05rem;font-weight:700">הדבר הכי טוב במשפחה שלנו הוא...</div><div style="font-size:.72rem;color:var(--t2)">אמרו בקול!</div><button class="ov-b" style="background:${p.color}" onclick="bqi++;showBQP()">הבא ▶</button>`;ov.classList.add('on');}
+SND.play('reveal');
+ov.innerHTML=`<div class="breathe-heart" style="animation:heartbeat 1.5s ease infinite">${ic('heart',56,'var(--rose)')}</div>
+<div class="ov-t" style="color:${p.color};animation:phaseTitleIn .6s ease both;animation-delay:.3s;opacity:0">${p.name}</div>
+<div class="ov-s" style="font-size:1.1rem;font-weight:700;animation:phaseSubIn .5s ease both;animation-delay:.6s;opacity:0">הדבר הכי טוב במשפחה שלנו הוא...</div>
+<div style="font-size:.75rem;color:var(--t2);animation:phaseSubIn .5s ease both;animation-delay:.9s;opacity:0">קחו את הזמן. אמרו בקול.</div>
+<button class="ov-b" style="background:${p.color};animation:phaseSubIn .5s ease both;animation-delay:1.2s;opacity:0" onclick="bqi++;showBQP()">הבא ▶</button>`;ov.classList.add('on');}
 
 // ===== ADVANCE =====
 
 function trackStreak(pi){if(lastScorer===pi){streaks[pi]=(streaks[pi]||0)+1;}else{streaks[pi]=1;lastScorer=pi;}if(streaks[pi]>=3){const d=document.createElement('div');d.className='streak-badge';d.textContent=P[pi].name+' על גל! '+streaks[pi]+' ברצף!';document.body.appendChild(d);setTimeout(()=>d.remove(),3000);}}
 
-function openQuote(){const m=document.createElement('div');m.className='quote-modal';m.id='quoteM';m.innerHTML=`<div>${ic('chat',28,'var(--gold)')}</div><div style="font-weight:700">מה נאמר?</div><input class="quote-input" id="quoteI" placeholder="הכניסו ציטוט..." maxlength="80"><div style="display:flex;gap:8px"><button class="ab ab-g" onclick="saveQuote()">שמור</button><button class="ab ab-m" onclick="document.getElementById('quoteM').remove()">ביטול</button></div>`;document.body.appendChild(m);document.getElementById('quoteI').focus();}
+function openQuote(){const m=document.createElement('div');m.className='quote-modal';m.id='quoteM';m.innerHTML=`<div>${ic('chat',28,'var(--gold)')}</div><div style="font-weight:700">נפל פה משפט</div><input class="quote-input" id="quoteI" placeholder="רשמו מה נאמר..." maxlength="80"><div style="display:flex;gap:8px"><button class="ab ab-g" onclick="saveQuote()">שמור</button><button class="ab ab-m" onclick="document.getElementById('quoteM').remove()">ביטול</button></div>`;document.body.appendChild(m);document.getElementById('quoteI').focus();}
 function saveQuote(){const t=document.getElementById('quoteI').value.trim();if(t){gS.quotes.push({text:t,round:gS.rounds,player:P[events[curE]?.pi||0].name});SND.play('pop');}document.getElementById('quoteM').remove();}
 
 function undoVote(){if(VS.cur>0){VS.cur--;delete VS.picks[VS.lastVi];vNext();}}
@@ -1796,6 +1876,7 @@ gc(`<div class="pass">
 <div style="font-size:1.2rem;font-weight:900;color:${P[pi].color};margin:8px 0">${choice.val}</div>
 <div style="font-size:.72rem;color:var(--t2);margin:4px 0">${correctCount>0?correctCount+' מתוך '+(P.length-1)+' ניחשו נכון!':'אף אחד לא ניחש!'}</div>
 ${correctHTML}
+<div style="font-size:.68rem;color:var(--t2);margin:8px 0;font-style:italic">${hostPrompt('general')}</div>
 <div class="acts" style="margin-top:10px"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);
 updateSB();}
 
@@ -1868,7 +1949,7 @@ gc(`<div class="pass">
 <div style="text-align:center"><div class="who-av" style="border-color:${P[b.pi2].color};width:52px;height:52px">${gAv(b.pi2,52)}</div><div style="font-size:.72rem;font-weight:700;color:${P[b.pi2].color};margin-top:4px">${P[b.pi2].name}</div><div style="font-size:.8rem;font-weight:800;color:var(--gold)">${b.a2.val||'(בקול)'}</div></div>
 </div>
 ${match?'<div style="font-size:.65rem;color:var(--teal)">+1 לשניכם!</div>':''}
-<div style="font-size:.68rem;color:var(--t3);margin:8px 0;font-style:italic">רוצים לדבר על זה? קחו רגע.</div>
+<div style="font-size:.68rem;color:var(--t2);margin:8px 0;font-style:italic">${hostPrompt('blind')}</div>
 <div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);
 if(match){scores[b.pi]=(scores[b.pi]||0)+1;scores[b.pi2]=(scores[b.pi2]||0)+1;updateSB();}}
 
@@ -1889,7 +1970,7 @@ gc(`<div class="pass">
 <div class="cq" style="font-size:1.1rem">מה לדעתכם ${P[pi].name} היה משלים?</div>
 <div style="font-size:.82rem;color:var(--t2);margin:6px 0">"${sentence}"</div>
 <div class="csub">כל אחד אומר בקול — ${g(pi,'הוא','היא')} שומע!</div>
-<div style="font-size:.68rem;color:var(--t3);margin:12px 0;font-style:italic">קחו את הזמן. אין ניקוד — רק רגע.</div>
+<div style="font-size:.68rem;color:var(--t2);margin:12px 0;font-style:italic">${hostPrompt('sentence')}</div>
 <div class="acts"><button class="ab ab-g" onclick="scores[${pi}]++;ptPop(P[${pi}].color,'+1');updateSB();advance()">המשך (+1)</button></div></div>`);}
 
 // ===== MIC ROUND — "האמת יוצאת לאור" =====
@@ -2115,6 +2196,7 @@ gc(`<div class="pass">
 <div style="font-size:.75rem;color:var(--text);margin:8px 0;line-height:1.6">${analysis.comment}</div>
 <div style="font-size:.72rem;color:var(--gold);font-style:italic;margin:6px 0">"${analysis.funnyLine}"</div>
 </div>
+<div style="font-size:.72rem;font-weight:700;color:var(--t2);margin:6px 0">${pct>=70?convinced+' מתוך '+total+' השתכנעו. כמעט פה אחד.':pct>=50?convinced+' מתוך '+total+' השתכנעו. רוב שקט.':pct>=30?'רק '+convinced+' מתוך '+total+' השתכנעו. עוד עבודה.':''+convinced+' מתוך '+total+'. קשה לשכנע את המשפחה הזאת.'}</div>
 <div style="display:flex;gap:8px;justify-content:center;margin:6px 0">
 <div class="ai-badge" style="color:var(--teal)">👍 ${convinced}</div>
 <div class="ai-badge" style="color:var(--coral)">👎 ${total-convinced}</div>
@@ -2234,7 +2316,7 @@ function buildFin(){SND.play('tada');
 const sorted=P.map((p,i)=>({...p,i,s:scores[i]||0})).sort((a,b)=>b.s-a.s);const mc=['#ffc73a','#c0c0c0','#cd7f32'];const hs=[140,110,80];const order=sorted.length>=3?[sorted[1],sorted[0],sorted[2]]:sorted.slice(0,3);const ho=sorted.length>=3?[hs[1],hs[0],hs[2]]:hs;
 const dur=Math.round((Date.now()-gS.t0)/1000);const mins=Math.floor(dur/60),secs=dur%60;
 try{gtag('event','game_complete',{player_count:P.length,total_rounds:gS.rounds,duration_seconds:dur,age_group:ageGroup,winner_score:Math.max(...P.map((_,i)=>scores[i]||0))});}catch(e){}
-let h=`<div class="crown">${ic('crown',56,'var(--gold)')}</div><div class="fin-t">תוצאות סופיות!</div><div class="podium">`;
+let h=`<div class="crown">${ic('crown',56,'var(--gold)')}</div><div class="fin-t">מי רוצה לדעת מי ניצח?</div><div class="podium">`;
 order.forEach((p,di)=>{const rank=sorted.indexOf(p);h+=`<div class="pod"><div class="pod-m" style="background:${mc[rank]||'#666'}">${rank+1}</div><div class="pod-av" style="border-color:${p.color}">${gAv(p.i,42)}</div><div class="pod-bar" id="pb${di}" style="background:${p.color}12;border:2px solid ${p.color};height:0;color:${p.color}">${p.s}</div><div class="pod-n" style="color:${p.color}">${p.name}</div><div class="pod-p">${p.s} נק׳</div></div>`;});h+='</div>';
 h+='<div class="sgrid">';h+=`<div class="sc"><div class="sc-v" style="color:var(--gold)">${gS.rounds}</div><div class="sc-l">סיבובים</div></div>`;h+=`<div class="sc"><div class="sc-v" style="color:var(--teal)">${mins}:${secs.toString().padStart(2,'0')}</div><div class="sc-l">זמן משחק</div></div>`;
 let ba=-1,bn=0;P.forEach((_,i)=>{if((gS.aliasW[i]||0)>bn){bn=gS.aliasW[i];ba=i;}});
@@ -2244,18 +2326,19 @@ if(mv>=0)h+=`<div class="sc"><div class="sc-v" style="color:${P[mv].color}">${P[
 // Titles
 const aw={};P.forEach((_,i)=>aw[i]=[]);voteLog.forEach(v=>{aw[v.winner].push(v.title);});
 const defaultTitles=['הכוכב העולה','רוח קרירה','הצופה החכם/ה','לב זהב','הנשמה הטובה','שחקן/ית הצללים','המסתורי/ת','חבר/ת הנשמה'];
-h+='<div style="width:100%;max-width:360px;font-size:.72rem;font-weight:700;text-align:center;color:var(--t2);margin:6px 0">תוארות</div>';
+h+='<div class="fin-section"><div class="fin-section-t">תוארות</div>';
 P.forEach((p,i)=>{const titles=aw[i].length>0?aw[i].map(t=>'⭐ '+t).join(' '):'⭐ '+defaultTitles[i%defaultTitles.length];
 h+=`<div class="tc"><div class="tc-av">${gAv(i,28)}</div><div style="flex:1;text-align:right"><div style="font-size:.72rem;font-weight:700;color:${p.color}">${p.name}</div><div style="font-size:.62rem;color:var(--gold)">${titles}</div></div></div>`;});
+h+='</div>';// close fin-section titles
 // Quotes
-if(gS.quotes&&gS.quotes.length>0){h+='<div style="width:100%;max-width:360px;font-size:.72rem;font-weight:700;text-align:center;color:var(--t2);margin:6px 0">ציטוטים מהערב</div>';
-gS.quotes.forEach(q=>{h+=`<div class="tc"><div style="font-size:.62rem;color:var(--gold);flex:1;text-align:right">"${q.text}" <span style="color:var(--t3)">— ${q.player}</span></div></div>`;});}
+if(gS.quotes&&gS.quotes.length>0){h+='<div class="fin-section"><div class="fin-section-t">ציטוטים מהערב</div>';
+gS.quotes.forEach(q=>{h+=`<div class="tc"><div style="font-size:.62rem;color:var(--gold);flex:1;text-align:right">"${q.text}" <span style="color:var(--t3)">— ${q.player}</span></div></div>`;});h+='</div>';}
 // Drawings gallery
-if(gS.drawings.length>0){h+='<div style="width:100%;max-width:360px;font-size:.72rem;font-weight:700;text-align:center;color:var(--t2);margin:6px 0">הציורים שלנו</div><div class="draw-gal">';
-gS.drawings.forEach(d=>{h+=`<div class="draw-gal-item"><img src="${d.img}"></div>`;});h+='</div>';}
+if(gS.drawings.length>0){h+='<div class="fin-section"><div class="fin-section-t">הציורים שלנו</div><div class="draw-gal">';
+gS.drawings.forEach(d=>{h+=`<div class="draw-gal-item"><img src="${d.img}"></div>`;});h+='</div></div>';}
 // Mic round results
 if(gS.micResults&&gS.micResults.length>0){
-h+='<div style="width:100%;max-width:360px;font-size:.72rem;font-weight:700;text-align:center;color:var(--t2);margin:6px 0">על דוכן העדים</div>';
+h+='<div class="fin-section"><div class="fin-section-t">על דוכן העדים</div>';
 // Find best lawyer
 let bestLawyer=gS.micResults.reduce((best,m)=>(!best||m.pct>best.pct)?m:best,null);
 gS.micResults.forEach(m=>{
@@ -2267,7 +2350,7 @@ h+=`<div class="tc"${isLawyer?' style="border-color:var(--gold)"':''}>
 <div style="font-size:.72rem;font-weight:700;color:${P[m.player]?.color||'var(--text)'}">${pName} ${isLawyer?'— עורך הדין של הערב':''}</div>
 <div style="font-size:.6rem;color:var(--t2)">"${m.claim}" — ${m.pct}% השתכנעו | ציון: ${m.analysis?.score||'?'}/10</div>
 </div></div>`;});
-}
+h+='</div>';}// close fin-section mic
 // Buttons
 // Family certificate
 const topQuote=gS.quotes&&gS.quotes.length>0?gS.quotes[0].text:'';
@@ -2279,7 +2362,7 @@ h+=`<div style="display:flex;align-items:center;gap:8px;margin:4px 0"><div style
 if(topQuote)h+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.05);font-size:.68rem;color:var(--t2);font-style:italic">\"'+topQuote+'\"</div>';
 h+='<div style="font-size:.55rem;color:var(--t3);margin-top:8px">השיחה ממשיכה לבד.</div>';
 h+='</div>';
-h+=`<div style="margin:12px 0;text-align:center"><button class="gobtn" onclick="challengeShare()" style="max-width:340px">אתגרו משפחה אחרת!</button></div>`;
+h+=`<div style="margin:12px 0;text-align:center"><button class="gobtn" onclick="challengeShare()" style="max-width:340px">מכירים מישהו שצריך את זה?</button></div>`;
 // AI Commentator placeholder
 h+=`<div class="ai-summary" id="aiSummaryCard">
 <div class="ai-summary-t">פרשן המשפחה</div>
@@ -2294,8 +2377,17 @@ h+=`<div class="fin-btns"><button class="fin-b" style="background:var(--gold)" o
 h+=buildHistoryHTML();
 document.getElementById('finW').innerHTML=h;
 saveHistory();
-order.forEach((p,di)=>{setTimeout(()=>{const el=document.getElementById('pb'+di);if(el)el.style.height=ho[di]+'px';},150+di*200);});
-for(let i=0;i<50;i++)setTimeout(()=>confetti(COL[Math.floor(Math.random()*COL.length)]),i*40);}
+// Staged dramatic podium reveal: 3rd → 2nd → 1st
+const podOrder=sorted.length>=3?[2,0,1]:[0,1];// indices in order[] → 3rd,2nd,1st visual positions
+const delays=[600,1800,3200];// cumulative delays for each reveal
+podOrder.forEach((di,step)=>{setTimeout(()=>{const el=document.getElementById('pb'+di);if(el){el.style.height=ho[di]+'px';el.style.opacity='1';}
+const pod=el?.closest('.pod');if(pod){pod.style.opacity='1';pod.style.transform='translateY(0)';}
+if(step<podOrder.length-1)SND.play('pop');
+if(step===podOrder.length-1){SND.play('tada');for(let i=0;i<60;i++)setTimeout(()=>confetti(COL[Math.floor(Math.random()*COL.length)]),i*35);}
+},delays[step]);});
+// Hide all pods initially for reveal
+document.querySelectorAll('.pod').forEach(p=>{p.style.opacity='0';p.style.transform='translateY(20px)';p.style.transition='opacity .6s ease,transform .6s ease';});
+document.querySelectorAll('.pod-bar').forEach(b=>{b.style.opacity='0';b.style.transition='height 1.2s cubic-bezier(.34,1.4,.64,1),opacity .4s ease';});
 
 // Share with story
 function share(){try{gtag('event','share_results',{player_count:P.length});}catch(e){}
@@ -2459,8 +2551,8 @@ history.pushState(null,null,location.href);});
 
 function shuf(a){for(let i=a.length-1;i>0;i--){const j=0|Math.random()*(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
 function nx(a,i){return a[i%a.length];}
-function confetti(mc){const cs=[mc,'#ffc73a','#ff6b6b','#74c0fc','#63e6be','#b197fc'];const sh=['','cf-c','cf-s'];
-for(let i=0;i<12;i++){const p=document.createElement('div');const s=sh[Math.floor(Math.random()*sh.length)];p.className='cf '+s;const sz=4+Math.random()*6;p.style.cssText=`left:${20+Math.random()*60}%;top:-8px;width:${sz}px;height:${sz*(s==='cf-c'?1:1.4)}px;background:${cs[0|Math.random()*cs.length]};--d:${1.2+Math.random()*1.5}s;--r:${Math.random()*720-360}deg;animation-delay:${Math.random()*.3}s`;document.body.appendChild(p);setTimeout(()=>p.remove(),3500);}}
+function confetti(mc){const cs=[mc,'#ffc73a','#ff6b6b','#74c0fc','#63e6be','#b197fc'];const sh=['','cf-c','cf-s','cf-t'];
+for(let i=0;i<16;i++){const p=document.createElement('div');const s=sh[Math.floor(Math.random()*sh.length)];p.className='cf '+s;const sz=4+Math.random()*7;const wind=(Math.random()-.5)*40;p.style.cssText=`left:${15+Math.random()*70}%;top:-8px;width:${sz}px;height:${sz*(s==='cf-c'?1:1.4)}px;background:${cs[0|Math.random()*cs.length]};--d:${1.4+Math.random()*1.8}s;--r:${Math.random()*720-360}deg;--wx:${wind}px;animation-delay:${Math.random()*.4}s`;document.body.appendChild(p);setTimeout(()=>p.remove(),4000);}}
 
 // ===== THEME (Light/Dark) =====
 function toggleTheme(){const app=document.querySelector('.app');const isLight=app.classList.toggle('light');document.body.classList.toggle('light-body',isLight);document.getElementById('themeB').textContent=isLight?'🌙':'☀';try{localStorage.setItem('mimi_theme',isLight?'light':'dark');}catch(e){}}
