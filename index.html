@@ -1175,7 +1175,7 @@ function toggleHelp(){const m=document.getElementById('helpM');m.classList.toggl
 
 // ===== STATE =====
 let P=[],pCnt=4,scores={},voteLog=[],turnQ={};
-let events=[],curE=0,spinning=false,wA=0,tmrId=null;
+let events=[],curE=0,spinning=false,wA=0,tmrId=null,_advancing=false;
 let pools={},idx={};
 let prevState=null;
 let gS={aliasW:{},drawW:{},rounds:0,t0:0,drawings:[],quotes:[],micResults:[]};
@@ -1307,12 +1307,13 @@ events.push({type:'phase_intro',phase:1});events.push(...mkRounds(perPhase,1));e
 events.push({type:'phase_intro',phase:2});events.push(...mkRounds(perPhase,2));events.push({type:'big_question'});
 scores={};turnQ={};voteLog=[];streaks={};lastScorer=-1;comebackUsed={};phasesSeen=0;prevState=null;gS={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};
 P.forEach((_,i)=>{scores[i]=0;turnQ[i]=0;gS.aliasW[i]=0;gS.drawW[i]=0;});
-// Phase-graded pools
+// Phase-graded pools — with cross-game memory (no repeats across ~3 games)
+const _pp=(()=>{try{const s=localStorage.getItem('mimi_pp');return s?JSON.parse(s):null;}catch(e){return null;}})();
+const _reuse=_pp&&_pp.a===ageGroup;
+function _gp(key,factory){if(_reuse&&_pp.p[key]&&_pp.p[key].length>0&&_pp.i[key]<_pp.p[key].length)return{p:_pp.p[key],i:_pp.i[key]};return{p:factory(),i:0};}
 ['warm','fire','final'].forEach(k=>{
-pools['vt_'+k]=shuf(filterByAge([...VOTE[k]]));pools['hs_'+k]=shuf(filterByAge([...(HOTSEAT[k]||[])]));pools['mi_'+k]=shuf(filterByAge([...(MISSIONS[k]||[])]));pools['ft_'+k]=shuf(filterByAge([...(FAMTALK[k]||[])]));pools['rv_'+k]=shuf(filterByAge([...(REVEAL[k]||[])]));pools['al_'+k]=shuf([...(ALIAS[k]||[])]);pools['dr_'+k]=shuf([...(DRAW[k]||[])]);pools['pd_'+k]=shuf(filterByAge([...(PDILEMMA[k]||[])]));pools['bl_'+k]=shuf(filterByAge([...(BLIND[k]||[])]));});
-pools.sent=shuf([...SENTENCE.final]);
-pools.ra=shuf([...RAPIDS]);pools.di=shuf([...DILEMMAS]);pools.fc=shuf([...FAM_CH]);
-idx={};Object.keys(pools).forEach(k=>idx[k]=0);
+[['vt_'+k,()=>shuf(filterByAge([...VOTE[k]]))],['hs_'+k,()=>shuf(filterByAge([...(HOTSEAT[k]||[])]))],['mi_'+k,()=>shuf(filterByAge([...(MISSIONS[k]||[])]))],['ft_'+k,()=>shuf(filterByAge([...(FAMTALK[k]||[])]))],['rv_'+k,()=>shuf(filterByAge([...(REVEAL[k]||[])]))],['al_'+k,()=>shuf([...(ALIAS[k]||[])])],['dr_'+k,()=>shuf([...(DRAW[k]||[])])],['pd_'+k,()=>shuf(filterByAge([...(PDILEMMA[k]||[])]))],['bl_'+k,()=>shuf(filterByAge([...(BLIND[k]||[])]))]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});});
+[['sent',()=>shuf([...SENTENCE.final])],['ra',()=>shuf([...RAPIDS])],['di',()=>shuf([...DILEMMAS])],['fc',()=>shuf([...FAM_CH])]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});
 curE=0;wA=0;show('scrGame');drawWheel(0);updateSB();updateFP();saveState();
 // Game intro moment
 const ov=document.getElementById('overlay');
@@ -1329,7 +1330,9 @@ function phaseTimer(){const p=cPhase();return p===0?35:p===1?25:40;}
 function phaseMicroBeat(rt){const ri=RT[rt];if(ri)SND.play('pop');vib(20);}
 
 // ===== PROCESS =====
+function _clearTimers(){if(AS.tmr){clearInterval(AS.tmr);AS.tmr=null;}if(DS.tmr){clearInterval(DS.tmr);DS.tmr=null;}if(MIC.tmr){clearInterval(MIC.tmr);MIC.tmr=null;}if(tmrId){clearInterval(tmrId);tmrId=null;}}
 function processEvent(){
+_clearTimers();
 if(curE>=events.length){clearSave();show('scrFin');buildFin();return;}
 const ev=events[curE];document.getElementById('gc').innerHTML='';
 if(ev.type==='phase_intro')showPI(ev.phase);
@@ -2049,6 +2052,7 @@ let timeLeft=15;
 if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
 navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
 MIC.stream=stream;
+try{
 MIC.recorder=new MediaRecorder(stream);
 MIC.chunks=[];
 MIC.recorder.ondataavailable=e=>{if(e.data.size>0)MIC.chunks.push(e.data);};
@@ -2057,6 +2061,7 @@ MIC.audioBlob=new Blob(MIC.chunks,{type:'audio/webm'});
 stream.getTracks().forEach(t=>t.stop());
 };
 MIC.recorder.start();
+}catch(e){MIC.recorder=null;stream.getTracks().forEach(t=>t.stop());}
 }).catch(()=>{MIC.recorder=null;});
 }
 
@@ -2086,7 +2091,7 @@ function stopMicRecording(){
 MIC.recording=false;
 if(MIC.recorder&&MIC.recorder.state==='recording'){
 MIC.recorder.stop();
-}
+}else if(MIC.stream){MIC.stream.getTracks().forEach(t=>t.stop());MIC.stream=null;}
 SND.play('buzz');vib(200);
 // Show family voting
 showMicVoting();
@@ -2220,7 +2225,7 @@ ptPop(p.color,'+'+pts);updateSB();scorePop(pi);trackStreak(pi);
 try{gtag('event','mic_round_complete',{player:p.name,score:analysis.score,convinced_pct:pct});}catch(e){}
 }
 
-function advance(){const ev=events[curE];if(ev?.type==='spin')turnQ[ev.pi]++;advanceEvent();}
+function advance(){if(_advancing)return;_advancing=true;const ev=events[curE];if(ev?.type==='spin')turnQ[ev.pi]++;advanceEvent();setTimeout(()=>_advancing=false,300);}
 function advanceEvent(){prevState={curE,scores:{...scores},voteLog:[...voteLog],turnQ:{...turnQ}};document.getElementById('undoB').disabled=false;
 // Track round analytics
 const prevEv=events[curE];
@@ -2324,7 +2329,8 @@ return h;
 }
 
 // ===== FINISH =====
-function buildFin(){SND.play('tada');
+function savePP(){try{localStorage.setItem('mimi_pp',JSON.stringify({p:pools,i:idx,a:ageGroup}));}catch(e){}}
+function buildFin(){savePP();SND.play('tada');
 const sorted=P.map((p,i)=>({...p,i,s:scores[i]||0})).sort((a,b)=>b.s-a.s);const mc=['#ffc73a','#c0c0c0','#cd7f32'];const hs=[140,110,80];const order=sorted.length>=3?[sorted[1],sorted[0],sorted[2]]:sorted.slice(0,3);const ho=sorted.length>=3?[hs[1],hs[0],hs[2]]:hs;
 const dur=Math.round((Date.now()-gS.t0)/1000);const mins=Math.floor(dur/60),secs=dur%60;
 try{gtag('event','game_complete',{player_count:P.length,total_rounds:gS.rounds,duration_seconds:dur,age_group:ageGroup,winner_score:Math.max(...P.map((_,i)=>scores[i]||0))});}catch(e){}
@@ -2593,7 +2599,7 @@ function goSetup(){clearSave();show('scrSetup');ss1Show();}
 function saveState(){try{localStorage.setItem('mimi',JSON.stringify({P,pCnt,scores,voteLog,turnQ,events,curE,wA,pools,idx,gS,PD}));}catch(e){}}
 function loadState(){try{const s=localStorage.getItem('mimi');return s?JSON.parse(s):null;}catch(e){return null;}}
 function clearSave(){try{localStorage.removeItem('mimi');}catch(e){}}
-function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;wA=st.wA;pools=st.pools;idx=st.idx;gS=st.gS||{aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};PD=st.PD||[];show('scrGame');drawWheel(wA);updateSB();updateFP();document.getElementById('warea').style.display='';processEvent();}
+function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;wA=st.wA;pools=st.pools;idx=st.idx;const dg={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};gS=st.gS?{...dg,...st.gS}:dg;if(!gS.t0)gS.t0=Date.now();PD=st.PD||[];show('scrGame');drawWheel(wA);updateSB();updateFP();document.getElementById('warea').style.display='';processEvent();}
 (function(){const s=loadState();if(s?.P?.length>0&&s.curE<s.events.length){const ov=document.getElementById('overlay');ov.innerHTML=`<div style="font-size:3rem">${ic('dice',40,'var(--gold)')}</div><div class="ov-t" style="color:var(--gold)">יש משחק שמור!</div><div class="ov-s">${s.P.map(p=>p.name).join(', ')}</div><div style="display:flex;gap:8px;margin-top:12px"><button class="ov-b" style="background:var(--teal)" onclick="closeOv();resumeG(loadState())">המשיכו! ▶</button><button class="ov-b" style="background:var(--coral)" onclick="clearSave();closeOv()">חדש 🆕</button></div>`;ov.classList.add('on');}})();
 window.addEventListener('beforeunload',function(e){if(document.getElementById('scrGame')?.classList.contains('on')){e.preventDefault();e.returnValue='';}});
 
@@ -2628,29 +2634,36 @@ function circleTimer(id,time,total,color){const pct=time/total;const r=36;const 
 function updateCircle(timerId,barId,time,total,color){const t=document.getElementById(timerId);if(t){t.textContent=time;if(time<=5)t.classList.add('low');}const r=36;const circ=2*Math.PI*r;const offset=circ*(1-time/total);const circles=document.querySelectorAll('.ctimer-circle');circles.forEach(c=>{if(c.closest('.ctimer')?.querySelector('#'+timerId)){c.style.strokeDashoffset=offset;if(time<=5)c.style.stroke='var(--coral)';}});}
 
 // ===== DONATION =====
-function buildDonateHTML(){return `<div class="donate-card">
-<div style="font-size:1.5rem;margin-bottom:4px">🚀</div>
-<div style="font-size:.95rem;font-weight:800;color:var(--gold)">רוצים עוד ערבים כאלה?</div>
-<div style="font-size:.68rem;color:var(--text);margin:6px 0;line-height:1.7;font-weight:600">כל שקל שתתרמו הופך ישירות ל:<br>שאלות חדשות, סיבובים מפתיעים, ופיצ'רים שיהפכו<br>את הערב הבא לעוד יותר מטורף.</div>
-<div style="font-size:.6rem;color:var(--t2);margin:4px 0">אתם לא תורמים — אתם משקיעים בערב המשפחתי הבא.</div>
+const DONATE_MSGS=[
+{emoji:'🎲',title:'הערב הזה? רק טעימה.',sub:'אנחנו כותבים שאלות חדשות כל שבוע. תרומה שלכם = עוד רגעים שסבא ישפיל את כולם ואמא תתחרט שהסכימה לשחק.'},
+{emoji:'🔥',title:'514 שאלות. עדיין לא נגמר.',sub:'כל שקל הופך לשאלה שעוד לא שמעתם, סיבוב שעוד לא חוויתם, ורגע שהמשפחה תדבר עליו עוד חודשים.'},
+{emoji:'💡',title:'אתם בונים את הערב הבא.',sub:'כל פיצ\'ר שהוספנו — מישהו כמוכם ביקש. אתם לא תורמים, אתם שותפים. וזה נראה על התוצאה.'},
+{emoji:'🎭',title:'הצחוקים בחינם. הפיתוח — לא.',sub:'אפס פרסומות. אפס מנויים. רק משפחה, טלפון, וערב שנזכרים בו. עזרו לנו להמשיך ככה.'},
+{emoji:'🏆',title:'המשפחה שלכם שווה את זה.',sub:'ערב אחד טוב שווה יותר מאלף סטוריז. תנו לנו להפוך את הבא — לבלתי נשכח.'}
+];
+function buildDonateHTML(){const m=DONATE_MSGS[Math.floor(Math.random()*DONATE_MSGS.length)];
+return `<div class="donate-card">
+<div style="font-size:1.5rem;margin-bottom:4px">${m.emoji}</div>
+<div style="font-size:.95rem;font-weight:800;color:var(--gold)">${m.title}</div>
+<div style="font-size:.68rem;color:var(--text);margin:6px 0;line-height:1.7;font-weight:600">${m.sub}</div>
 <div class="donate-tiers">
 <div class="donate-tier" onclick="openDonate('small')">
 <div class="donate-tier-emoji">☕</div>
 <div class="donate-tier-price">5₪</div>
-<div class="donate-tier-desc">קפה קטן<br>שלנו עליכם</div>
+<div class="donate-tier-desc">שאלה חדשה אחת<br>בזכותכם</div>
 </div>
 <div class="donate-tier" onclick="openDonate('medium')">
-<div class="donate-tier-emoji">🎲</div>
+<div class="donate-tier-emoji">🎯</div>
 <div class="donate-tier-price">20₪</div>
-<div class="donate-tier-desc">תמיכה משמעותית<br>בפיתוח המשחק</div>
+<div class="donate-tier-desc">סיבוב שלם חדש<br>על השם שלכם</div>
 </div>
 <div class="donate-tier" onclick="openDonate('large')">
-<div class="donate-tier-emoji">🎪</div>
+<div class="donate-tier-emoji">👑</div>
 <div class="donate-tier-price">50₪</div>
-<div class="donate-tier-desc">שותפים מלאים<br>בהצלחה של מי מי מי?</div>
+<div class="donate-tier-desc">שותף/ה בפיתוח<br>הערב המשפחתי הבא</div>
 </div>
 </div>
-<div class="donate-social">עזרו לנו להמשיך לפתח ערבים משפחתיים מטורפים!</div>
+<div class="donate-social" style="margin-top:10px">100% מגיע ישר לפיתוח. בלי פרסומות. בלי מנויים. רק משחק טוב יותר.</div>
 </div>`;}
 function openDonate(tier){try{gtag('event','donate_click',{tier});}catch(e){}const url='https://buymeacoffee.com/mimimigame';try{window.open(url,'_blank');}catch(e){navigator.clipboard.writeText(url).then(()=>toast('הלינק הועתק!')).catch(()=>{});}}
 

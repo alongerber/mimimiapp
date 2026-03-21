@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mimi-v4';
+const CACHE_NAME = 'mimi-v5';
 const ASSETS = [
   './',
   './index.html',
