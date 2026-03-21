@@ -1199,7 +1199,7 @@ let aiSummaryCache=null;
 // Feedback state
 let fbData={peakMoment:'',energyDip:'',missingFeature:'',nextTime:'',recommend:0,groupType:'',freeText:''};
 // Google Sheets URL for feedback collection (see setup instructions at bottom of file)
-const SHEET_URL='https://script.google.com/macros/s/AKfycbwSzi6hfABHaLcvWf2FdBcwVts9HZZm7MgFxPoen9BN-FwSGbmoLlNj8C3xPSZST-oDAw/exec';
+const SHEET_URL='https://script.google.com/macros/s/AKfycbzYvxRmjeXbD6BzHCBnwnC0dC78E2dA0pueyWRP8x0ZWIAgvCV3lFmXYGVkzQVMH0oO7g/exec';
 let roundStartTime=0;
 function setMode(m){gameLen=m;document.getElementById('mShort').classList.toggle('on',m==='short');document.getElementById('mFull').classList.toggle('on',m==='full');}
 function setVM(m){voteMode=m;document.getElementById('vmPass').classList.toggle('on',m==='pass');document.getElementById('vmOpen').classList.toggle('on',m==='open');document.getElementById('vmDesc').textContent=m==='pass'?'כל אחד מצביע בסתר בטלפון':'כולם מצביעים ביחד';}
