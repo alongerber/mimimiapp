@@ -415,6 +415,53 @@ body.light-body{background:#f5f5f0}
 /* Crown glow */
 .crown svg{filter:drop-shadow(0 2px 12px rgba(255,199,58,.4))}
 
+/* Age range selector */
+.age-grid{display:flex;justify-content:center;gap:6px;margin:8px 0;flex-wrap:wrap}
+.age-btn{padding:8px 14px;border-radius:10px;border:2px solid var(--s3);background:var(--s1);color:var(--t2);font-size:.72rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.25s;display:flex;flex-direction:column;align-items:center;gap:2px}
+.age-btn.on{border-color:var(--teal);color:var(--teal);background:var(--s2);transform:scale(1.05);box-shadow:0 0 12px rgba(56,217,169,.2)}
+.age-btn-emoji{font-size:1.1rem}.age-btn-label{font-size:.6rem;color:var(--t3)}
+.age-btn.on .age-btn-label{color:var(--teal)}
+
+/* Mic round */
+.mic-vis{display:flex;align-items:center;justify-content:center;gap:3px;height:60px;margin:12px 0}
+.mic-bar{width:4px;border-radius:2px;background:var(--coral);animation:micPulse 0.5s ease infinite alternate}
+@keyframes micPulse{from{height:10px;opacity:.4}to{height:40px;opacity:1}}
+.mic-rec{width:80px;height:80px;border-radius:50%;border:4px solid var(--coral);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;margin:10px auto;animation:micGlow 1.5s ease infinite}
+@keyframes micGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,107,107,.4)}50%{box-shadow:0 0 0 16px rgba(255,107,107,0)}}
+.mic-rec.recording{background:var(--coral);animation:micGlow 0.8s ease infinite}
+.mic-timer{font-size:2rem;font-weight:900;color:var(--coral);font-variant-numeric:tabular-nums}
+
+/* AI analysis card */
+.ai-card{background:linear-gradient(135deg,rgba(177,151,252,.08),rgba(255,107,107,.06));border:1.5px solid rgba(177,151,252,.2);border-radius:16px;padding:16px;margin:10px 0;text-align:center}
+.ai-card-t{font-size:.88rem;font-weight:800;color:var(--lav);margin-bottom:8px}
+.ai-badge{display:inline-block;padding:4px 10px;border-radius:8px;font-size:.65rem;font-weight:700;margin:3px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+
+/* Family vote during mic */
+.fam-vote{display:flex;gap:8px;justify-content:center;margin:10px 0}
+.fam-vote-btn{padding:12px 24px;border-radius:14px;border:2px solid;font-size:.85rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.2s;background:var(--s2)}
+.fam-vote-btn:active{transform:scale(.94)}
+.fam-vote-btn.convince{border-color:var(--teal);color:var(--teal)}
+.fam-vote-btn.not-convince{border-color:var(--coral);color:var(--coral)}
+
+/* AI commentator */
+.ai-summary{background:linear-gradient(135deg,var(--s1),var(--s2));border:1.5px solid rgba(177,151,252,.15);border-radius:20px;padding:20px 16px;margin:12px 0;text-align:center;max-width:360px;width:100%}
+.ai-summary-t{font-size:1rem;font-weight:900;color:var(--lav);margin-bottom:10px}
+.ai-summary-item{background:var(--s2);border-radius:12px;padding:10px;margin:6px 0;border:1px solid var(--s3);text-align:right}
+.ai-summary-loading{display:flex;align-items:center;justify-content:center;gap:6px;padding:16px;color:var(--t2);font-size:.75rem}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:var(--lav);animation:aiDot 1.2s ease infinite}
+.ai-dot:nth-child(2){animation-delay:.2s}.ai-dot:nth-child(3){animation-delay:.4s}
+@keyframes aiDot{0%,80%,100%{transform:scale(.5);opacity:.3}40%{transform:scale(1);opacity:1}}
+
+/* Creative feedback */
+.fb-q{background:var(--s2);border-radius:14px;padding:12px;margin:6px 0;border:1px solid var(--s3);text-align:center;cursor:pointer;transition:.2s}
+.fb-q:hover{border-color:var(--lav)}
+.fb-q.selected{border-color:var(--gold);background:rgba(255,199,58,.06)}
+.fb-q-t{font-size:.82rem;font-weight:700;margin-bottom:4px}
+.fb-q-opts{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:6px}
+.fb-chip{padding:5px 10px;border-radius:8px;border:1.5px solid var(--s3);background:var(--s1);color:var(--t2);font-size:.68rem;font-weight:600;cursor:pointer;transition:.2s;font-family:inherit}
+.fb-chip:active{transform:scale(.94)}
+.fb-chip.on{border-color:var(--gold);color:var(--gold);background:rgba(255,199,58,.08)}
+
 </style>
 </head>
 <body>
@@ -456,6 +503,14 @@ body.light-body{background:#f5f5f0}
     </div>
     <div class="st">כמה אתם היום?</div>
     <div class="cgrid" id="cntR"></div>
+    <div class="st" style="margin-top:8px">מי משחק?</div>
+    <div class="ss" style="margin-bottom:4px">בחרו את הגיל של השחקן הצעיר ביותר</div>
+    <div class="age-grid" id="ageR">
+      <button class="age-btn" onclick="setAge('6-9')"><span class="age-btn-emoji">🧒</span>6-9<span class="age-btn-label">ילדים</span></button>
+      <button class="age-btn" onclick="setAge('10-13')"><span class="age-btn-emoji">🎒</span>10-13<span class="age-btn-label">טרום נוער</span></button>
+      <button class="age-btn" onclick="setAge('13-18')"><span class="age-btn-emoji">🎧</span>13-18<span class="age-btn-label">נוער</span></button>
+      <button class="age-btn on" onclick="setAge('18+')"><span class="age-btn-emoji">🎭</span>18+<span class="age-btn-label">מבוגרים</span></button>
+    </div>
     <div class="st" style="margin-top:8px">אורך משחק</div>
     <div class="cgrid"><button class="cb" id="mShort" onclick="setMode('short')" style="width:auto;padding:0 14px;font-size:.75rem">קצר</button><button class="cb on" id="mFull" onclick="setMode('full')" style="width:auto;padding:0 14px;font-size:.75rem">מלא</button></div>
     <div class="st" style="margin-top:8px">איך מצביעים?</div>
@@ -513,6 +568,7 @@ body.light-body{background:#f5f5f0}
   <div style="display:flex;gap:8px;margin-top:12px">
     <button class="mc" style="flex:1" onclick="toggleHelp()">הבנתי!</button>
     <button class="mc" style="flex:0 0 auto;background:var(--s3);color:var(--t2);padding:10px 14px" onclick="document.querySelector('.app').classList.toggle('big-text')">א±</button>
+    <button class="mc" style="flex:0 0 auto;background:var(--s3);color:var(--t2);padding:10px 14px;font-size:.65rem" onclick="setupGeminiKey()">AI</button>
   </div>
 </div></div>
 <div class="onb" id="onb" style="display:none">
@@ -1076,6 +1132,7 @@ function buildHelp(){const cats=[
 {n:'ברק',icon:'bolt',c:'var(--gold)',d:'ענו מהר לפני שהזמן נגמר!'},
 {n:'מה עדיף?',icon:'scale',c:'var(--sky)',d:'דילמה — כולם מצביעים'},
 {n:'שיחת משפחה',icon:'people',c:'var(--mint)',d:'שאלה לכל המשפחה'},
+{n:'מיקרופון',icon:'star',c:'var(--coral)',d:'שכנעו בקול — AI מנתח!'},
 ];
 document.getElementById('helpL').innerHTML='<div class="help-grid">'+cats.map(c=>`<div class="hcard"><div class="hcard-ic" style="border-color:${c.c}33">${ic(c.icon,22,c.c)}</div><div class="hcard-n" style="color:${c.c}">${c.n}</div><div class="hcard-d">${c.d}</div></div>`).join('')+'</div>';}
 buildHelp();
@@ -1086,10 +1143,50 @@ let P=[],pCnt=4,scores={},voteLog=[],turnQ={};
 let events=[],curE=0,spinning=false,wA=0,tmrId=null;
 let pools={},idx={};
 let prevState=null;
-let gS={aliasW:{},drawW:{},rounds:0,t0:0,drawings:[],quotes:[]};
-let PD=[],curSP=0,seenTypes={},phasesSeen=0,streaks={},lastScorer=-1,comebackUsed={},gameLen='full',voteMode='open';
+let gS={aliasW:{},drawW:{},rounds:0,t0:0,drawings:[],quotes:[],micResults:[]};
+let PD=[],curSP=0,seenTypes={},phasesSeen=0,streaks={},lastScorer=-1,comebackUsed={},gameLen='full',voteMode='open',ageGroup='18+';
+// Microphone round state
+let MIC={};
+// AI summary cache
+let aiSummaryCache=null;
+// Feedback state
+let fbData={funniestRound:'',boringMoment:false,favType:'',wouldPay:''};
+// Gemini API key (user must set)
+let GEMINI_API_KEY=localStorage.getItem('mimi_gemini_key')||'';
 function setMode(m){gameLen=m;document.getElementById('mShort').classList.toggle('on',m==='short');document.getElementById('mFull').classList.toggle('on',m==='full');}
 function setVM(m){voteMode=m;document.getElementById('vmPass').classList.toggle('on',m==='pass');document.getElementById('vmOpen').classList.toggle('on',m==='open');document.getElementById('vmDesc').textContent=m==='pass'?'כל אחד מצביע בסתר בטלפון':'כולם מצביעים ביחד';}
+function setAge(a){ageGroup=a;document.querySelectorAll('.age-btn').forEach(b=>b.classList.toggle('on',b.textContent.includes(a.replace('+',''))));}
+
+// ===== AGE-BASED CONTENT FILTERING =====
+// Tags: 'all' = safe for all, '10+' = 10 and up, '13+' = teens, '18+' = adults only
+function ageOk(tag){
+if(!tag||tag==='all')return true;
+const minAge=ageGroup==='6-9'?6:ageGroup==='10-13'?10:ageGroup==='13-18'?13:18;
+const reqAge=parseInt(tag);
+return minAge>=reqAge;
+}
+function filterByAge(arr){
+if(ageGroup==='18+')return arr;// no filter for adults
+return arr.filter(item=>{
+if(typeof item==='string')return true;// simple strings (alias/draw words) always ok
+if(item.age)return ageOk(item.age);
+// Filter by content keywords for items without explicit age tag
+if(item.q){
+const q=item.q;
+// Romance/dating content - not for young kids
+if(ageGroup==='6-9'){
+if(/רומנטי|דייט|מנשק|נשיקה|חבר\/ה|מתאהב|אקס|פלירט|שיכור|אלכוהול|בירה|יין|קללות|מילה גסה/.test(q))return false;
+// Filter questions about adult activities
+if(/מסעדה|קניות מיותרות|שולח הודעות|הודעה ומתחרט|סצנות במסעדות/.test(q))return false;
+}
+if(ageGroup==='10-13'){
+if(/שיכור|אלכוהול|בירה|יין|קללות|מילה גסה|פלירט|אקס/.test(q))return false;
+}
+return true;
+}
+return true;
+});
+}
 
 // ===== SETUP =====
 (function(){const r=document.getElementById('cntR');for(let i=3;i<=8;i++){const b=document.createElement('button');b.className='cb'+(i===pCnt?' on':'');b.textContent=i;b.onclick=()=>{pCnt=i;r.querySelectorAll('.cb').forEach((x,j)=>x.classList.toggle('on',j+3===i));};r.appendChild(b);}})();
@@ -1138,6 +1235,7 @@ const tpp=gameLen==='short'?Math.max(2,Math.floor(16/P.length)):Math.max(3,Math.
 const longTypes=['vote','dilemma','pdilemma','blind'];
 function mkTypes(n,phase){
 const all=['vote','vote','alias','hotseat','mission','rapid','dilemma','famtalk','draw','reveal','pdilemma','blind'];
+if(phase===1&&n>3)all.push('mic');// Add mic round in fire phase
 let t=shuf([...all]).slice(0,n);if(phase===2&&!t.includes('sentence')&&n>3){t[t.length-2]='sentence';}
 // Sort: ensure no two long types adjacent
 const sorted=[];let last='';
@@ -1157,16 +1255,16 @@ events=[];
 events.push({type:'phase_intro',phase:0});events.push(...mkRounds(perPhase,0));events.push({type:'family_challenge',ci:0});
 events.push({type:'phase_intro',phase:1});events.push(...mkRounds(perPhase,1));events.push({type:'family_challenge',ci:1});
 events.push({type:'phase_intro',phase:2});events.push(...mkRounds(perPhase,2));events.push({type:'big_question'});
-scores={};turnQ={};voteLog=[];streaks={};lastScorer=-1;comebackUsed={};phasesSeen=0;prevState=null;gS={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[]};
+scores={};turnQ={};voteLog=[];streaks={};lastScorer=-1;comebackUsed={};phasesSeen=0;prevState=null;gS={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};
 P.forEach((_,i)=>{scores[i]=0;turnQ[i]=0;gS.aliasW[i]=0;gS.drawW[i]=0;});
 // Phase-graded pools
 ['warm','fire','final'].forEach(k=>{
-pools['vt_'+k]=shuf([...VOTE[k]]);pools['hs_'+k]=shuf([...(HOTSEAT[k]||[])]);pools['mi_'+k]=shuf([...(MISSIONS[k]||[])]);pools['ft_'+k]=shuf([...(FAMTALK[k]||[])]);pools['rv_'+k]=shuf([...(REVEAL[k]||[])]);pools['al_'+k]=shuf([...(ALIAS[k]||[])]);pools['dr_'+k]=shuf([...(DRAW[k]||[])]);pools['pd_'+k]=shuf([...(PDILEMMA[k]||[])]);pools['bl_'+k]=shuf([...(BLIND[k]||[])]);});
+pools['vt_'+k]=shuf(filterByAge([...VOTE[k]]));pools['hs_'+k]=shuf(filterByAge([...(HOTSEAT[k]||[])]));pools['mi_'+k]=shuf(filterByAge([...(MISSIONS[k]||[])]));pools['ft_'+k]=shuf(filterByAge([...(FAMTALK[k]||[])]));pools['rv_'+k]=shuf(filterByAge([...(REVEAL[k]||[])]));pools['al_'+k]=shuf([...(ALIAS[k]||[])]);pools['dr_'+k]=shuf([...(DRAW[k]||[])]);pools['pd_'+k]=shuf(filterByAge([...(PDILEMMA[k]||[])]));pools['bl_'+k]=shuf(filterByAge([...(BLIND[k]||[])]));});
 pools.sent=shuf([...SENTENCE.final]);
 pools.ra=shuf([...RAPIDS]);pools.di=shuf([...DILEMMAS]);pools.fc=shuf([...FAM_CH]);
 idx={};Object.keys(pools).forEach(k=>idx[k]=0);
 curE=0;wA=0;show('scrGame');drawWheel(0);updateSB();updateFP();saveState();processEvent();
-try{gtag('event','game_start',{player_count:P.length});}catch(e){}
+try{gtag('event','game_start',{player_count:P.length,age_group:ageGroup,game_length:gameLen,vote_mode:voteMode});}catch(e){}
 }
 function pk(){return PH_K[cPhase()];}
 function cPhase(){let p=0;for(let i=0;i<=curE&&i<events.length;i++)if(events[i].type==='phase_intro')p=events[i].phase;return p;}
@@ -1215,7 +1313,7 @@ document.getElementById('gc').style.opacity='1';
 setTimeout(()=>{showRound(ev);spinning=false;},1200);})(performance.now());}
 
 // ===== SHOW ROUND =====
-const RT={vote:{ic:'vote',c:'var(--lav)',bg:'vote'},hotseat:{ic:'flame',c:'var(--coral)',bg:'hotseat'},mission:{ic:'target',c:'var(--peach)',bg:'mission'},alias:{ic:'chat',c:'var(--teal)',bg:'alias'},draw:{ic:'brush',c:'var(--sky)',bg:'draw'},rapid:{ic:'bolt',c:'var(--gold)',bg:'rapid'},dilemma:{ic:'scale',c:'var(--sky)',bg:'dilemma'},famtalk:{ic:'people',c:'var(--mint)',bg:'famtalk'},reveal:{ic:'heart',c:'var(--rose)',bg:'reveal'},pdilemma:{ic:'scale',c:'var(--peach)',bg:'hotseat'},blind:{ic:'heart',c:'var(--rose)',bg:'reveal'},sentence:{ic:'chat',c:'var(--mint)',bg:'reveal'}};
+const RT={vote:{ic:'vote',c:'var(--lav)',bg:'vote'},hotseat:{ic:'flame',c:'var(--coral)',bg:'hotseat'},mission:{ic:'target',c:'var(--peach)',bg:'mission'},alias:{ic:'chat',c:'var(--teal)',bg:'alias'},draw:{ic:'brush',c:'var(--sky)',bg:'draw'},rapid:{ic:'bolt',c:'var(--gold)',bg:'rapid'},dilemma:{ic:'scale',c:'var(--sky)',bg:'dilemma'},famtalk:{ic:'people',c:'var(--mint)',bg:'famtalk'},reveal:{ic:'heart',c:'var(--rose)',bg:'reveal'},pdilemma:{ic:'scale',c:'var(--peach)',bg:'hotseat'},blind:{ic:'heart',c:'var(--rose)',bg:'reveal'},sentence:{ic:'chat',c:'var(--mint)',bg:'reveal'},mic:{ic:'star',c:'var(--coral)',bg:'hotseat'}};
 
 function showRound(ev){
 const pi=ev.pi,p=P[pi],rt=ev.roundType,ri=RT[rt];
@@ -1244,6 +1342,7 @@ else if(rt==='reveal')showReveal(pi,ev.pi2,sp,mult);
 else if(rt==='pdilemma')showPDilemma(pi,sp,mult);
 else if(rt==='blind')showBlind(pi,ev.pi2,sp,mult);
 else if(rt==='sentence')showSentence(pi,sp,mult);
+else if(rt==='mic')showMicRound(pi,sp,mult);
 }
 function gc(h){const el=document.getElementById('gc');
 el.style.opacity='0';el.style.transform='translateY(8px)';
@@ -1418,7 +1517,7 @@ ${sp}${explain}
 <div class="cq">${q.q}</div>
 <button class="quote-btn" onclick="openQuote()">${ic('chat',12,'var(--gold)')} ציטוט!</button>
 <div class="acts"><button class="ab ab-g" style="width:100%" onclick="hsAnswer(${pi},${pts})">עניתי! (+${pts})</button>
-<div style="display:flex;gap:8px;margin-top:6px;justify-content:center"><button class="ab ab-m" style="font-size:.72rem" onclick="hsSwap(${pi},${mult})">שאלה אחרת</button><button class="ab ab-m" style="font-size:.72rem" onclick="advance()">דלג</button></div></div></div>`);}
+<div style="display:flex;gap:8px;margin-top:6px;justify-content:center"><button class="ab ab-m" style="font-size:.72rem" onclick="hsSwap(${pi},${mult})">שאלה אחרת</button><button class="ab ab-m" style="font-size:.72rem" onclick="try{gtag('event','round_skip',{round_type:'hotseat',round_number:gS.rounds});}catch(e){}advance()">דלג</button></div></div></div>`);}
 function hsAnswer(pi,pts){scores[pi]+=pts;ptPop(P[pi].color,'+'+pts);updateSB();scorePop(pi);trackStreak(pi);advance();}
 function hsSwap(pi,mult){// Get another question
 const q=nx(pools['hs_'+pk()],idx['hs_'+pk()]++);const p=P[pi],pts=2*mult;
@@ -1593,6 +1692,7 @@ ${sp}${explain}
 
 // ===== PHASE INTRO — dramatic =====
 function showPI(phase){const ov=document.getElementById('overlay');SND.play('tada');phasesSeen++;
+try{gtag('event','phase_start',{phase:phase,phase_name:PH_N[phase]});}catch(e){}
 function spawnParticles(container,color,count){for(let i=0;i<count;i++){const p=document.createElement('div');p.className='phase-particle';const sz=3+Math.random()*5;p.style.cssText=`width:${sz}px;height:${sz}px;background:${color};left:${10+Math.random()*80}%;bottom:${10+Math.random()*40}%;animation-delay:${Math.random()*1.5}s;animation-duration:${1.5+Math.random()*1.5}s`;container.appendChild(p);setTimeout(()=>p.remove(),3500);}}
 function showPhaseContent(){SND.play('reveal');vib([50,50,50,50,200]);
 const pSorted=P.map((p,i)=>({n:p.name,s:scores[i]||0,c:p.color})).sort((a,b)=>b.s-a.s);
@@ -1795,8 +1895,248 @@ gc(`<div class="pass">
 <div style="font-size:.68rem;color:var(--t3);margin:12px 0;font-style:italic">קחו את הזמן. אין ניקוד — רק רגע.</div>
 <div class="acts"><button class="ab ab-g" onclick="scores[${pi}]++;ptPop(P[${pi}].color,'+1');updateSB();advance()">המשך (+1)</button></div></div>`);}
 
+// ===== MIC ROUND — "האמת יוצאת לאור" =====
+const MIC_CLAIMS={
+warm:[
+{cm:"אני הכי מצחיק פה",cf:"אני הכי מצחיקה פה",age:'all'},
+{cm:"אני תמיד עוזר בבית",cf:"אני תמיד עוזרת בבית",age:'all'},
+{cm:"אני הכי חכם במשפחה",cf:"אני הכי חכמה במשפחה",age:'all'},
+{cm:"אני אף פעם לא משקר",cf:"אני אף פעם לא משקרת",age:'all'},
+{cm:"אני הולך לישון בזמן כל לילה",cf:"אני הולכת לישון בזמן כל לילה",age:'all'},
+{cm:"אני אוהב ירקות באמת",cf:"אני אוהבת ירקות באמת",age:'all'},
+],
+fire:[
+{cm:"אני הכי טוב בלשמור סודות",cf:"אני הכי טובה בלשמור סודות",age:'all'},
+{cm:"אני אף פעם לא מחפש תירוצים",cf:"אני אף פעם לא מחפשת תירוצים",age:'all'},
+{cm:"אני תמיד מודה כשאני טועה",cf:"אני תמיד מודה כשאני טועה",age:'all'},
+{cm:"אני הכי רגוע כשיש לחץ",cf:"אני הכי רגועה כשיש לחץ",age:'all'},
+{cm:"אני מי שמנקה הכי הרבה בבית",cf:"אני מי שמנקה הכי הרבה בבית",age:'all'},
+{cm:"אני אף פעם לא אוכל בסתר מהמקרר",cf:"אני אף פעם לא אוכלת בסתר מהמקרר",age:'all'},
+{cm:"אני הכי סבלני במשפחה",cf:"אני הכי סבלנית במשפחה",age:'all'},
+{cm:"אני תמיד מגיע בזמן",cf:"אני תמיד מגיעה בזמן",age:'all'},
+],
+final:[
+{cm:"אני הכי משפיע על המשפחה",cf:"אני הכי משפיעה על המשפחה",age:'10+'},
+{cm:"בלעדיי המשפחה לא הייתה אותו דבר",cf:"בלעדיי המשפחה לא הייתה אותו דבר",age:'all'},
+{cm:"אני הכי יודע להקשיב",cf:"אני הכי יודעת להקשיב",age:'all'},
+{cm:"אני מכיר את כולם פה יותר טוב ממה שהם חושבים",cf:"אני מכירה את כולם פה יותר טוב ממה שהם חושבים",age:'10+'},
+{cm:"אני הכי אמיתי במשפחה הזאת",cf:"אני הכי אמיתית במשפחה הזאת",age:'13+'},
+]};
+
+function getMicClaim(phase,pi){
+const k=PH_K[phase]||'fire';
+const pool=filterByAge(MIC_CLAIMS[k]||MIC_CLAIMS.fire);
+const item=pool[Math.floor(Math.random()*pool.length)];
+if(!item)return 'אני הכי מצחיק פה';
+return P[pi]?.gender==='f'?item.cf:item.cm;
+}
+
+function showMicRound(pi,sp,mult){
+const p=P[pi];
+const claim=getMicClaim(cPhase(),pi);
+MIC={pi,claim,mult,recording:false,audioBlob:null,transcript:'',votes:{convince:0,notConvince:0}};
+
+const firstTime=!seenTypes['mic'];seenTypes['mic']=true;
+const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('star',16,'var(--coral)')} האמת יוצאת לאור</div><div class="explain-text">מקבלים טענה. יש 15 שניות לשכנע את כולם!<br>המשפחה מצביעה — והבינה המלאכותית מנתחת.</div></div>`:'';
+
+gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,52)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">על דוכן העדים!</div></div></div>
+${sp}${explain}
+<div class="rc bg-hotseat"><div class="rc-bar" style="background:var(--coral)"></div><div class="rc-glow" style="background:var(--coral)"></div>
+<div class="rc-icon">${ic('star',36,'var(--coral)')}</div>
+<div style="font-size:.72rem;color:var(--t2);margin-bottom:4px">${g(pi,'שכנע','שכנעי')} את המשפחה:</div>
+<div class="cq" style="color:var(--coral)">"${claim}"</div>
+<div class="csub">15 שניות. ${g(pi,'דבר','דברי')} בקול, ${g(pi,'שכנע','שכנעי')}, ${g(pi,'הצדק','הצדיקי')}!</div>
+<div class="acts"><button class="ab" style="background:var(--coral);width:100%" onclick="startMicRecording(${pi})">${g(pi,'מוכן','מוכנה')}! הקלטה</button></div></div>`);
+try{gtag('event','mic_round_start',{player:p.name});}catch(e){}
+}
+
+function startMicRecording(pi){
+MIC.recording=true;
+MIC.startTime=Date.now();
+let timeLeft=15;
+
+// Try to start recording
+if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+MIC.stream=stream;
+MIC.recorder=new MediaRecorder(stream);
+MIC.chunks=[];
+MIC.recorder.ondataavailable=e=>{if(e.data.size>0)MIC.chunks.push(e.data);};
+MIC.recorder.onstop=()=>{
+MIC.audioBlob=new Blob(MIC.chunks,{type:'audio/webm'});
+stream.getTracks().forEach(t=>t.stop());
+};
+MIC.recorder.start();
+}).catch(()=>{MIC.recorder=null;});
+}
+
+// Show recording UI with timer
+gc(`<div class="rc bg-hotseat"><div class="rc-bar" style="background:var(--coral)"></div>
+<div style="font-size:.75rem;font-weight:700;color:var(--t2);margin-bottom:4px">"${MIC.claim}"</div>
+${circleTimer('mict',timeLeft,15,'var(--coral)')}
+<div class="mic-rec recording" id="micRecBtn">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="#fff"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+</div>
+<div style="font-size:.65rem;color:var(--coral);font-weight:700;margin-top:4px">מקליט... דבר!</div>
+<div class="mic-vis" id="micVis">${Array(8).fill(0).map((_,i)=>`<div class="mic-bar" style="animation-delay:${i*0.1}s"></div>`).join('')}</div>
+</div>`);
+
+SND.play('pop');
+MIC.tmr=setInterval(()=>{
+timeLeft--;
+updateCircle('mict',null,timeLeft,15,'var(--coral)');
+if(timeLeft<=0){
+clearInterval(MIC.tmr);
+stopMicRecording();
+}
+},1000);
+}
+
+function stopMicRecording(){
+MIC.recording=false;
+if(MIC.recorder&&MIC.recorder.state==='recording'){
+MIC.recorder.stop();
+}
+SND.play('buzz');vib(200);
+// Show family voting
+showMicVoting();
+}
+
+function showMicVoting(){
+const pi=MIC.pi;
+gc(`<div class="pass">
+<div style="font-size:1rem;font-weight:900;color:var(--gold);margin:8px 0">המשפחה מצביעה!</div>
+<div style="font-size:.78rem;color:var(--t2);margin:6px 0">${P[pi].name} טען: "${MIC.claim}"</div>
+<div style="font-size:.72rem;color:var(--t3);margin-bottom:10px">כל אחד — ${g(pi,'שכנע','שכנעה')} או לא?</div>
+<div style="display:flex;gap:8px;justify-content:center;margin:8px 0">
+<button class="fam-vote-btn convince" onclick="micVote('convince')">👍 ${g(pi,'שכנע','שכנעה')}!</button>
+<button class="fam-vote-btn not-convince" onclick="micVote('not')">👎 לא קנית אותי</button>
+</div>
+<div id="micVoteCount" style="font-size:.72rem;color:var(--t2);margin:6px 0">${MIC.votes.convince+MIC.votes.notConvince}/${P.length-1} הצביעו</div>
+<div class="acts" style="margin-top:8px"><button class="ab ab-g" id="micDoneBtn" onclick="micVoteDone()" disabled style="width:100%">חשפו את הניתוח!</button></div></div>`);
+}
+
+function micVote(type){
+if(type==='convince')MIC.votes.convince++;
+else MIC.votes.notConvince++;
+SND.play('vote');vib(20);
+const total=MIC.votes.convince+MIC.votes.notConvince;
+const el=document.getElementById('micVoteCount');
+if(el)el.textContent=total+'/'+(P.length-1)+' הצביעו';
+if(total>=P.length-1){document.getElementById('micDoneBtn').disabled=false;}
+}
+
+function micVoteDone(){
+const pi=MIC.pi;
+const p=P[pi];
+const convinced=MIC.votes.convince;
+const total=MIC.votes.convince+MIC.votes.notConvince;
+const pct=total>0?Math.round(convinced/total*100):0;
+
+// Show loading while AI analyzes
+gc(`<div class="pass">
+<div class="ai-summary-loading"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div>
+<div style="font-size:.78rem;color:var(--t2)">הבינה המלאכותית מנתחת את הנאום...</div></div>`);
+
+// Call Gemini for analysis (or fallback)
+analyzeMicWithGemini(pi,MIC.claim,convinced,total,pct);
+}
+
+async function analyzeMicWithGemini(pi,claim,convinced,total,pct){
+const p=P[pi];
+let analysis=null;
+
+if(GEMINI_API_KEY){
+try{
+const prompt=`אתה מנתח שפה שנון וחד בעברית. שחקן בשם "${p.name}" ניסה לשכנע את המשפחה בטענה: "${claim}".
+${convinced} מתוך ${total} השתכנעו (${pct}%).
+צור ניתוח קצר ומצחיק (עברית בלבד, 3-4 משפטים) שכולל:
+1. ציון שכנוע (1-10)
+2. הערה שנונה על הטענה
+3. משפט חד ומצחיק אחד על הביצוע
+אל תשתמש באימוג'ים. אל תכתוב יותר מ-4 משפטים.
+החזר JSON: {"score":N,"comment":"...","funnyLine":"...","verdict":"משכנע/לא משכנע/על הגבול"}`;
+
+const resp=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.9,maxOutputTokens:300}})
+});
+const data=await resp.json();
+const text=data?.candidates?.[0]?.content?.parts?.[0]?.text||'';
+// Try to parse JSON from response
+const jsonMatch=text.match(/\{[\s\S]*\}/);
+if(jsonMatch)analysis=JSON.parse(jsonMatch[0]);
+}catch(e){console.log('Gemini error:',e);}
+}
+
+// Fallback analysis if no API or error
+if(!analysis){
+const score=pct>=70?Math.floor(Math.random()*2)+8:pct>=40?Math.floor(Math.random()*2)+5:Math.floor(Math.random()*2)+2;
+const comments=[
+pct>=70?'המשפחה קנתה את זה. לא בטוח שבצדק.':'',
+pct>=40?'היה ניסיון אמיתי, אבל חלק מהמשפחה לא התרשמה.':'',
+pct<40?'ניסיון יפה, אבל אף אחד לא באמת האמין.':''
+].filter(Boolean);
+const funnyLines=[
+'מישהו צריך לעבוד על כושר השכנוע.',
+'אם זה היה בית משפט, היו מזכים — מחוסר עניין.',
+'ניסיון מכובד. לא מספיק, אבל מכובד.',
+'הנאום הזה ראוי למקרר. לתלות, לא לשמור.',
+'בקושי 15 שניות וכבר אפשר לכתוב עליו ספר.',
+'מרשים. לא בטוח למה, אבל מרשים.',
+];
+analysis={
+score,
+comment:comments[0]||'ניתוח מעניין.',
+funnyLine:funnyLines[Math.floor(Math.random()*funnyLines.length)],
+verdict:pct>=60?'משכנע':pct>=35?'על הגבול':'לא משכנע'
+};
+}
+
+// Store for end-game summary
+if(!gS.micResults)gS.micResults=[];
+gS.micResults.push({player:pi,claim,convinced,total,pct,analysis});
+
+// Points: if majority convinced +3, otherwise +1 for trying
+const pts=pct>=50?3*MIC.mult:1*MIC.mult;
+scores[pi]+=pts;
+
+showMicResult(pi,analysis,convinced,total,pct,pts);
+}
+
+function showMicResult(pi,analysis,convinced,total,pct,pts){
+const p=P[pi];
+const verdictColor=analysis.verdict==='משכנע'?'var(--teal)':analysis.verdict==='על הגבול'?'var(--gold)':'var(--coral)';
+
+SND.play('reveal');vib([50,50,100]);confetti(p.color);
+
+gc(`<div class="pass">
+<div style="font-size:1.1rem;font-weight:900;color:var(--gold);margin:8px 0">תוצאות הניתוח</div>
+<div class="ai-card">
+<div class="ai-card-t">ניתוח בינה מלאכותית</div>
+<div style="font-size:2rem;font-weight:900;color:${verdictColor};margin:6px 0">${analysis.score}/10</div>
+<div class="ai-badge" style="color:${verdictColor};border-color:${verdictColor}">${analysis.verdict}</div>
+<div style="font-size:.75rem;color:var(--text);margin:8px 0;line-height:1.6">${analysis.comment}</div>
+<div style="font-size:.72rem;color:var(--gold);font-style:italic;margin:6px 0">"${analysis.funnyLine}"</div>
+</div>
+<div style="display:flex;gap:8px;justify-content:center;margin:6px 0">
+<div class="ai-badge" style="color:var(--teal)">👍 ${convinced}</div>
+<div class="ai-badge" style="color:var(--coral)">👎 ${total-convinced}</div>
+</div>
+<div class="ptag">+${pts} ל${p.name}</div>
+<div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);
+
+ptPop(p.color,'+'+pts);updateSB();scorePop(pi);trackStreak(pi);
+try{gtag('event','mic_round_complete',{player:p.name,score:analysis.score,convinced_pct:pct});}catch(e){}
+}
+
 function advance(){const ev=events[curE];if(ev?.type==='spin')turnQ[ev.pi]++;advanceEvent();}
-function advanceEvent(){prevState={curE,scores:{...scores},voteLog:[...voteLog],turnQ:{...turnQ}};document.getElementById('undoB').disabled=false;curE++;updateFP();processEvent();saveState();}
+function advanceEvent(){prevState={curE,scores:{...scores},voteLog:[...voteLog],turnQ:{...turnQ}};document.getElementById('undoB').disabled=false;
+// Track round analytics
+const prevEv=events[curE];
+if(prevEv?.type==='spin'){try{gtag('event','round_complete',{round_type:prevEv.roundType,round_number:gS.rounds,phase:cPhase()});}catch(e){}}
+curE++;updateFP();processEvent();saveState();}
 function undoStep(){if(!prevState)return;curE=prevState.curE;scores={...prevState.scores};voteLog=[...prevState.voteLog];turnQ={...prevState.turnQ};prevState=null;document.getElementById('undoB').disabled=true;updateSB();updateFP();document.getElementById('gc').innerHTML='';processEvent();saveState();SND.play('pop');}
 function closeOv(){document.getElementById('overlay').classList.remove('on');}
 
@@ -1816,9 +2156,90 @@ html+=`<div class="fprog-s" style="width:${pSpins/spins.length*100}%;background:
 strip.innerHTML=html;const fpN=document.getElementById('fprogN');if(fpN)fpN.textContent=PH_N[cPhase()]+' '+done+'/'+spins.length;}
 function ptPop(col,txt){const d=document.createElement('div');d.className='pp';d.style.color=col;d.textContent=txt;document.body.appendChild(d);setTimeout(()=>d.remove(),1200);}
 
+// ===== AI COMMENTATOR =====
+async function generateAISummary(sorted){
+const playerData=sorted.map(p=>({name:p.name,score:p.s}));
+const titlesData=voteLog.map(v=>({question:v.q,winner:P[v.winner]?.name,title:v.title}));
+const micData=(gS.micResults||[]).map(m=>({player:P[m.player]?.name,claim:m.claim,convinced_pct:m.pct,ai_score:m.analysis?.score}));
+const durSec=Math.round((Date.now()-gS.t0)/1000);
+const mins=Math.floor(durSec/60);
+
+let summaryHTML='';
+
+if(GEMINI_API_KEY){
+try{
+const prompt=`אתה פרשן משפחתי שנון וחד בעברית. סכם ערב משחק משפחתי.
+
+נתונים:
+- שחקנים ותוצאות: ${JSON.stringify(playerData)}
+- תוארים שניתנו: ${JSON.stringify(titlesData.slice(0,8))}
+${micData.length>0?'- סיבובי מיקרופון: '+JSON.stringify(micData):''}
+- משך המשחק: ${mins} דקות
+- סיבובים: ${gS.rounds}
+
+צור סיכום ערב מצחיק בעברית (5-7 משפטים קצרים). כולל:
+1. כותרת שנונה לערב (3-5 מילים)
+2. "הכוכב של הערב" — ולמה
+3. "רגע השיא" — מבוסס על הנתונים
+4. "עורך הדין של הערב" — מי שהכי שיכנע (אם היו סיבובי מיקרופון)
+5. "המשפט שיישאר" — משפט סיכום שנון אחד
+6. ציון כללי לערב (1-10)
+
+אל תשתמש באימוג'ים. כתוב בעברית תקינה. היה מצחיק אבל לא גס.
+החזר JSON: {"title":"...","star":{"name":"...","why":"..."},"highlight":"...","lawyer":{"name":"...","why":"..."},"quote":"...","score":N}`;
+
+const resp=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.95,maxOutputTokens:500}})
+});
+const data=await resp.json();
+const text=data?.candidates?.[0]?.content?.parts?.[0]?.text||'';
+const jsonMatch=text.match(/\{[\s\S]*\}/);
+if(jsonMatch){
+const s=JSON.parse(jsonMatch[0]);
+summaryHTML=buildAISummaryHTML(s);
+}
+}catch(e){console.log('AI Summary error:',e);}
+}
+
+// Fallback
+if(!summaryHTML){
+const winner=sorted[0];
+const fallback={
+title:'ערב שלא ישכח במהרה',
+star:{name:winner.name,why:'הכי הרבה נקודות. מפתיע? לא ממש.'},
+highlight:`${gS.rounds} סיבובים ב-${mins} דקות. הזמן עף.`,
+lawyer:micData.length>0?{name:micData[0]?.player||winner.name,why:'ניסה. לא תמיד הצליח.'}:null,
+quote:'ערב שכזה לא קונים בכסף. אבל אפשר לתרום.',
+score:Math.min(10,Math.max(7,Math.round(gS.rounds/3)))
+};
+summaryHTML=buildAISummaryHTML(fallback);
+}
+
+// Insert into DOM
+const el=document.getElementById('aiSummaryContent');
+const loading=document.getElementById('aiSummaryLoading');
+if(el){el.innerHTML=summaryHTML;el.style.display='block';}
+if(loading)loading.style.display='none';
+try{gtag('event','ai_summary_shown');}catch(e){}
+}
+
+function buildAISummaryHTML(s){
+let h=`<div style="font-size:.9rem;font-weight:900;color:var(--gold);margin-bottom:8px">"${s.title}"</div>`;
+h+=`<div class="ai-summary-item"><div style="font-size:.62rem;color:var(--t3);font-weight:700">כוכב הערב</div><div style="font-size:.82rem;font-weight:800;color:var(--text)">${s.star.name}</div><div style="font-size:.68rem;color:var(--t2)">${s.star.why}</div></div>`;
+h+=`<div class="ai-summary-item"><div style="font-size:.62rem;color:var(--t3);font-weight:700">רגע השיא</div><div style="font-size:.72rem;color:var(--text)">${s.highlight}</div></div>`;
+if(s.lawyer){h+=`<div class="ai-summary-item"><div style="font-size:.62rem;color:var(--t3);font-weight:700">עורך הדין של הערב</div><div style="font-size:.82rem;font-weight:800;color:var(--text)">${s.lawyer.name}</div><div style="font-size:.68rem;color:var(--t2)">${s.lawyer.why}</div></div>`;}
+h+=`<div style="font-size:.78rem;color:var(--gold);font-style:italic;margin:10px 0;font-weight:700">"${s.quote}"</div>`;
+h+=`<div style="font-size:.62rem;color:var(--t2)">ציון ערב: <span style="font-size:1rem;font-weight:900;color:var(--gold)">${s.score}/10</span></div>`;
+return h;
+}
+
 // ===== FINISH =====
-function buildFin(){SND.play('tada');const sorted=P.map((p,i)=>({...p,i,s:scores[i]||0})).sort((a,b)=>b.s-a.s);const mc=['#ffc73a','#c0c0c0','#cd7f32'];const hs=[140,110,80];const order=sorted.length>=3?[sorted[1],sorted[0],sorted[2]]:sorted.slice(0,3);const ho=sorted.length>=3?[hs[1],hs[0],hs[2]]:hs;
+function buildFin(){SND.play('tada');
+const sorted=P.map((p,i)=>({...p,i,s:scores[i]||0})).sort((a,b)=>b.s-a.s);const mc=['#ffc73a','#c0c0c0','#cd7f32'];const hs=[140,110,80];const order=sorted.length>=3?[sorted[1],sorted[0],sorted[2]]:sorted.slice(0,3);const ho=sorted.length>=3?[hs[1],hs[0],hs[2]]:hs;
 const dur=Math.round((Date.now()-gS.t0)/1000);const mins=Math.floor(dur/60),secs=dur%60;
+try{gtag('event','game_complete',{player_count:P.length,total_rounds:gS.rounds,duration_seconds:dur,age_group:ageGroup,winner_score:Math.max(...P.map((_,i)=>scores[i]||0))});}catch(e){}
 let h=`<div class="crown">${ic('crown',56,'var(--gold)')}</div><div class="fin-t">תוצאות סופיות!</div><div class="podium">`;
 order.forEach((p,di)=>{const rank=sorted.indexOf(p);h+=`<div class="pod"><div class="pod-m" style="background:${mc[rank]||'#666'}">${rank+1}</div><div class="pod-av" style="border-color:${p.color}">${gAv(p.i,42)}</div><div class="pod-bar" id="pb${di}" style="background:${p.color}12;border:2px solid ${p.color};height:0;color:${p.color}">${p.s}</div><div class="pod-n" style="color:${p.color}">${p.name}</div><div class="pod-p">${p.s} נק׳</div></div>`;});h+='</div>';
 h+='<div class="sgrid">';h+=`<div class="sc"><div class="sc-v" style="color:var(--gold)">${gS.rounds}</div><div class="sc-l">סיבובים</div></div>`;h+=`<div class="sc"><div class="sc-v" style="color:var(--teal)">${mins}:${secs.toString().padStart(2,'0')}</div><div class="sc-l">זמן משחק</div></div>`;
@@ -1838,6 +2259,21 @@ gS.quotes.forEach(q=>{h+=`<div class="tc"><div style="font-size:.62rem;color:var
 // Drawings gallery
 if(gS.drawings.length>0){h+='<div style="width:100%;max-width:360px;font-size:.72rem;font-weight:700;text-align:center;color:var(--t2);margin:6px 0">הציורים שלנו</div><div class="draw-gal">';
 gS.drawings.forEach(d=>{h+=`<div class="draw-gal-item"><img src="${d.img}"></div>`;});h+='</div>';}
+// Mic round results
+if(gS.micResults&&gS.micResults.length>0){
+h+='<div style="width:100%;max-width:360px;font-size:.72rem;font-weight:700;text-align:center;color:var(--t2);margin:6px 0">על דוכן העדים</div>';
+// Find best lawyer
+let bestLawyer=gS.micResults.reduce((best,m)=>(!best||m.pct>best.pct)?m:best,null);
+gS.micResults.forEach(m=>{
+const pName=P[m.player]?.name||'?';
+const isLawyer=m===bestLawyer;
+h+=`<div class="tc"${isLawyer?' style="border-color:var(--gold)"':''}>
+<div class="tc-av">${gAv(m.player,28)}</div>
+<div style="flex:1;text-align:right">
+<div style="font-size:.72rem;font-weight:700;color:${P[m.player]?.color||'var(--text)'}">${pName} ${isLawyer?'— עורך הדין של הערב':''}</div>
+<div style="font-size:.6rem;color:var(--t2)">"${m.claim}" — ${m.pct}% השתכנעו | ציון: ${m.analysis?.score||'?'}/10</div>
+</div></div>`;});
+}
 // Buttons
 // Family certificate
 const topQuote=gS.quotes&&gS.quotes.length>0?gS.quotes[0].text:'';
@@ -1850,6 +2286,15 @@ if(topQuote)h+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid 
 h+='<div style="font-size:.55rem;color:var(--t3);margin-top:8px">השיחה ממשיכה לבד.</div>';
 h+='</div>';
 h+=`<div style="margin:12px 0;text-align:center"><button class="gobtn" onclick="challengeShare()" style="max-width:340px">אתגרו משפחה אחרת!</button></div>`;
+// AI Commentator placeholder
+h+=`<div class="ai-summary" id="aiSummaryCard">
+<div class="ai-summary-t">פרשן המשפחה</div>
+<div class="ai-summary-loading" id="aiSummaryLoading"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span style="margin-right:6px">מנתח את הערב...</span></div>
+<div id="aiSummaryContent" style="display:none"></div>
+</div>`;
+// Trigger AI summary
+generateAISummary(sorted);
+
 h+=buildDonateHTML();
 h+=`<div class="fin-btns"><button class="fin-b" style="background:var(--gold)" onclick="genWC()">כרטיס מנצח</button><button class="fin-b" style="background:var(--lav)" onclick="share()">שתף תוצאות</button><button class="fin-b" style="background:var(--coral)" onclick="launch()">עוד סיבוב</button><button class="fin-b" style="background:var(--teal)" onclick="showFB()">פידבק</button><button class="fin-b" style="background:var(--s3)" onclick="goSetup()">חדש</button></div>`;
 h+=buildHistoryHTML();
@@ -1859,7 +2304,8 @@ order.forEach((p,di)=>{setTimeout(()=>{const el=document.getElementById('pb'+di)
 for(let i=0;i<50;i++)setTimeout(()=>confetti(COL[Math.floor(Math.random()*COL.length)]),i*40);}
 
 // Share with story
-function share(){const sorted=P.map((p,i)=>({...p,s:scores[i]||0})).sort((a,b)=>b.s-a.s);
+function share(){try{gtag('event','share_results',{player_count:P.length});}catch(e){}
+const sorted=P.map((p,i)=>({...p,s:scores[i]||0})).sort((a,b)=>b.s-a.s);
 const titles=[];voteLog.forEach(v=>{titles.push(`${P[v.winner].name} = "${v.title}"`);});
 let txt=`ערב משחק משפחתי!\n${sorted[0].name} ניצח/ה עם ${sorted[0].s} נקודות!\n`;
 if(titles.length>0)txt+=titles.slice(0,3).join('\n')+'\n';
@@ -1906,9 +2352,100 @@ c.font='700 16px Heebo';c.fillStyle='#8888aa';c.fillText('מי מי מי?',360,1
 if(!noDL){const link=document.createElement('a');link.download='mimi-winner.png';link.href=document.getElementById('wcv').toDataURL('image/png');link.click();}}
 
 let fbR=0;
-function showFB(){show('scrFB');let h=`<div>${ic('star',40,'var(--gold)')}</div><div class="fin-t">נהנתם?</div><div style="width:100%;max-width:340px"><div class="fb-stars">`;for(let i=1;i<=5;i++)h+=`<div class="fb-star" onclick="setFB(${i})" id="fs${i}"><svg viewBox="0 0 24 24" fill="currentColor" width="36" height="36">${I.star}</svg></div>`;h+=`</div><textarea class="fb-ta" id="fbt" placeholder="מה אהבתם? מה לשפר?"></textarea><div class="acts" style="margin-top:10px"><button class="ab" style="background:var(--gold)" onclick="subFB()">שלח + כרטיס מנצח</button><button class="ab ab-m" onclick="show('scrFin')">חזרה</button></div></div>`;document.getElementById('fbW').innerHTML=h;}
-function setFB(n){fbR=n;for(let i=1;i<=5;i++)document.getElementById('fs'+i).classList.toggle('on',i<=n);}
-function subFB(){try{gtag('event','feedback',{rating:fbR});}catch(e){}show('scrFin');ptPop('var(--gold)','תודה ❤️');}
+function showFB(){show('scrFB');fbData={funniestRound:'',boringMoment:false,favType:'',wouldPay:'',freeText:''};
+const roundTypes=[
+{id:'vote',label:'הצבעות',emoji:'🗳'},
+{id:'hotseat',label:'כיסא חם',emoji:'🔥'},
+{id:'alias',label:'אליאס',emoji:'💬'},
+{id:'draw',label:'ציור',emoji:'🎨'},
+{id:'mic',label:'מיקרופון',emoji:'🎤'},
+{id:'dilemma',label:'דילמות',emoji:'⚖'},
+{id:'reveal',label:'רגעי זוג',emoji:'💕'},
+{id:'mission',label:'משימות',emoji:'🎯'},
+];
+let h=`<div style="width:100%;max-width:360px">
+<div style="text-align:center;margin-bottom:12px">
+<div style="font-size:1.8rem">${ic('star',40,'var(--gold)')}</div>
+<div class="fin-t" style="font-size:1.1rem">ספרו לנו — בלי פילטרים</div>
+<div style="font-size:.65rem;color:var(--t2);margin:4px 0">ככל שתענו יותר, המשחק ישתפר. ואולי גם תקבלו משהו.</div>
+</div>
+
+<div class="fb-q" id="fbq1">
+<div class="fb-q-t">באיזה רגע צחקתם הכי חזק?</div>
+<div class="fb-q-opts">
+${roundTypes.map(rt=>`<div class="fb-chip" onclick="fbPick('funniestRound','${rt.id}',this)">${rt.emoji} ${rt.label}</div>`).join('')}
+</div>
+</div>
+
+<div class="fb-q" id="fbq2">
+<div class="fb-q-t">היה רגע שהייתם מוותרים עליו?</div>
+<div class="fb-q-opts">
+<div class="fb-chip" onclick="fbPick('boringMoment','yes',this)">כן, היה משעמם</div>
+<div class="fb-chip" onclick="fbPick('boringMoment','almost',this)">כמעט, אבל שרד</div>
+<div class="fb-chip" onclick="fbPick('boringMoment','no',this)">אף רגע. הכול היה שווה.</div>
+</div>
+</div>
+
+<div class="fb-q" id="fbq3">
+<div class="fb-q-t">איזה סוג סיבוב הכי אהבתם?</div>
+<div class="fb-q-opts">
+${roundTypes.map(rt=>`<div class="fb-chip" onclick="fbPick('favType','${rt.id}',this)">${rt.emoji} ${rt.label}</div>`).join('')}
+</div>
+</div>
+
+<div class="fb-q" id="fbq4">
+<div class="fb-q-t">הייתם משלמים על גרסה מורחבת?</div>
+<div class="fb-q-opts">
+<div class="fb-chip" onclick="fbPick('wouldPay','yes',this)">בלי לחשוב פעמיים</div>
+<div class="fb-chip" onclick="fbPick('wouldPay','maybe',this)">תלוי מה יש בפנים</div>
+<div class="fb-chip" onclick="fbPick('wouldPay','no',this)">המשחק מושלם ככה</div>
+</div>
+</div>
+
+<textarea class="fb-ta" id="fbt" placeholder="עוד משהו? רעיון לשאלה? ביקורת? הכול מתקבל באהבה." style="margin-top:8px"></textarea>
+
+<div class="acts" style="margin-top:10px">
+<button class="ab" style="background:var(--gold);width:100%" onclick="subFB()">שלח פידבק ותקבל הפתעה</button>
+<button class="ab ab-m" style="margin-top:6px" onclick="show('scrFin')">חזרה</button>
+</div></div>`;
+document.getElementById('fbW').innerHTML=h;
+try{gtag('event','feedback_screen_view');}catch(e){}
+}
+function fbPick(key,val,el){
+fbData[key]=val;
+SND.play('pop');vib(15);
+el.parentElement.querySelectorAll('.fb-chip').forEach(c=>c.classList.remove('on'));
+el.classList.add('on');
+el.closest('.fb-q').classList.add('selected');
+}
+function setFB(n){fbR=n;for(let i=1;i<=5;i++){const el=document.getElementById('fs'+i);if(el)el.classList.toggle('on',i<=n);}}
+function subFB(){
+fbData.freeText=(document.getElementById('fbt')?.value||'').trim();
+// Count how many questions were answered
+const answered=Object.values(fbData).filter(v=>v&&v!=='').length;
+try{gtag('event','feedback',{
+funniest_round:fbData.funniestRound,
+boring_moment:fbData.boringMoment,
+fav_type:fbData.favType,
+would_pay:fbData.wouldPay,
+has_free_text:fbData.freeText?'yes':'no',
+answers_count:answered
+});}catch(e){}
+
+if(answered>=3){
+// Reward: unlock a special message + exclusive question suggestion
+show('scrFin');
+const rewards=[
+'תודה ענקית! בזכותכם המשחק משתפר.',
+'וואו, ענינו על הכול. אתם כוכבים.',
+'הפידבק שלכם שווה זהב. רשמנו הכול.',
+];
+ptPop('var(--gold)',rewards[Math.floor(Math.random()*rewards.length)]);
+}else{
+show('scrFin');
+ptPop('var(--gold)','תודה!');
+}
+}
 
 // ===== NAV =====
 function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
@@ -1916,7 +2453,7 @@ function goSetup(){clearSave();show('scrSetup');ss1Show();}
 function saveState(){try{localStorage.setItem('mimi',JSON.stringify({P,pCnt,scores,voteLog,turnQ,events,curE,wA,pools,idx,gS,PD}));}catch(e){}}
 function loadState(){try{const s=localStorage.getItem('mimi');return s?JSON.parse(s):null;}catch(e){return null;}}
 function clearSave(){try{localStorage.removeItem('mimi');}catch(e){}}
-function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;wA=st.wA;pools=st.pools;idx=st.idx;gS=st.gS||{aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[]};PD=st.PD||[];show('scrGame');drawWheel(wA);updateSB();updateFP();document.getElementById('warea').style.display='';processEvent();}
+function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;wA=st.wA;pools=st.pools;idx=st.idx;gS=st.gS||{aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};PD=st.PD||[];show('scrGame');drawWheel(wA);updateSB();updateFP();document.getElementById('warea').style.display='';processEvent();}
 (function(){const s=loadState();if(s?.P?.length>0&&s.curE<s.events.length){const ov=document.getElementById('overlay');ov.innerHTML=`<div style="font-size:3rem">${ic('dice',40,'var(--gold)')}</div><div class="ov-t" style="color:var(--gold)">יש משחק שמור!</div><div class="ov-s">${s.P.map(p=>p.name).join(', ')}</div><div style="display:flex;gap:8px;margin-top:12px"><button class="ov-b" style="background:var(--teal)" onclick="closeOv();resumeG(loadState())">המשיכו! ▶</button><button class="ov-b" style="background:var(--coral)" onclick="clearSave();closeOv()">חדש 🆕</button></div>`;ov.classList.add('on');}})();
 window.addEventListener('beforeunload',function(e){if(document.getElementById('scrGame')?.classList.contains('on')){e.preventDefault();e.returnValue='';}});
 
@@ -1946,29 +2483,57 @@ function updateCircle(timerId,barId,time,total,color){const t=document.getElemen
 
 // ===== DONATION =====
 function buildDonateHTML(){return `<div class="donate-card">
-<div style="font-size:1.5rem;margin-bottom:4px">☕</div>
-<div style="font-size:.95rem;font-weight:800;color:var(--gold)">נהנתם? עזרו לנו להמשיך ליצור!</div>
-<div style="font-size:.65rem;color:var(--t2);margin:6px 0;line-height:1.6">המשחק הזה נוצר באהבה, בלילות ובסופי שבוע.<br>כל תרומה עוזרת לנו להוסיף עוד שאלות, משחקים ופיצ׳רים.</div>
+<div style="font-size:1.5rem;margin-bottom:4px">🚀</div>
+<div style="font-size:.95rem;font-weight:800;color:var(--gold)">רוצים עוד ערבים כאלה?</div>
+<div style="font-size:.68rem;color:var(--text);margin:6px 0;line-height:1.7;font-weight:600">כל שקל שתתרמו הופך ישירות ל:<br>שאלות חדשות, סיבובים מפתיעים, ופיצ'רים שיהפכו<br>את הערב הבא לעוד יותר מטורף.</div>
+<div style="font-size:.6rem;color:var(--t2);margin:4px 0">אתם לא תורמים — אתם משקיעים בערב המשפחתי הבא.</div>
 <div class="donate-tiers">
 <div class="donate-tier" onclick="openDonate('small')">
-<div class="donate-tier-emoji">☕</div>
+<div class="donate-tier-emoji">🎯</div>
 <div class="donate-tier-price">5₪</div>
-<div class="donate-tier-desc">קפה קטן<br>+ שאלה בשמכם</div>
+<div class="donate-tier-desc">5 שאלות חדשות<br>שנכתבות בזכותכם</div>
 </div>
 <div class="donate-tier" onclick="openDonate('medium')">
-<div class="donate-tier-emoji">🍕</div>
+<div class="donate-tier-emoji">🎲</div>
 <div class="donate-tier-price">20₪</div>
-<div class="donate-tier-desc">פיצה למפתח<br>+ חבילת שאלות חדשה</div>
+<div class="donate-tier-desc">סיבוב חדש שלם<br>+ השם שלכם בקרדיטים</div>
 </div>
 <div class="donate-tier" onclick="openDonate('large')">
-<div class="donate-tier-emoji">🎉</div>
+<div class="donate-tier-emoji">🎪</div>
 <div class="donate-tier-price">50₪</div>
-<div class="donate-tier-desc">ערב שלם<br>+ השם שלכם בקרדיטים<br>+ הצבעה על תוכן הבא</div>
+<div class="donate-tier-desc">חבילת הרחבה בלעדית<br>+ הצבעה על התוכן הבא<br>+ גישה מוקדמת לפיצ'רים</div>
 </div>
 </div>
-<div class="donate-social">כבר תרמו <b style="color:var(--gold)">127</b> משפחות — תודה ענקית!</div>
+<div class="donate-social">כבר <b style="color:var(--gold)">127</b> משפחות השקיעו בערבים הבאים שלהן</div>
 </div>`;}
-function openDonate(tier){const url='https://buymeacoffee.com/mimimigame';try{window.open(url,'_blank');}catch(e){navigator.clipboard.writeText(url).then(()=>alert('הלינק הועתק!')).catch(()=>{});}}
+function openDonate(tier){try{gtag('event','donate_click',{tier});}catch(e){}const url='https://buymeacoffee.com/mimimigame';try{window.open(url,'_blank');}catch(e){navigator.clipboard.writeText(url).then(()=>alert('הלינק הועתק!')).catch(()=>{});}}
+
+// Gemini API key setup
+function setupGeminiKey(){
+const current=localStorage.getItem('mimi_gemini_key')||'';
+const m=document.createElement('div');
+m.className='quote-modal';m.id='geminiM';
+m.innerHTML=`<div style="font-size:1.2rem;font-weight:900;color:var(--lav)">הגדרת Gemini AI</div>
+<div style="font-size:.68rem;color:var(--t2);max-width:280px;line-height:1.6;margin:8px 0">הוסיפו מפתח API של Gemini כדי לאפשר ניתוח נאומים ופרשנות AI בסוף המשחק.</div>
+<input class="quote-input" id="geminiKeyI" type="password" placeholder="Gemini API Key" value="${current}" style="font-size:.75rem">
+<div style="display:flex;gap:8px">
+<button class="ab ab-g" onclick="saveGeminiKey()">שמור</button>
+<button class="ab ab-m" onclick="document.getElementById('geminiM').remove()">ביטול</button>
+${current?'<button class="ab" style="background:var(--coral)" onclick="clearGeminiKey()">מחק מפתח</button>':''}
+</div>`;
+document.body.appendChild(m);document.getElementById('geminiKeyI').focus();
+}
+function saveGeminiKey(){
+const key=document.getElementById('geminiKeyI').value.trim();
+if(key){localStorage.setItem('mimi_gemini_key',key);GEMINI_API_KEY=key;}
+document.getElementById('geminiM').remove();
+ptPop('var(--lav)','מפתח נשמר!');
+}
+function clearGeminiKey(){
+localStorage.removeItem('mimi_gemini_key');GEMINI_API_KEY='';
+document.getElementById('geminiM').remove();
+ptPop('var(--coral)','מפתח נמחק');
+}
 
 // PWA Service Worker
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
