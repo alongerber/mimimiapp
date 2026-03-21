@@ -2407,6 +2407,7 @@ if(step===podOrder.length-1){SND.play('tada');for(let i=0;i<60;i++)setTimeout(()
 // Hide all pods initially for reveal
 document.querySelectorAll('.pod').forEach(p=>{p.style.opacity='0';p.style.transform='translateY(20px)';p.style.transition='opacity .6s ease,transform .6s ease';});
 document.querySelectorAll('.pod-bar').forEach(b=>{b.style.opacity='0';b.style.transition='height 1.2s cubic-bezier(.34,1.4,.64,1),opacity .4s ease';});
+}
 
 // Share with story
 function share(){try{gtag('event','share_results',{player_count:P.length});}catch(e){}
