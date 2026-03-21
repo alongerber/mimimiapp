@@ -532,7 +532,7 @@ body.light-body{background:#f8f6f1}
     <div class="cgrid"><button class="cb" id="vmPass" onclick="setVM('pass')" style="width:auto;padding:0 12px;font-size:.7rem">מעבירים טלפון</button><button class="cb on" id="vmOpen" onclick="setVM('open')" style="width:auto;padding:0 12px;font-size:.7rem">מצביעים בגלוי</button></div>
     <div class="ss" id="vmDesc">כל אחד מצביע בסתר בטלפון</div>
     <button class="gobtn" onclick="startPS()">בואו נכיר את השחקנים</button>
-    <button class="gobtn" id="a2hsBtn" style="display:none;background:var(--s2);border:1px solid var(--lav);color:var(--lav);margin-top:8px" onclick="installApp()">📲 הורדה לדף הבית</button>
+    <button class="gobtn" id="a2hsBtn" style="background:var(--s2);border:1px solid var(--lav);color:var(--lav);margin-top:8px" onclick="installApp()">📲 הוספה למסך הבית</button>
     <div id="setupHist"></div>
   </div>
   <div id="ss2" style="display:none"><div id="s2h"></div><div id="s2b"></div>
@@ -623,6 +623,8 @@ refresh:'<path d="M1 4v6h6M23 20v-6h-6" fill="none" stroke="cC" stroke-width="2"
 play:'<polygon points="5,3 19,12 5,21"/>',
 skip:'<path d="M5 4l10 8-10 8V4zM19 5v14" fill="none" stroke="cC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
 swap:'<path d="M16 3l4 4-4 4M20 7H4M8 21l-4-4 4-4M4 17h16" fill="none" stroke="cC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+megaphone:'<path d="M11 5L6 9H2v6h4l5 4V5z" fill="none" stroke="cC" stroke-width="1.8"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" fill="none" stroke="cC" stroke-width="1.8" stroke-linecap="round"/>',
+x:'<path d="M18 6L6 18M6 6l12 12" fill="none" stroke="cC" stroke-width="2" stroke-linecap="round"/>',
 };
 const _fill=['crown','star','flame','bolt','heart','play'];
 function ic(n,s=14,c='currentColor'){const svg=I[n]||'';const isFill=_fill.includes(n);return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="${isFill?c:'none'}" stroke="${isFill?'none':c}" style="vertical-align:middle;flex-shrink:0">${svg.replace(/cC/g,c)}</svg>`;}
@@ -2597,9 +2599,13 @@ function openDonate(tier){try{gtag('event','donate_click',{tier});}catch(e){}con
 
 // PWA Install
 let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;const btn=document.getElementById('a2hsBtn');if(btn)btn.style.display='';});
+const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+const isStandalone=window.matchMedia('(display-mode:standalone)').matches||navigator.standalone;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
 window.addEventListener('appinstalled',()=>{deferredPrompt=null;const btn=document.getElementById('a2hsBtn');if(btn)btn.style.display='none';});
-function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{deferredPrompt=null;if(r.outcome==='accepted'){const btn=document.getElementById('a2hsBtn');if(btn)btn.style.display='none';}});}else{alert('ניתן להוסיף לדף הבית דרך תפריט הדפדפן ⋮ → "הוספה למסך הבית"');}}
+if(isStandalone){const btn=document.getElementById('a2hsBtn');if(btn)btn.style.display='none';}
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{deferredPrompt=null;if(r.outcome==='accepted'){const btn=document.getElementById('a2hsBtn');if(btn)btn.style.display='none';}});return;}if(isIOS){showA2HSModal('<b>ב-iPhone / iPad:</b><br>1. לחצו על כפתור השיתוף '+ic('share',16,'var(--sky)')+' בתחתית המסך<br>2. גללו ובחרו <b>"הוסף למסך הבית"</b><br>3. לחצו <b>"הוסף"</b>');}else{showA2HSModal('<b>בדפדפן:</b><br>1. לחצו על תפריט ⋮ בפינה העליונה<br>2. בחרו <b>"הוספה למסך הבית"</b> או <b>"התקנת אפליקציה"</b>');}}
+function showA2HSModal(html){const m=document.createElement('div');m.className='mbg on';m.onclick=()=>m.remove();m.innerHTML='<div class="mbox" onclick="event.stopPropagation()" style="max-width:320px"><h2 style="font-size:1rem;color:var(--lav);margin-bottom:10px">📲 הוספה למסך הבית</h2><div style="font-size:.85rem;line-height:1.7;text-align:right">'+html+'</div><button class="gobtn" style="margin-top:14px;font-size:.85rem" onclick="this.closest(\'.mbg\').remove()">הבנתי!</button></div>';document.querySelector('.app').appendChild(m);}
 // PWA Service Worker
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
 </script>
