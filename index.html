@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta property="og:title" content="מי מי מי? 🎲">
 <meta property="og:description" content="משחק משפחתי מלא צחוק והפתעות! 3-8 שחקנים, טלפון אחד.">
@@ -299,6 +299,8 @@ body.light-body{background:#f8f6f1}
 .fb-star{width:36px;height:36px;cursor:pointer;color:var(--s3);transition:.2s}.fb-star.on{color:var(--gold);transform:scale(1.1)}
 .fb-ta{width:100%;min-height:60px;background:var(--s1);border:1.5px solid var(--s3);border-radius:12px;padding:10px;color:var(--text);font-family:inherit;font-size:.82rem;resize:none;outline:0}
 
+/* Toast */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--s2);color:var(--text);padding:10px 20px;border-radius:12px;font-size:.8rem;font-weight:700;z-index:9999;animation:popIn .3s ease;pointer-events:none}
 /* Confetti */
 .cf{position:fixed;z-index:150;pointer-events:none;animation:cfA var(--d) ease-out forwards;transform-style:preserve-3d}
 @keyframes cfA{0%{opacity:1;transform:translateY(0) rotate(0) rotateX(0) scale(1)}30%{opacity:1;transform:translateY(30vh) rotate(calc(var(--r) * .4)) rotateX(180deg) translateX(var(--wx,0px)) scale(.9)}60%{opacity:1}100%{opacity:0;transform:translateY(100vh) rotate(var(--r)) rotateX(540deg) translateX(calc(var(--wx,0px) * 1.5)) scale(.4)}}
@@ -1197,7 +1199,7 @@ let aiSummaryCache=null;
 // Feedback state
 let fbData={peakMoment:'',energyDip:'',missingFeature:'',nextTime:'',recommend:0,groupType:'',freeText:''};
 // Google Sheets URL for feedback collection (see setup instructions at bottom of file)
-const SHEET_URL='GOOGLE_SCRIPT_URL_HERE';
+const SHEET_URL='https://script.google.com/macros/s/AKfycbwSzi6hfABHaLcvWf2FdBcwVts9HZZm7MgFxPoen9BN-FwSGbmoLlNj8C3xPSZST-oDAw/exec';
 let roundStartTime=0;
 function setMode(m){gameLen=m;document.getElementById('mShort').classList.toggle('on',m==='short');document.getElementById('mFull').classList.toggle('on',m==='full');}
 function setVM(m){voteMode=m;document.getElementById('vmPass').classList.toggle('on',m==='pass');document.getElementById('vmOpen').classList.toggle('on',m==='open');document.getElementById('vmDesc').textContent=m==='pass'?'כל אחד מצביע בסתר בטלפון':'כולם מצביעים ביחד';}
@@ -1275,7 +1277,7 @@ document.getElementById('pSum').innerHTML=h;}
 
 // ===== LAUNCH =====
 function launch(){
-clearSave();seenTypes={};P=[];for(let i=0;i<pCnt;i++){const pd=PD[i];P.push({name:pd.name,color:COL[i],letter:pd.name[0]||'?',avId:pd.avId,gender:pd.gender});}
+clearSave();seenTypes={};P=[];for(let i=0;i<pCnt;i++){const pd=PD[i];const sn=pd.name.replace(/[<>"&]/g,'');P.push({name:sn,color:COL[i],letter:sn[0]||'?',avId:pd.avId,gender:pd.gender});}
 const tpp=gameLen==='short'?Math.max(2,Math.floor(16/P.length)):Math.max(3,Math.floor(30/P.length));const perPhase=Math.floor(tpp*P.length/3);
 // Type distribution with pacing (long-short alternation)
 const longTypes=['vote','dilemma','pdilemma','blind'];
@@ -1831,7 +1833,7 @@ txt+=sorted[0].name+' ניצח/ה עם '+sorted[0].s+' נקודות\n';
 if(titles.length>0)txt+=titles.slice(0,2).join('\n')+'\n';
 txt+='\nחושבים שאתם יותר טובים? \nהורידו ושחקו!';
 if(navigator.share)navigator.share({title:'אתגר מי מי מי!',text:txt}).catch(()=>{});
-else{navigator.clipboard.writeText(txt).then(()=>alert('הועתק!')).catch(()=>{});}}
+else{navigator.clipboard.writeText(txt).then(()=>toast('הועתק!')).catch(()=>{});}}
 
 // === D3: Personal Dilemma ===
 function showPDilemma(pi,sp,mult){
@@ -2154,7 +2156,7 @@ const data=await resp.json();
 const jsonMatch=(data.text||'').match(/\{[\s\S]*\}/);
 if(jsonMatch)analysis=JSON.parse(jsonMatch[0]);
 }
-}catch(e){console.log('AI analysis error:',e);}
+}catch(e){}
 
 // Fallback analysis if no API or error
 if(!analysis){
@@ -2287,7 +2289,7 @@ const s=JSON.parse(jsonMatch[0]);
 summaryHTML=buildAISummaryHTML(s);
 }
 }
-}catch(e){console.log('AI Summary error:',e);}
+}catch(e){}
 
 // Fallback
 if(!summaryHTML){
@@ -2411,8 +2413,8 @@ genWC(true);const cv=document.getElementById('wcv');
 try{cv.toBlob(function(blob){const file=new File([blob],'mimi-winner.png',{type:'image/png'});
 if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({title:'מי מי מי?',text:txt,files:[file]}).catch(()=>{});}
 else if(navigator.share){navigator.share({title:'מי מי מי?',text:txt}).catch(()=>{});}
-else{const link=document.createElement('a');link.download='mimi-winner.png';link.href=cv.toDataURL('image/png');link.click();navigator.clipboard.writeText(txt).then(()=>alert('הועתק + התמונה ירדה!')).catch(()=>{});}
-},'image/png');}catch(e){if(navigator.share)navigator.share({title:'מי מי מי?',text:txt}).catch(()=>{});else navigator.clipboard.writeText(txt).then(()=>alert('הועתק!')).catch(()=>{});}}
+else{const link=document.createElement('a');link.download='mimi-winner.png';link.href=cv.toDataURL('image/png');link.click();navigator.clipboard.writeText(txt).then(()=>toast('הועתק + התמונה ירדה!')).catch(()=>{});}
+},'image/png');}catch(e){if(navigator.share)navigator.share({title:'מי מי מי?',text:txt}).catch(()=>{});else navigator.clipboard.writeText(txt).then(()=>toast('הועתק!')).catch(()=>{});}}
 
 function genWC(noDL){const sorted=P.map((p,i)=>({...p,i,s:scores[i]||0})).sort((a,b)=>b.s-a.s);const w=sorted[0];
 const cv=document.getElementById('wcv');cv.width=720;cv.height=1280;const c=cv.getContext('2d');
@@ -2601,6 +2603,7 @@ checkOnb();
 history.pushState(null,null,location.href);window.addEventListener('popstate',()=>{
 history.pushState(null,null,location.href);});
 
+function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2000);}
 function shuf(a){for(let i=a.length-1;i>0;i--){const j=0|Math.random()*(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
 function nx(a,i){return a[i%a.length];}
 function confetti(mc){const cs=[mc,'#ffc73a','#ff6b6b','#74c0fc','#63e6be','#b197fc'];const sh=['','cf-c','cf-s','cf-t'];
@@ -2632,24 +2635,24 @@ function buildDonateHTML(){return `<div class="donate-card">
 <div style="font-size:.6rem;color:var(--t2);margin:4px 0">אתם לא תורמים — אתם משקיעים בערב המשפחתי הבא.</div>
 <div class="donate-tiers">
 <div class="donate-tier" onclick="openDonate('small')">
-<div class="donate-tier-emoji">🎯</div>
+<div class="donate-tier-emoji">☕</div>
 <div class="donate-tier-price">5₪</div>
-<div class="donate-tier-desc">5 שאלות חדשות<br>שנכתבות בזכותכם</div>
+<div class="donate-tier-desc">קפה קטן<br>שלנו עליכם</div>
 </div>
 <div class="donate-tier" onclick="openDonate('medium')">
 <div class="donate-tier-emoji">🎲</div>
 <div class="donate-tier-price">20₪</div>
-<div class="donate-tier-desc">סיבוב חדש שלם<br>+ השם שלכם בקרדיטים</div>
+<div class="donate-tier-desc">תמיכה משמעותית<br>בפיתוח המשחק</div>
 </div>
 <div class="donate-tier" onclick="openDonate('large')">
 <div class="donate-tier-emoji">🎪</div>
 <div class="donate-tier-price">50₪</div>
-<div class="donate-tier-desc">חבילת הרחבה בלעדית<br>+ הצבעה על התוכן הבא<br>+ גישה מוקדמת לפיצ'רים</div>
+<div class="donate-tier-desc">שותפים מלאים<br>בהצלחה של מי מי מי?</div>
 </div>
 </div>
-<div class="donate-social">כבר <b style="color:var(--gold)">127</b> משפחות השקיעו בערבים הבאים שלהן</div>
+<div class="donate-social">עזרו לנו להמשיך לפתח ערבים משפחתיים מטורפים!</div>
 </div>`;}
-function openDonate(tier){try{gtag('event','donate_click',{tier});}catch(e){}const url='https://buymeacoffee.com/mimimigame';try{window.open(url,'_blank');}catch(e){navigator.clipboard.writeText(url).then(()=>alert('הלינק הועתק!')).catch(()=>{});}}
+function openDonate(tier){try{gtag('event','donate_click',{tier});}catch(e){}const url='https://buymeacoffee.com/mimimigame';try{window.open(url,'_blank');}catch(e){navigator.clipboard.writeText(url).then(()=>toast('הלינק הועתק!')).catch(()=>{});}}
 
 // PWA Install
 let deferredPrompt=null;

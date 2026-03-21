@@ -31,7 +31,7 @@ self.addEventListener('fetch', e => {
         const clone = r.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
         return r;
-      }).catch(() => caches.match(e.request))
+      }).catch(() => caches.match(e.request).then(r => r || new Response('<html dir="rtl"><body style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;background:#0a0a1a;color:#fff"><h2>אופליין — נסו שוב כשיש אינטרנט</h2></body></html>',{headers:{'Content-Type':'text/html;charset=utf-8'}})))
     );
   } else {
     e.respondWith(
