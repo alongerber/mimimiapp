@@ -35,10 +35,10 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 .gl{position:fixed;border-radius:50%;filter:blur(120px);opacity:.07;pointer-events:none;transition:background .6s}
 .gl1{width:300px;height:300px;background:var(--lav);top:-100px;right:-120px}
 .gl2{width:250px;height:250px;background:var(--teal);bottom:-80px;left:-100px}
-.scr{display:none;flex:1;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:0 18px 32px}.scr.on{display:flex}.scr::-webkit-scrollbar{display:none}
+.scr{display:none;flex:1;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:0 18px 32px;position:relative;z-index:1}.scr.on{display:flex}.scr::-webkit-scrollbar{display:none}
 
 /* Header */
-.hdr{padding:8px 16px 4px;text-align:center;flex-shrink:0;position:relative}
+.hdr{padding:8px 16px 4px;text-align:center;flex-shrink:0;position:relative;z-index:2}
 .logo{font-weight:900;font-size:1.4rem;letter-spacing:-1px}
 .logo b{display:inline-block;animation:bob 2.5s ease infinite}
 .logo b:nth-child(1){color:var(--coral)}.logo b:nth-child(2){color:var(--gold)}.logo b:nth-child(3){color:var(--sky)}.logo b:nth-child(4){color:var(--teal)}.logo b:nth-child(5){color:var(--lav)}
@@ -532,6 +532,7 @@ body.light-body{background:#f8f6f1}
     <div class="cgrid"><button class="cb" id="vmPass" onclick="setVM('pass')" style="width:auto;padding:0 12px;font-size:.7rem">מעבירים טלפון</button><button class="cb on" id="vmOpen" onclick="setVM('open')" style="width:auto;padding:0 12px;font-size:.7rem">מצביעים בגלוי</button></div>
     <div class="ss" id="vmDesc">כל אחד מצביע בסתר בטלפון</div>
     <button class="gobtn" onclick="startPS()">בואו נכיר את השחקנים</button>
+    <button class="gobtn" id="a2hsBtn" style="display:none;background:var(--s2);border:1px solid var(--lav);color:var(--lav);margin-top:8px" onclick="installApp()">📲 הורדה לדף הבית</button>
     <div id="setupHist"></div>
   </div>
   <div id="ss2" style="display:none"><div id="s2h"></div><div id="s2b"></div>
@@ -2594,6 +2595,11 @@ function buildDonateHTML(){return `<div class="donate-card">
 </div>`;}
 function openDonate(tier){try{gtag('event','donate_click',{tier});}catch(e){}const url='https://buymeacoffee.com/mimimigame';try{window.open(url,'_blank');}catch(e){navigator.clipboard.writeText(url).then(()=>alert('הלינק הועתק!')).catch(()=>{});}}
 
+// PWA Install
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;const btn=document.getElementById('a2hsBtn');if(btn)btn.style.display='';});
+window.addEventListener('appinstalled',()=>{deferredPrompt=null;const btn=document.getElementById('a2hsBtn');if(btn)btn.style.display='none';});
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{deferredPrompt=null;if(r.outcome==='accepted'){const btn=document.getElementById('a2hsBtn');if(btn)btn.style.display='none';}});}else{alert('ניתן להוסיף לדף הבית דרך תפריט הדפדפן ⋮ → "הוספה למסך הבית"');}}
 // PWA Service Worker
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
 </script>
