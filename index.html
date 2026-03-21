@@ -198,6 +198,52 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 /* Phase transition dramatic */
 .phase-count{font-size:4rem;font-weight:900;animation:phaseCount .8s ease}
 @keyframes phaseCount{0%{transform:scale(2);opacity:0}50%{transform:scale(1);opacity:1}100%{transform:scale(1);opacity:1}}
+.phase-bg{position:fixed;inset:0;z-index:55;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;animation:phaseBgIn .6s ease both}
+@keyframes phaseBgIn{from{opacity:0}to{opacity:1}}
+.phase-bg .phase-num{font-size:8rem;font-weight:900;opacity:.08;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:phaseNumPulse 1s ease infinite}
+@keyframes phaseNumPulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.1)}}
+.phase-title-reveal{font-size:2rem;font-weight:900;animation:phaseTitleIn .6s cubic-bezier(.34,1.3,.64,1) both;animation-delay:.3s;opacity:0}
+@keyframes phaseTitleIn{from{opacity:0;transform:translateY(20px) scale(.8)}to{opacity:1;transform:translateY(0) scale(1)}}
+.phase-sub-reveal{font-size:.82rem;color:var(--t2);animation:phaseSubIn .5s ease both;animation-delay:.6s;opacity:0;max-width:280px;line-height:1.6}
+@keyframes phaseSubIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.phase-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.phase-particle{position:absolute;border-radius:50%;animation:particleFloat 2s ease-out forwards}
+@keyframes particleFloat{0%{opacity:.8;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-100px) scale(0)}}
+
+/* Circular timer */
+.ctimer{position:relative;width:80px;height:80px;margin:8px auto}
+.ctimer svg{transform:rotate(-90deg);width:80px;height:80px}
+.ctimer-circle{fill:none;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .3s linear}
+.ctimer-bg{fill:none;stroke:var(--s3);stroke-width:4}
+.ctimer-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:1.8rem;font-weight:900;font-variant-numeric:tabular-nums}
+
+/* Light mode */
+.app.light{--bg:#f5f5f0;--s1:#e8e8e0;--s2:#ddddd5;--s3:#ccccc4;--text:#1a1a2e;--t2:#555566;--t3:#888899}
+.app.light~.gl{opacity:.04}
+.app.light .rc{box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.app.light .sb{backdrop-filter:none;background:var(--s1)}
+.app.light .nar{backdrop-filter:none;background:var(--s2)!important}
+.app.light .sni{background:var(--s1);border-color:var(--s3);color:var(--text)}
+.app.light .ov{background:rgba(245,245,240,.96);backdrop-filter:blur(12px)}
+.app.light .mbox{background:var(--s1)}
+body.light-body{background:#f5f5f0}
+.theme-toggle{position:absolute;top:8px;left:52px;width:28px;height:28px;border-radius:50%;background:var(--s2);border:1px solid var(--s3);color:var(--t2);font-size:.75rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10}
+
+/* Game history */
+.hist-item{background:var(--s1);border-radius:12px;padding:10px 12px;margin:4px 0;border:1px solid var(--s3);display:flex;align-items:center;gap:10px}
+.hist-date{font-size:.55rem;color:var(--t3)}.hist-winner{font-size:.78rem;font-weight:700}.hist-score{font-size:.65rem;color:var(--t2)}
+
+/* Donation */
+.donate-card{background:linear-gradient(135deg,var(--s1),var(--s2));border:1.5px solid rgba(255,199,58,.15);border-radius:20px;padding:20px 16px;margin:12px 0;text-align:center;max-width:360px;width:100%}
+.donate-card:hover{border-color:rgba(255,199,58,.3)}
+.donate-tiers{display:flex;gap:8px;justify-content:center;margin:12px 0;flex-wrap:wrap}
+.donate-tier{padding:12px 16px;border-radius:14px;border:1.5px solid var(--s3);background:var(--s2);cursor:pointer;transition:.2s;text-align:center;flex:1;min-width:90px}
+.donate-tier:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 4px 16px rgba(255,199,58,.15)}
+.donate-tier:active{transform:scale(.96)}
+.donate-tier-emoji{font-size:1.5rem;margin-bottom:4px}
+.donate-tier-price{font-size:.9rem;font-weight:800;color:var(--gold)}
+.donate-tier-desc{font-size:.55rem;color:var(--t2);margin-top:2px;line-height:1.4}
+.donate-social{font-size:.55rem;color:var(--t3);margin-top:8px}
 
 /* Crown drop */
 .crown{animation:crownDrop .6s cubic-bezier(.34,1.5,.64,1)}
@@ -376,11 +422,12 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 <div class="app">
 <div class="hdr">
   <div class="logo"><b>מ</b><b>י</b> <b>מ</b><b>י</b> <b>מ</b><b>י</b><b>?</b></div>
-  <button class="hb l" onclick="toggleHelp()">?</button>
-  <button class="hb r" id="sndB" onclick="SND.toggle()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="1.8" style="vertical-align:middle"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" stroke-linecap="round"/></svg></button>
+  <button class="hb l" onclick="toggleHelp()" aria-label="עזרה">?</button>
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="מצב תצוגה" id="themeB">☀</button>
+  <button class="hb r" id="sndB" onclick="SND.toggle()" aria-label="שמע"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="1.8" style="vertical-align:middle"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" stroke-linecap="round"/></svg></button>
 </div>
 
-<div class="scr on" id="scrSetup"><div style="flex:1;display:flex;flex-direction:column;gap:10px;padding:8px 0">
+<div class="scr on" id="scrSetup" role="main" aria-label="הגדרות משחק"><div style="flex:1;display:flex;flex-direction:column;gap:10px;padding:8px 0">
   <div id="ss1">
     <div class="hero">
       <div class="hero-vis">
@@ -415,6 +462,7 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
     <div class="cgrid"><button class="cb" id="vmPass" onclick="setVM('pass')" style="width:auto;padding:0 12px;font-size:.7rem">מעבירים טלפון</button><button class="cb on" id="vmOpen" onclick="setVM('open')" style="width:auto;padding:0 12px;font-size:.7rem">מצביעים בגלוי</button></div>
     <div class="ss" id="vmDesc">כל אחד מצביע בסתר בטלפון</div>
     <button class="gobtn" onclick="startPS()">בואו נכיר את השחקנים</button>
+    <div id="setupHist"></div>
   </div>
   <div id="ss2" style="display:none"><div id="s2h"></div><div id="s2b"></div>
     <button class="gobtn" id="npb" disabled onclick="nextPS()">הבא ▶</button>
@@ -426,20 +474,20 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
   </div>
 </div></div>
 
-<div class="scr" id="scrGame">
-  <div class="sbar" id="scoreBar"></div>
+<div class="scr" id="scrGame" role="main" aria-label="משחק">
+  <div class="sbar" id="scoreBar" role="status" aria-label="ניקוד"></div>
   <div style="display:flex;align-items:center;gap:6px;padding:0 16px"><div class="fprog" id="fprog" style="flex:1"></div><div id="fprogN" style="font-size:.6rem;color:var(--t2);font-weight:700;white-space:nowrap"></div></div>
   <div class="warea" id="warea">
     <div class="warrow"><svg width="22" height="18" viewBox="0 0 22 18"><polygon points="11,18 0,0 22,0" fill="#ffc73a"/></svg></div>
     <canvas id="cv" width="600" height="600"></canvas>
     <div class="wctr" onclick="doSpin()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div>
   </div>
-  <div class="gbtns"><button class="spinb" id="spinB" onclick="doSpin()">סובבו!</button><button class="undo-b" id="undoB" disabled onclick="undoStep()">↩</button></div>
+  <div class="gbtns"><button class="spinb" id="spinB" onclick="doSpin()" aria-label="סובבו את הגלגל">סובבו!</button><button class="undo-b" id="undoB" disabled onclick="undoStep()" aria-label="שלב אחורה">↩</button></div>
   <div id="gc"></div>
 </div>
 
-<div class="scr" id="scrFin"><div class="finw" id="finW"></div></div>
-<div class="scr" id="scrFB"><div class="finw" id="fbW"></div></div>
+<div class="scr" id="scrFin" role="main" aria-label="תוצאות"><div class="finw" id="finW"></div></div>
+<div class="scr" id="scrFB" role="main" aria-label="פידבק"><div class="finw" id="fbW"></div></div>
 <div class="ov" id="overlay"></div>
 <div class="mbg" id="helpM" onclick="toggleHelp()"><div class="mbox" onclick="event.stopPropagation()">
   <h2 style="font-size:1.1rem;color:var(--gold);margin-bottom:4px">איך משחקים?</h2>
@@ -1045,7 +1093,7 @@ function setVM(m){voteMode=m;document.getElementById('vmPass').classList.toggle(
 
 // ===== SETUP =====
 (function(){const r=document.getElementById('cntR');for(let i=3;i<=8;i++){const b=document.createElement('button');b.className='cb'+(i===pCnt?' on':'');b.textContent=i;b.onclick=()=>{pCnt=i;r.querySelectorAll('.cb').forEach((x,j)=>x.classList.toggle('on',j+3===i));};r.appendChild(b);}})();
-function ss1Show(){document.getElementById('ss1').style.display='';document.getElementById('ss2').style.display='none';document.getElementById('ss3').style.display='none';}
+function ss1Show(){document.getElementById('ss1').style.display='';document.getElementById('ss2').style.display='none';document.getElementById('ss3').style.display='none';try{const sh=document.getElementById('setupHist');if(sh){const hist=getHistory();if(hist.length>0){let hh='<div style="font-size:.65rem;font-weight:700;text-align:center;color:var(--t3);margin:12px 0 4px">משחקים אחרונים</div>';hist.slice(0,3).forEach(g=>{hh+=`<div class="hist-item"><div style="flex:1;text-align:right"><div style="font-size:.72rem;font-weight:700;color:${g.winnerColor||'var(--gold)'}">${g.winner} ניצח/ה</div><div style="font-size:.58rem;color:var(--t2)">${g.players.length} שחקנים</div></div><div style="font-size:.55rem;color:var(--t3)">${g.date}</div></div>`;});sh.innerHTML=hh;}}}catch(e){}}
 function startPS(){PD=[];for(let i=0;i<pCnt;i++)PD.push({name:'',gender:'m',avId:null});curSP=0;document.getElementById('ss1').style.display='none';document.getElementById('ss2').style.display='';showAllPlayers();}
 function showAllPlayers(){
 // Assign random avatars to anyone without one
@@ -1436,11 +1484,10 @@ ${sp}${explain}
 <div class="rc-icon">${ic('chat',36,'var(--teal)')}</div>
 <div class="csub">30 שניות • עד ${ACAP} נקודות${mult>1?' (×'+mult+')':''}</div>
 <div class="acts"><button class="ab" style="background:var(--teal);width:100%" onclick="aGo(${pi})">${g(pi,'מוכן','מוכנה')}! מתחילים</button></div></div>`);}
-function aGo(pi){AS={...AS,score:0,time:30,total:30,words:[]};showAW(pi);AS.tmr=setInterval(()=>{AS.time--;SND.play('tick');const b=document.getElementById('ab');if(b)b.style.width=(AS.time/AS.total*100)+'%';const t=document.getElementById('at');if(t)t.textContent=AS.time;if(AS.time<=5){if(b)b.style.background='var(--coral)';if(t)t.classList.add('low');}if(AS.time<=0){clearInterval(AS.tmr);vib(300);SND.play('buzz');aEnd();}},1000);}
+function aGo(pi){AS={...AS,score:0,time:30,total:30,words:[]};showAW(pi);AS.tmr=setInterval(()=>{AS.time--;SND.play('tick');updateCircle('at','ab',AS.time,AS.total,'var(--teal)');if(AS.time<=0){clearInterval(AS.tmr);vib(300);SND.play('buzz');aEnd();}},1000);}
 function showAW(pi){if(AS.score>=ACAP){clearInterval(AS.tmr);aEnd();return;}const w=nx(pools['al_'+pk()],idx['al_'+pk()]++);AS.cw=w;
 gc(`<div class="rc bg-alias"><div class="rc-bar" style="background:var(--teal)"></div>
-<div style="display:flex;justify-content:space-between"><span style="font-size:.7rem;font-weight:700;color:var(--teal)">${ic('chat',14,'var(--teal)')} אליאס</span><span class="tnum" id="at" style="font-size:1.3rem;color:var(--teal)">${AS.time}</span></div>
-<div class="tbar"><div class="tfill" id="ab" style="width:${AS.time/AS.total*100}%;background:var(--teal)"></div></div>
+${circleTimer('at',AS.time,AS.total,'var(--teal)')}
 <div class="aword" style="color:${P[pi].color}">${w}</div>
 <div style="font-size:.75rem;color:var(--gold);font-weight:700">${AS.score}/${ACAP}</div>
 <div class="abtns"><button style="background:var(--teal)" onclick="aOk()">ניחשו! ✅</button><button style="background:var(--s3)" onclick="aSkip()">דלג ⏭</button></div></div>`);}
@@ -1462,8 +1509,7 @@ ${sp}${explain}
 <div class="csub">${g(pi,'אל תראה','אל תראי')} לאף אחד!</div>
 <div class="acts"><button class="ab" style="background:var(--sky);width:100%" onclick="dGo(${pi})">${g(pi,'מוכן','מוכנה')}! מתחילים</button></div></div>`);}
 function dGo(pi){gc(`<div class="rc bg-draw"><div class="rc-bar" style="background:var(--sky)"></div>
-<div style="display:flex;justify-content:space-between"><span style="font-size:.7rem;font-weight:700;color:var(--sky)">${ic('brush',14,'var(--sky)')} ציור</span><span class="tnum" id="dt" style="font-size:1.3rem;color:var(--sky)">${DS.time}</span></div>
-<div class="tbar"><div class="tfill" id="db" style="width:100%;background:var(--sky)"></div></div>
+${circleTimer('dt',DS.time,DS.total,'var(--sky)')}
 <div class="draww"><canvas id="dcv" width="260" height="260"></canvas></div>
 <div class="draw-colors">
 <div class="dc on" style="background:#333" onclick="dColor('#333',this)"></div>
@@ -1474,7 +1520,7 @@ function dGo(pi){gc(`<div class="rc bg-draw"><div class="rc-bar" style="backgrou
 </div>
 <div style="text-align:center;margin:4px 0"><button onclick="dClr()" style="background:none;border:1px solid var(--s3);border-radius:8px;padding:3px 10px;color:var(--t2);font-family:inherit;font-size:.65rem;cursor:pointer">נקה</button></div>
 <div class="abtns"><button style="background:var(--teal)" onclick="dRes(true)">ניחשו! ✅</button><button style="background:var(--coral)" onclick="dRes(false)">לא ניחשו ❌</button></div></div>`);
-initDC();DS.tmr=setInterval(()=>{DS.time--;SND.play('tick');const b=document.getElementById('db');if(b)b.style.width=(DS.time/DS.total*100)+'%';const t=document.getElementById('dt');if(t)t.textContent=DS.time;if(DS.time<=5){if(b)b.style.background='var(--coral)';if(t)t.classList.add('low');}if(DS.time<=0){clearInterval(DS.tmr);dRes(false);}},1000);}
+initDC();DS.tmr=setInterval(()=>{DS.time--;SND.play('tick');updateCircle('dt','db',DS.time,DS.total,'var(--sky)');if(DS.time<=0){clearInterval(DS.tmr);dRes(false);}},1000);}
 function initDC(){const cv=document.getElementById('dcv');if(!cv)return;const dpr=window.devicePixelRatio||1;cv.width=260*dpr;cv.height=260*dpr;const c=cv.getContext('2d');c.scale(dpr,dpr);cv.style.width='260px';cv.style.height='260px';c.fillStyle='#fff';c.fillRect(0,0,260,260);c.strokeStyle='#333';c.lineWidth=3;c.lineCap='round';let d=false;function pos(e){const r=cv.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:(t.clientX-r.left)*(260/r.width),y:(t.clientY-r.top)*(260/r.height)};}cv.onpointerdown=e=>{d=true;const p=pos(e);c.beginPath();c.moveTo(p.x,p.y);};cv.onpointermove=e=>{if(!d)return;const p=pos(e);c.lineTo(p.x,p.y);c.stroke();};cv.onpointerup=()=>{d=false;};cv.onpointerleave=()=>{d=false;};
 cv.ontouchstart=e=>{e.preventDefault();cv.onpointerdown(e.touches[0]);};
 cv.ontouchmove=e=>{e.preventDefault();cv.onpointermove(e.touches[0]);};
@@ -1496,9 +1542,9 @@ ${sp}${explain}
 <div class="rc bg-rapid"><div class="rc-bar" style="background:var(--gold)"></div><div class="rc-glow" style="background:var(--gold)"></div>
 <div class="rc-icon">${ic('bolt',36,'var(--gold)')}</div>
 <div class="cq">${q.q}</div>
-<div class="tnum" id="rt" style="color:var(--gold)">${tl}</div>
+${circleTimer('rt',tl,tl,'var(--gold)')}
 <div class="acts"><button class="ab ab-g" onclick="rEnd(${pi},${pts},true)">הצליח! (+${pts})</button><button class="ab" style="background:var(--coral)" onclick="rEnd(${pi},0,false)">לא הספיק</button></div></div>`);
-tmrId=setInterval(()=>{tl--;SND.play('tick');const el=document.getElementById('rt');if(!el){clearInterval(tmrId);return;}el.textContent=tl;if(tl<=3)el.classList.add('low');if(tl<=0){clearInterval(tmrId);el.textContent='⏰';}},1000);}
+const rapidTotal=tl;tmrId=setInterval(()=>{tl--;SND.play('tick');updateCircle('rt',null,tl,rapidTotal,'var(--gold)');if(tl<=0){clearInterval(tmrId);const el=document.getElementById('rt');if(el)el.textContent='⏰';}},1000);}
 function rEnd(pi,pts,ok){if(tmrId){clearInterval(tmrId);tmrId=null;}if(ok){scores[pi]+=pts;ptPop(P[pi].color,'+'+pts);SND.play('win');vib(60);updateSB();scorePop(pi);trackStreak(pi);}else SND.play('buzz');advance();}
 
 // ===== DILEMMA =====
@@ -1547,26 +1593,31 @@ ${sp}${explain}
 
 // ===== PHASE INTRO — dramatic =====
 function showPI(phase){const ov=document.getElementById('overlay');SND.play('tada');phasesSeen++;
+function spawnParticles(container,color,count){for(let i=0;i<count;i++){const p=document.createElement('div');p.className='phase-particle';const sz=3+Math.random()*5;p.style.cssText=`width:${sz}px;height:${sz}px;background:${color};left:${10+Math.random()*80}%;bottom:${10+Math.random()*40}%;animation-delay:${Math.random()*1.5}s;animation-duration:${1.5+Math.random()*1.5}s`;container.appendChild(p);setTimeout(()=>p.remove(),3500);}}
 function showPhaseContent(){SND.play('reveal');vib([50,50,50,50,200]);
 const pSorted=P.map((p,i)=>({n:p.name,s:scores[i]||0,c:p.color})).sort((a,b)=>b.s-a.s);
-const sumHTML=pSorted[0].s>0?'<div style="font-size:.65rem;color:var(--t2);margin-top:8px">'+pSorted.map((p,i)=>`<span style="color:${p.c};font-weight:700">${p.n} ${p.s}</span>`).join(' · ')+'</div>':'';
-ov.innerHTML=`<div style="font-size:4rem;animation:popIn .5s ease">${PH_E[phase]}</div>
-<div class="ov-t" style="color:${PH_C[phase]}">שלב ${phase+1}: ${PH_N[phase]}</div>
-<div class="ov-s">${PH_D[phase]}</div>${sumHTML}
-${phase===2?'<div style="font-size:.72rem;color:var(--gold);font-weight:700">שאלת זהב מחכה!</div>':''}
-<button class="ov-b" style="background:${PH_C[phase]}" onclick="closeOv();advanceEvent()">יאללה!</button>`;}
-if(phasesSeen<=1){ov.innerHTML=`<div class="phase-count" style="color:${PH_C[phase]}">3</div>`;ov.classList.add('on');
-let c=3;const ci=setInterval(()=>{c--;if(c>0){ov.querySelector('.phase-count').textContent=c;SND.play('tick');}
-else{clearInterval(ci);showPhaseContent();}},500);}
+const sumHTML=pSorted[0].s>0?'<div style="font-size:.65rem;color:var(--t2);margin-top:12px">'+pSorted.map((p,i)=>`<span style="color:${p.c};font-weight:700">${p.n} ${p.s}</span>`).join(' · ')+'</div>':'';
+ov.innerHTML=`<div class="phase-bg" style="background:radial-gradient(circle at 50% 40%,${PH_C[phase]}15,var(--bg))">
+<div class="phase-num" style="color:${PH_C[phase]}">${phase+1}</div>
+<div class="phase-particles" id="phaseParticles"></div>
+<div style="font-size:4rem;animation:popIn .5s ease">${PH_E[phase]}</div>
+<div class="phase-title-reveal" style="color:${PH_C[phase]}">שלב ${phase+1}: ${PH_N[phase]}</div>
+<div class="phase-sub-reveal">${PH_D[phase]}</div>${sumHTML}
+${phase===2?'<div class="phase-sub-reveal" style="animation-delay:.8s;color:var(--gold);font-weight:700;font-size:.78rem">שאלת זהב מחכה!</div>':''}
+<button class="ov-b" style="background:${PH_C[phase]};animation:phaseSubIn .5s ease both;animation-delay:.9s;opacity:0;margin-top:8px" onclick="closeOv();advanceEvent()">יאללה!</button></div>`;
+spawnParticles(document.getElementById('phaseParticles'),PH_C[phase],15);}
+if(phasesSeen<=1){ov.innerHTML=`<div class="phase-bg" style="background:radial-gradient(circle at 50% 40%,${PH_C[phase]}15,var(--bg))"><div class="phase-num" style="color:${PH_C[phase]}">${phase+1}</div><div class="phase-count" style="color:${PH_C[phase]}">3</div></div>`;ov.classList.add('on');
+let c=3;const ci=setInterval(()=>{c--;if(c>0){const el=ov.querySelector('.phase-count');if(el)el.textContent=c;SND.play('tick');}
+else{clearInterval(ci);showPhaseContent();}},600);}
 else{ov.classList.add('on');showPhaseContent();}}
 
 // ===== FAMILY CHALLENGE =====
 function showFC(ci){const phase=cPhase();const ch=nx(pools.fc,idx.fc++);let tl=ch.t;const ov=document.getElementById('overlay');
-ov.innerHTML=`<div style="animation:popIn .5s ease">${ic('people',56,'var(--mint)')}</div><div class="ov-t" style="color:var(--mint)">אתגר משפחתי!</div><div class="ov-s">${ch.q}</div>
-<div class="tnum" id="ct" style="color:var(--mint)">${tl}</div>
+const fcTotal=tl;ov.innerHTML=`<div style="animation:popIn .5s ease">${ic('people',56,'var(--mint)')}</div><div class="ov-t" style="color:var(--mint)">אתגר משפחתי!</div><div class="ov-s">${ch.q}</div>
+${circleTimer('ct',tl,fcTotal,'var(--mint)')}
 <div style="font-size:.68rem;color:var(--gold)">הצלחנו = +2 לכולם!</div>
 <div style="display:flex;gap:8px"><button class="ov-b" style="background:var(--teal)" onclick="fcR(true)">הצלחנו!</button><button class="ov-b" style="background:var(--coral)" onclick="fcR(false)">לא הפעם</button></div>`;
-ov.classList.add('on');tmrId=setInterval(()=>{tl--;SND.play('tick');const el=document.getElementById('ct');if(!el){clearInterval(tmrId);return;}el.textContent=tl;if(tl<=5)el.classList.add('low');if(tl<=0){clearInterval(tmrId);el.textContent='⏰';}},1000);}
+ov.classList.add('on');tmrId=setInterval(()=>{tl--;SND.play('tick');updateCircle('ct',null,tl,fcTotal,'var(--mint)');if(tl<=0){clearInterval(tmrId);const el=document.getElementById('ct');if(el)el.textContent='⏰';}},1000);}
 function fcR(ok){if(tmrId){clearInterval(tmrId);tmrId=null;}if(ok){P.forEach((_,i)=>{scores[i]+=2;});updateSB();ptPop('var(--mint)','+2 לכולם!');SND.play('win');vib(100);}closeOv();advanceEvent();}
 
 // ===== BIG QUESTION =====
@@ -1799,8 +1850,11 @@ if(topQuote)h+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid 
 h+='<div style="font-size:.55rem;color:var(--t3);margin-top:8px">השיחה ממשיכה לבד.</div>';
 h+='</div>';
 h+=`<div style="margin:12px 0;text-align:center"><button class="gobtn" onclick="challengeShare()" style="max-width:340px">אתגרו משפחה אחרת!</button></div>`;
+h+=buildDonateHTML();
 h+=`<div class="fin-btns"><button class="fin-b" style="background:var(--gold)" onclick="genWC()">כרטיס מנצח</button><button class="fin-b" style="background:var(--lav)" onclick="share()">שתף תוצאות</button><button class="fin-b" style="background:var(--coral)" onclick="launch()">עוד סיבוב</button><button class="fin-b" style="background:var(--teal)" onclick="showFB()">פידבק</button><button class="fin-b" style="background:var(--s3)" onclick="goSetup()">חדש</button></div>`;
+h+=buildHistoryHTML();
 document.getElementById('finW').innerHTML=h;
+saveHistory();
 order.forEach((p,di)=>{setTimeout(()=>{const el=document.getElementById('pb'+di);if(el)el.style.height=ho[di]+'px';},150+di*200);});
 for(let i=0;i<50;i++)setTimeout(()=>confetti(COL[Math.floor(Math.random()*COL.length)]),i*40);}
 
@@ -1876,6 +1930,45 @@ function shuf(a){for(let i=a.length-1;i>0;i--){const j=0|Math.random()*(i+1);[a[
 function nx(a,i){return a[i%a.length];}
 function confetti(mc){const cs=[mc,'#ffc73a','#ff6b6b','#74c0fc','#63e6be','#b197fc'];const sh=['','cf-c','cf-s'];
 for(let i=0;i<12;i++){const p=document.createElement('div');const s=sh[Math.floor(Math.random()*sh.length)];p.className='cf '+s;const sz=4+Math.random()*6;p.style.cssText=`left:${20+Math.random()*60}%;top:-8px;width:${sz}px;height:${sz*(s==='cf-c'?1:1.4)}px;background:${cs[0|Math.random()*cs.length]};--d:${1.2+Math.random()*1.5}s;--r:${Math.random()*720-360}deg;animation-delay:${Math.random()*.3}s`;document.body.appendChild(p);setTimeout(()=>p.remove(),3500);}}
+
+// ===== THEME (Light/Dark) =====
+function toggleTheme(){const app=document.querySelector('.app');const isLight=app.classList.toggle('light');document.body.classList.toggle('light-body',isLight);document.getElementById('themeB').textContent=isLight?'🌙':'☀';try{localStorage.setItem('mimi_theme',isLight?'light':'dark');}catch(e){}}
+(function(){try{const t=localStorage.getItem('mimi_theme');if(t==='light'){document.querySelector('.app').classList.add('light');document.body.classList.add('light-body');document.getElementById('themeB').textContent='🌙';}}catch(e){}})();
+
+// ===== GAME HISTORY =====
+function saveHistory(){try{const hist=JSON.parse(localStorage.getItem('mimi_history')||'[]');const sorted=P.map((p,i)=>({name:p.name,score:scores[i]||0,color:p.color})).sort((a,b)=>b.score-a.score);const dur=Math.round((Date.now()-gS.t0)/1000);hist.unshift({date:new Date().toLocaleDateString('he-IL'),winner:sorted[0].name,winnerColor:sorted[0].color,score:sorted[0].score,players:sorted,duration:dur,rounds:gS.rounds});if(hist.length>20)hist.length=20;localStorage.setItem('mimi_history',JSON.stringify(hist));}catch(e){}}
+function getHistory(){try{return JSON.parse(localStorage.getItem('mimi_history')||'[]');}catch(e){return[];}}
+function buildHistoryHTML(){const hist=getHistory();if(hist.length===0)return '';let h='<div style="width:100%;max-width:360px;font-size:.72rem;font-weight:700;text-align:center;color:var(--t2);margin:10px 0 4px">משחקים קודמים</div>';hist.slice(0,5).forEach(g=>{h+=`<div class="hist-item"><div style="flex:1;text-align:right"><div class="hist-winner" style="color:${g.winnerColor||'var(--gold)'}">${g.winner} ניצח/ה!</div><div class="hist-score">${g.players.length} שחקנים • ${g.rounds} סיבובים</div></div><div class="hist-date">${g.date}</div></div>`;});return h;}
+
+// ===== CIRCULAR TIMER =====
+function circleTimer(id,time,total,color){const pct=time/total;const r=36;const circ=2*Math.PI*r;const offset=circ*(1-pct);return `<div class="ctimer"><svg viewBox="0 0 80 80"><circle class="ctimer-bg" cx="40" cy="40" r="${r}"/><circle class="ctimer-circle" cx="40" cy="40" r="${r}" stroke="${color}" stroke-dasharray="${circ}" stroke-dashoffset="${offset}"/></svg><div class="ctimer-num ${time<=5?'low':''}" id="${id}" style="color:${color}">${time}</div></div>`;}
+function updateCircle(timerId,barId,time,total,color){const t=document.getElementById(timerId);if(t){t.textContent=time;if(time<=5)t.classList.add('low');}const r=36;const circ=2*Math.PI*r;const offset=circ*(1-time/total);const circles=document.querySelectorAll('.ctimer-circle');circles.forEach(c=>{if(c.closest('.ctimer')?.querySelector('#'+timerId)){c.style.strokeDashoffset=offset;if(time<=5)c.style.stroke='var(--coral)';}});}
+
+// ===== DONATION =====
+function buildDonateHTML(){return `<div class="donate-card">
+<div style="font-size:1.5rem;margin-bottom:4px">☕</div>
+<div style="font-size:.95rem;font-weight:800;color:var(--gold)">נהנתם? עזרו לנו להמשיך ליצור!</div>
+<div style="font-size:.65rem;color:var(--t2);margin:6px 0;line-height:1.6">המשחק הזה נוצר באהבה, בלילות ובסופי שבוע.<br>כל תרומה עוזרת לנו להוסיף עוד שאלות, משחקים ופיצ׳רים.</div>
+<div class="donate-tiers">
+<div class="donate-tier" onclick="openDonate('small')">
+<div class="donate-tier-emoji">☕</div>
+<div class="donate-tier-price">5₪</div>
+<div class="donate-tier-desc">קפה קטן<br>+ שאלה בשמכם</div>
+</div>
+<div class="donate-tier" onclick="openDonate('medium')">
+<div class="donate-tier-emoji">🍕</div>
+<div class="donate-tier-price">20₪</div>
+<div class="donate-tier-desc">פיצה למפתח<br>+ חבילת שאלות חדשה</div>
+</div>
+<div class="donate-tier" onclick="openDonate('large')">
+<div class="donate-tier-emoji">🎉</div>
+<div class="donate-tier-price">50₪</div>
+<div class="donate-tier-desc">ערב שלם<br>+ השם שלכם בקרדיטים<br>+ הצבעה על תוכן הבא</div>
+</div>
+</div>
+<div class="donate-social">כבר תרמו <b style="color:var(--gold)">127</b> משפחות — תודה ענקית!</div>
+</div>`;}
+function openDonate(tier){const url='https://buymeacoffee.com/mimimigame';try{window.open(url,'_blank');}catch(e){navigator.clipboard.writeText(url).then(()=>alert('הלינק הועתק!')).catch(()=>{});}}
 
 // PWA Service Worker
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
