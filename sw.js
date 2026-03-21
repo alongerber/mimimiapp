@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mimi-v3';
+const CACHE_NAME = 'mimi-v4';
 const ASSETS = [
   './',
   './index.html',
@@ -22,6 +22,8 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+  // Never cache API calls
+  if (e.request.url.includes('/api/')) return;
   // Network first for HTML and fonts, cache first for other assets
   if (e.request.url.includes('fonts.g') || e.request.mode === 'navigate') {
     e.respondWith(

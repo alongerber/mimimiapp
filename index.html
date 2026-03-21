@@ -568,7 +568,6 @@ body.light-body{background:#f5f5f0}
   <div style="display:flex;gap:8px;margin-top:12px">
     <button class="mc" style="flex:1" onclick="toggleHelp()">הבנתי!</button>
     <button class="mc" style="flex:0 0 auto;background:var(--s3);color:var(--t2);padding:10px 14px" onclick="document.querySelector('.app').classList.toggle('big-text')">א±</button>
-    <button class="mc" style="flex:0 0 auto;background:var(--s3);color:var(--t2);padding:10px 14px;font-size:.65rem" onclick="setupGeminiKey()">AI</button>
   </div>
 </div></div>
 <div class="onb" id="onb" style="display:none">
@@ -1151,8 +1150,6 @@ let MIC={};
 let aiSummaryCache=null;
 // Feedback state
 let fbData={funniestRound:'',boringMoment:false,favType:'',wouldPay:''};
-// Gemini API key (user must set)
-let GEMINI_API_KEY=localStorage.getItem('mimi_gemini_key')||'';
 function setMode(m){gameLen=m;document.getElementById('mShort').classList.toggle('on',m==='short');document.getElementById('mFull').classList.toggle('on',m==='full');}
 function setVM(m){voteMode=m;document.getElementById('vmPass').classList.toggle('on',m==='pass');document.getElementById('vmOpen').classList.toggle('on',m==='open');document.getElementById('vmDesc').textContent=m==='pass'?'כל אחד מצביע בסתר בטלפון':'כולם מצביעים ביחד';}
 function setAge(a){ageGroup=a;document.querySelectorAll('.age-btn').forEach(b=>b.classList.toggle('on',b.textContent.includes(a.replace('+',''))));}
@@ -2046,7 +2043,6 @@ async function analyzeMicWithGemini(pi,claim,convinced,total,pct){
 const p=P[pi];
 let analysis=null;
 
-if(GEMINI_API_KEY){
 try{
 const prompt=`אתה מנתח שפה שנון וחד בעברית. שחקן בשם "${p.name}" ניסה לשכנע את המשפחה בטענה: "${claim}".
 ${convinced} מתוך ${total} השתכנעו (${pct}%).
@@ -2057,18 +2053,17 @@ ${convinced} מתוך ${total} השתכנעו (${pct}%).
 אל תשתמש באימוג'ים. אל תכתוב יותר מ-4 משפטים.
 החזר JSON: {"score":N,"comment":"...","funnyLine":"...","verdict":"משכנע/לא משכנע/על הגבול"}`;
 
-const resp=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,{
+const resp=await fetch('/api/gemini',{
 method:'POST',
 headers:{'Content-Type':'application/json'},
-body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.9,maxOutputTokens:300}})
+body:JSON.stringify({prompt,type:'mic'})
 });
+if(resp.ok){
 const data=await resp.json();
-const text=data?.candidates?.[0]?.content?.parts?.[0]?.text||'';
-// Try to parse JSON from response
-const jsonMatch=text.match(/\{[\s\S]*\}/);
+const jsonMatch=(data.text||'').match(/\{[\s\S]*\}/);
 if(jsonMatch)analysis=JSON.parse(jsonMatch[0]);
-}catch(e){console.log('Gemini error:',e);}
 }
+}catch(e){console.log('AI analysis error:',e);}
 
 // Fallback analysis if no API or error
 if(!analysis){
@@ -2166,7 +2161,6 @@ const mins=Math.floor(durSec/60);
 
 let summaryHTML='';
 
-if(GEMINI_API_KEY){
 try{
 const prompt=`אתה פרשן משפחתי שנון וחד בעברית. סכם ערב משחק משפחתי.
 
@@ -2188,20 +2182,20 @@ ${micData.length>0?'- סיבובי מיקרופון: '+JSON.stringify(micData):'
 אל תשתמש באימוג'ים. כתוב בעברית תקינה. היה מצחיק אבל לא גס.
 החזר JSON: {"title":"...","star":{"name":"...","why":"..."},"highlight":"...","lawyer":{"name":"...","why":"..."},"quote":"...","score":N}`;
 
-const resp=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,{
+const resp=await fetch('/api/gemini',{
 method:'POST',
 headers:{'Content-Type':'application/json'},
-body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.95,maxOutputTokens:500}})
+body:JSON.stringify({prompt,type:'summary'})
 });
+if(resp.ok){
 const data=await resp.json();
-const text=data?.candidates?.[0]?.content?.parts?.[0]?.text||'';
-const jsonMatch=text.match(/\{[\s\S]*\}/);
+const jsonMatch=(data.text||'').match(/\{[\s\S]*\}/);
 if(jsonMatch){
 const s=JSON.parse(jsonMatch[0]);
 summaryHTML=buildAISummaryHTML(s);
 }
-}catch(e){console.log('AI Summary error:',e);}
 }
+}catch(e){console.log('AI Summary error:',e);}
 
 // Fallback
 if(!summaryHTML){
@@ -2507,33 +2501,6 @@ function buildDonateHTML(){return `<div class="donate-card">
 <div class="donate-social">כבר <b style="color:var(--gold)">127</b> משפחות השקיעו בערבים הבאים שלהן</div>
 </div>`;}
 function openDonate(tier){try{gtag('event','donate_click',{tier});}catch(e){}const url='https://buymeacoffee.com/mimimigame';try{window.open(url,'_blank');}catch(e){navigator.clipboard.writeText(url).then(()=>alert('הלינק הועתק!')).catch(()=>{});}}
-
-// Gemini API key setup
-function setupGeminiKey(){
-const current=localStorage.getItem('mimi_gemini_key')||'';
-const m=document.createElement('div');
-m.className='quote-modal';m.id='geminiM';
-m.innerHTML=`<div style="font-size:1.2rem;font-weight:900;color:var(--lav)">הגדרת Gemini AI</div>
-<div style="font-size:.68rem;color:var(--t2);max-width:280px;line-height:1.6;margin:8px 0">הוסיפו מפתח API של Gemini כדי לאפשר ניתוח נאומים ופרשנות AI בסוף המשחק.</div>
-<input class="quote-input" id="geminiKeyI" type="password" placeholder="Gemini API Key" value="${current}" style="font-size:.75rem">
-<div style="display:flex;gap:8px">
-<button class="ab ab-g" onclick="saveGeminiKey()">שמור</button>
-<button class="ab ab-m" onclick="document.getElementById('geminiM').remove()">ביטול</button>
-${current?'<button class="ab" style="background:var(--coral)" onclick="clearGeminiKey()">מחק מפתח</button>':''}
-</div>`;
-document.body.appendChild(m);document.getElementById('geminiKeyI').focus();
-}
-function saveGeminiKey(){
-const key=document.getElementById('geminiKeyI').value.trim();
-if(key){localStorage.setItem('mimi_gemini_key',key);GEMINI_API_KEY=key;}
-document.getElementById('geminiM').remove();
-ptPop('var(--lav)','מפתח נשמר!');
-}
-function clearGeminiKey(){
-localStorage.removeItem('mimi_gemini_key');GEMINI_API_KEY='';
-document.getElementById('geminiM').remove();
-ptPop('var(--coral)','מפתח נמחק');
-}
 
 // PWA Service Worker
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
