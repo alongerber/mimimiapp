@@ -647,6 +647,7 @@ const AVATARS=[
 /* avI removed */
 function gAv(pi,sz){const av=P[pi]?.avId?AVATARS.find(a=>a.id===P[pi].avId):null;return av?`<img src="${av.img}" style="width:${sz}px;height:${sz}px;border-radius:${sz*.26}px;object-fit:cover">`:`<span style="font-size:${sz*.5}px;color:${P[pi]?.color};font-weight:900">${P[pi]?.letter||'?'}</span>`;}
 function g(pi,m,f){return P[pi]?.gender==='f'?f:m;}
+function pickTarget(pi){const isChild=P[pi].role==='child';let cands=P.map((_,j)=>j).filter(j=>j!==pi);if(isChild){const adults=cands.filter(j=>P[j].role==='adult');if(adults.length>0)cands=adults;}return cands[Math.floor(Math.random()*cands.length)];}
 function vib(ms){try{navigator.vibrate(ms);}catch(e){}}
 
 // ===== SOUND =====
@@ -1211,7 +1212,7 @@ function filterByAge(arr){return arr;}
 // ===== SETUP =====
 (function(){const r=document.getElementById('cntR');for(let i=3;i<=8;i++){const b=document.createElement('button');b.className='cb'+(i===pCnt?' on':'');b.textContent=i;b.onclick=()=>{pCnt=i;r.querySelectorAll('.cb').forEach((x,j)=>x.classList.toggle('on',j+3===i));};r.appendChild(b);}})();
 function ss1Show(){document.getElementById('ss1').style.display='';document.getElementById('ss2').style.display='none';document.getElementById('ss3').style.display='none';try{const sh=document.getElementById('setupHist');if(sh){const hist=getHistory();if(hist.length>0){let hh='<div style="font-size:.65rem;font-weight:700;text-align:center;color:var(--t3);margin:12px 0 4px">משחקים אחרונים</div>';hist.slice(0,3).forEach(g=>{hh+=`<div class="hist-item"><div style="flex:1;text-align:right"><div style="font-size:.72rem;font-weight:700;color:${g.winnerColor||'var(--gold)'}">${g.winner} ניצח/ה</div><div style="font-size:.58rem;color:var(--t2)">${g.players.length} שחקנים</div></div><div style="font-size:.55rem;color:var(--t3)">${g.date}</div></div>`;});sh.innerHTML=hh;}}}catch(e){}}
-function startPS(){try{gtag('event','setup_step',{step:'player_names',player_count:pCnt});}catch(e){}PD=[];for(let i=0;i<pCnt;i++)PD.push({name:'',gender:'m',avId:null});curSP=0;document.getElementById('ss1').style.display='none';document.getElementById('ss2').style.display='';showAllPlayers();}
+function startPS(){try{gtag('event','setup_step',{step:'player_names',player_count:pCnt});}catch(e){}PD=[];for(let i=0;i<pCnt;i++)PD.push({name:'',gender:'m',avId:null,role:'adult'});curSP=0;document.getElementById('ss1').style.display='none';document.getElementById('ss2').style.display='';showAllPlayers();}
 function showAllPlayers(){
 // Assign random avatars to anyone without one
 const used=PD.map(p=>p.avId).filter(Boolean);
@@ -1221,9 +1222,10 @@ for(let i=0;i<pCnt;i++){const av=AVATARS.find(a=>a.id===PD[i].avId);
 h+=`<div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:var(--s1);border-radius:14px;padding:8px 12px;border:1.5px solid ${COL[i]}22">
 <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2.5px solid ${COL[i]};cursor:pointer" onclick="pickAvFor(${i})">${av?'<img src="'+av.img+'" style="width:100%;height:100%;object-fit:cover">':'?'}</div>
 <input class="sni" style="margin:0;text-align:right;border-color:${COL[i]}33" placeholder="שחקן/ית ${i+1}" maxlength="10" value="${PD[i].name}" oninput="PD[${i}].name=this.value.trim();chkAll()">
-<div style="display:flex;gap:4px">
+<div style="display:flex;gap:4px;align-items:center">
 <button class="gb ${PD[i].gender==='m'?'on':''}" onclick="PD[${i}].gender='m';showAllPlayers()" style="padding:6px 8px;font-size:.65rem">בן</button>
 <button class="gb ${PD[i].gender==='f'?'on':''}" onclick="PD[${i}].gender='f';showAllPlayers()" style="padding:6px 8px;font-size:.65rem">בת</button>
+<button class="gb ${PD[i].role==='child'?'on':''}" onclick="PD[${i}].role=PD[${i}].role==='child'?'adult':'child';showAllPlayers()" style="padding:6px 8px;font-size:.7rem" title="${PD[i].role==='child'?'ילד/ה':'מבוגר/ת'}">${PD[i].role==='child'?'👶':'👤'}</button>
 </div></div>`;}
 document.getElementById('s2b').innerHTML=h;
 document.getElementById('s2h').innerHTML='';
@@ -1244,12 +1246,12 @@ function setAvFor(idx,id){PD[idx].avId=id;SND.play('pop');showAllPlayers();}
 /* spChk removed */
 function nextPS(){showSum();}
 function showSum(){document.getElementById('ss2').style.display='none';document.getElementById('ss3').style.display='';
-let h='';PD.forEach((d,i)=>{const av=AVATARS.find(a=>a.id===d.avId);h+=`<div class="scard" style="animation-delay:${i*.1}s"><div class="scard-av" style="border-color:${COL[i]}">${av?`<img src="${av.img}">`:'?'}</div><div style="flex:1;text-align:right"><div style="font-size:.9rem;font-weight:800;color:${COL[i]}">${esc(d.name)}</div><div style="font-size:.55rem;color:var(--t2)">${d.gender==='m'?'♂ בן':'♀ בת'}</div></div></div>`;});
+let h='';PD.forEach((d,i)=>{const av=AVATARS.find(a=>a.id===d.avId);h+=`<div class="scard" style="animation-delay:${i*.1}s"><div class="scard-av" style="border-color:${COL[i]}">${av?`<img src="${av.img}">`:'?'}</div><div style="flex:1;text-align:right"><div style="font-size:.9rem;font-weight:800;color:${COL[i]}">${esc(d.name)}</div><div style="font-size:.55rem;color:var(--t2)">${d.gender==='m'?'♂ בן':'♀ בת'} · ${d.role==='child'?'👶 ילד/ה':'👤 מבוגר/ת'}</div></div></div>`;});
 document.getElementById('pSum').innerHTML=h;}
 
 // ===== LAUNCH =====
 function launch(){
-clearSave();seenTypes={};P=[];for(let i=0;i<pCnt;i++){const pd=PD[i];const sn=pd.name.replace(/[<>"&]/g,'');P.push({name:sn,color:COL[i],letter:sn[0]||'?',avId:pd.avId,gender:pd.gender});}
+clearSave();seenTypes={};P=[];for(let i=0;i<pCnt;i++){const pd=PD[i];const sn=pd.name.replace(/[<>"&]/g,'');P.push({name:sn,color:COL[i],letter:sn[0]||'?',avId:pd.avId,gender:pd.gender,role:pd.role||'adult'});}
 const tpp=gameLen==='short'?Math.max(2,Math.floor(16/P.length)):Math.max(3,Math.floor(30/P.length));const perPhase=Math.floor(tpp*P.length/3);
 // Type distribution with pacing (long-short alternation)
 const longTypes=['vote','dilemma','pdilemma','blind'];
@@ -1268,7 +1270,7 @@ let goldIdx=-1;if(phase===2&&n>2)goldIdx=n-2;
 for(let i=0;i<n;i++){const mn=Math.min(...tc);const c=tc.map((v,j)=>v===mn?j:-1).filter(x=>x>=0);const pi=c[0|Math.random()*c.length];tc[pi]++;
 const ev={type:'spin',pi,roundType:types[i],phase};
 // Assign second player for reveal/pair missions
-if(types[i]==='reveal'){const others=P.map((_,j)=>j).filter(j=>j!==pi);ev.pi2=others[Math.floor(Math.random()*others.length)];}
+if(types[i]==='reveal'){ev.pi2=pickTarget(pi);}
 if(i===specialIdx)ev.special='double';if(i===goldIdx)ev.special='gold';
 out.push(ev);
 // Social validation moment every 5 rounds
@@ -1676,7 +1678,7 @@ gc(`<div class="nar" style="background:${RT.hotseat.c}11;border-color:${RT.hotse
 
 // ===== REVEAL (new type!) =====
 function showReveal(pi,pi2,sp,mult){
-if(pi2===undefined){const others=P.map((_,j)=>j).filter(j=>j!==pi);pi2=others[Math.floor(Math.random()*others.length)];}
+if(pi2===undefined){pi2=pickTarget(pi);}
 const q=nx(pools['rv_'+pk()],idx['rv_'+pk()]++);
 const qText=q.q.replace(/%1/g,P[pi].name).replace(/%2/g,P[pi2].name);
 const isHeart=q.type==='heart'||q.type==='deep';
@@ -1706,7 +1708,8 @@ function showMSN(pi,sp,mult,ev){const m=nx(pools['mi_'+pk()],idx['mi_'+pk()]++);
 const p=P[pi];
 const firstTime=!seenTypes['mission'];seenTypes['mission']=true;
 const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('target',16,'var(--peach)')} משימה</div><div class="explain-text">שלוש רמות. בחרו חכם.<br>${p.name} ${g(pi,'מבצע','מבצעת')}, כולם שופטים!</div></div>`:'';
-let opts='<div class="mopts">';m.o.forEach((o,i)=>{const t=o.t.replace(/%2/g,ev.pi2!==undefined?P[ev.pi2].name:P[(pi+1)%P.length].name);opts+=`<div class="mopt" onclick="mPick(this,${o.d})"><span class="mopt-s">${'⭐'.repeat(o.d)} +${o.d*mult}</span><span>${t}</span></div>`;});opts+='</div>';
+const _mt=ev.pi2!==undefined?ev.pi2:pickTarget(pi);
+let opts='<div class="mopts">';m.o.forEach((o,i)=>{const t=o.t.replace(/%2/g,P[_mt].name);opts+=`<div class="mopt" onclick="mPick(this,${o.d})"><span class="mopt-s">${'⭐'.repeat(o.d)} +${o.d*mult}</span><span>${t}</span></div>`;});opts+='</div>';
 gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,52)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">משימה!</div></div></div>
 ${sp}${explain}
 <div class="rc bg-mission"><div class="rc-bar" style="background:var(--peach)"></div><div class="rc-glow" style="background:var(--peach)"></div>
@@ -1981,7 +1984,7 @@ updateSB();}
 
 // === D4: Blind Reaction ===
 function showBlind(pi,pi2,sp,mult){
-if(pi2===undefined){const others=P.map((_,j)=>j).filter(j=>j!==pi);pi2=others[Math.floor(Math.random()*others.length)];}
+if(pi2===undefined){pi2=pickTarget(pi);}
 const pool=BLIND[pk()]||BLIND.fire;
 const q=pool[Math.floor(Math.random()*pool.length)];
 const q1=q.q1.replace(/%1/g,P[pi].name).replace(/%2/g,P[pi2].name);
