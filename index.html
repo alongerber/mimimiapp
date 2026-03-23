@@ -1225,7 +1225,7 @@ h+=`<div style="display:flex;align-items:center;gap:10px;margin:6px 0;background
 <div style="display:flex;gap:4px;align-items:center">
 <button class="gb ${PD[i].gender==='m'?'on':''}" onclick="PD[${i}].gender='m';showAllPlayers()" style="padding:6px 8px;font-size:.65rem">בן</button>
 <button class="gb ${PD[i].gender==='f'?'on':''}" onclick="PD[${i}].gender='f';showAllPlayers()" style="padding:6px 8px;font-size:.65rem">בת</button>
-<button class="gb ${PD[i].role==='child'?'on':''}" onclick="PD[${i}].role=PD[${i}].role==='child'?'adult':'child';showAllPlayers()" style="padding:6px 8px;font-size:.7rem" title="${PD[i].role==='child'?'ילד/ה':'מבוגר/ת'}">${PD[i].role==='child'?'👶':'👤'}</button>
+<button class="gb ${PD[i].role==='child'?'on':''}" onclick="PD[${i}].role=PD[${i}].role==='child'?'adult':'child';showAllPlayers()" style="padding:6px 8px;font-size:.6rem">${PD[i].role==='child'?'ילד':'גדול'}</button>
 </div></div>`;}
 document.getElementById('s2b').innerHTML=h;
 document.getElementById('s2h').innerHTML='';
@@ -1246,7 +1246,7 @@ function setAvFor(idx,id){PD[idx].avId=id;SND.play('pop');showAllPlayers();}
 /* spChk removed */
 function nextPS(){showSum();}
 function showSum(){document.getElementById('ss2').style.display='none';document.getElementById('ss3').style.display='';
-let h='';PD.forEach((d,i)=>{const av=AVATARS.find(a=>a.id===d.avId);h+=`<div class="scard" style="animation-delay:${i*.1}s"><div class="scard-av" style="border-color:${COL[i]}">${av?`<img src="${av.img}">`:'?'}</div><div style="flex:1;text-align:right"><div style="font-size:.9rem;font-weight:800;color:${COL[i]}">${esc(d.name)}</div><div style="font-size:.55rem;color:var(--t2)">${d.gender==='m'?'♂ בן':'♀ בת'} · ${d.role==='child'?'👶 ילד/ה':'👤 מבוגר/ת'}</div></div></div>`;});
+let h='';PD.forEach((d,i)=>{const av=AVATARS.find(a=>a.id===d.avId);h+=`<div class="scard" style="animation-delay:${i*.1}s"><div class="scard-av" style="border-color:${COL[i]}">${av?`<img src="${av.img}">`:'?'}</div><div style="flex:1;text-align:right"><div style="font-size:.9rem;font-weight:800;color:${COL[i]}">${esc(d.name)}</div><div style="font-size:.55rem;color:var(--t2)">${d.gender==='m'?'♂ בן':'♀ בת'} · ${d.role==='child'?'ילד/ה':'מבוגר/ת'}</div></div></div>`;});
 document.getElementById('pSum').innerHTML=h;}
 
 // ===== LAUNCH =====
