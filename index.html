@@ -104,7 +104,7 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 
 /* Wheel */
 .warea{position:relative;width:100%;max-width:280px;margin:6px auto;aspect-ratio:1;flex-shrink:0}
-.warea canvas{width:100%;height:100%;border-radius:50%;display:block;filter:drop-shadow(0 4px 20px rgba(0,0,0,.5))}
+.warea canvas{width:100%;height:100%;display:block;filter:drop-shadow(0 4px 20px rgba(0,0,0,.5))}
 .warea::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(255,215,0,.2);animation:wheelGlow 4s ease infinite;pointer-events:none}
 @keyframes wheelGlow{0%,100%{border-color:rgba(177,151,252,.15);box-shadow:0 0 8px rgba(177,151,252,.05)}50%{border-color:rgba(56,217,169,.2);box-shadow:0 0 16px rgba(56,217,169,.08)}}
 .warrow{position:absolute;top:-8px;left:50%;transform:translateX(-50%);z-index:5;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
@@ -608,8 +608,10 @@ body.light-body{background:#f8f6f1}
 </div>
 <canvas id="wcv" width="600" height="800" style="display:none"></canvas>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const COL=['#ff6b6b','#74c0fc','#63e6be','#ffc73a','#b197fc','#ffa94d','#38d9a9','#f783ac'];
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
 const TAU=Math.PI*2,ACAP=5;
 const I={
 crown:'<path d="M2 17h20l-3-11-5 5-4-7-4 7-5-5z"/><rect x="2" y="17" width="20" height="3" rx="1"/>',
@@ -1287,7 +1289,7 @@ function setAvFor(idx,id){PD[idx].avId=id;SND.play('pop');showAllPlayers();}
 /* spChk removed */
 function nextPS(){showSum();}
 function showSum(){document.getElementById('ss2').style.display='none';document.getElementById('ss3').style.display='';
-let h='';PD.forEach((d,i)=>{const av=AVATARS.find(a=>a.id===d.avId);h+=`<div class="scard" style="animation-delay:${i*.1}s"><div class="scard-av" style="border-color:${COL[i]}">${av?`<img src="${av.img}">`:'?'}</div><div style="flex:1;text-align:right"><div style="font-size:.9rem;font-weight:800;color:${COL[i]}">${d.name}</div><div style="font-size:.55rem;color:var(--t2)">${d.gender==='m'?'♂ בן':'♀ בת'}</div></div></div>`;});
+let h='';PD.forEach((d,i)=>{const av=AVATARS.find(a=>a.id===d.avId);h+=`<div class="scard" style="animation-delay:${i*.1}s"><div class="scard-av" style="border-color:${COL[i]}">${av?`<img src="${av.img}">`:'?'}</div><div style="flex:1;text-align:right"><div style="font-size:.9rem;font-weight:800;color:${COL[i]}">${esc(d.name)}</div><div style="font-size:.55rem;color:var(--t2)">${d.gender==='m'?'♂ בן':'♀ בת'}</div></div></div>`;});
 document.getElementById('pSum').innerHTML=h;}
 
 // ===== LAUNCH =====
@@ -1365,40 +1367,114 @@ document.getElementById('warea').style.display='none';document.getElementById('g
 showRound(ev);}}
 }
 
-// ===== WHEEL =====
-function drawWheel(rot){const cv=document.getElementById('cv');if(!cv)return;const c=cv.getContext('2d'),S=600,cx=S/2,r=S/2-24,N=P.length,sa=TAU/N;
+// ===== 3D WHEEL (Three.js) =====
+let wheel3D=null;
+function initWheel3D(){
+const cv=document.getElementById('cv');if(!cv||typeof THREE==='undefined')return false;
+try{
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(38,1,0.1,100);
+camera.position.set(0,3.2,8);camera.lookAt(0,0,0);
+const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+renderer.setSize(600,600);renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));renderer.setClearColor(0x000000,0);
+scene.add(new THREE.AmbientLight(0xffffff,0.55));
+const dl=new THREE.DirectionalLight(0xffffff,0.7);dl.position.set(2,8,4);scene.add(dl);
+const pl=new THREE.PointLight(0xffd700,0.3);pl.position.set(-3,3,5);scene.add(pl);
+const wg=new THREE.Group();scene.add(wg);
+wheel3D={scene,camera,renderer,wg,key:''};return true;
+}catch(e){return false;}}
+
+function makeWheelFace(){
+const S=1024,cx=S/2,r=S/2-8;
+const cv=document.createElement('canvas');cv.width=S;cv.height=S;
+const c=cv.getContext('2d');
+const N=P.length,sa=TAU/N;
+c.save();c.beginPath();c.arc(cx,cx,r,0,TAU);c.clip();
+P.forEach((p,i)=>{
+const a1=i*sa-Math.PI/2,a2=a1+sa;
+c.beginPath();c.moveTo(cx,cx);c.arc(cx,cx,r,a1,a2);c.closePath();
+const gr=c.createRadialGradient(cx,cx,r*.15,cx,cx,r);
+gr.addColorStop(0,'#ffffff33');gr.addColorStop(.3,p.color+'ee');gr.addColorStop(1,p.color);
+c.fillStyle=gr;c.fill();
+c.strokeStyle='rgba(0,0,0,.25)';c.lineWidth=3;c.stroke();
+c.beginPath();c.moveTo(cx,cx);
+c.lineTo(cx+Math.cos(a1)*r,cx+Math.sin(a1)*r);
+c.strokeStyle='rgba(255,255,255,.15)';c.lineWidth=1.5;c.stroke();
+c.save();c.translate(cx,cx);c.rotate(a1+sa/2);
+c.textAlign='center';c.textBaseline='middle';
+const fs=N>6?34:N>4?42:52;
+c.font=`800 ${fs}px Heebo`;
+c.shadowColor='rgba(0,0,0,.85)';c.shadowBlur=8;
+c.fillStyle='#fff';c.fillText(p.name,r*.58,0);
+c.shadowBlur=0;c.restore();});
+c.restore();return cv;}
+
+function buildWheel3D(){
+if(!wheel3D)return;const wg=wheel3D.wg;
+while(wg.children.length){const ch=wg.children[0];if(ch.geometry)ch.geometry.dispose();
+if(ch.material){(Array.isArray(ch.material)?ch.material:[ch.material]).forEach(m=>{if(m.map)m.map.dispose();m.dispose();});}wg.remove(ch);}
+const R=3,D=0.28,N=P.length;
+const tex=new THREE.CanvasTexture(makeWheelFace());
+tex.anisotropy=wheel3D.renderer.capabilities.getMaxAnisotropy();
+const cg=new THREE.CylinderGeometry(R,R,D,64);
+const disc=new THREE.Mesh(cg,[
+new THREE.MeshPhongMaterial({color:0x12122a,shininess:20}),
+new THREE.MeshPhongMaterial({map:tex,shininess:30}),
+new THREE.MeshPhongMaterial({color:0x0d0d1a})]);
+wg.add(disc);
+// Golden rings
+const rg=new THREE.TorusGeometry(R+0.05,0.09,12,80);
+const rm=new THREE.MeshPhongMaterial({color:0xffd700,shininess:100,specular:new THREE.Color(0xffffff),emissive:new THREE.Color(0x332200)});
+const rt=new THREE.Mesh(rg,rm);rt.rotation.x=Math.PI/2;rt.position.y=D/2;wg.add(rt);
+const rb=rt.clone();rb.position.y=-D/2;wg.add(rb);
+// Hub
+wg.add(new THREE.Mesh(new THREE.CylinderGeometry(0.35,0.35,D+0.05,32),
+new THREE.MeshPhongMaterial({color:0xffd700,shininess:100,specular:new THREE.Color(0xffffff),emissive:new THREE.Color(0x221100)})));
+wg.add(new THREE.Mesh(new THREE.CylinderGeometry(0.14,0.14,D+0.08,32),
+new THREE.MeshPhongMaterial({color:0xfff8e1,shininess:80,emissive:new THREE.Color(0x111100)})));
+// Dots on ring
+for(let i=0;i<N*3;i++){const a=i*(TAU/(N*3));
+const d=new THREE.Mesh(new THREE.SphereGeometry(0.03,6,6),
+new THREE.MeshPhongMaterial({color:i%3===0?0xffffff:0xffd700}));
+d.position.set(Math.cos(a)*(R+0.05),D/2+0.09,Math.sin(a)*(R+0.05));wg.add(d);}
+wheel3D.key=P.map(p=>p.name+p.color).join('|');}
+
+// ===== WHEEL DRAW =====
+function drawWheel(rot){
+if(!wheel3D&&typeof THREE!=='undefined')initWheel3D();
+if(wheel3D){
+const k=P.map(p=>p.name+p.color).join('|');
+if(wheel3D.key!==k)buildWheel3D();
+wheel3D.wg.rotation.y=Math.PI/2-rot;
+wheel3D.renderer.render(wheel3D.scene,wheel3D.camera);return;}
+// 2D fallback
+drawWheel2D(rot);}
+
+function drawWheel2D(rot){const cv=document.getElementById('cv');if(!cv)return;const c=cv.getContext('2d'),S=600,cx=S/2,r=S/2-24,N=P.length,sa=TAU/N;
 c.clearRect(0,0,S,S);
-// Outer golden ring with shadow
 c.save();c.shadowColor='rgba(0,0,0,.6)';c.shadowBlur=30;
 c.beginPath();c.arc(cx,cx,r+18,0,TAU);
 const ringGr=c.createRadialGradient(cx,cx,r+4,cx,cx,r+18);
 ringGr.addColorStop(0,'#c9a84c');ringGr.addColorStop(.3,'#ffd700');ringGr.addColorStop(.5,'#fff5cc');ringGr.addColorStop(.7,'#ffd700');ringGr.addColorStop(1,'#b8942e');
 c.fillStyle=ringGr;c.fill();c.restore();
-// Inner dark border
 c.beginPath();c.arc(cx,cx,r+4,0,TAU);c.fillStyle='#12122a';c.fill();
-// Decorative dots on ring
 for(let i=0;i<N*3;i++){const a=i*(TAU/(N*3));const dx=cx+Math.cos(a)*(r+11);const dy=cx+Math.sin(a)*(r+11);c.beginPath();c.arc(dx,dy,2,0,TAU);c.fillStyle=i%3===0?'#fff9':'#ffd70066';c.fill();}
-// Slices
 c.save();c.translate(cx,cx);c.rotate(rot);
 P.forEach((p,i)=>{const a1=i*sa-Math.PI/2,a2=a1+sa;c.beginPath();c.moveTo(0,0);c.arc(0,0,r,a1,a2);c.closePath();
 const gr=c.createRadialGradient(0,0,r*.15,0,0,r);gr.addColorStop(0,'#ffffff33');gr.addColorStop(.3,p.color+'ee');gr.addColorStop(1,p.color);c.fillStyle=gr;c.fill();
 c.strokeStyle='rgba(0,0,0,.25)';c.lineWidth=2;c.stroke();
-// Slice divider highlight
 c.beginPath();c.moveTo(0,0);const ex=Math.cos(a1)*r,ey=Math.sin(a1)*r;c.lineTo(ex,ey);c.strokeStyle='rgba(255,255,255,.12)';c.lineWidth=1;c.stroke();
-// Player name with better shadow
 c.save();c.rotate(a1+sa/2);c.textAlign='center';c.textBaseline='middle';
 const fs=N>6?17:N>4?21:26;
 c.font=`800 ${fs}px Heebo`;c.shadowColor='rgba(0,0,0,.8)';c.shadowBlur=6;c.fillStyle='#fff';c.fillText(p.name,r*.58,0);
 c.shadowBlur=0;c.restore();});
 c.restore();
-// Center hub - golden gradient
 c.save();c.shadowColor='rgba(0,0,0,.5)';c.shadowBlur=12;
 c.beginPath();c.arc(cx,cx,28,0,TAU);
 const hubGr=c.createRadialGradient(cx-6,cx-6,2,cx,cx,28);
 hubGr.addColorStop(0,'#fff8e1');hubGr.addColorStop(.4,'#ffd700');hubGr.addColorStop(.8,'#c9a84c');hubGr.addColorStop(1,'#8b6914');
 c.fillStyle=hubGr;c.fill();c.restore();
 c.beginPath();c.arc(cx,cx,28,0,TAU);c.strokeStyle='#ffd70055';c.lineWidth=2;c.stroke();
-// Inner circle on hub
 c.beginPath();c.arc(cx,cx,14,0,TAU);
 const inGr=c.createRadialGradient(cx-3,cx-3,1,cx,cx,14);
 inGr.addColorStop(0,'#fff');inGr.addColorStop(1,'#e8c84a');
@@ -2302,10 +2378,10 @@ function closeOv(){document.getElementById('overlay').classList.remove('on');}
 function updateSB(){const s=document.getElementById('scoreBar');s.innerHTML='';
 const maxSc=Math.max(...P.map((_,i)=>scores[i]||0));
 P.forEach((p,i)=>{const sc=scores[i]||0;const isLead=sc>0&&sc===maxSc;
-const d=document.createElement('div');d.className='sb';d.innerHTML=`<div class="sb-av">${gAv(i,30)}</div><div class="sb-n" style="color:${p.color}">${p.name}</div><div class="sb-p" id="sbp${i}" style="color:${p.color}">${sc}${isLead?ic('crown',10,'var(--gold)'):''}</div>`;s.appendChild(d);});}
+const d=document.createElement('div');d.className='sb';d.innerHTML=`<div class="sb-av">${gAv(i,30)}</div><div class="sb-n" style="color:${p.color}">${esc(p.name)}</div><div class="sb-p" id="sbp${i}" style="color:${p.color}">${sc}${isLead?ic('crown',10,'var(--gold)'):''}</div>`;s.appendChild(d);});}
 function scorePop(pi){// Announce leader
 const sorted=P.map((p,i)=>({n:p.name,s:scores[i]||0,c:p.color})).sort((a,b)=>b.s-a.s);
-if(sorted[0].s>0){const d=document.createElement('div');d.className='score-pop';d.innerHTML=`${sorted[0].n} מוביל/ה עם ${sorted[0].s}!`;d.style.color=sorted[0].c;d.style.borderColor=sorted[0].c+'66';document.body.appendChild(d);setTimeout(()=>d.remove(),3500);}}
+if(sorted[0].s>0){const d=document.createElement('div');d.className='score-pop';d.innerHTML=`${esc(sorted[0].n)} מוביל/ה עם ${sorted[0].s}!`;d.style.color=sorted[0].c;d.style.borderColor=sorted[0].c+'66';document.body.appendChild(d);setTimeout(()=>d.remove(),3500);}}
 function updateFP(){const strip=document.getElementById('fprog');const spins=events.filter(e=>e.type==='spin');const done=events.slice(0,curE).filter(e=>e.type==='spin').length;
 if(spins.length===0){strip.innerHTML='';return;}
 let html='';const perPhase=Math.ceil(spins.length/3);
@@ -2665,7 +2741,7 @@ function saveState(){try{localStorage.setItem('mimi',JSON.stringify({P,pCnt,scor
 function loadState(){try{const s=localStorage.getItem('mimi');return s?JSON.parse(s):null;}catch(e){return null;}}
 function clearSave(){try{localStorage.removeItem('mimi');}catch(e){}}
 function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;wA=st.wA;pools=st.pools;idx=st.idx;const dg={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};gS=st.gS?{...dg,...st.gS}:dg;if(!gS.t0)gS.t0=Date.now();PD=st.PD||[];show('scrGame');drawWheel(wA);updateSB();updateFP();document.getElementById('warea').style.display='';processEvent();}
-(function(){const s=loadState();if(s?.P?.length>0&&s.curE<s.events.length){const ov=document.getElementById('overlay');ov.innerHTML=`<div style="font-size:3rem">${ic('dice',40,'var(--gold)')}</div><div class="ov-t" style="color:var(--gold)">יש משחק שמור!</div><div class="ov-s">${s.P.map(p=>p.name).join(', ')}</div><div style="display:flex;gap:8px;margin-top:12px"><button class="ov-b" style="background:var(--teal)" onclick="closeOv();resumeG(loadState())">המשיכו! ▶</button><button class="ov-b" style="background:var(--coral)" onclick="clearSave();closeOv()">חדש 🆕</button></div>`;ov.classList.add('on');}})();
+(function(){const s=loadState();if(s?.P?.length>0&&s.curE<s.events.length){const ov=document.getElementById('overlay');ov.innerHTML=`<div style="font-size:3rem">${ic('dice',40,'var(--gold)')}</div><div class="ov-t" style="color:var(--gold)">יש משחק שמור!</div><div class="ov-s">${s.P.map(p=>esc(p.name)).join(', ')}</div><div style="display:flex;gap:8px;margin-top:12px"><button class="ov-b" style="background:var(--teal)" onclick="closeOv();resumeG(loadState())">המשיכו! ▶</button><button class="ov-b" style="background:var(--coral)" onclick="clearSave();closeOv()">חדש 🆕</button></div>`;ov.classList.add('on');}})();
 window.addEventListener('beforeunload',function(e){if(document.getElementById('scrGame')?.classList.contains('on')){e.preventDefault();e.returnValue='';}});
 
 function closeOnb(){document.getElementById('onb').style.display='none';try{localStorage.setItem('mimi_onb','1');}catch(e){}}
@@ -2715,17 +2791,17 @@ return `<div class="donate-card">
 <div class="donate-tier" onclick="openDonate('small')">
 <div class="donate-tier-emoji">☕</div>
 <div class="donate-tier-price">5₪</div>
-<div class="donate-tier-desc">שאלה חדשה אחת<br>בזכותכם</div>
+<div class="donate-tier-desc">תודה קטנה<br>על משחק גדול</div>
 </div>
 <div class="donate-tier" onclick="openDonate('medium')">
 <div class="donate-tier-emoji">🎯</div>
 <div class="donate-tier-price">20₪</div>
-<div class="donate-tier-desc">סיבוב שלם חדש<br>על השם שלכם</div>
+<div class="donate-tier-desc">עוזרים לנו<br>להמשיך לפתח</div>
 </div>
 <div class="donate-tier" onclick="openDonate('large')">
 <div class="donate-tier-emoji">👑</div>
 <div class="donate-tier-price">50₪</div>
-<div class="donate-tier-desc">שותף/ה בפיתוח<br>הערב המשפחתי הבא</div>
+<div class="donate-tier-desc">תמיכה משמעותית<br>בפיתוח המשחק</div>
 </div>
 </div>
 <div class="donate-social" style="margin-top:10px">100% מגיע ישר לפיתוח. בלי פרסומות. בלי מנויים. רק משחק טוב יותר.</div>
