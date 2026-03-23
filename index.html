@@ -435,12 +435,6 @@ body.light-body{background:#f8f6f1}
 /* Crown glow */
 .crown svg{filter:drop-shadow(0 2px 12px rgba(255,199,58,.4))}
 
-/* Age range selector */
-.age-grid{display:flex;justify-content:center;gap:6px;margin:8px 0;flex-wrap:wrap}
-.age-btn{padding:8px 14px;border-radius:10px;border:2px solid var(--s3);background:var(--s1);color:var(--t2);font-size:.72rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.25s;display:flex;flex-direction:column;align-items:center;gap:2px}
-.age-btn.on{border-color:var(--teal);color:var(--teal);background:var(--s2);transform:scale(1.05);box-shadow:0 0 12px rgba(56,217,169,.2)}
-.age-btn-emoji{font-size:1.1rem}.age-btn-label{font-size:.6rem;color:var(--t3)}
-.age-btn.on .age-btn-label{color:var(--teal)}
 
 /* Mic round */
 .mic-vis{display:flex;align-items:center;justify-content:center;gap:3px;height:60px;margin:12px 0}
@@ -524,14 +518,6 @@ body.light-body{background:#f8f6f1}
     </div>
     <div class="st">כמה אתם היום?</div>
     <div class="cgrid" id="cntR"></div>
-    <div class="st" style="margin-top:8px">מי בפנים?</div>
-    <div class="ss" style="margin-bottom:4px">מי הצעיר ביותר?</div>
-    <div class="age-grid" id="ageR">
-      <button class="age-btn" onclick="setAge('6-9')"><span class="age-btn-emoji">🧒</span>6-9<span class="age-btn-label">ילדים</span></button>
-      <button class="age-btn" onclick="setAge('10-13')"><span class="age-btn-emoji">🎒</span>10-13<span class="age-btn-label">טרום נוער</span></button>
-      <button class="age-btn" onclick="setAge('13-18')"><span class="age-btn-emoji">🎧</span>13-18<span class="age-btn-label">נוער</span></button>
-      <button class="age-btn on" onclick="setAge('18+')"><span class="age-btn-emoji">🎭</span>18+<span class="age-btn-label">מבוגרים</span></button>
-    </div>
     <div class="st" style="margin-top:8px">כמה זמן יש לכם?</div>
     <div class="cgrid"><button class="cb" id="mShort" onclick="setMode('short')" style="width:auto;padding:0 14px;font-size:.75rem">קצר</button><button class="cb on" id="mFull" onclick="setMode('full')" style="width:auto;padding:0 14px;font-size:.75rem">מלא</button></div>
     <div class="st" style="margin-top:8px">מעבירים טלפון או מצביעים ביחד?</div>
@@ -1196,7 +1182,7 @@ let events=[],curE=0,spinning=false,wA=0,tmrId=null,_advancing=false;
 let pools={},idx={};
 let prevState=null;
 let gS={aliasW:{},drawW:{},rounds:0,t0:0,drawings:[],quotes:[],micResults:[]};
-let PD=[],curSP=0,seenTypes={},phasesSeen=0,streaks={},lastScorer=-1,comebackUsed={},gameLen='full',voteMode='open',ageGroup='18+';
+let PD=[],curSP=0,seenTypes={},phasesSeen=0,streaks={},lastScorer=-1,comebackUsed={},gameLen='full',voteMode='open';
 const SPIN_CTA=["גורלות!","מי יהיה?","הגלגל מחליט","בואו נראה","מי נבחר?","רגע האמת"];
 const HOST_PROMPTS={
 vote:["שווה לשאול — למה דווקא הוא?","מישהו מופתע? ספרו.","מי שהצביע אחרת — מה ראה?","יש פה סיפור מאחורי ההצבעה?","מי רוצה להגן על הבחירה שלו?"],
@@ -1220,38 +1206,7 @@ const SHEET_URL='https://script.google.com/macros/s/AKfycbzYvxRmjeXbD6BzHCBnwnC0
 let roundStartTime=0;
 function setMode(m){gameLen=m;document.getElementById('mShort').classList.toggle('on',m==='short');document.getElementById('mFull').classList.toggle('on',m==='full');}
 function setVM(m){voteMode=m;document.getElementById('vmPass').classList.toggle('on',m==='pass');document.getElementById('vmOpen').classList.toggle('on',m==='open');document.getElementById('vmDesc').textContent=m==='pass'?'כל אחד מצביע בסתר בטלפון':'כולם מצביעים ביחד';}
-function setAge(a){ageGroup=a;document.querySelectorAll('.age-btn').forEach(b=>b.classList.toggle('on',b.textContent.includes(a.replace('+',''))));}
-
-// ===== AGE-BASED CONTENT FILTERING =====
-// Tags: 'all' = safe for all, '10+' = 10 and up, '13+' = teens, '18+' = adults only
-function ageOk(tag){
-if(!tag||tag==='all')return true;
-const minAge=ageGroup==='6-9'?6:ageGroup==='10-13'?10:ageGroup==='13-18'?13:18;
-const reqAge=parseInt(tag);
-return minAge>=reqAge;
-}
-function filterByAge(arr){
-if(ageGroup==='18+')return arr;// no filter for adults
-return arr.filter(item=>{
-if(typeof item==='string')return true;// simple strings (alias/draw words) always ok
-if(item.age)return ageOk(item.age);
-// Filter by content keywords for items without explicit age tag
-if(item.q){
-const q=item.q;
-// Romance/dating content - not for young kids
-if(ageGroup==='6-9'){
-if(/רומנטי|דייט|מנשק|נשיקה|חבר\/ה|מתאהב|אקס|פלירט|שיכור|אלכוהול|בירה|יין|קללות|מילה גסה/.test(q))return false;
-// Filter questions about adult activities
-if(/מסעדה|קניות מיותרות|שולח הודעות|הודעה ומתחרט|סצנות במסעדות/.test(q))return false;
-}
-if(ageGroup==='10-13'){
-if(/שיכור|אלכוהול|בירה|יין|קללות|מילה גסה|פלירט|אקס/.test(q))return false;
-}
-return true;
-}
-return true;
-});
-}
+function filterByAge(arr){return arr;}
 
 // ===== SETUP =====
 (function(){const r=document.getElementById('cntR');for(let i=3;i<=8;i++){const b=document.createElement('button');b.className='cb'+(i===pCnt?' on':'');b.textContent=i;b.onclick=()=>{pCnt=i;r.querySelectorAll('.cb').forEach((x,j)=>x.classList.toggle('on',j+3===i));};r.appendChild(b);}})();
@@ -1326,7 +1281,7 @@ scores={};turnQ={};voteLog=[];streaks={};lastScorer=-1;comebackUsed={};phasesSee
 P.forEach((_,i)=>{scores[i]=0;turnQ[i]=0;gS.aliasW[i]=0;gS.drawW[i]=0;});
 // Phase-graded pools — with cross-game memory (no repeats across ~3 games)
 const _pp=(()=>{try{const s=localStorage.getItem('mimi_pp');return s?JSON.parse(s):null;}catch(e){return null;}})();
-const _reuse=_pp&&_pp.a===ageGroup;
+const _reuse=!!_pp;
 function _gp(key,factory){if(_reuse&&_pp.p[key]&&_pp.p[key].length>0&&_pp.i[key]<_pp.p[key].length)return{p:_pp.p[key],i:_pp.i[key]};return{p:factory(),i:0};}
 ['warm','fire','final'].forEach(k=>{
 [['vt_'+k,()=>shuf(filterByAge([...VOTE[k]]))],['hs_'+k,()=>shuf(filterByAge([...(HOTSEAT[k]||[])]))],['mi_'+k,()=>shuf(filterByAge([...(MISSIONS[k]||[])]))],['ft_'+k,()=>shuf(filterByAge([...(FAMTALK[k]||[])]))],['rv_'+k,()=>shuf(filterByAge([...(REVEAL[k]||[])]))],['al_'+k,()=>shuf([...(ALIAS[k]||[])])],['dr_'+k,()=>shuf([...(DRAW[k]||[])])],['pd_'+k,()=>shuf(filterByAge([...(PDILEMMA[k]||[])]))],['bl_'+k,()=>shuf(filterByAge([...(BLIND[k]||[])]))]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});});
@@ -1339,7 +1294,7 @@ ov.innerHTML=`<div style="animation:popIn .5s ease"><div class="logo" style="fon
 <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:12px 0;animation:phaseSubIn .5s ease both;animation-delay:.5s;opacity:0">${P.map(p=>`<span style="color:${p.color};font-weight:700;font-size:.82rem">${p.name}</span>`).join(' • ')}</div>
 <button class="ov-b" style="background:linear-gradient(135deg,var(--lav),var(--coral));animation:phaseSubIn .5s ease both;animation-delay:.7s;opacity:0" onclick="closeOv();processEvent()">יאללה!</button>`;
 ov.classList.add('on');SND.play('tada');
-try{gtag('event','game_start',{player_count:P.length,age_group:ageGroup,game_length:gameLen,vote_mode:voteMode});}catch(e){}
+try{gtag('event','game_start',{player_count:P.length,game_length:gameLen,vote_mode:voteMode});}catch(e){}
 }
 function pk(){return PH_K[cPhase()];}
 function cPhase(){let p=0;for(let i=0;i<=curE&&i<events.length;i++)if(events[i].type==='phase_intro')p=events[i].phase;return p;}
@@ -2469,12 +2424,12 @@ return h;
 }
 
 // ===== FINISH =====
-function savePP(){try{localStorage.setItem('mimi_pp',JSON.stringify({p:pools,i:idx,a:ageGroup}));}catch(e){}}
+function savePP(){try{localStorage.setItem('mimi_pp',JSON.stringify({p:pools,i:idx}));}catch(e){}}
 function buildFin(){savePP();SND.play('tada');
 const sorted=P.map((p,i)=>({...p,i,s:scores[i]||0})).sort((a,b)=>b.s-a.s);const mc=['#ffc73a','#c0c0c0','#cd7f32'];const hs=[140,110,80];const order=sorted.length>=3?[sorted[1],sorted[0],sorted[2]]:sorted.slice(0,3);const ho=sorted.length>=3?[hs[1],hs[0],hs[2]]:hs;
 const dur=Math.round((Date.now()-gS.t0)/1000);const mins=Math.floor(dur/60),secs=dur%60;
-try{gtag('event','game_complete',{player_count:P.length,total_rounds:gS.rounds,duration_seconds:dur,age_group:ageGroup,winner_score:Math.max(...P.map((_,i)=>scores[i]||0))});}catch(e){}
-sendToSheet({type:'game_complete',players:P.length,duration:dur,rounds:gS.rounds,age_group:ageGroup,winner_score:Math.max(...P.map((_,i)=>scores[i]||0))});
+try{gtag('event','game_complete',{player_count:P.length,total_rounds:gS.rounds,duration_seconds:dur,winner_score:Math.max(...P.map((_,i)=>scores[i]||0))});}catch(e){}
+sendToSheet({type:'game_complete',players:P.length,duration:dur,rounds:gS.rounds,winner_score:Math.max(...P.map((_,i)=>scores[i]||0))});
 let h=`<div class="crown">${ic('crown',56,'var(--gold)')}</div><div class="fin-t">מי רוצה לדעת מי ניצח?</div><div class="podium">`;
 order.forEach((p,di)=>{const rank=sorted.indexOf(p);h+=`<div class="pod"><div class="pod-m" style="background:${mc[rank]||'#666'}">${rank+1}</div><div class="pod-av" style="border-color:${p.color}">${gAv(p.i,42)}</div><div class="pod-bar" id="pb${di}" style="background:${p.color}12;border:2px solid ${p.color};height:0;color:${p.color}">${p.s}</div><div class="pod-n" style="color:${p.color}">${p.name}</div><div class="pod-p">${p.s} נק׳</div></div>`;});h+='</div>';
 h+='<div class="sgrid">';h+=`<div class="sc"><div class="sc-v" style="color:var(--gold)">${gS.rounds}</div><div class="sc-l">סיבובים</div></div>`;h+=`<div class="sc"><div class="sc-v" style="color:var(--teal)">${mins}:${secs.toString().padStart(2,'0')}</div><div class="sc-l">זמן משחק</div></div>`;
