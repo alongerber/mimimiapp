@@ -495,18 +495,19 @@ body.light-body{background:#f8f6f1}
 .pick-name{font-size:.65rem;text-align:center;margin-top:2px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:56px}
 
 /* Intro screen */
-.intro-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:24px 16px;text-align:center;gap:18px}
-.intro-av{width:90px;height:90px;border-radius:50%;overflow:hidden;border:3px solid var(--gold);box-shadow:0 0 30px rgba(255,199,58,.25);animation:intro-pulse 2s ease-in-out infinite}
-@keyframes intro-pulse{0%,100%{box-shadow:0 0 30px rgba(255,199,58,.25)}50%{box-shadow:0 0 50px rgba(255,199,58,.45)}}
-.intro-av img{width:100%;height:100%;object-fit:cover}
-.intro-title{font-size:1.8rem;font-weight:900;color:var(--gold);letter-spacing:2px;margin:0}
-.intro-typing{font-size:.82rem;color:var(--t2);min-height:6em;line-height:1.7;direction:rtl;max-width:320px;text-align:center}
-.intro-typing .intro-line{opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s}
-.intro-typing .intro-line.vis{opacity:1;transform:translateY(0)}
-.intro-typing .intro-line.bright{color:var(--text);font-weight:700}
-.intro-typing .intro-line.gold{color:var(--gold);font-weight:800}
-.intro-start{margin-top:12px;opacity:0;transition:opacity .5s}
-.intro-start.show{opacity:1}
+.intro-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:24px 16px;text-align:center;gap:18px;position:relative}
+.intro-skip{position:absolute;top:12px;left:12px;background:none;border:none;color:var(--t3);font-size:.7rem;font-family:inherit;cursor:pointer;padding:6px 10px}
+.intro-avatar{width:90px;height:90px;border-radius:50%;overflow:hidden;border:3px solid var(--gold);box-shadow:0 0 30px rgba(255,199,58,.25)}
+.intro-avatar img{width:100%;height:100%;object-fit:cover}
+.intro-text{font-size:.82rem;color:var(--t2);min-height:6em;line-height:1.7;direction:rtl;max-width:320px;text-align:center}
+.intro-text .intro-line{opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s}
+.intro-text .intro-line.vis{opacity:1;transform:translateY(0)}
+.intro-text .intro-line.bright{color:var(--text);font-weight:700}
+.intro-text .intro-line.gold{color:var(--gold);font-weight:800}
+.intro-cta{opacity:0;transition:opacity .5s;margin-top:12px}
+.intro-cta.vis{opacity:1}
+.intro-cta button{background:var(--gold);color:#1a1a2e;border:none;border-radius:16px;padding:14px 32px;font-size:.9rem;font-weight:800;font-family:inherit;cursor:pointer;min-width:200px}
+@keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
 
 /* Magic moment / paywall */
 .magic-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:24px 16px;text-align:center;gap:14px}
@@ -532,14 +533,17 @@ body.light-body{background:#f8f6f1}
 </div>
 
 <div class="scr on" id="scrIntro">
-<div class="intro-wrap">
-  <div class="intro-av"><img src="avatars/intro.webp" alt="מי מי מי"></div>
-  <div class="intro-title">מי מי מי?</div>
-  <div class="intro-typing" id="introTyping"></div>
-  <div class="intro-start" id="introStartBtn">
-    <button class="gobtn" onclick="startFromIntro()" style="min-width:200px">יאללה, מתחילים</button>
+  <div class="intro-wrap">
+    <button class="intro-skip" onclick="skipIntro()">דלג ▸</button>
+    <div class="intro-avatar"><img src="avatars/intro.webp" alt=""></div>
+    <div class="intro-text" id="introText"></div>
+    <div class="intro-cta" id="introCta">
+      <button onclick="skipIntro()">מתחילים</button>
+    </div>
+    <div id="introTap" style="margin-top:20px">
+      <button onclick="startIntroAnim()" style="background:none;border:2px solid var(--gold);color:var(--gold);padding:12px 32px;border-radius:12px;font-size:.85rem;font-weight:700;font-family:inherit;cursor:pointer;animation:pulse 2s ease infinite">לחצו להתחיל</button>
+    </div>
   </div>
-</div>
 </div>
 
 <div class="scr" id="scrSetup" role="main" aria-label="הגדרות משחק"><div style="flex:1;display:flex;flex-direction:column;gap:10px;padding:8px 0">
@@ -2847,53 +2851,70 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
 // 13. זהו! כל פידבק ונתוני משחק יגיעו ישירות לגיליון שלכם
 //
 
-// ===== INTRO SCREEN =====
-const INTRO_LINES=[
-{text:'שלום. יש פה משחק.',cls:'bright',delay:0},
-{text:'אין הוראות כי אני לא יודע לכתוב הוראות.',cls:'',delay:1800},
-{text:'',cls:'',delay:3200},
-{text:'פשוט שימו חטיפים על השולחן.',cls:'',delay:3800},
-{text:'שימו את הטלפון באמצע.',cls:'bright',delay:5200},
-{text:'תגידו מי פה. תבחרו דמות. תלחצו.',cls:'',delay:6600},
-{text:'',cls:'',delay:8000},
-{text:'אחרי זה אני מטפל בשאר',cls:'',delay:8600},
-{text:'כי אתם כנראה לא תצליחו לבד',cls:'',delay:10000},
-{text:'ואני גם לא הצלחתי אבל ביחד נסתדר.',cls:'',delay:11400},
-{text:'',cls:'',delay:12800},
-{text:'הילדים יצחקו.',cls:'gold',delay:13400},
-{text:'ההורים יגידו דברים שלא תכננו להגיד.',cls:'bright',delay:14800},
-{text:'סבתא תתקשר מחר לשאול מתי עוד פעם.',cls:'',delay:16200},
-{text:'',cls:'',delay:17600},
-{text:'אני לא מבטיח כלום',cls:'',delay:18200},
-{text:'כי הפעם האחרונה שהבטחתי משהו',cls:'',delay:19600},
-{text:'אני עדיין משלם עליו.',cls:'',delay:21000},
-];
-let introTmrs=[];
-function startIntro(){
-const el=document.getElementById('introTyping');
-if(!el)return;
+// ===== INTRO — tap to start, then animate + audio =====
+function startIntroAnim(){
+// Hide tap button
+const tap=document.getElementById('introTap');
+if(tap)tap.style.display='none';
+
+// Start audio
+try{
+window._introAudio=new Audio('avatars/intro_voice.mp3');
+window._introAudio.volume=0.85;
+window._introAudio.play().catch(()=>{});
+}catch(e){}
 try{gtag('event','intro_start');}catch(e){}
-el.innerHTML='';
-introTmrs=[];
-// Build all line elements
-INTRO_LINES.forEach((l,i)=>{
-if(!l.text){const br=document.createElement('div');br.style.height='8px';br.className='intro-line';el.appendChild(br);
-const t=setTimeout(()=>br.classList.add('vis'),l.delay);introTmrs.push(t);return;}
-const d=document.createElement('div');d.className='intro-line'+(l.cls?' '+l.cls:'');d.textContent=l.text;el.appendChild(d);
-const t=setTimeout(()=>{d.classList.add('vis');el.scrollTop=el.scrollHeight;},l.delay);introTmrs.push(t);
+
+// Lines synced to audio
+const lines=[
+{text:'שלום שלום, יש פה משחק.',cls:'bright',delay:0},
+{text:'אין הוראות כי אני לא יודע לכתוב הוראות.',cls:'',delay:2500},
+{text:'',cls:'',delay:5000},
+{text:'פשוט שימו חטיפים על השולחן,',cls:'',delay:5500},
+{text:'שימו את הטלפון באמצע,',cls:'bright',delay:7000},
+{text:'תגידו מי פה ותבחרו דמות.',cls:'',delay:8500},
+{text:'תלחצו.',cls:'bright',delay:10000},
+{text:'',cls:'',delay:11500},
+{text:'אחרי זה אני מטפל בשאר',cls:'',delay:12000},
+{text:'כי אתם כנראה לא תצליחו לבד',cls:'',delay:13500},
+{text:'ואני גם לא הצלחתי, אבל ביחד נסתדר.',cls:'',delay:15000},
+{text:'',cls:'',delay:17000},
+{text:'הילדים יצחקו,',cls:'gold',delay:17500},
+{text:'ההורים יגידו דברים שלא תכננו להגיד.',cls:'bright',delay:19000},
+{text:'סבתא תתקשר מחר לשאול מתי עוד פעם.',cls:'',delay:21000},
+{text:'',cls:'',delay:23000},
+{text:'אני לא מבטיח כלום',cls:'',delay:23500},
+{text:'כי בפעם האחרונה שהבטחתי משהו',cls:'',delay:25000},
+{text:'אני עדיין משלם עליו לעורך דין.',cls:'',delay:27000},
+];
+
+const container=document.getElementById('introText');
+
+lines.forEach(line=>{
+setTimeout(()=>{
+if(line.text==='')return; // gap
+const el=document.createElement('div');
+el.className='intro-line'+(line.cls?' '+line.cls:'');
+el.textContent=line.text;
+container.appendChild(el);
+requestAnimationFrame(()=>el.classList.add('vis'));
+},line.delay);
 });
-// Show start button after last line
-const lastDelay=INTRO_LINES[INTRO_LINES.length-1].delay;
-const t=setTimeout(()=>{document.getElementById('introStartBtn').classList.add('show');try{gtag('event','intro_complete');}catch(e){}},lastDelay+1500);
-introTmrs.push(t);
+
+// Show CTA after last line
+setTimeout(()=>{
+const cta=document.getElementById('introCta');
+if(cta)cta.classList.add('vis');
+try{gtag('event','intro_complete');}catch(e){}
+},29000);
 }
-function startFromIntro(){
-introTmrs.forEach(t=>clearTimeout(t));introTmrs=[];
+
+function skipIntro(){
+if(window._introAudio){try{window._introAudio.pause();}catch(e){}}
 show('scrSetup');ss1Show();
+try{gtag('event','intro_complete');}catch(e){}
 try{gtag('event','setup_start');}catch(e){}
 }
-// Auto-start intro
-setTimeout(startIntro,400);
 
 // ===== FREE/PAID SPLIT =====
 function showMagicMoment(){
