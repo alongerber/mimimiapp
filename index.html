@@ -706,22 +706,22 @@ else if(t==='reveal'){for(let i=0;i<6;i++){this.n(300-i*25,'square',.04,now+i*.0
 
 // ===== NARRATOR =====
 const NAR={
-vote:[(n)=>`יאללה, שומעים את כולם!`,(n)=>`${n}, תקרא בקול.`,(n)=>`רגע, רגע... שקט. ${n} קורא.`,(n)=>`תרימו יד! מי מצביע?`,(n)=>`${n} שואל, כולם עונים.`],
-vote_qv:[(n)=>`מה אומרים? כולם מצביעים!`,(n)=>`מי מתאים? תחליטו!`,(n)=>`בלי לחשוב יותר מדי — מצביעים!`,(n)=>`כולם יודעים את התשובה. תגידו!`,(n)=>`הצביעו מהבטן.`],
-hotseat_warm:[(n)=>`${n}, עכשיו עליך.`,(n)=>`${n}, מוכן? שאלה קלה.`,(n)=>`${n}, בוא נכיר אותך.`],
-hotseat_fire:[(n)=>`${n}, מוכן? תנשום עמוק.`,(n)=>`${n} במוקד. בלי רחמים.`,(n)=>`תורך ${n}. אל תתחמק.`,(n)=>`${n}, הפעם זה אישי.`],
-hotseat_final:[(n)=>`${n}, רגע של כנות.`,(n)=>`${n}, השאלה הזאת חשובה.`,(n)=>`${n}, תענה מהלב.`],
-alias:[(n)=>`${n}, 30 שניות — תסביר!`,(n)=>`${n} מסביר, כולם מנחשים!`,(n)=>`בלי להגיד את המילה! יאללה ${n}!`,(n)=>`${n}, תהיה יצירתי. הזמן רץ.`],
-draw:[(n)=>`${n}, תצייר! השאר מנחשים.`,(n)=>`מוכנים לניחוש? ${n} מצייר.`,(n)=>`${n} ציירו, כולם שקט!`,(n)=>`${n}, העיפרון בידיים שלך.`],
-mission:[(n)=>`${n}, יש לך אתגר.`,(n)=>`אתגר ל-${n}. בחר חכם!`,(n)=>`${n}, תראה מה יש בשבילך.`,(n)=>`${n}, מוכן להוכיח?`],
-rapid:[(n)=>`${n}, מהר מהר!`,(n)=>`שאלת ברק! ${n}, מוכן?`,(n)=>`${n} — ענה לפני שנגמר הזמן!`,(n)=>`${n}, בלי לחשוב — לדבר!`],
-dilemma:[(n)=>`דילמה! כולם מצביעים.`,(n)=>`מה הייתם בוחרים?`,(n)=>`אין תשובה נכונה. בוחרים!`,(n)=>`בואו נראה מי חושב אחרת.`],
-famtalk:[(n)=>`שאלה לכולם!`,(n)=>`רגע לכל המשפחה.`,(n)=>`${n} פותח, כולם מצטרפים.`,(n)=>`שיחה שצריכה לקרות.`,(n)=>`עצרו הכל. רגע ביחד.`],
-reveal:[(n,n2)=>`${n} ו-${n2} — רגע שלכם.`,(n,n2)=>`${n}, יש לך משהו ל-${n2}.`,(n,n2)=>`לפעמים צריך רק שני אנשים.`,(n,n2)=>`רגע שלא חוזר.`,(n,n2)=>`${n} ו-${n2}, תנו לזה מקום.`],
-win:[(n)=>`${n} לוקח את הכתר!`,(n)=>`אין ויכוח — ${n}!`,(n)=>`${n}, התואר שלך!`,(n)=>`${n}, המשפחה בחרה בך.`],
-tie:[()=>`תיקו! אף אחד לא ניצח.`,()=>`הקולות חלוקים!`,()=>`מחלוקת. ממשיכים.`,()=>`הבית חלוק. אבל זה בסדר.`],
-sentence:[(n)=>`${n}, תשלים את המשפט.`,(n)=>`${n}, אומרים הכל בקול.`,(n)=>`כולם מקשיבים ל-${n}.`],
-mic:[(n)=>`${n}, הבמה שלך.`,(n)=>`${n}, 15 שניות לשכנע.`,(n)=>`${n} עולה לדוכן העדים.`]
+vote:[(n)=>`${n}. תקרא.`,(n)=>`כולם מצביעים. בלי לחשוב יותר מדי.`,(n)=>`${n} שואל. אין תשובה לא נכונה. כנראה.`,(n)=>`הצביעו. מי שלא מצביע אוכל ערב מעל הכיור.`,(n)=>`רגע של אמת. או סתם רגע.`],
+vote_qv:[(n)=>`מצביעים.`,(n)=>`כולם. עכשיו.`,(n)=>`מהבטן. בלי לחשוב.`,(n)=>`תבחרו. ואל תתחרטו. או תתחרטו. לא משנה.`],
+hotseat_warm:[(n)=>`${n}. שאלה.`,(n)=>`${n}. פשוט תענה.`,(n)=>`${n}. לא כואב. כנראה.`],
+hotseat_fire:[(n)=>`${n}. תתכונן.`,(n)=>`${n}. הפעם זה אישי. יותר מהרגיל.`,(n)=>`${n}. אל תשקר. אנחנו נדע.`,(n)=>`${n}. תענה ונמשיך.`],
+hotseat_final:[(n)=>`${n}. רגע אחד של כנות. זה כל מה שמבקשים.`,(n)=>`${n}. השאלה האחרונה. תענה מהמקום השקט.`,(n)=>`${n}. מהלב. אם יש.`],
+alias:[(n)=>`${n}. 30 שניות. תסביר.`,(n)=>`${n} מסביר. השאר מנחשים. או לא.`,(n)=>`בלי להגיד את המילה. ${n}. יאללה.`],
+draw:[(n)=>`${n} מצייר. השאר בשקט.`,(n)=>`${n}. עיפרון. נייר. תצייר.`,(n)=>`${n} מצייר. אל תגידו מה זה נראה.`],
+mission:[(n)=>`${n}. יש משימה.`,(n)=>`${n}. תבחר ותעשה.`,(n)=>`${n}. אתגר. אם תצליח טוב. אם לא גם.`],
+rapid:[(n)=>`${n}. מהר.`,(n)=>`${n}. ענה לפני שנגמר הזמן. או אחרי. אבל עדיף לפני.`,(n)=>`${n}. בלי לחשוב. פשוט תגיד.`],
+dilemma:[(n)=>`דילמה. כולם בוחרים.`,(n)=>`אין תשובה נכונה. יש תשובה שלכם.`,(n)=>`תבחרו. ואז תתווכחו. ככה זה עובד.`],
+famtalk:[(n)=>`שאלה לכולם. לא חייבים לענות. אבל עדיף.`,(n)=>`שיחה משפחתית. מי שלא מדבר מפסיד.`,(n)=>`${n} פותח. השאר ממשיכים. או לא. תלוי.`],
+reveal:[(n,n2)=>`${n} ו-${n2}. רגע שלכם.`,(n,n2)=>`${n}. יש לך משהו להגיד ל-${n2}. עכשיו או אף פעם.`,(n,n2)=>`שני אנשים. רגע אחד. ממש עכשיו.`],
+win:[(n)=>`${n} ניצח. לא ציפינו.`,(n)=>`${n}. התואר שלך. אל תתרגל.`,(n)=>`${n}. המשפחה בחרה. מה לעשות.`],
+tie:[()=>`תיקו. אף אחד לא ניצח. כמו בגירושין.`,()=>`הקולות חלוקים. ממשיכים.`,()=>`אין מנצח. יש שורדים.`],
+sentence:[(n)=>`${n}. תשלים את המשפט.`,(n)=>`${n}. מילים. בקול. עכשיו.`],
+mic:[(n)=>`${n}. 15 שניות. תשכנע.`,(n)=>`${n} על הדוכן.`]
 };
 function nar(type,n1,n2){let key=type;if(type==='hotseat'){const p=pk();key='hotseat_'+p;}const a=NAR[key]||NAR[type];if(!a)return '';return a[Math.floor(Math.random()*a.length)](n1,n2);}
 
@@ -780,13 +780,13 @@ let secretPool=[];
 let secretIdx=0;
 const SPIN_CTA=["גורלות!","מי יהיה?","הגלגל מחליט","בואו נראה","מי נבחר?","רגע האמת"];
 const HOST_PROMPTS={
-vote:["שווה לשאול — למה דווקא הוא?","מישהו מופתע? ספרו.","מי שהצביע אחרת — מה ראה?","יש פה סיפור מאחורי ההצבעה?","מי רוצה להגן על הבחירה שלו?"],
-blind:["מה גרם לכם לבחור את זה?","חשבתם על אותו דבר — או סתם מזל?","מה זה אומר על הקשר ביניכם?","יש פה חיבור שלא ציפיתם לו?","מתי הרגשתם ככה לאחרונה?"],
-hotseat:["מישהו הופתע מהתשובה?","יש למישהו תגובה?","מי חשב שהתשובה תהיה אחרת?","זה סוד ששווה לחפור בו עוד."],
-reveal:["אם הייתם חוזרים לרגע הזה — מה הייתם משנים?","מה הרגע הזה אומר עליכם?","מי עוד מרגיש ככה?","תנו לזה רגע נוסף."],
-sentence:["מישהו הופתע?","מי היה הכי קרוב?","מה זה אומר על מה שהם חושבים עליך?"],
-dilemma:["מישהו שינה דעה ברגע האחרון?","מה היה קורה אם כולם בוחרים אחרת?","יש מישהו שרוצה לשכנע את השאר?"],
-general:["רגע, בואו נעצור פה.","יש מישהו שרוצה להגיד משהו?","קחו רגע לפני שממשיכים.","שימו לב מה קרה פה."]
+vote:["מישהו הופתע. או סתם לא שם לב.","למה דווקא הוא. מישהו מוכן להסביר.","הצבעה מעניינת. או סתם רגילה.","מי שהצביע אחרת — מה ראה שאחרים לא.","יש פה סיפור. או אין. קשה לדעת."],
+blind:["חשבתם על אותו דבר. או לא. נראה.","מה זה אומר עליכם. כנראה כלום. או הכל.","חיבור שלא ציפיתם לו. או שכן."],
+hotseat:["מישהו הופתע. או לא. ממשיכים.","יש תגובה. אפשר גם בלי.","מי חשב שהתשובה תהיה אחרת. אני לא חשבתי כלום."],
+reveal:["רגע שעבר. לא חוזר. ככה זה עם רגעים.","מי עוד מרגיש ככה. לא חייבים להגיד.","תנו לזה עוד שנייה. ואז ממשיכים."],
+sentence:["מישהו הופתע. מישהו לא. שניהם בסדר.","מה המשפט הזה אומר. לא חייבים לענות."],
+dilemma:["מישהו שינה דעה. או שלא. שניהם לגיטימי.","יש מי שרוצה לשכנע. יש מי שלא. ממשיכים."],
+general:["רגע. לפני שממשיכים.","אפשר לעצור פה שנייה.","מה עכשיו קרה פה. שאלה רטורית. ממשיכים."]
 };
 function hostPrompt(type){const pool=HOST_PROMPTS[type]||HOST_PROMPTS.general;return pool[Math.floor(Math.random()*pool.length)];}
 
@@ -922,7 +922,7 @@ const tpp=gameLen==='short'?Math.max(2,Math.floor(16/P.length)):Math.max(3,Math.
 // Type distribution with pacing (long-short alternation)
 const longTypes=['vote','dilemma','pdilemma','blind'];
 function mkTypes(n,phase){
-const all=['vote','vote','alias','hotseat','mission','rapid','dilemma','famtalk','draw','reveal','pdilemma','blind'];
+const all=['vote','vote','alias','hotseat','mission','rapid','dilemma','famtalk','draw','reveal','pdilemma','blind','moral','whatif'];
 if(phase===1&&n>3)all.push('mic');// Add mic round in fire phase
 let t=shuf([...all]).slice(0,n);if(phase===2&&!t.includes('sentence')&&n>3){t[t.length-2]='sentence';}
 // Sort: ensure no two long types adjacent
@@ -949,6 +949,11 @@ scores={};turnQ={};voteLog=[];streaks={};lastScorer=-1;comebackUsed={};phasesSee
 P.forEach((_,i)=>{scores[i]=0;turnQ[i]=0;gS.aliasW[i]=0;gS.drawW[i]=0;});
 if(typeof SECRET!=='undefined'&&SECRET.length){
 secretPool=shuf([...SECRET]);
+// Prize pool
+if(typeof PRIZES!=='undefined'&&PRIZES.length){
+  window._prizePool=shuf([...PRIZES]);
+  window._prizeIdx=0;
+}
 secretIdx=0;
 }else{
 secretPool=[];
@@ -977,7 +982,7 @@ if(_pp&&_pp.n!==undefined)nightMode=_pp.n;
 function _gp(key,factory){if(_reuse&&_pp.p[key]&&_pp.p[key].length>0&&_pp.i[key]<_pp.p[key].length)return{p:_pp.p[key],i:_pp.i[key]};return{p:factory(),i:0};}
 ['warm','fire','final'].forEach(k=>{
 [['vt_'+k,()=>shuf(filterByAge([...VOTE[k]]))],['hs_'+k,()=>shuf(filterByAge([...(HOTSEAT[k]||[])]))],['mi_'+k,()=>shuf(filterByAge([...(MISSIONS[k]||[])]))],['ft_'+k,()=>shuf(filterByAge([...(FAMTALK[k]||[])]))],['rv_'+k,()=>shuf(filterByAge([...(REVEAL[k]||[])]))],['al_'+k,()=>shuf([...(ALIAS[k]||[])])],['dr_'+k,()=>shuf([...(DRAW[k]||[])])],['pd_'+k,()=>shuf(filterByAge([...(PDILEMMA[k]||[])]))],['bl_'+k,()=>shuf(filterByAge([...(BLIND[k]||[])]))]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});});
-[['sent',()=>shuf([...SENTENCE.final])],['ra',()=>shuf([...RAPIDS])],['di',()=>shuf([...DILEMMAS])],['fc',()=>shuf([...FAM_CH])],['rec',()=>shuf([...(typeof RECORD!=='undefined'?RECORD:[])])]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});
+[['sent',()=>shuf([...SENTENCE.final])],['ra',()=>shuf([...RAPIDS])],['di',()=>shuf([...DILEMMAS])],['fc',()=>shuf([...FAM_CH])],['rec',()=>shuf([...(typeof RECORD!=='undefined'?RECORD:[])])],['moral',()=>shuf([...(typeof MORAL!=='undefined'?MORAL:[])])],['whatif',()=>shuf([...(typeof WHATIF!=='undefined'?WHATIF:[])])]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});
 // Night mode — mix in adult content
 if(nightMode){
 ['warm','fire','final'].forEach(k=>{
@@ -1114,8 +1119,8 @@ function doSpin(){
 }
 
 // ===== SHOW ROUND =====
-const RT_NAMES={vote:'הצבעה',hotseat:'כיסא חם',mission:'משימה',alias:'מילים',draw:'ציור',rapid:'בזק',dilemma:'דילמה',famtalk:'שיחה',reveal:'זה על זה',pdilemma:'בחירה',blind:'ניחוש',sentence:'השלם משפט',mic:'שכנע',secret:'סודי',record:'הקלטה'};
-const RT={vote:{ic:'vote',c:'var(--lav)',bg:'vote'},hotseat:{ic:'flame',c:'var(--coral)',bg:'hotseat'},mission:{ic:'target',c:'var(--peach)',bg:'mission'},alias:{ic:'chat',c:'var(--teal)',bg:'alias'},draw:{ic:'brush',c:'var(--sky)',bg:'draw'},rapid:{ic:'bolt',c:'var(--gold)',bg:'rapid'},dilemma:{ic:'scale',c:'var(--sky)',bg:'dilemma'},famtalk:{ic:'people',c:'var(--mint)',bg:'famtalk'},reveal:{ic:'heart',c:'var(--rose)',bg:'reveal'},pdilemma:{ic:'scale',c:'var(--peach)',bg:'hotseat'},blind:{ic:'heart',c:'var(--rose)',bg:'reveal'},sentence:{ic:'chat',c:'var(--mint)',bg:'reveal'},mic:{ic:'star',c:'var(--coral)',bg:'hotseat'},secret:{ic:'target',c:'var(--gold)',bg:'hotseat'},record:{ic:'megaphone',c:'var(--mint)',bg:'famtalk'}};
+const RT_NAMES={vote:'הצבעה',hotseat:'כיסא חם',mission:'משימה',alias:'מילים',draw:'ציור',rapid:'בזק',dilemma:'דילמה',famtalk:'שיחה',reveal:'זה על זה',pdilemma:'בחירה',blind:'ניחוש',sentence:'השלם משפט',mic:'שכנע',secret:'סודי',record:'הקלטה',moral:'דילמה מוסרית',whatif:'מה היית עושה'};
+const RT={vote:{ic:'vote',c:'var(--lav)',bg:'vote'},hotseat:{ic:'flame',c:'var(--coral)',bg:'hotseat'},mission:{ic:'target',c:'var(--peach)',bg:'mission'},alias:{ic:'chat',c:'var(--teal)',bg:'alias'},draw:{ic:'brush',c:'var(--sky)',bg:'draw'},rapid:{ic:'bolt',c:'var(--gold)',bg:'rapid'},dilemma:{ic:'scale',c:'var(--sky)',bg:'dilemma'},famtalk:{ic:'people',c:'var(--mint)',bg:'famtalk'},reveal:{ic:'heart',c:'var(--rose)',bg:'reveal'},pdilemma:{ic:'scale',c:'var(--peach)',bg:'hotseat'},blind:{ic:'heart',c:'var(--rose)',bg:'reveal'},sentence:{ic:'chat',c:'var(--mint)',bg:'reveal'},mic:{ic:'star',c:'var(--coral)',bg:'hotseat'},secret:{ic:'target',c:'var(--gold)',bg:'hotseat'},record:{ic:'megaphone',c:'var(--mint)',bg:'famtalk'},moral:{ic:'scale',c:'var(--coral)',bg:'dilemma'},whatif:{ic:'sparkle',c:'var(--sky)',bg:'famtalk'}};
 
 function showRound(ev){
 const pi=ev.pi,p=P[pi],rt=ev.roundType,ri=RT[rt];
@@ -1150,6 +1155,8 @@ else if(rt==='blind')showBlind(pi,ev.pi2,sp,mult);
 else if(rt==='sentence')showSentence(pi,sp,mult);
 else if(rt==='mic')showMicRound(pi,sp,mult);
 else if(rt==='record')showRecord(ev,sp,mult);
+else if(rt==='moral')showMoral(pi,sp,mult);
+else if(rt==='whatif')showWhatIf(pi,sp,mult);
 }
 function gc(h){const el=document.getElementById('gc');
 el.style.opacity='0';el.style.transform='translateY(8px)';
@@ -1406,6 +1413,72 @@ function mDo(){const pi=MS.pi,pts=MS.d*MS.mult,p=P[pi];
 gc(`<div class="pass"><div>${ic('sparkle',40,'var(--peach)')}</div><div class="pass-name" style="color:${p.color}">${p.name} ${g(pi,'מבצע','מבצעת')}!</div><div class="csub">עבר/ה?</div>
 <div class="acts"><button class="ab ab-g" onclick="scores[${pi}]+=${pts};ptPop('${p.color}','+${pts}');updateSB();trackStreak(${pi});advance()">✅ עבר! (+${pts})</button><button class="ab" style="background:var(--coral)" onclick="advance()">❌ לא עבר</button></div></div>`);}
 
+// ===== MORAL DILEMMA =====
+function showMoral(pi,sp,mult){
+  const q=nx(pools['moral'],idx['moral']++);
+  if(!q){advance();return;}
+  const p=P[pi];
+  const rtName=RT_NAMES['moral']||'דילמה';
+
+  let optsHtml='';
+  if(q.opts&&q.opts.length){
+    optsHtml='<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0">';
+    q.opts.forEach((o,i)=>{
+      const colors=['var(--coral)','var(--teal)','var(--sky)'];
+      optsHtml+=`<button class="ab" style="background:${colors[i%3]};flex:1;min-width:80px;font-size:.75rem" onclick="SND.play('pop');advance()">${o}</button>`;
+    });
+    optsHtml+='</div>';
+  }
+
+  gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,52)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">${rtName}</div></div></div>
+  ${sp}
+  <div class="rc bg-dilemma"><div class="rc-bar" style="background:var(--coral)"></div><div class="rc-glow" style="background:var(--coral)"></div>
+  <div class="rc-icon">${ic('scale',36,'var(--coral)')}</div>
+  <div class="cq" style="color:var(--coral)">${q.q}</div>
+  <div class="csub">כל אחד אומר מה היה עושה. בלי לשפוט.</div>
+  ${optsHtml}
+  <div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">דיברנו. ממשיכים.</button></div>
+  </div>`);
+}
+
+// ===== WHAT IF =====
+function showWhatIf(pi,sp,mult){
+  const q=nx(pools['whatif'],idx['whatif']++);
+  if(!q){advance();return;}
+  const p=P[pi];
+  const rtName=RT_NAMES['whatif']||'מה היית עושה';
+
+  gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,52)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">${rtName}</div></div></div>
+  ${sp}
+  <div class="rc bg-famtalk"><div class="rc-bar" style="background:var(--sky)"></div><div class="rc-glow" style="background:var(--sky)"></div>
+  <div class="rc-icon">${ic('sparkle',36,'var(--sky)')}</div>
+  <div class="cq" style="color:var(--sky)">${q.q}</div>
+  <div class="csub">${p.name} עונה ראשון. אחר כך כולם.</div>
+  <div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">ענינו. ממשיכים.</button></div>
+  </div>`);
+}
+
+// ===== PRIZES =====
+function showPrize(pi){
+  if(!window._prizePool||window._prizeIdx>=window._prizePool.length)return;
+  const prize=window._prizePool[window._prizeIdx++];
+  const p=P[pi];
+  if(!gS.prizes)gS.prizes=[];
+  gS.prizes.push({player:pi,prize:prize,round:gS.rounds});
+
+  gc(`<div style="text-align:center;padding:16px">
+    <div style="margin:8px 0">${ic('trophy',42,'var(--gold)')}</div>
+    <div style="font-size:.9rem;font-weight:900;color:var(--gold);margin:6px 0">פרס!</div>
+    <div style="width:56px;height:56px;border-radius:50%;overflow:hidden;border:2.5px solid ${p.color};margin:0 auto 8px">${gAv(pi,56)}</div>
+    <div style="font-size:.85rem;font-weight:800;color:${p.color};margin:4px 0">${p.name}</div>
+    <div style="background:rgba(255,199,58,.08);border:1px solid rgba(255,199,58,.2);border-radius:10px;padding:12px;margin:10px 0">
+      <div style="font-size:.82rem;color:var(--gold);font-weight:700">${prize}</div>
+    </div>
+    <div style="font-size:.6rem;color:var(--t3);margin:6px 0">פרס אמיתי. אפשר לממש. מחר.</div>
+    <div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">ממשיכים</button></div>
+  </div>`);
+}
+
 // ===== ALIAS =====
 let AS={};
 function startAlias(pi,sp,mult){const p=P[pi];AS={pi,mult};
@@ -1426,7 +1499,7 @@ ${circleTimer('at',AS.time,AS.total,'var(--teal)')}
 <div class="abtns"><button style="background:var(--teal)" onclick="aOk()">ניחשו! ✅</button><button style="background:var(--s3)" onclick="aSkip()">דלג ⏭</button></div></div>`);}
 function aOk(){SND.play('pop');vib(30);AS.score++;AS.words.push(AS.cw);showAW(AS.pi);}
 function aSkip(){showAW(AS.pi);}
-function aEnd(){if(AS.tmr)clearInterval(AS.tmr);const pi=AS.pi,p=P[pi],pts=Math.min(AS.score,ACAP)*AS.mult;scores[pi]+=pts;gS.aliasW[pi]=(gS.aliasW[pi]||0)+AS.score;updateSB();saveState();if(pts>0){ptPop(p.color,'+'+pts);SND.play('win');vib(80);scorePop(pi);trackStreak(pi);}
+function aEnd(){if(AS.tmr)clearInterval(AS.tmr);const pi=AS.pi,p=P[pi],pts=Math.min(AS.score,ACAP)*AS.mult;scores[pi]+=pts;gS.aliasW[pi]=(gS.aliasW[pi]||0)+AS.score;updateSB();saveState();if(pts>0){ptPop(p.color,'+'+pts);SND.play('win');vib(80);scorePop(pi);trackStreak(pi);showPrize(pi);return;}
 gc(`<div class="pass"><div style="font-size:2.5rem;font-weight:900;color:var(--gold)">${AS.score} מילים!</div><div class="csub">${AS.words.join(' • ')}</div></div><div class="ptag">+${pts} ל${p.name}</div><div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);}
 
 // ===== DRAW =====
@@ -1467,7 +1540,7 @@ function dClr(){const cv=document.getElementById('dcv');if(cv){const c=cv.getCon
 function dRes(ok){if(DS.tmr)clearInterval(DS.tmr);const pi=DS.pi,p=P[pi],pts=ok?3*DS.mult:0;
 // Save drawing
 try{const cv=document.getElementById('dcv');if(cv)gS.drawings.push({img:cv.toDataURL('image/jpeg',.6),word:DS.word,player:pi});}catch(e){}
-if(ok){scores[pi]+=pts;gS.drawW[pi]=(gS.drawW[pi]||0)+1;ptPop(p.color,'+'+pts);SND.play('win');vib(80);updateSB();scorePop(pi);trackStreak(pi);}else SND.play('buzz');
+if(ok){scores[pi]+=pts;gS.drawW[pi]=(gS.drawW[pi]||0)+1;ptPop(p.color,'+'+pts);SND.play('win');vib(80);updateSB();scorePop(pi);trackStreak(pi);showPrize(pi);return;}else SND.play('buzz');
 gc(`<div class="pass"><div>${ok?ic('star',40,'var(--teal)'):ic('x',40,'var(--coral)')}</div><div style="font-size:1.1rem;font-weight:700;color:${ok?'var(--teal)':'var(--coral)'}">${ok?'ניחשו!':'לא ניחשו'}</div><div class="csub">המילה: <b>${DS.word}</b></div>${ok?`</div><div class="ptag">+${pts} ל${p.name}</div>`:''}<div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);}
 
 // ===== RAPID =====
@@ -1483,7 +1556,7 @@ ${circleTimer('rt',tl,tl,'var(--gold)')}
 <div class="acts" id="rapidActs"><button class="ab ab-g" onclick="startRapidTimer(${pi},${pts},${tl})">התחל!</button></div></div>`);
 }
 function startRapidTimer(pi,pts,tl){const rapidTotal=tl;document.getElementById('rapidActs').innerHTML=`<button class="ab ab-g" onclick="rEnd(${pi},${pts},true)">הצליח! (+${pts})</button><button class="ab" style="background:var(--coral)" onclick="rEnd(${pi},0,false)">לא הספיק</button>`;tmrId=setInterval(()=>{tl--;SND.play('tick');updateCircle('rt',null,tl,rapidTotal,'var(--gold)');if(tl<=0){clearInterval(tmrId);const el=document.getElementById('rt');if(el)el.textContent='⏰';}},1000);}
-function rEnd(pi,pts,ok){if(tmrId){clearInterval(tmrId);tmrId=null;}if(ok){scores[pi]+=pts;ptPop(P[pi].color,'+'+pts);SND.play('win');vib(60);updateSB();scorePop(pi);trackStreak(pi);}else SND.play('buzz');advance();}
+function rEnd(pi,pts,ok){if(tmrId){clearInterval(tmrId);tmrId=null;}if(ok){scores[pi]+=pts;ptPop(P[pi].color,'+'+pts);SND.play('win');vib(60);updateSB();scorePop(pi);trackStreak(pi);showPrize(pi);return;}else SND.play('buzz');advance();}
 
 // ===== DILEMMA =====
 let DL={};
@@ -1762,29 +1835,29 @@ gc(`<div class="pass">
 // ===== MIC ROUND — "האמת יוצאת לאור" =====
 const MIC_CLAIMS={
 warm:[
-{cm:"אני הכי מצחיק פה",cf:"אני הכי מצחיקה פה",age:'all'},
-{cm:"אני תמיד עוזר בבית",cf:"אני תמיד עוזרת בבית",age:'all'},
-{cm:"אני הכי חכם במשפחה",cf:"אני הכי חכמה במשפחה",age:'all'},
-{cm:"אני אף פעם לא משקר",cf:"אני אף פעם לא משקרת",age:'all'},
-{cm:"אני הולך לישון בזמן כל לילה",cf:"אני הולכת לישון בזמן כל לילה",age:'all'},
-{cm:"אני אוהב ירקות באמת",cf:"אני אוהבת ירקות באמת",age:'all'},
+{cm:"אני הכי מצחיק פה ואף אחד לא מבין למה",cf:"אני הכי מצחיקה פה ואף אחד לא מבין למה",age:'all'},
+{cm:"אני תמיד עוזר בבית. תמיד. גם כשלא רואים",cf:"אני תמיד עוזרת בבית. תמיד. גם כשלא רואים",age:'all'},
+{cm:"אני אף פעם לא משקר. חוץ מעכשיו",cf:"אני אף פעם לא משקרת. חוץ מעכשיו",age:'all'},
+{cm:"אני הולך לישון בזמן כל לילה. בדיוק בזמן",cf:"אני הולכת לישון בזמן כל לילה. בדיוק בזמן",age:'all'},
+{cm:"אני אוהב ירקות. באמת. לא בצחוק",cf:"אני אוהבת ירקות. באמת. לא בצחוק",age:'all'},
+{cm:"אני הכי מסודר פה. תסתכלו על החדר שלי. אל תסתכלו",cf:"אני הכי מסודרת פה. תסתכלו על החדר שלי. אל תסתכלו",age:'all'},
 ],
 fire:[
-{cm:"אני הכי טוב בלשמור סודות",cf:"אני הכי טובה בלשמור סודות",age:'all'},
-{cm:"אני אף פעם לא מחפש תירוצים",cf:"אני אף פעם לא מחפשת תירוצים",age:'all'},
-{cm:"אני תמיד מודה כשאני טועה",cf:"אני תמיד מודה כשאני טועה",age:'all'},
-{cm:"אני הכי רגוע כשיש לחץ",cf:"אני הכי רגועה כשיש לחץ",age:'all'},
-{cm:"אני מי שמנקה הכי הרבה בבית",cf:"אני מי שמנקה הכי הרבה בבית",age:'all'},
-{cm:"אני אף פעם לא אוכל בסתר מהמקרר",cf:"אני אף פעם לא אוכלת בסתר מהמקרר",age:'all'},
-{cm:"אני הכי סבלני במשפחה",cf:"אני הכי סבלנית במשפחה",age:'all'},
-{cm:"אני תמיד מגיע בזמן",cf:"אני תמיד מגיעה בזמן",age:'all'},
+{cm:"אני הכי טוב בלשמור סודות. שאלו את מי שלא אמרתי לו",cf:"אני הכי טובה בלשמור סודות. שאלו את מי שלא אמרתי לה",age:'all'},
+{cm:"אני אף פעם לא מחפש תירוצים. חוץ מעכשיו",cf:"אני אף פעם לא מחפשת תירוצים. חוץ מעכשיו",age:'all'},
+{cm:"אני תמיד מודה כשאני טועה. פשוט אני לא טועה",cf:"אני תמיד מודה כשאני טועה. פשוט אני לא טועה",age:'all'},
+{cm:"אני הכי רגוע כשיש לחץ. כי אני לא שם לב",cf:"אני הכי רגועה כשיש לחץ. כי אני לא שמה לב",age:'all'},
+{cm:"אני מי שמנקה הכי הרבה בבית. ואף אחד לא מעריך",cf:"אני מי שמנקה הכי הרבה בבית. ואף אחד לא מעריך",age:'all'},
+{cm:"אני אף פעם לא אוכל בסתר מהמקרר. ברוב הימים",cf:"אני אף פעם לא אוכלת בסתר מהמקרר. ברוב הימים",age:'all'},
+{cm:"אני הכי סבלני במשפחה. סבלני מאוד. ממש",cf:"אני הכי סבלנית במשפחה. סבלנית מאוד. ממש",age:'all'},
+{cm:"אני תמיד מגיע בזמן. הזמן פשוט מגיע אחריי",cf:"אני תמיד מגיעה בזמן. הזמן פשוט מגיע אחריי",age:'all'},
 ],
 final:[
-{cm:"אני הכי משפיע על המשפחה",cf:"אני הכי משפיעה על המשפחה",age:'10+'},
-{cm:"בלעדיי המשפחה לא הייתה אותו דבר",cf:"בלעדיי המשפחה לא הייתה אותו דבר",age:'all'},
-{cm:"אני הכי יודע להקשיב",cf:"אני הכי יודעת להקשיב",age:'all'},
-{cm:"אני מכיר את כולם פה יותר טוב ממה שהם חושבים",cf:"אני מכירה את כולם פה יותר טוב ממה שהם חושבים",age:'10+'},
-{cm:"אני הכי אמיתי במשפחה הזאת",cf:"אני הכי אמיתית במשפחה הזאת",age:'13+'},
+{cm:"אני הכי משפיע על המשפחה. לטוב ולרע. בעיקר לטוב. אני חושב",cf:"אני הכי משפיעה על המשפחה. לטוב ולרע. בעיקר לטוב. אני חושבת",age:'all'},
+{cm:"בלעדיי המשפחה לא הייתה אותו דבר. הייתה שקטה יותר",cf:"בלעדיי המשפחה לא הייתה אותו דבר. הייתה שקטה יותר",age:'all'},
+{cm:"אני הכי יודע להקשיב. רק לא תמיד בוחר",cf:"אני הכי יודעת להקשיב. רק לא תמיד בוחרת",age:'all'},
+{cm:"אני מכיר את כולם פה יותר טוב ממה שהם חושבים. וזה לא תמיד נעים",cf:"אני מכירה את כולם פה יותר טוב ממה שהם חושבים. וזה לא תמיד נעים",age:'all'},
+{cm:"אני הכי אמיתי פה. גם כשזה לא נוח. במיוחד כשזה לא נוח",cf:"אני הכי אמיתית פה. גם כשזה לא נוח. במיוחד כשזה לא נוח",age:'all'},
 ]};
 
 function getMicClaim(phase,pi){
@@ -2085,7 +2158,7 @@ const p=P[pi];
 const pts=success?3:0;
 scores[pi]+=pts;
 updateSB();saveState();
-if(success){ptPop(p.color,'+3');SND.play('win');vib(80);scorePop(pi);trackStreak(pi);}
+if(success){ptPop(p.color,'+3');SND.play('win');vib(80);scorePop(pi);trackStreak(pi);showPrize(pi);return;}
 else{SND.play('buzz');vib(40);}
 window._lastSecretEnd=gS.rounds;
 activeSecret=null;
