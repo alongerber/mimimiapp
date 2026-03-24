@@ -494,6 +494,29 @@ body.light-body{background:#f8f6f1}
 .pick-av img{width:100%;height:100%;object-fit:cover}
 .pick-name{font-size:.65rem;text-align:center;margin-top:2px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:56px}
 
+/* Intro screen */
+.intro-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:24px 16px;text-align:center;gap:18px}
+.intro-av{width:90px;height:90px;border-radius:50%;overflow:hidden;border:3px solid var(--gold);box-shadow:0 0 30px rgba(255,199,58,.25);animation:intro-pulse 2s ease-in-out infinite}
+@keyframes intro-pulse{0%,100%{box-shadow:0 0 30px rgba(255,199,58,.25)}50%{box-shadow:0 0 50px rgba(255,199,58,.45)}}
+.intro-av img{width:100%;height:100%;object-fit:cover}
+.intro-title{font-size:1.8rem;font-weight:900;color:var(--gold);letter-spacing:2px;margin:0}
+.intro-typing{font-size:.82rem;color:var(--t2);min-height:2.4em;line-height:1.5;direction:rtl;max-width:320px}
+.intro-typing .cursor{display:inline-block;width:2px;height:1em;background:var(--gold);animation:blink .6s step-end infinite;vertical-align:text-bottom;margin-right:2px}
+@keyframes blink{50%{opacity:0}}
+.intro-start{margin-top:12px;opacity:0;transition:opacity .5s}
+.intro-start.show{opacity:1}
+
+/* Magic moment / paywall */
+.magic-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:24px 16px;text-align:center;gap:14px}
+.magic-title{font-size:1.1rem;font-weight:900;color:var(--gold)}
+.magic-sub{font-size:.78rem;color:var(--t2);max-width:300px;line-height:1.5}
+.magic-features{display:flex;flex-direction:column;gap:8px;width:100%;max-width:300px;margin:8px 0}
+.magic-feat{display:flex;align-items:center;gap:10px;background:var(--s1);border-radius:12px;padding:10px 14px;font-size:.72rem;color:var(--text);text-align:right}
+.magic-feat-icon{font-size:1.2rem;flex-shrink:0}
+.magic-btn{background:var(--gold);color:#1a1a2e;border:none;border-radius:16px;padding:14px 32px;font-size:.9rem;font-weight:800;cursor:pointer;width:100%;max-width:300px;transition:transform .15s}
+.magic-btn:active{transform:scale(.96)}
+.magic-free{font-size:.68rem;color:var(--t3);text-decoration:underline;cursor:pointer;margin-top:4px}
+
 </style>
 </head>
 <body>
@@ -506,7 +529,18 @@ body.light-body{background:#f8f6f1}
   <button class="hb r" id="sndB" onclick="SND.toggle()" aria-label="שמע"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="1.8" style="vertical-align:middle"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" stroke-linecap="round"/></svg></button>
 </div>
 
-<div class="scr on" id="scrSetup" role="main" aria-label="הגדרות משחק"><div style="flex:1;display:flex;flex-direction:column;gap:10px;padding:8px 0">
+<div class="scr on" id="scrIntro">
+<div class="intro-wrap">
+  <div class="intro-av"><img src="avatars/intro.webp" alt="מי מי מי"></div>
+  <div class="intro-title">מי מי מי?</div>
+  <div class="intro-typing" id="introTyping"></div>
+  <div class="intro-start" id="introStartBtn">
+    <button class="gobtn" onclick="startFromIntro()" style="min-width:200px">יאללה, מתחילים</button>
+  </div>
+</div>
+</div>
+
+<div class="scr" id="scrSetup" role="main" aria-label="הגדרות משחק"><div style="flex:1;display:flex;flex-direction:column;gap:10px;padding:8px 0">
   <div id="ss1">
     <div class="hero">
       <div class="hero-vis">
@@ -775,6 +809,7 @@ let prevState=null;
 let gS={aliasW:{},drawW:{},rounds:0,t0:0,drawings:[],quotes:[],micResults:[]};
 let PD=[],curSP=0,seenTypes={},phasesSeen=0,streaks={},lastScorer=-1,comebackUsed={},gameLen='full',voteMode='open';
 let nightMode=false;
+let hasPaid=false;
 let activeSecret=null;
 let secretPool=[];
 let secretIdx=0;
@@ -1013,7 +1048,11 @@ function processEvent(){
 _clearTimers();
 if(curE>=events.length){clearSave();show('scrFin');buildFin();return;}
 const ev=events[curE];document.getElementById('gc').innerHTML='';
-if(ev.type==='phase_intro')showPI(ev.phase);
+if(ev.type==='phase_intro'){
+if(ev.phase===1){try{gtag('event','phase_0_complete',{player_count:P.length});}catch(e){}}
+if(ev.phase>=1&&!hasPaid){showMagicMoment();return;}
+showPI(ev.phase);
+}
 else if(ev.type==='social_moment')showSocialMoment();
 else if(ev.type==='family_challenge')showFC(ev.ci);
 else if(ev.type==='big_question')showBQ();
@@ -2804,6 +2843,103 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
 // 11. העתיקו את ה-URL שמופיע (מתחיל ב-https://script.google.com/...)
 // 12. בקובץ הזה, חפשו GOOGLE_SCRIPT_URL_HERE והחליפו ב-URL שהעתקתם
 // 13. זהו! כל פידבק ונתוני משחק יגיעו ישירות לגיליון שלכם
+//
+
+// ===== INTRO SCREEN =====
+const INTRO_LINES=[
+"שלום. אני המנחה. לא ביקשתי את זה.",
+"הערב אנחנו הולכים לגלות דברים. על המשפחה. על עצמנו. בעיקר על עצמנו.",
+"יהיו שאלות. דילמות. משימות. ורגעים מביכים שאי אפשר למחוק.",
+"מוכנים? לא משנה. מתחילים."
+];
+let introLineIdx=0,introCharIdx=0,introTmr=null;
+function typeIntro(){
+const el=document.getElementById('introTyping');
+if(!el)return;
+if(introLineIdx>=INTRO_LINES.length){
+clearInterval(introTmr);introTmr=null;
+el.innerHTML=INTRO_LINES[INTRO_LINES.length-1];
+document.getElementById('introStartBtn').classList.add('show');
+try{gtag('event','intro_complete');}catch(e){}
+return;
+}
+const line=INTRO_LINES[introLineIdx];
+if(introCharIdx<=line.length){
+el.innerHTML=line.substring(0,introCharIdx)+'<span class="cursor"></span>';
+introCharIdx++;
+}else{
+introLineIdx++;introCharIdx=0;
+setTimeout(()=>{if(introTmr)typeIntro();},800);
+clearInterval(introTmr);introTmr=setInterval(typeIntro,50);
+return;
+}
+}
+function startIntro(){
+introLineIdx=0;introCharIdx=0;
+introTmr=setInterval(typeIntro,50);
+try{gtag('event','intro_start');}catch(e){}
+}
+function startFromIntro(){
+if(introTmr){clearInterval(introTmr);introTmr=null;}
+show('scrSetup');ss1Show();
+try{gtag('event','setup_start');}catch(e){}
+}
+// Auto-start intro
+setTimeout(startIntro,400);
+
+// ===== FREE/PAID SPLIT =====
+function showMagicMoment(){
+SND.play('pop');
+try{gtag('event','paywall_shown',{phase:'fire'});}catch(e){}
+const gc=document.getElementById('gc');
+let h='<div class="magic-wrap">';
+h+='<div style="font-size:2.5rem">✨</div>';
+h+='<div class="magic-title">רגע קסם</div>';
+h+='<div class="magic-sub">השלב הראשון היה רק חימום. עכשיו מתחיל הכיף האמיתי.</div>';
+h+='<div class="magic-features">';
+h+='<div class="magic-feat"><div class="magic-feat-icon">🔥</div><div>שאלות חמות שחושפות את האמת</div></div>';
+h+='<div class="magic-feat"><div class="magic-feat-icon">🎭</div><div>משימות מטורפות ודילמות בלתי אפשריות</div></div>';
+h+='<div class="magic-feat"><div class="magic-feat-icon">🏆</div><div>הסיום הגדול עם פרסים ותוארות</div></div>';
+h+='</div>';
+h+='<button class="magic-btn" onclick="openPayment()">פתח הכל — 15₪</button>';
+h+='<div class="magic-free" onclick="unlockFree()">המשך בחינם (מוגבל)</div>';
+h+='<div style="margin-top:8px"><button class="gobtn" style="font-size:.68rem;padding:8px 20px;background:var(--s2)" onclick="shareForUnlock()">שתף חבר ופתח בחינם</button></div>';
+h+='</div>';
+gc.innerHTML=h;
+}
+function openPayment(){
+try{gtag('event','payment_click');}catch(e){}
+// Placeholder — integrate real payment here
+hasPaid=true;
+SND.play('tada');
+advance();
+}
+function unlockFree(){
+try{gtag('event','paywall_skip');}catch(e){}
+hasPaid=false;
+advance();
+}
+function shareForUnlock(){
+try{gtag('event','share_for_unlock');}catch(e){}
+shareGame('unlock');
+hasPaid=true;
+SND.play('tada');
+setTimeout(()=>advance(),600);
+}
+
+// ===== SHARING =====
+function shareGame(source){
+const text='שיחקנו ב"מי מי מי?" וזה היה מטורף 🎲✨ בואו לנסות!';
+const url='https://mimimiapp.vercel.app';
+try{gtag('event','share_click',{source:source||'fin'});}catch(e){}
+if(navigator.share){
+navigator.share({title:'מי מי מי?',text:text,url:url}).catch(()=>{});
+}else{
+const waUrl='https://wa.me/?text='+encodeURIComponent(text+' '+url);
+window.open(waUrl,'_blank');
+}
+}
+
 //
 </script>
 </body>
