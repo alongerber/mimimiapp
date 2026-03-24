@@ -93,7 +93,7 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 .sb{flex:0 0 auto;min-width:56px;padding:5px 8px;border-radius:10px;background:var(--s1);text-align:center;border:2px solid transparent;transition:.3s;display:flex;flex-direction:column;align-items:center;gap:1px}
 .sb.hot{border-color:var(--gold);background:var(--s2);animation:sbPop .5s ease}
 @keyframes sbPop{50%{transform:scale(1.12)}}
-.sb-av{width:30px;height:30px;border-radius:8px;overflow:hidden}.sb-av img{width:100%;height:100%;object-fit:cover}
+.sb-av{width:40px;height:40px;border-radius:10px;overflow:hidden}.sb-av img{width:100%;height:100%;object-fit:cover}
 .sb-n{font-size:.55rem;font-weight:700;white-space:nowrap;max-width:50px;overflow:hidden;text-overflow:ellipsis}
 .sb-p{font-size:.95rem;font-weight:900}
 .sb-p.bump{animation:sBump .5s ease}
@@ -104,12 +104,6 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 @keyframes scorePop{0%{opacity:0;transform:translateX(-50%) translateY(10px)}10%{opacity:1;transform:translateX(-50%) translateY(0)}80%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-10px)}}
 
 /* Wheel */
-.warea{position:relative;width:100%;max-width:280px;margin:6px auto;aspect-ratio:1;flex-shrink:0}
-.warea canvas{width:100%;height:100%;display:block;filter:drop-shadow(0 4px 20px rgba(0,0,0,.5))}
-.warea::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(255,215,0,.2);animation:wheelGlow 4s ease infinite;pointer-events:none}
-@keyframes wheelGlow{0%,100%{border-color:rgba(177,151,252,.15);box-shadow:0 0 8px rgba(177,151,252,.05)}50%{border-color:rgba(56,217,169,.2);box-shadow:0 0 16px rgba(56,217,169,.08)}}
-.warrow{position:absolute;top:-8px;left:50%;transform:translateX(-50%);z-index:5;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
-.wctr{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;background:transparent;border-radius:50%;z-index:4;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .gbtns{display:flex;gap:6px;margin:4px 0;flex-shrink:0}
 .spinb{flex:1;padding:16px;border:none;border-radius:var(--r);font-family:inherit;font-size:.9rem;font-weight:800;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--lav),var(--coral));transition:.15s}.spinb:active{transform:scale(.97)}.spinb:disabled{opacity:.2}
 .undo-b{width:42px;border:none;border-radius:var(--r);background:var(--s2);color:var(--t2);font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center}.undo-b:disabled{opacity:.12}
@@ -240,7 +234,6 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 .app.light .sni{background:#fff;border-color:var(--s3);color:var(--text)}
 .app.light .ov{background:rgba(248,246,241,.96);backdrop-filter:blur(12px)}
 .app.light .mbox{background:var(--s1)}
-.app.light .warea canvas{filter:drop-shadow(0 4px 20px rgba(0,0,0,.15)) saturate(.85) brightness(1.1)}
 body.light-body{background:#f8f6f1}
 .theme-toggle{position:absolute;top:8px;left:52px;width:28px;height:28px;border-radius:50%;background:var(--s2);border:1px solid var(--s3);color:var(--t2);font-size:.75rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10}
 
@@ -333,8 +326,6 @@ body.light-body{background:#f8f6f1}
 .mp-p{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:10px;background:var(--s2);border:1px solid var(--s3);font-size:.7rem;font-weight:700}
 .mp-p-av{width:20px;height:20px;border-radius:5px;overflow:hidden}.mp-p-av img{width:100%;height:100%;object-fit:cover}
 
-@media(max-height:700px){.warea{max-width:220px}}
-@media(min-width:420px){.warea{max-width:300px}}
 
 
 /* Hero visual */
@@ -495,6 +486,20 @@ body.light-body{background:#f8f6f1}
 .av-confirm:active{transform:scale(.95)}
 .av-back{flex:1;padding:14px;border:none;border-radius:12px;font-size:.8rem;font-weight:600;background:var(--s2);color:var(--t2);cursor:pointer;font-family:inherit}
 
+/* === NEW WHEEL === */
+.wheel-wrap{position:relative;width:220px;height:220px;margin:0 auto}
+.wheel-container{position:relative;width:100%;height:100%;border-radius:50%;transition:none;will-change:transform}
+.wheel-ring{position:absolute;inset:-4px;border-radius:50%;border:3px solid rgba(255,215,0,.35);pointer-events:none}
+.wheel-player{position:absolute;display:flex;flex-direction:column;align-items:center;transform-origin:center center;pointer-events:none}
+.wheel-av{width:48px;height:48px;border-radius:50%;overflow:hidden;border:2.5px solid;box-shadow:0 2px 12px rgba(0,0,0,.4);background:var(--s1)}
+.wheel-av img{width:100%;height:100%;object-fit:cover}
+.wheel-name{font-size:.5rem;font-weight:800;margin-top:2px;text-shadow:0 1px 4px rgba(0,0,0,.8);white-space:nowrap;max-width:60px;overflow:hidden;text-overflow:ellipsis}
+.wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ffd700,#b8942e);box-shadow:0 0 16px rgba(255,215,0,.3);z-index:2;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.wheel-center::after{content:'';width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,#fff8e1,#ffd700)}
+.wheel-pointer{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:18px solid var(--gold);z-index:3;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+.wheel-player.landed .wheel-av{box-shadow:0 0 20px var(--glow-color,#ffd700);transform:scale(1.15);transition:all .3s}
+@media(min-width:400px){.wheel-wrap{width:260px;height:260px}.wheel-av{width:56px;height:56px}.wheel-name{font-size:.55rem}}
+
 </style>
 </head>
 <body>
@@ -553,10 +558,11 @@ body.light-body{background:#f8f6f1}
     <button class="gobtn" id="a2hsBtn" style="background:var(--s2);border:1px solid var(--lav);color:var(--lav);margin-top:8px" onclick="installApp()">📲 הוספה למסך הבית</button>
     <div id="setupHist"></div>
   </div>
-  <div id="ss2" style="display:none"><div id="s2h"></div><div id="s2b"></div>
+  <div id="ss2" style="display:none"><div style="text-align:right;margin-bottom:8px"><button class="gb" onclick="document.getElementById('ss2').style.display='none';document.getElementById('ss1').style.display=''" style="font-size:.65rem;padding:5px 10px">← חזרה</button></div><div id="s2h"></div><div id="s2b"></div>
     <button class="gobtn" id="npb" disabled onclick="nextPS()">הבא ▶</button>
   </div>
   <div id="ss3" style="display:none">
+    <div style="text-align:right;margin-bottom:8px"><button class="gb" onclick="document.getElementById('ss3').style.display='none';document.getElementById('ss2').style.display=''" style="font-size:.65rem;padding:5px 10px">← חזרה</button></div>
     <div class="st">כולם פה?</div><div id="pSum"></div>
     <button class="gobtn" onclick="launch()">יאללה, מתחילים!</button>
     <button class="gobtn" style="background:var(--s2);margin-top:6px;border:1px solid var(--s3)" onclick="ss1Show()">↩ חזרה</button>
@@ -566,10 +572,11 @@ body.light-body{background:#f8f6f1}
 <div class="scr" id="scrGame" role="main" aria-label="משחק">
   <div class="sbar" id="scoreBar" role="status" aria-label="ניקוד"></div>
   <div style="display:flex;align-items:center;gap:6px;padding:0 16px"><div class="fprog" id="fprog" style="flex:1"></div><div id="fprogN" style="font-size:.6rem;color:var(--t2);font-weight:700;white-space:nowrap"></div></div>
-  <div class="warea" id="warea">
-    <div class="warrow"><svg width="28" height="28" viewBox="0 0 28 28"><defs><linearGradient id="arrG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff5cc"/><stop offset="50%" stop-color="#ffd700"/><stop offset="100%" stop-color="#b8942e"/></linearGradient><filter id="arrS"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity=".5"/></filter></defs><polygon points="14,26 2,4 26,4" fill="url(#arrG)" filter="url(#arrS)" stroke="#b8942e" stroke-width="1"/></svg></div>
-    <canvas id="cv" width="600" height="600"></canvas>
-    <div class="wctr" onclick="doSpin()"></div>
+  <div class="wheel-wrap" id="wheelWrap">
+    <div class="wheel-pointer"></div>
+    <div class="wheel-ring"></div>
+    <div class="wheel-container" id="wheelContainer"></div>
+    <div class="wheel-center" onclick="doSpin()"></div>
   </div>
   <div class="gbtns"><button class="spinb" id="spinB" onclick="doSpin()" aria-label="סובבו את הגלגל">גורלות!</button><button class="undo-b" id="undoB" disabled onclick="undoStep()" aria-label="שלב אחורה">↩</button></div>
   <div id="gc"></div>
@@ -620,7 +627,6 @@ body.light-body{background:#f8f6f1}
 </div>
 <canvas id="wcv" width="600" height="800" style="display:none"></canvas>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="content.js"></script>
 <script>
 const COL=['#ff6b6b','#74c0fc','#63e6be','#ffc73a','#b197fc','#ffa94d','#38d9a9','#f783ac'];
@@ -823,9 +829,8 @@ h+=`<div style="display:flex;align-items:center;gap:10px;margin:6px 0;background
 <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2.5px solid ${COL[i]};cursor:pointer" onclick="pickAvFor(${i})">${av?'<img src="'+av.img+'" style="width:100%;height:100%;object-fit:cover">':'?'}</div>
 <input class="sni" style="margin:0;text-align:right;border-color:${COL[i]}33" placeholder="שחקן/ית ${i+1}" maxlength="10" value="${PD[i].name}" oninput="PD[${i}].name=this.value.trim();chkAll()">
 <div style="display:flex;gap:4px;align-items:center">
-<button class="gb ${PD[i].gender==='m'?'on':''}" onclick="PD[${i}].gender='m';showAllPlayers()" style="padding:6px 8px;font-size:.65rem">בן</button>
-<button class="gb ${PD[i].gender==='f'?'on':''}" onclick="PD[${i}].gender='f';showAllPlayers()" style="padding:6px 8px;font-size:.65rem">בת</button>
-<button class="gb ${PD[i].role==='child'?'child-on':''}" onclick="PD[${i}].role=PD[${i}].role==='child'?'adult':'child';showAllPlayers()" style="padding:5px 7px;font-size:.58rem;gap:3px">${PD[i].role==='child'?ic('star',11,'var(--peach)')+'ילד':ic('people',11,'var(--t2)')+'גדול'}</button>
+<button class="gb ${PD[i].gender==='m'?'on':''}" onclick="PD[${i}].gender='m';showAllPlayers()" style="padding:6px 8px;font-size:.65rem">♂</button>
+<button class="gb ${PD[i].gender==='f'?'on':''}" onclick="PD[${i}].gender='f';showAllPlayers()" style="padding:6px 8px;font-size:.65rem">♀</button>
 </div></div>`;}
 document.getElementById('s2b').innerHTML=h;
 document.getElementById('s2h').innerHTML='';
@@ -1021,125 +1026,58 @@ else if(ev.type==='spin'){
 roundStartTime=Date.now();
 if(gS.rounds===0){
 document.getElementById('gc').innerHTML='';document.getElementById('gc').style.opacity='1';document.getElementById('gc').style.transform='none';
-document.getElementById('warea').style.display='';document.getElementById('spinB').parentElement.style.display='flex';document.getElementById('spinB').disabled=false;
+document.getElementById('wheelWrap').style.display='';document.getElementById('spinB').parentElement.style.display='flex';document.getElementById('spinB').disabled=false;
 document.getElementById('spinB').textContent=SPIN_CTA[Math.floor(Math.random()*SPIN_CTA.length)];updateFP();
 }else{
-document.getElementById('warea').style.display='none';document.getElementById('gc').innerHTML='';document.getElementById('gc').style.opacity='1';document.getElementById('gc').style.transform='none';
+document.getElementById('wheelWrap').style.display='none';document.getElementById('gc').innerHTML='';document.getElementById('gc').style.opacity='1';document.getElementById('gc').style.transform='none';
 showRound(ev);}}
 }
 
-// ===== 3D WHEEL (Three.js) =====
-let wheel3D=null;
-function initWheel3D(){
-const cv=document.getElementById('cv');if(!cv||typeof THREE==='undefined')return false;
-try{
-const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(38,1,0.1,100);
-camera.position.set(0,3.2,8);camera.lookAt(0,0,0);
-const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
-renderer.setSize(600,600);renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));renderer.setClearColor(0x000000,0);
-scene.add(new THREE.AmbientLight(0xffffff,0.55));
-const dl=new THREE.DirectionalLight(0xffffff,0.7);dl.position.set(2,8,4);scene.add(dl);
-const pl=new THREE.PointLight(0xffd700,0.3);pl.position.set(-3,3,5);scene.add(pl);
-const wg=new THREE.Group();scene.add(wg);
-wheel3D={scene,camera,renderer,wg,key:''};return true;
-}catch(e){return false;}}
+// ===== NEW HTML WHEEL =====
+let wheelBuiltFor='';
 
-function makeWheelFace(){
-const S=1024,cx=S/2,r=S/2-8;
-const cv=document.createElement('canvas');cv.width=S;cv.height=S;
-const c=cv.getContext('2d');
-const N=P.length,sa=TAU/N;
-c.save();c.beginPath();c.arc(cx,cx,r,0,TAU);c.clip();
-P.forEach((p,i)=>{
-const a1=i*sa-Math.PI/2,a2=a1+sa;
-c.beginPath();c.moveTo(cx,cx);c.arc(cx,cx,r,a1,a2);c.closePath();
-const gr=c.createRadialGradient(cx,cx,r*.15,cx,cx,r);
-gr.addColorStop(0,'#ffffff33');gr.addColorStop(.3,p.color+'ee');gr.addColorStop(1,p.color);
-c.fillStyle=gr;c.fill();
-c.strokeStyle='rgba(0,0,0,.25)';c.lineWidth=3;c.stroke();
-c.beginPath();c.moveTo(cx,cx);
-c.lineTo(cx+Math.cos(a1)*r,cx+Math.sin(a1)*r);
-c.strokeStyle='rgba(255,255,255,.15)';c.lineWidth=1.5;c.stroke();
-c.save();c.translate(cx,cx);c.rotate(a1+sa/2);
-c.textAlign='center';c.textBaseline='middle';
-const fs=N>6?34:N>4?42:52;
-c.font=`800 ${fs}px Heebo`;
-c.shadowColor='rgba(0,0,0,.85)';c.shadowBlur=8;
-c.fillStyle='#fff';c.fillText(p.name,r*.58,0);
-c.shadowBlur=0;c.restore();});
-c.restore();return cv;}
 
-function buildWheel3D(){
-if(!wheel3D)return;const wg=wheel3D.wg;
-while(wg.children.length){const ch=wg.children[0];if(ch.geometry)ch.geometry.dispose();
-if(ch.material){(Array.isArray(ch.material)?ch.material:[ch.material]).forEach(m=>{if(m.map)m.map.dispose();m.dispose();});}wg.remove(ch);}
-const R=3,D=0.28,N=P.length;
-const tex=new THREE.CanvasTexture(makeWheelFace());
-tex.anisotropy=wheel3D.renderer.capabilities.getMaxAnisotropy();
-const cg=new THREE.CylinderGeometry(R,R,D,64);
-const disc=new THREE.Mesh(cg,[
-new THREE.MeshPhongMaterial({color:0x12122a,shininess:20}),
-new THREE.MeshPhongMaterial({map:tex,shininess:30}),
-new THREE.MeshPhongMaterial({color:0x0d0d1a})]);
-wg.add(disc);
-// Golden rings
-const rg=new THREE.TorusGeometry(R+0.05,0.09,12,80);
-const rm=new THREE.MeshPhongMaterial({color:0xffd700,shininess:100,specular:new THREE.Color(0xffffff),emissive:new THREE.Color(0x332200)});
-const rt=new THREE.Mesh(rg,rm);rt.rotation.x=Math.PI/2;rt.position.y=D/2;wg.add(rt);
-const rb=rt.clone();rb.position.y=-D/2;wg.add(rb);
-// Hub
-wg.add(new THREE.Mesh(new THREE.CylinderGeometry(0.35,0.35,D+0.05,32),
-new THREE.MeshPhongMaterial({color:0xffd700,shininess:100,specular:new THREE.Color(0xffffff),emissive:new THREE.Color(0x221100)})));
-wg.add(new THREE.Mesh(new THREE.CylinderGeometry(0.14,0.14,D+0.08,32),
-new THREE.MeshPhongMaterial({color:0xfff8e1,shininess:80,emissive:new THREE.Color(0x111100)})));
-// Dots on ring
-for(let i=0;i<N*3;i++){const a=i*(TAU/(N*3));
-const d=new THREE.Mesh(new THREE.SphereGeometry(0.03,6,6),
-new THREE.MeshPhongMaterial({color:i%3===0?0xffffff:0xffd700}));
-d.position.set(Math.cos(a)*(R+0.05),D/2+0.09,Math.sin(a)*(R+0.05));wg.add(d);}
-wheel3D.key=P.map(p=>p.name+p.color).join('|');}
+function buildHTMLWheel(){
+  const container=document.getElementById('wheelContainer');
+  if(!container||!P.length)return;
+  const key=P.map(p=>p.name+p.color+(p.avId||'')).join('|');
+  if(wheelBuiltFor===key)return;
+  wheelBuiltFor=key;
 
-// ===== WHEEL DRAW =====
+  const N=P.length;
+  const wrap=document.getElementById('wheelWrap');
+  const wrapSize=wrap?wrap.offsetWidth:220;
+  const radius=wrapSize*0.33;
+
+  let h='';
+  P.forEach((p,i)=>{
+    const angleDeg=(i/N)*360;
+    const av=p.avId?AVATARS.find(a=>a.id===p.avId):null;
+    const imgHtml=av?`<img src="${av.img}">`:`<span style="font-size:1.2rem;color:${p.color};font-weight:900">${p.letter||'?'}</span>`;
+
+    h+=`<div class="wheel-player" data-pi="${i}" style="
+      left:50%;top:50%;
+      transform:rotate(${angleDeg}deg) translateY(-${radius}px) rotate(-${angleDeg}deg);
+      margin-left:-30px;margin-top:-30px;
+    ">
+      <div class="wheel-av" style="border-color:${p.color}">${imgHtml}</div>
+      <div class="wheel-name" style="color:${p.color}">${p.name}</div>
+    </div>`;
+  });
+
+  container.innerHTML=h;
+}
+
+function setWheelRotation(rot){
+  const container=document.getElementById('wheelContainer');
+  if(container)container.style.transform=`rotate(${rot}rad)`;
+}
+
 function drawWheel(rot){
-if(!wheel3D&&typeof THREE!=='undefined')initWheel3D();
-if(wheel3D){
-const k=P.map(p=>p.name+p.color).join('|');
-if(wheel3D.key!==k)buildWheel3D();
-wheel3D.wg.rotation.y=Math.PI/2-rot;
-wheel3D.renderer.render(wheel3D.scene,wheel3D.camera);return;}
-// 2D fallback
-drawWheel2D(rot);}
+  buildHTMLWheel();
+  setWheelRotation(rot);
+}
 
-function drawWheel2D(rot){const cv=document.getElementById('cv');if(!cv)return;const c=cv.getContext('2d'),S=600,cx=S/2,r=S/2-24,N=P.length,sa=TAU/N;
-c.clearRect(0,0,S,S);
-c.save();c.shadowColor='rgba(0,0,0,.6)';c.shadowBlur=30;
-c.beginPath();c.arc(cx,cx,r+18,0,TAU);
-const ringGr=c.createRadialGradient(cx,cx,r+4,cx,cx,r+18);
-ringGr.addColorStop(0,'#c9a84c');ringGr.addColorStop(.3,'#ffd700');ringGr.addColorStop(.5,'#fff5cc');ringGr.addColorStop(.7,'#ffd700');ringGr.addColorStop(1,'#b8942e');
-c.fillStyle=ringGr;c.fill();c.restore();
-c.beginPath();c.arc(cx,cx,r+4,0,TAU);c.fillStyle='#12122a';c.fill();
-for(let i=0;i<N*3;i++){const a=i*(TAU/(N*3));const dx=cx+Math.cos(a)*(r+11);const dy=cx+Math.sin(a)*(r+11);c.beginPath();c.arc(dx,dy,2,0,TAU);c.fillStyle=i%3===0?'#fff9':'#ffd70066';c.fill();}
-c.save();c.translate(cx,cx);c.rotate(rot);
-P.forEach((p,i)=>{const a1=i*sa-Math.PI/2,a2=a1+sa;c.beginPath();c.moveTo(0,0);c.arc(0,0,r,a1,a2);c.closePath();
-const gr=c.createRadialGradient(0,0,r*.15,0,0,r);gr.addColorStop(0,'#ffffff33');gr.addColorStop(.3,p.color+'ee');gr.addColorStop(1,p.color);c.fillStyle=gr;c.fill();
-c.strokeStyle='rgba(0,0,0,.25)';c.lineWidth=2;c.stroke();
-c.beginPath();c.moveTo(0,0);const ex=Math.cos(a1)*r,ey=Math.sin(a1)*r;c.lineTo(ex,ey);c.strokeStyle='rgba(255,255,255,.12)';c.lineWidth=1;c.stroke();
-c.save();c.rotate(a1+sa/2);c.textAlign='center';c.textBaseline='middle';
-const fs=N>6?17:N>4?21:26;
-c.font=`800 ${fs}px Heebo`;c.shadowColor='rgba(0,0,0,.8)';c.shadowBlur=6;c.fillStyle='#fff';c.fillText(p.name,r*.58,0);
-c.shadowBlur=0;c.restore();});
-c.restore();
-c.save();c.shadowColor='rgba(0,0,0,.5)';c.shadowBlur=12;
-c.beginPath();c.arc(cx,cx,28,0,TAU);
-const hubGr=c.createRadialGradient(cx-6,cx-6,2,cx,cx,28);
-hubGr.addColorStop(0,'#fff8e1');hubGr.addColorStop(.4,'#ffd700');hubGr.addColorStop(.8,'#c9a84c');hubGr.addColorStop(1,'#8b6914');
-c.fillStyle=hubGr;c.fill();c.restore();
-c.beginPath();c.arc(cx,cx,28,0,TAU);c.strokeStyle='#ffd70055';c.lineWidth=2;c.stroke();
-c.beginPath();c.arc(cx,cx,14,0,TAU);
-const inGr=c.createRadialGradient(cx-3,cx-3,1,cx,cx,14);
-inGr.addColorStop(0,'#fff');inGr.addColorStop(1,'#e8c84a');
-c.fillStyle=inGr;c.fill();}
 function sliceAt(rot){const N=P.length,sa=TAU/N;let neg=(-rot)%TAU;if(neg<0)neg+=TAU;return Math.floor(neg/sa)%N;}
 let lastSl=-1;
 function doSpin(){if(spinning){return;}const ev=events[curE];if(!ev||ev.type!=='spin')return;spinning=true;document.getElementById('spinB').disabled=true;document.getElementById('gc').innerHTML='';document.getElementById('gc').style.opacity='1';SND.play('spin');lastSl=-1;window._skipSpin=false;if(gS.rounds>4){document.getElementById('gc').innerHTML='<div style="text-align:center;padding:8px"><button onclick="window._skipSpin=true" style="background:none;border:none;color:var(--t3);font-size:.6rem;cursor:pointer;font-family:inherit">לחצו לדלג ▸</button></div>';}
@@ -1197,7 +1135,7 @@ else if(rt==='record')showRecord(ev,sp,mult);
 }
 function gc(h){const el=document.getElementById('gc');
 el.style.opacity='0';el.style.transform='translateY(8px)';
-document.getElementById('warea').style.display='none';
+document.getElementById('wheelWrap').style.display='none';
 document.getElementById('spinB').parentElement.style.display='none';
 setTimeout(()=>{el.innerHTML=h;el.style.opacity='1';el.style.transform='translateY(0)';
 // Secret reminder
@@ -2284,7 +2222,7 @@ function closeOv(){document.getElementById('overlay').classList.remove('on');}
 function updateSB(){const s=document.getElementById('scoreBar');s.innerHTML='';
 const maxSc=Math.max(...P.map((_,i)=>scores[i]||0));
 P.forEach((p,i)=>{const sc=scores[i]||0;const isLead=sc>0&&sc===maxSc;
-const d=document.createElement('div');d.className='sb';d.innerHTML=`<div class="sb-av">${gAv(i,30)}</div><div class="sb-n" style="color:${p.color}">${esc(p.name)}</div><div class="sb-p" id="sbp${i}" style="color:${p.color}">${sc}${isLead?ic('crown',10,'var(--gold)'):''}</div>`;s.appendChild(d);});}
+const d=document.createElement('div');d.className='sb';d.innerHTML=`<div class="sb-av">${gAv(i,40)}</div><div class="sb-n" style="color:${p.color}">${esc(p.name)}</div><div class="sb-p" id="sbp${i}" style="color:${p.color}">${sc}${isLead?ic('crown',10,'var(--gold)'):''}</div>`;s.appendChild(d);});}
 function scorePop(pi){// Announce leader
 const sorted=P.map((p,i)=>({n:p.name,s:scores[i]||0,c:p.color})).sort((a,b)=>b.s-a.s);
 if(sorted[0].s>0){const d=document.createElement('div');d.className='score-pop';d.innerHTML=`${esc(sorted[0].n)} מוביל/ה עם ${sorted[0].s}!`;d.style.color=sorted[0].c;d.style.borderColor=sorted[0].c+'66';document.body.appendChild(d);setTimeout(()=>d.remove(),3500);}}
@@ -2646,7 +2584,7 @@ function goSetup(){clearSave();show('scrSetup');ss1Show();}
 function saveState(){try{localStorage.setItem('mimi',JSON.stringify({P,pCnt,scores,voteLog,turnQ,events,curE,wA,pools,idx,gS,PD}));}catch(e){}}
 function loadState(){try{const s=localStorage.getItem('mimi');return s?JSON.parse(s):null;}catch(e){return null;}}
 function clearSave(){try{localStorage.removeItem('mimi');}catch(e){}}
-function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;wA=st.wA;pools=st.pools;idx=st.idx;const dg={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};gS=st.gS?{...dg,...st.gS}:dg;if(!gS.t0)gS.t0=Date.now();PD=st.PD||[];show('scrGame');drawWheel(wA);updateSB();updateFP();document.getElementById('warea').style.display='';processEvent();}
+function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;wA=st.wA;pools=st.pools;idx=st.idx;const dg={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};gS=st.gS?{...dg,...st.gS}:dg;if(!gS.t0)gS.t0=Date.now();PD=st.PD||[];show('scrGame');drawWheel(wA);updateSB();updateFP();document.getElementById('wheelWrap').style.display='';processEvent();}
 (function(){const s=loadState();if(s?.P?.length>0&&s.curE<s.events.length){const ov=document.getElementById('overlay');ov.innerHTML=`<div style="font-size:3rem">${ic('dice',40,'var(--gold)')}</div><div class="ov-t" style="color:var(--gold)">יש משחק שמור!</div><div class="ov-s">${s.P.map(p=>esc(p.name)).join(', ')}</div><div style="display:flex;gap:8px;margin-top:12px"><button class="ov-b" style="background:var(--teal)" onclick="closeOv();resumeG(loadState())">המשיכו! ▶</button><button class="ov-b" style="background:var(--coral)" onclick="clearSave();closeOv()">חדש 🆕</button></div>`;ov.classList.add('on');}})();
 window.addEventListener('beforeunload',function(e){if(document.getElementById('scrGame')?.classList.contains('on')){e.preventDefault();e.returnValue='';}});
 
