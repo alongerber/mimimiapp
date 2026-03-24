@@ -486,19 +486,13 @@ body.light-body{background:#f8f6f1}
 .av-confirm:active{transform:scale(.95)}
 .av-back{flex:1;padding:14px;border:none;border-radius:12px;font-size:.8rem;font-weight:600;background:var(--s2);color:var(--t2);cursor:pointer;font-family:inherit}
 
-/* === NEW WHEEL === */
-.wheel-wrap{position:relative;width:220px;height:220px;margin:0 auto}
-.wheel-container{position:relative;width:100%;height:100%;border-radius:50%;transition:none;will-change:transform}
-.wheel-ring{position:absolute;inset:-4px;border-radius:50%;border:3px solid rgba(255,215,0,.35);pointer-events:none}
-.wheel-player{position:absolute;display:flex;flex-direction:column;align-items:center;transform-origin:center center;pointer-events:none}
-.wheel-av{width:48px;height:48px;border-radius:50%;overflow:hidden;border:2.5px solid;box-shadow:0 2px 12px rgba(0,0,0,.4);background:var(--s1)}
-.wheel-av img{width:100%;height:100%;object-fit:cover}
-.wheel-name{font-size:.5rem;font-weight:800;margin-top:2px;text-shadow:0 1px 4px rgba(0,0,0,.8);white-space:nowrap;max-width:60px;overflow:hidden;text-overflow:ellipsis}
-.wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ffd700,#b8942e);box-shadow:0 0 16px rgba(255,215,0,.3);z-index:2;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.wheel-center::after{content:'';width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,#fff8e1,#ffd700)}
-.wheel-pointer{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:18px solid var(--gold);z-index:3;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
-.wheel-player.landed .wheel-av{box-shadow:0 0 20px var(--glow-color,#ffd700);transform:scale(1.15);transition:all .3s}
-@media(min-width:400px){.wheel-wrap{width:260px;height:260px}.wheel-av{width:56px;height:56px}.wheel-name{font-size:.55rem}}
+/* === RANDOM PICK ANIMATION === */
+.pick-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:8px 0;min-height:60px}
+.pick-av{width:48px;height:48px;border-radius:50%;overflow:hidden;border:2.5px solid var(--s3);transition:all .15s;opacity:.4;transform:scale(.85)}
+.pick-av.lit{opacity:1;transform:scale(1);border-color:var(--gold);box-shadow:0 0 12px rgba(255,199,58,.3)}
+.pick-av.chosen{opacity:1;transform:scale(1.3);border-width:3px;box-shadow:0 0 24px var(--glow,rgba(255,199,58,.5));z-index:2}
+.pick-av img{width:100%;height:100%;object-fit:cover}
+.pick-name{font-size:.65rem;text-align:center;margin-top:2px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:56px}
 
 </style>
 </head>
@@ -572,12 +566,7 @@ body.light-body{background:#f8f6f1}
 <div class="scr" id="scrGame" role="main" aria-label="משחק">
   <div class="sbar" id="scoreBar" role="status" aria-label="ניקוד"></div>
   <div style="display:flex;align-items:center;gap:6px;padding:0 16px"><div class="fprog" id="fprog" style="flex:1"></div><div id="fprogN" style="font-size:.6rem;color:var(--t2);font-weight:700;white-space:nowrap"></div></div>
-  <div class="wheel-wrap" id="wheelWrap">
-    <div class="wheel-pointer"></div>
-    <div class="wheel-ring"></div>
-    <div class="wheel-container" id="wheelContainer"></div>
-    <div class="wheel-center" onclick="doSpin()"></div>
-  </div>
+  <div id="pickArea"></div>
   <div class="gbtns"><button class="spinb" id="spinB" onclick="doSpin()" aria-label="סובבו את הגלגל">גורלות!</button><button class="undo-b" id="undoB" disabled onclick="undoStep()" aria-label="שלב אחורה">↩</button></div>
   <div id="gc"></div>
 </div>
@@ -780,7 +769,7 @@ function toggleHelp(){const m=document.getElementById('helpM');m.classList.toggl
 
 // ===== STATE =====
 let P=[],pCnt=4,scores={},voteLog=[],turnQ={};
-let events=[],curE=0,spinning=false,wA=0,tmrId=null,_advancing=false;
+let events=[],curE=0,spinning=false,tmrId=null,_advancing=false;
 let pools={},idx={};
 let prevState=null;
 let gS={aliasW:{},drawW:{},rounds:0,t0:0,drawings:[],quotes:[],micResults:[]};
@@ -927,6 +916,7 @@ document.getElementById('pSum').innerHTML=h;}
 
 // ===== LAUNCH =====
 function launch(){
+if(pCnt<3){toast('צריך לפחות 3 שחקנים');return;}
 clearSave();seenTypes={};P=[];for(let i=0;i<pCnt;i++){const pd=PD[i];const sn=pd.name.replace(/[<>"&]/g,'');P.push({name:sn,color:COL[i],letter:sn[0]||'?',avId:pd.avId,gender:pd.gender,role:pd.role||'adult'});}
 const tpp=gameLen==='short'?Math.max(2,Math.floor(16/P.length)):Math.max(3,Math.floor(30/P.length));const perPhase=Math.floor(tpp*P.length/3);
 // Type distribution with pacing (long-short alternation)
@@ -997,7 +987,7 @@ if(NIGHT_REVEAL&&NIGHT_REVEAL.length){if(!pools['rv_'+k])pools['rv_'+k]=[];pools
 });
 if(NIGHT_DILEMMAS&&NIGHT_DILEMMAS.length){if(!pools['di'])pools['di']=[];pools['di'].push(...NIGHT_DILEMMAS);pools['di']=shuf(pools['di']);}
 }
-curE=0;wA=0;show('scrGame');drawWheel(0);updateSB();updateFP();saveState();
+curE=0;show('scrGame');drawWheel();updateSB();updateFP();saveState();
 // Game intro moment
 const ov=document.getElementById('overlay');
 ov.innerHTML=`<div style="animation:popIn .5s ease"><div class="logo" style="font-size:2rem;margin-bottom:12px"><b>מ</b><b>י</b> <b>מ</b><b>י</b> <b>מ</b><b>י</b><b>?</b></div></div>
@@ -1026,89 +1016,117 @@ else if(ev.type==='spin'){
 roundStartTime=Date.now();
 if(gS.rounds===0){
 document.getElementById('gc').innerHTML='';document.getElementById('gc').style.opacity='1';document.getElementById('gc').style.transform='none';
-document.getElementById('wheelWrap').style.display='';document.getElementById('spinB').parentElement.style.display='flex';document.getElementById('spinB').disabled=false;
+document.getElementById('pickArea').style.display='';document.getElementById('spinB').parentElement.style.display='flex';document.getElementById('spinB').disabled=false;
 document.getElementById('spinB').textContent=SPIN_CTA[Math.floor(Math.random()*SPIN_CTA.length)];updateFP();
 }else{
-document.getElementById('wheelWrap').style.display='none';document.getElementById('gc').innerHTML='';document.getElementById('gc').style.opacity='1';document.getElementById('gc').style.transform='none';
+document.getElementById('pickArea').style.display='none';document.getElementById('gc').innerHTML='';document.getElementById('gc').style.opacity='1';document.getElementById('gc').style.transform='none';
 showRound(ev);}}
 }
 
-// ===== NEW HTML WHEEL =====
-let wheelBuiltFor='';
+// ===== RANDOM PICK (replaces wheel) =====
+function buildPickRow(){
+  const area=document.getElementById('pickArea');
+  if(!area)return;
+  let h='<div class="pick-row" id="pickRow">';
+  P.forEach((p,i)=>{
+    const av=p.avId?AVATARS.find(a=>a.id===p.avId):null;
+    const imgHtml=av?`<img src="${av.img}">`:`<span style="font-size:1rem;color:${p.color};font-weight:900">${p.letter||'?'}</span>`;
+    h+=`<div class="pick-item" style="text-align:center"><div class="pick-av" data-pi="${i}" style="--glow:${p.color}55">${imgHtml}</div><div class="pick-name" style="color:${p.color}">${p.name}</div></div>`;
+  });
+  h+='</div>';
+  area.innerHTML=h;
+}
 
+function drawWheel(){buildPickRow();}
 
-function buildHTMLWheel(){
-  const container=document.getElementById('wheelContainer');
-  if(!container||!P.length)return;
-  const key=P.map(p=>p.name+p.color+(p.avId||'')).join('|');
-  if(wheelBuiltFor===key)return;
-  wheelBuiltFor=key;
+function animatePick(targetIdx,callback){
+  buildPickRow();
+  const avatars=document.querySelectorAll('.pick-av');
+  if(!avatars.length){callback();return;}
 
   const N=P.length;
-  const wrap=document.getElementById('wheelWrap');
-  const wrapSize=wrap?wrap.offsetWidth:220;
-  const radius=wrapSize*0.33;
+  let speed=60;
+  let rounds=N*3+targetIdx;
+  let count=0;
 
-  let h='';
-  P.forEach((p,i)=>{
-    const angleDeg=(i/N)*360;
-    const av=p.avId?AVATARS.find(a=>a.id===p.avId):null;
-    const imgHtml=av?`<img src="${av.img}">`:`<span style="font-size:1.2rem;color:${p.color};font-weight:900">${p.letter||'?'}</span>`;
+  function step(){
+    avatars.forEach(a=>a.classList.remove('lit','chosen'));
+    const idx=count%N;
+    avatars[idx].classList.add('lit');
+    SND.play('wtick');
+    count++;
 
-    h+=`<div class="wheel-player" data-pi="${i}" style="
-      left:50%;top:50%;
-      transform:rotate(${angleDeg}deg) translateY(-${radius}px) rotate(-${angleDeg}deg);
-      margin-left:-30px;margin-top:-30px;
-    ">
-      <div class="wheel-av" style="border-color:${p.color}">${imgHtml}</div>
-      <div class="wheel-name" style="color:${p.color}">${p.name}</div>
-    </div>`;
+    if(count>=rounds){
+      avatars.forEach(a=>a.classList.remove('lit','chosen'));
+      avatars[targetIdx].classList.add('chosen');
+      avatars[targetIdx].style.borderColor=P[targetIdx].color;
+      avatars[targetIdx].style.boxShadow=`0 0 28px ${P[targetIdx].color}66`;
+      SND.play('pop');vib(50);
+      setTimeout(callback,800);
+      return;
+    }
+
+    if(count>rounds-N*1.5){
+      speed=Math.min(speed*1.12,300);
+    }
+
+    setTimeout(step,speed);
+  }
+
+  step();
+}
+
+function showPassPhone(ev){
+  const pi=ev.pi;
+  const p=P[pi];
+  gc(`<div style="text-align:center;padding:20px">
+    <div style="font-size:.7rem;color:var(--t2);margin-bottom:10px">תעבירו את הטלפון ל-</div>
+    <div style="width:72px;height:72px;border-radius:50%;overflow:hidden;border:3px solid ${p.color};margin:0 auto 8px;box-shadow:0 0 24px ${p.color}44">${gAv(pi,72)}</div>
+    <div style="font-size:1.2rem;font-weight:900;color:${p.color};margin:6px 0">${p.name}</div>
+    <div class="acts" style="margin-top:16px"><button class="ab" style="background:${p.color};color:#fff;width:100%;max-width:220px;padding:14px" onclick="showRound(events[curE])">הטלפון אצלי</button></div>
+  </div>`);
+}
+
+function doSpin(){
+  if(spinning)return;
+  const ev=events[curE];
+  if(!ev||ev.type!=='spin')return;
+  spinning=true;
+  document.getElementById('spinB').disabled=true;
+  document.getElementById('gc').innerHTML='';
+  document.getElementById('gc').style.opacity='1';
+  SND.play('spin');
+
+  const target=ev.pi;
+
+  animatePick(target,function(){
+    const p=P[target];
+    const LAND_PHRASES=["הגורל בחר:","הגלגל החליט:","הפעם —","הזרקור על:","מי במרכז?"];
+    const phrase=LAND_PHRASES[Math.floor(Math.random()*LAND_PHRASES.length)];
+    document.getElementById('gc').innerHTML=`<div style="text-align:center;padding:12px;animation:popIn .4s cubic-bezier(.34,1.3,.64,1)">
+      <div style="font-size:.7rem;font-weight:700;color:var(--t2);margin-bottom:8px;letter-spacing:1px">${phrase}</div>
+      <div style="width:72px;height:72px;border-radius:50%;overflow:hidden;border:3px solid ${p.color};margin:0 auto 8px;box-shadow:0 0 28px ${p.color}55">${gAv(target,72)}</div>
+      <div style="font-size:1.3rem;font-weight:900;color:${p.color}">${p.name}</div></div>`;
+    confetti(p.color);
+    try{say(p.name);}catch(e){}
+    setTimeout(()=>{showPassPhone(ev);spinning=false;},1500);
   });
-
-  container.innerHTML=h;
 }
-
-function setWheelRotation(rot){
-  const container=document.getElementById('wheelContainer');
-  if(container)container.style.transform=`rotate(${rot}rad)`;
-}
-
-function drawWheel(rot){
-  buildHTMLWheel();
-  setWheelRotation(rot);
-}
-
-function sliceAt(rot){const N=P.length,sa=TAU/N;let neg=(-rot)%TAU;if(neg<0)neg+=TAU;return Math.floor(neg/sa)%N;}
-let lastSl=-1;
-function doSpin(){if(spinning){return;}const ev=events[curE];if(!ev||ev.type!=='spin')return;spinning=true;document.getElementById('spinB').disabled=true;document.getElementById('gc').innerHTML='';document.getElementById('gc').style.opacity='1';SND.play('spin');lastSl=-1;window._skipSpin=false;if(gS.rounds>4){document.getElementById('gc').innerHTML='<div style="text-align:center;padding:8px"><button onclick="window._skipSpin=true" style="background:none;border:none;color:var(--t3);font-size:.6rem;cursor:pointer;font-family:inherit">לחצו לדלג ▸</button></div>';}
-const target=ev.pi,N=P.length,sa=TAU/N,midF=.3+Math.random()*.4,desN=(target+midF)*sa,desR=(TAU-desN)%TAU,full=(5+Math.random()*3)*TAU,fin=Math.ceil(wA/TAU)*TAU+desR+full,dur=Math.max(1500,3500-gS.rounds*80)+Math.random()*500,t0=performance.now(),a0=wA,dist=fin-a0;
-function ease(t){return 1-Math.pow(1-t,3.5)}
-(function anim(now){const p=Math.min((now-t0)/dur,1);wA=a0+dist*ease(p);drawWheel(wA);const cs=sliceAt(wA);if(cs!==lastSl){lastSl=cs;if(p<.9)SND.play('wtick');}
-if(p<1&&!window._skipSpin){requestAnimationFrame(anim);return;}if(p<1&&window._skipSpin){wA=a0+dist;drawWheel(wA);}
-if(sliceAt(wA)!==target){const nudge=(target+.5)*sa;wA=-nudge+Math.ceil(wA/TAU)*TAU;drawWheel(wA);}
-SND.play('pop');vib(50);
-// Show who landed — dramatic reveal
-const landedP=P[target];
-const LAND_PHRASES=["הגורל בחר:","הגלגל החליט:","הפעם —","הזרקור על:","מי במרכז?"];
-const landPhrase=LAND_PHRASES[Math.floor(Math.random()*LAND_PHRASES.length)];
-document.getElementById('gc').innerHTML=`<div style="text-align:center;padding:16px;animation:popIn .4s cubic-bezier(.34,1.3,.64,1)">
-<div style="font-size:.72rem;font-weight:700;color:var(--t2);margin-bottom:10px;letter-spacing:1px">${landPhrase}</div>
-<div style="width:72px;height:72px;border-radius:50%;overflow:hidden;border:3px solid ${landedP.color};margin:0 auto 8px;box-shadow:0 0 28px ${landedP.color}55">${gAv(target,72)}</div>
-<div style="font-size:1.3rem;font-weight:900;color:${landedP.color}">${landedP.name}</div></div>`;
-document.getElementById('gc').style.opacity='1';confetti(landedP.color);
-try{say(landedP.name);}catch(e){}
-setTimeout(()=>{showRound(ev);spinning=false;},1200);})(performance.now());}
 
 // ===== SHOW ROUND =====
+const RT_NAMES={vote:'הצבעה',hotseat:'כיסא חם',mission:'משימה',alias:'מילים',draw:'ציור',rapid:'בזק',dilemma:'דילמה',famtalk:'שיחה',reveal:'זה על זה',pdilemma:'בחירה',blind:'ניחוש',sentence:'השלם משפט',mic:'שכנע',secret:'סודי',record:'הקלטה'};
 const RT={vote:{ic:'vote',c:'var(--lav)',bg:'vote'},hotseat:{ic:'flame',c:'var(--coral)',bg:'hotseat'},mission:{ic:'target',c:'var(--peach)',bg:'mission'},alias:{ic:'chat',c:'var(--teal)',bg:'alias'},draw:{ic:'brush',c:'var(--sky)',bg:'draw'},rapid:{ic:'bolt',c:'var(--gold)',bg:'rapid'},dilemma:{ic:'scale',c:'var(--sky)',bg:'dilemma'},famtalk:{ic:'people',c:'var(--mint)',bg:'famtalk'},reveal:{ic:'heart',c:'var(--rose)',bg:'reveal'},pdilemma:{ic:'scale',c:'var(--peach)',bg:'hotseat'},blind:{ic:'heart',c:'var(--rose)',bg:'reveal'},sentence:{ic:'chat',c:'var(--mint)',bg:'reveal'},mic:{ic:'star',c:'var(--coral)',bg:'hotseat'},secret:{ic:'target',c:'var(--gold)',bg:'hotseat'},record:{ic:'megaphone',c:'var(--mint)',bg:'famtalk'}};
 
 function showRound(ev){
 const pi=ev.pi,p=P[pi],rt=ev.roundType,ri=RT[rt];
+const rtName=RT_NAMES[rt]||rt;
 // Comeback check
 const sortedScores=P.map((_,i)=>scores[i]||0);const maxScore=Math.max(...sortedScores);const myScore=scores[pi]||0;
 if(maxScore-myScore>=5&&!comebackUsed[pi]&&!ev.special&&gS.rounds>P.length*2){ev.special='comeback';comebackUsed[pi]=true;}
 document.querySelectorAll('.sb').forEach((el,i)=>{el.classList.toggle('hot',i===pi);el.classList.toggle('active',i===pi);});
 confetti(p.color);gS.rounds++;
+// Show round type badge
+document.getElementById('gc').insertAdjacentHTML('afterbegin',`<div style="text-align:center;margin:4px 0 2px"><span style="font-size:.55rem;font-weight:700;color:${ri.c};background:${ri.c}15;padding:2px 10px;border-radius:10px;border:1px solid ${ri.c}33">${ic(ri.ic,12,ri.c)} ${rtName}</span></div>`);
 // Set full-screen bg color
 document.body.style.background=getComputedStyle(document.documentElement).getPropertyValue('--bg');
 document.querySelector('.gl1').style.background=ri.c;
@@ -1135,9 +1153,12 @@ else if(rt==='record')showRecord(ev,sp,mult);
 }
 function gc(h){const el=document.getElementById('gc');
 el.style.opacity='0';el.style.transform='translateY(8px)';
-document.getElementById('wheelWrap').style.display='none';
+document.getElementById('pickArea').style.display='none';
 document.getElementById('spinB').parentElement.style.display='none';
-setTimeout(()=>{el.innerHTML=h;el.style.opacity='1';el.style.transform='translateY(0)';
+setTimeout(()=>{el.innerHTML=h;
+// Add skip button to every round
+el.innerHTML+='<div style="text-align:center;margin-top:10px"><button onclick="advance()" style="background:none;border:none;color:var(--t3);font-size:.6rem;cursor:pointer;font-family:inherit;padding:4px 12px">דלג ▸</button></div>';
+el.style.opacity='1';el.style.transform='translateY(0)';
 // Secret reminder
 if(activeSecret){
 const old=document.getElementById('secretReminder');
@@ -2581,10 +2602,10 @@ for(let i=0;i<30;i++)setTimeout(()=>confetti(COL[Math.floor(Math.random()*COL.le
 // ===== NAV =====
 function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
 function goSetup(){clearSave();show('scrSetup');ss1Show();}
-function saveState(){try{localStorage.setItem('mimi',JSON.stringify({P,pCnt,scores,voteLog,turnQ,events,curE,wA,pools,idx,gS,PD}));}catch(e){}}
+function saveState(){try{localStorage.setItem('mimi',JSON.stringify({P,pCnt,scores,voteLog,turnQ,events,curE,pools,idx,gS,PD}));}catch(e){}}
 function loadState(){try{const s=localStorage.getItem('mimi');return s?JSON.parse(s):null;}catch(e){return null;}}
 function clearSave(){try{localStorage.removeItem('mimi');}catch(e){}}
-function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;wA=st.wA;pools=st.pools;idx=st.idx;const dg={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};gS=st.gS?{...dg,...st.gS}:dg;if(!gS.t0)gS.t0=Date.now();PD=st.PD||[];show('scrGame');drawWheel(wA);updateSB();updateFP();document.getElementById('wheelWrap').style.display='';processEvent();}
+function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;pools=st.pools;idx=st.idx;const dg={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};gS=st.gS?{...dg,...st.gS}:dg;if(!gS.t0)gS.t0=Date.now();PD=st.PD||[];show('scrGame');drawWheel();updateSB();updateFP();document.getElementById('pickArea').style.display='';processEvent();}
 (function(){const s=loadState();if(s?.P?.length>0&&s.curE<s.events.length){const ov=document.getElementById('overlay');ov.innerHTML=`<div style="font-size:3rem">${ic('dice',40,'var(--gold)')}</div><div class="ov-t" style="color:var(--gold)">יש משחק שמור!</div><div class="ov-s">${s.P.map(p=>esc(p.name)).join(', ')}</div><div style="display:flex;gap:8px;margin-top:12px"><button class="ov-b" style="background:var(--teal)" onclick="closeOv();resumeG(loadState())">המשיכו! ▶</button><button class="ov-b" style="background:var(--coral)" onclick="clearSave();closeOv()">חדש 🆕</button></div>`;ov.classList.add('on');}})();
 window.addEventListener('beforeunload',function(e){if(document.getElementById('scrGame')?.classList.contains('on')){e.preventDefault();e.returnValue='';}});
 
