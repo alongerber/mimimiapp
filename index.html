@@ -500,9 +500,11 @@ body.light-body{background:#f8f6f1}
 @keyframes intro-pulse{0%,100%{box-shadow:0 0 30px rgba(255,199,58,.25)}50%{box-shadow:0 0 50px rgba(255,199,58,.45)}}
 .intro-av img{width:100%;height:100%;object-fit:cover}
 .intro-title{font-size:1.8rem;font-weight:900;color:var(--gold);letter-spacing:2px;margin:0}
-.intro-typing{font-size:.82rem;color:var(--t2);min-height:2.4em;line-height:1.5;direction:rtl;max-width:320px}
-.intro-typing .cursor{display:inline-block;width:2px;height:1em;background:var(--gold);animation:blink .6s step-end infinite;vertical-align:text-bottom;margin-right:2px}
-@keyframes blink{50%{opacity:0}}
+.intro-typing{font-size:.82rem;color:var(--t2);min-height:6em;line-height:1.7;direction:rtl;max-width:320px;text-align:center}
+.intro-typing .intro-line{opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s}
+.intro-typing .intro-line.vis{opacity:1;transform:translateY(0)}
+.intro-typing .intro-line.bright{color:var(--text);font-weight:700}
+.intro-typing .intro-line.gold{color:var(--gold);font-weight:800}
 .intro-start{margin-top:12px;opacity:0;transition:opacity .5s}
 .intro-start.show{opacity:1}
 
@@ -2847,40 +2849,46 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
 
 // ===== INTRO SCREEN =====
 const INTRO_LINES=[
-"שלום. אני המנחה. לא ביקשתי את זה.",
-"הערב אנחנו הולכים לגלות דברים. על המשפחה. על עצמנו. בעיקר על עצמנו.",
-"יהיו שאלות. דילמות. משימות. ורגעים מביכים שאי אפשר למחוק.",
-"מוכנים? לא משנה. מתחילים."
+{text:'שלום. יש פה משחק.',cls:'bright',delay:0},
+{text:'אין הוראות כי אני לא יודע לכתוב הוראות.',cls:'',delay:1800},
+{text:'',cls:'',delay:3200},
+{text:'פשוט שימו חטיפים על השולחן.',cls:'',delay:3800},
+{text:'שימו את הטלפון באמצע.',cls:'bright',delay:5200},
+{text:'תגידו מי פה. תבחרו דמות. תלחצו.',cls:'',delay:6600},
+{text:'',cls:'',delay:8000},
+{text:'אחרי זה אני מטפל בשאר',cls:'',delay:8600},
+{text:'כי אתם כנראה לא תצליחו לבד',cls:'',delay:10000},
+{text:'ואני גם לא הצלחתי אבל ביחד נסתדר.',cls:'',delay:11400},
+{text:'',cls:'',delay:12800},
+{text:'הילדים יצחקו.',cls:'gold',delay:13400},
+{text:'ההורים יגידו דברים שלא תכננו להגיד.',cls:'bright',delay:14800},
+{text:'סבתא תתקשר מחר לשאול מתי עוד פעם.',cls:'',delay:16200},
+{text:'',cls:'',delay:17600},
+{text:'אני לא מבטיח כלום',cls:'',delay:18200},
+{text:'כי הפעם האחרונה שהבטחתי משהו',cls:'',delay:19600},
+{text:'אני עדיין משלם עליו.',cls:'',delay:21000},
 ];
-let introLineIdx=0,introCharIdx=0,introTmr=null;
-function typeIntro(){
+let introTmrs=[];
+function startIntro(){
 const el=document.getElementById('introTyping');
 if(!el)return;
-if(introLineIdx>=INTRO_LINES.length){
-clearInterval(introTmr);introTmr=null;
-el.innerHTML=INTRO_LINES[INTRO_LINES.length-1];
-document.getElementById('introStartBtn').classList.add('show');
-try{gtag('event','intro_complete');}catch(e){}
-return;
-}
-const line=INTRO_LINES[introLineIdx];
-if(introCharIdx<=line.length){
-el.innerHTML=line.substring(0,introCharIdx)+'<span class="cursor"></span>';
-introCharIdx++;
-}else{
-introLineIdx++;introCharIdx=0;
-setTimeout(()=>{if(introTmr)typeIntro();},800);
-clearInterval(introTmr);introTmr=setInterval(typeIntro,50);
-return;
-}
-}
-function startIntro(){
-introLineIdx=0;introCharIdx=0;
-introTmr=setInterval(typeIntro,50);
 try{gtag('event','intro_start');}catch(e){}
+el.innerHTML='';
+introTmrs=[];
+// Build all line elements
+INTRO_LINES.forEach((l,i)=>{
+if(!l.text){const br=document.createElement('div');br.style.height='8px';br.className='intro-line';el.appendChild(br);
+const t=setTimeout(()=>br.classList.add('vis'),l.delay);introTmrs.push(t);return;}
+const d=document.createElement('div');d.className='intro-line'+(l.cls?' '+l.cls:'');d.textContent=l.text;el.appendChild(d);
+const t=setTimeout(()=>{d.classList.add('vis');el.scrollTop=el.scrollHeight;},l.delay);introTmrs.push(t);
+});
+// Show start button after last line
+const lastDelay=INTRO_LINES[INTRO_LINES.length-1].delay;
+const t=setTimeout(()=>{document.getElementById('introStartBtn').classList.add('show');try{gtag('event','intro_complete');}catch(e){}},lastDelay+1500);
+introTmrs.push(t);
 }
 function startFromIntro(){
-if(introTmr){clearInterval(introTmr);introTmr=null;}
+introTmrs.forEach(t=>clearTimeout(t));introTmrs=[];
 show('scrSetup');ss1Show();
 try{gtag('event','setup_start');}catch(e){}
 }
