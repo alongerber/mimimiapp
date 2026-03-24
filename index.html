@@ -499,7 +499,7 @@ body.light-body{background:#f8f6f1}
 .intro-bg-glow{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,199,58,.06) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-60%);animation:glowPulse 4s ease infinite;pointer-events:none}
 @keyframes glowPulse{0%,100%{opacity:.4;transform:translate(-50%,-60%) scale(1)}50%{opacity:.7;transform:translate(-50%,-60%) scale(1.15)}}
 .intro-brand{font-size:.55rem;color:var(--t3);font-weight:600;letter-spacing:3px;margin-bottom:16px;opacity:0;animation:fadeUp .6s ease .2s forwards}
-.intro-avatar{width:200px;height:200px;overflow:hidden;margin-bottom:20px;opacity:0;transform:translateY(20px);animation:heroIn 1s cubic-bezier(.34,1.2,.64,1) .4s forwards;position:relative;flex-shrink:0;border-radius:50%}
+.intro-avatar{width:200px;height:200px;overflow:hidden;margin-bottom:20px;opacity:0;transform:translateY(20px);animation:heroIn 1s cubic-bezier(.34,1.2,.64,1) .4s forwards;position:relative;flex-shrink:0}
 .intro-avatar video{width:100%;height:100%;object-fit:cover}
 @keyframes heroIn{to{opacity:1;transform:translateY(0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -2897,8 +2897,11 @@ if(tap)tap.style.display='none';
 // Play video (has audio built in)
 const vid=document.getElementById('introVideo');
 if(vid){
-vid.muted=!SND.on; // respect mute setting
-vid.play().catch(()=>{});
+vid.muted=true; // must start muted per browser policy
+vid.play().then(()=>{
+// User interaction allows unmute now
+if(SND.on)vid.muted=false;
+}).catch(()=>{});
 window._introVideo=vid;
 }
 
