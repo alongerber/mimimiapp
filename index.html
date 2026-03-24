@@ -524,6 +524,13 @@ body.light-body{background:#f8f6f1}
     <div class="st" style="margin-top:8px">מעבירים טלפון או מצביעים ביחד?</div>
     <div class="cgrid"><button class="cb" id="vmPass" onclick="setVM('pass')" style="width:auto;padding:0 12px;font-size:.7rem">מעבירים טלפון</button><button class="cb on" id="vmOpen" onclick="setVM('open')" style="width:auto;padding:0 12px;font-size:.7rem">מצביעים בגלוי</button></div>
     <div class="ss" id="vmDesc">כל אחד מצביע בסתר בטלפון</div>
+    <div id="nightToggle" style="text-align:center;margin:12px 0">
+      <div style="font-size:.75rem;color:var(--t2);margin-bottom:6px">מצב מבוגרים</div>
+      <button class="gb" id="nightBtn" onclick="toggleNight()" style="font-size:.75rem">
+        אחרי שהילדים נרדמו
+      </button>
+      <div style="font-size:.55rem;color:var(--t3);margin-top:4px">שאלות שילדים לא שואלים כי הם לא יודעים שהשאלה קיימת</div>
+    </div>
     <button class="gobtn" onclick="startPS()">בואו נכיר את השחקנים</button>
     <button class="gobtn" id="a2hsBtn" style="background:var(--s2);border:1px solid var(--lav);color:var(--lav);margin-top:8px" onclick="installApp()">📲 הוספה למסך הבית</button>
     <div id="setupHist"></div>
@@ -738,6 +745,7 @@ let pools={},idx={};
 let prevState=null;
 let gS={aliasW:{},drawW:{},rounds:0,t0:0,drawings:[],quotes:[],micResults:[]};
 let PD=[],curSP=0,seenTypes={},phasesSeen=0,streaks={},lastScorer=-1,comebackUsed={},gameLen='full',voteMode='open';
+let nightMode=false;
 const SPIN_CTA=["גורלות!","מי יהיה?","הגלגל מחליט","בואו נראה","מי נבחר?","רגע האמת"];
 const HOST_PROMPTS={
 vote:["שווה לשאול — למה דווקא הוא?","מישהו מופתע? ספרו.","מי שהצביע אחרת — מה ראה?","יש פה סיפור מאחורי ההצבעה?","מי רוצה להגן על הבחירה שלו?"],
@@ -761,6 +769,7 @@ const SHEET_URL='https://script.google.com/macros/s/AKfycbzYvxRmjeXbD6BzHCBnwnC0
 let roundStartTime=0;
 function setMode(m){gameLen=m;document.getElementById('mShort').classList.toggle('on',m==='short');document.getElementById('mFull').classList.toggle('on',m==='full');}
 function setVM(m){voteMode=m;document.getElementById('vmPass').classList.toggle('on',m==='pass');document.getElementById('vmOpen').classList.toggle('on',m==='open');document.getElementById('vmDesc').textContent=m==='pass'?'כל אחד מצביע בסתר בטלפון':'כולם מצביעים ביחד';}
+function toggleNight(){nightMode=!nightMode;const btn=document.getElementById('nightBtn');if(btn)btn.classList.toggle('on',nightMode);}
 function filterByAge(arr){return arr;}
 
 // ===== SETUP =====
@@ -838,10 +847,20 @@ P.forEach((_,i)=>{scores[i]=0;turnQ[i]=0;gS.aliasW[i]=0;gS.drawW[i]=0;});
 // Phase-graded pools — with cross-game memory (no repeats across ~3 games)
 const _pp=(()=>{try{const s=localStorage.getItem('mimi_pp');return s?JSON.parse(s):null;}catch(e){return null;}})();
 const _reuse=!!_pp;
+if(_pp&&_pp.n!==undefined)nightMode=_pp.n;
 function _gp(key,factory){if(_reuse&&_pp.p[key]&&_pp.p[key].length>0&&_pp.i[key]<_pp.p[key].length)return{p:_pp.p[key],i:_pp.i[key]};return{p:factory(),i:0};}
 ['warm','fire','final'].forEach(k=>{
 [['vt_'+k,()=>shuf(filterByAge([...VOTE[k]]))],['hs_'+k,()=>shuf(filterByAge([...(HOTSEAT[k]||[])]))],['mi_'+k,()=>shuf(filterByAge([...(MISSIONS[k]||[])]))],['ft_'+k,()=>shuf(filterByAge([...(FAMTALK[k]||[])]))],['rv_'+k,()=>shuf(filterByAge([...(REVEAL[k]||[])]))],['al_'+k,()=>shuf([...(ALIAS[k]||[])])],['dr_'+k,()=>shuf([...(DRAW[k]||[])])],['pd_'+k,()=>shuf(filterByAge([...(PDILEMMA[k]||[])]))],['bl_'+k,()=>shuf(filterByAge([...(BLIND[k]||[])]))]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});});
 [['sent',()=>shuf([...SENTENCE.final])],['ra',()=>shuf([...RAPIDS])],['di',()=>shuf([...DILEMMAS])],['fc',()=>shuf([...FAM_CH])]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});
+// Night mode — mix in adult content
+if(nightMode){
+['warm','fire','final'].forEach(k=>{
+if(NIGHT_VOTE&&NIGHT_VOTE.length){if(!pools['vt_'+k])pools['vt_'+k]=[];pools['vt_'+k].push(...NIGHT_VOTE);pools['vt_'+k]=shuf(pools['vt_'+k]);}
+if(NIGHT_HOTSEAT&&NIGHT_HOTSEAT.length){if(!pools['hs_'+k])pools['hs_'+k]=[];pools['hs_'+k].push(...NIGHT_HOTSEAT);pools['hs_'+k]=shuf(pools['hs_'+k]);}
+if(NIGHT_REVEAL&&NIGHT_REVEAL.length){if(!pools['rv_'+k])pools['rv_'+k]=[];pools['rv_'+k].push(...NIGHT_REVEAL);pools['rv_'+k]=shuf(pools['rv_'+k]);}
+});
+if(NIGHT_DILEMMAS&&NIGHT_DILEMMAS.length){if(!pools['di'])pools['di']=[];pools['di'].push(...NIGHT_DILEMMAS);pools['di']=shuf(pools['di']);}
+}
 curE=0;wA=0;show('scrGame');drawWheel(0);updateSB();updateFP();saveState();
 // Game intro moment
 const ov=document.getElementById('overlay');
@@ -1981,7 +2000,7 @@ return h;
 }
 
 // ===== FINISH =====
-function savePP(){try{localStorage.setItem('mimi_pp',JSON.stringify({p:pools,i:idx}));}catch(e){}}
+function savePP(){try{localStorage.setItem('mimi_pp',JSON.stringify({p:pools,i:idx,n:nightMode}));}catch(e){}}
 function buildFin(){savePP();SND.play('tada');
 const sorted=P.map((p,i)=>({...p,i,s:scores[i]||0})).sort((a,b)=>b.s-a.s);const mc=['#ffc73a','#c0c0c0','#cd7f32'];const hs=[140,110,80];const order=sorted.length>=3?[sorted[1],sorted[0],sorted[2]]:sorted.slice(0,3);const ho=sorted.length>=3?[hs[1],hs[0],hs[2]]:hs;
 const dur=Math.round((Date.now()-gS.t0)/1000);const mins=Math.floor(dur/60),secs=dur%60;
