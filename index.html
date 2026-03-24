@@ -477,6 +477,24 @@ body.light-body{background:#f8f6f1}
 .fb-chip:active{transform:scale(.94)}
 .fb-chip.on{border-color:var(--gold);color:var(--gold);background:rgba(255,199,58,.08)}
 
+/* === AVATAR CAROUSEL === */
+.av-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;animation:fadeIn .3s ease}
+.av-title{font-size:1.1rem;font-weight:900;margin-bottom:12px;text-align:center}
+.av-carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:20px 30%;width:100%;max-width:420px;scrollbar-width:none}
+.av-carousel::-webkit-scrollbar{display:none}
+.av-item{flex:0 0 80px;height:80px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.1);cursor:pointer;scroll-snap-align:center;transition:all .3s cubic-bezier(.34,1.2,.64,1);opacity:.6;filter:saturate(.7)}
+.av-item.active{flex:0 0 110px;height:110px;border-color:var(--gold);box-shadow:0 0 30px rgba(255,199,58,.4),0 0 60px rgba(255,199,58,.1);opacity:1;filter:saturate(1);transform:translateY(-8px)}
+.av-item.taken{opacity:.15;pointer-events:none;filter:grayscale(1)}
+.av-item img{width:100%;height:100%;object-fit:cover}
+.av-label{font-size:.75rem;color:var(--t2);text-align:center;margin-top:8px;min-height:20px}
+.av-cats{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:16px 0 12px}
+.av-cat{padding:6px 14px;border-radius:20px;font-size:.65rem;font-weight:700;background:var(--s2);color:var(--t3);border:1px solid var(--s3);cursor:pointer;transition:.2s}
+.av-cat.on{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.av-actions{display:flex;gap:8px;margin-top:12px;width:100%;max-width:300px}
+.av-confirm{flex:2;padding:14px;border:none;border-radius:12px;font-size:.9rem;font-weight:800;cursor:pointer;font-family:inherit;transition:.2s}
+.av-confirm:active{transform:scale(.95)}
+.av-back{flex:1;padding:14px;border:none;border-radius:12px;font-size:.8rem;font-weight:600;background:var(--s2);color:var(--t2);cursor:pointer;font-family:inherit}
+
 </style>
 </head>
 <body>
@@ -815,12 +833,83 @@ document.getElementById('npb').textContent='מתחילים!';
 chkAll();}
 function chkAll(){const ok=PD.every(p=>p.name&&p.avId);document.getElementById('npb').disabled=!ok;}
 function pickAvFor(idx){curSP=idx;showAvPicker();}
-function showAvPicker(){const i=curSP,d=PD[i],taken=PD.filter((_,j)=>j!==i).map(p=>p.avId).filter(Boolean);
-let h=`<div style="text-align:center;margin-bottom:8px"><div class="st" style="color:${COL[i]}">בחרו דמות</div></div>`;
-h+=`<div class="avg">`;AVATARS.forEach(av=>{const sel=d.avId===av.id?'sel':'';const tk=taken.includes(av.id)?'tk':'';h+=`<div class="avi ${sel} ${tk}" onclick="setAvFor(${i},'${av.id}')"><img src="${av.img}"></div>`;});h+=`</div>`;
-h+=`<div class="acts" style="margin-top:10px"><button class="ab ab-m" onclick="showAllPlayers()">חזרה</button></div>`;
-document.getElementById('s2b').innerHTML=h;document.getElementById('s2h').innerHTML='';}
-function setAvFor(idx,id){PD[idx].avId=id;SND.play('pop');showAllPlayers();}
+function showAvPicker(){
+  const i=curSP,d=PD[i],taken=PD.filter((_,j)=>j!==i).map(p=>p.avId).filter(Boolean);
+  const color=COL[i];
+  const cats=['הכל','הורים','ילדים','נוער','סבים'];
+  let curCat='הכל';
+  let selId=d.avId||AVATARS[0].id;
+
+  function render(cat){
+    curCat=cat||curCat;
+    const filtered=curCat==='הכל'?AVATARS:AVATARS.filter(a=>a.cat===curCat);
+    const selAv=AVATARS.find(a=>a.id===selId);
+
+    let h=`<div class="av-overlay" id="avOverlay" onclick="if(event.target===this)closeAvPicker()">`;
+    h+=`<div class="av-title" style="color:${color}">${d.name} — בחרו דמות</div>`;
+
+    h+=`<div class="av-carousel" id="avCarousel">`;
+    filtered.forEach(av=>{
+      const cls=av.id===selId?'active':'';
+      const tk=taken.includes(av.id)?'taken':'';
+      h+=`<div class="av-item ${cls} ${tk}" data-id="${av.id}" onclick="avSelect('${av.id}')"><img src="${av.img}" alt="${av.label}"></div>`;
+    });
+    h+=`</div>`;
+
+    h+=`<div class="av-label">${selAv?selAv.label:''}</div>`;
+
+    h+=`<div class="av-cats">`;
+    cats.forEach(c=>{
+      h+=`<div class="av-cat ${c===curCat?'on':''}" onclick="avFilter('${c}')">${c}</div>`;
+    });
+    h+=`</div>`;
+
+    h+=`<div class="av-actions">`;
+    h+=`<button class="av-back" onclick="closeAvPicker()">חזרה</button>`;
+    h+=`<button class="av-confirm" style="background:${color};color:#fff" onclick="avConfirm()">זה אני</button>`;
+    h+=`</div>`;
+
+    h+=`</div>`;
+
+    const existing=document.getElementById('avOverlay');
+    if(existing)existing.remove();
+    document.body.insertAdjacentHTML('beforeend',h);
+
+    setTimeout(()=>{
+      const carousel=document.getElementById('avCarousel');
+      const activeEl=carousel?.querySelector('.active');
+      if(activeEl&&carousel){
+        activeEl.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+      }
+    },100);
+  }
+
+  window.avSelect=function(id){
+    if(taken.includes(id))return;
+    selId=id;
+    SND.play('pop');vib(20);
+    render();
+  };
+
+  window.avFilter=function(cat){
+    SND.play('pop');
+    render(cat);
+  };
+
+  window.avConfirm=function(){
+    PD[i].avId=selId;
+    SND.play('pop');vib(30);
+    closeAvPicker();
+    showAllPlayers();
+  };
+
+  window.closeAvPicker=function(){
+    const el=document.getElementById('avOverlay');
+    if(el){el.style.opacity='0';setTimeout(()=>el.remove(),200);}
+  };
+
+  render('הכל');
+}
 /* showSP removed */
 /* spIn removed */
 /* spG removed */
