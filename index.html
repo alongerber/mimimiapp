@@ -746,6 +746,9 @@ let prevState=null;
 let gS={aliasW:{},drawW:{},rounds:0,t0:0,drawings:[],quotes:[],micResults:[]};
 let PD=[],curSP=0,seenTypes={},phasesSeen=0,streaks={},lastScorer=-1,comebackUsed={},gameLen='full',voteMode='open';
 let nightMode=false;
+let activeSecret=null;
+let secretPool=[];
+let secretIdx=0;
 const SPIN_CTA=["גורלות!","מי יהיה?","הגלגל מחליט","בואו נראה","מי נבחר?","רגע האמת"];
 const HOST_PROMPTS={
 vote:["שווה לשאול — למה דווקא הוא?","מישהו מופתע? ספרו.","מי שהצביע אחרת — מה ראה?","יש פה סיפור מאחורי ההצבעה?","מי רוצה להגן על הבחירה שלו?"],
@@ -844,6 +847,29 @@ events.push({type:'phase_intro',phase:1});events.push(...mkRounds(perPhase,1));e
 events.push({type:'phase_intro',phase:2});events.push(...mkRounds(perPhase,2));events.push({type:'big_question'});
 scores={};turnQ={};voteLog=[];streaks={};lastScorer=-1;comebackUsed={};phasesSeen=0;prevState=null;gS={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};
 P.forEach((_,i)=>{scores[i]=0;turnQ[i]=0;gS.aliasW[i]=0;gS.drawW[i]=0;});
+if(typeof SECRET!=='undefined'&&SECRET.length){
+secretPool=shuf([...SECRET]);
+secretIdx=0;
+}else{
+secretPool=[];
+}
+if(!window._lastSecretEnd)window._lastSecretEnd=0;
+// Insert RECORD rounds — max 1 per phase
+if(typeof RECORD!=='undefined'&&RECORD.length){
+const recPool=shuf([...RECORD]);
+let ri=0;
+for(let phase=0;phase<3&&ri<recPool.length;phase++){
+const phaseSpins=[];
+events.forEach((ev,idx)=>{
+if(ev.type==='spin'&&ev.phase===phase)phaseSpins.push(idx);
+});
+if(phaseSpins.length>=3){
+const insertAt=phaseSpins[Math.floor(phaseSpins.length/2)];
+events.splice(insertAt,0,{type:'spin',pi:0,roundType:'record',phase:phase,recordQ:recPool[ri]});
+ri++;
+}
+}
+}
 // Phase-graded pools — with cross-game memory (no repeats across ~3 games)
 const _pp=(()=>{try{const s=localStorage.getItem('mimi_pp');return s?JSON.parse(s):null;}catch(e){return null;}})();
 const _reuse=!!_pp;
@@ -851,7 +877,7 @@ if(_pp&&_pp.n!==undefined)nightMode=_pp.n;
 function _gp(key,factory){if(_reuse&&_pp.p[key]&&_pp.p[key].length>0&&_pp.i[key]<_pp.p[key].length)return{p:_pp.p[key],i:_pp.i[key]};return{p:factory(),i:0};}
 ['warm','fire','final'].forEach(k=>{
 [['vt_'+k,()=>shuf(filterByAge([...VOTE[k]]))],['hs_'+k,()=>shuf(filterByAge([...(HOTSEAT[k]||[])]))],['mi_'+k,()=>shuf(filterByAge([...(MISSIONS[k]||[])]))],['ft_'+k,()=>shuf(filterByAge([...(FAMTALK[k]||[])]))],['rv_'+k,()=>shuf(filterByAge([...(REVEAL[k]||[])]))],['al_'+k,()=>shuf([...(ALIAS[k]||[])])],['dr_'+k,()=>shuf([...(DRAW[k]||[])])],['pd_'+k,()=>shuf(filterByAge([...(PDILEMMA[k]||[])]))],['bl_'+k,()=>shuf(filterByAge([...(BLIND[k]||[])]))]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});});
-[['sent',()=>shuf([...SENTENCE.final])],['ra',()=>shuf([...RAPIDS])],['di',()=>shuf([...DILEMMAS])],['fc',()=>shuf([...FAM_CH])]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});
+[['sent',()=>shuf([...SENTENCE.final])],['ra',()=>shuf([...RAPIDS])],['di',()=>shuf([...DILEMMAS])],['fc',()=>shuf([...FAM_CH])],['rec',()=>shuf([...(typeof RECORD!=='undefined'?RECORD:[])])]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});
 // Night mode — mix in adult content
 if(nightMode){
 ['warm','fire','final'].forEach(k=>{
@@ -1031,7 +1057,7 @@ try{say(landedP.name);}catch(e){}
 setTimeout(()=>{showRound(ev);spinning=false;},1200);})(performance.now());}
 
 // ===== SHOW ROUND =====
-const RT={vote:{ic:'vote',c:'var(--lav)',bg:'vote'},hotseat:{ic:'flame',c:'var(--coral)',bg:'hotseat'},mission:{ic:'target',c:'var(--peach)',bg:'mission'},alias:{ic:'chat',c:'var(--teal)',bg:'alias'},draw:{ic:'brush',c:'var(--sky)',bg:'draw'},rapid:{ic:'bolt',c:'var(--gold)',bg:'rapid'},dilemma:{ic:'scale',c:'var(--sky)',bg:'dilemma'},famtalk:{ic:'people',c:'var(--mint)',bg:'famtalk'},reveal:{ic:'heart',c:'var(--rose)',bg:'reveal'},pdilemma:{ic:'scale',c:'var(--peach)',bg:'hotseat'},blind:{ic:'heart',c:'var(--rose)',bg:'reveal'},sentence:{ic:'chat',c:'var(--mint)',bg:'reveal'},mic:{ic:'star',c:'var(--coral)',bg:'hotseat'}};
+const RT={vote:{ic:'vote',c:'var(--lav)',bg:'vote'},hotseat:{ic:'flame',c:'var(--coral)',bg:'hotseat'},mission:{ic:'target',c:'var(--peach)',bg:'mission'},alias:{ic:'chat',c:'var(--teal)',bg:'alias'},draw:{ic:'brush',c:'var(--sky)',bg:'draw'},rapid:{ic:'bolt',c:'var(--gold)',bg:'rapid'},dilemma:{ic:'scale',c:'var(--sky)',bg:'dilemma'},famtalk:{ic:'people',c:'var(--mint)',bg:'famtalk'},reveal:{ic:'heart',c:'var(--rose)',bg:'reveal'},pdilemma:{ic:'scale',c:'var(--peach)',bg:'hotseat'},blind:{ic:'heart',c:'var(--rose)',bg:'reveal'},sentence:{ic:'chat',c:'var(--mint)',bg:'reveal'},mic:{ic:'star',c:'var(--coral)',bg:'hotseat'},secret:{ic:'target',c:'var(--gold)',bg:'hotseat'},record:{ic:'megaphone',c:'var(--mint)',bg:'famtalk'}};
 
 function showRound(ev){
 const pi=ev.pi,p=P[pi],rt=ev.roundType,ri=RT[rt];
@@ -1062,12 +1088,33 @@ else if(rt==='pdilemma')showPDilemma(pi,sp,mult);
 else if(rt==='blind')showBlind(pi,ev.pi2,sp,mult);
 else if(rt==='sentence')showSentence(pi,sp,mult);
 else if(rt==='mic')showMicRound(pi,sp,mult);
+else if(rt==='record')showRecord(ev,sp,mult);
 }
 function gc(h){const el=document.getElementById('gc');
 el.style.opacity='0';el.style.transform='translateY(8px)';
 document.getElementById('warea').style.display='none';
 document.getElementById('spinB').parentElement.style.display='none';
 setTimeout(()=>{el.innerHTML=h;el.style.opacity='1';el.style.transform='translateY(0)';
+// Secret reminder
+if(activeSecret){
+const old=document.getElementById('secretReminder');
+if(old)old.remove();
+const btn=document.createElement('div');
+btn.id='secretReminder';
+btn.innerHTML=ic('star',14,'var(--gold)');
+btn.style.cssText='position:fixed;bottom:80px;left:12px;width:32px;height:32px;border-radius:50%;background:rgba(255,199,58,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:100;opacity:0.6;border:1px solid rgba(255,199,58,.2);';
+btn.onclick=function(){
+const popup=document.createElement('div');
+popup.style.cssText='position:fixed;bottom:120px;left:12px;background:var(--s2);border:1px solid rgba(255,199,58,.3);border-radius:10px;padding:10px 14px;max-width:200px;z-index:101;font-size:.7rem;color:var(--gold);';
+popup.innerHTML=activeSecret.mission.q+'<br><span style="color:var(--t3);font-size:.6rem">עוד '+activeSecret.roundsLeft+' סיבובים</span>';
+document.body.appendChild(popup);
+setTimeout(()=>{if(popup.parentNode)popup.remove();},3000);
+};
+document.body.appendChild(btn);
+}else{
+const old=document.getElementById('secretReminder');
+if(old)old.remove();
+}
 setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'nearest'}),100);},150);}
 
 // ===== VOTE — Quick Vote (open) + Secret =====
@@ -1896,7 +1943,230 @@ ptPop(p.color,'+'+pts);updateSB();scorePop(pi);trackStreak(pi);
 try{gtag('event','mic_round_complete',{player:p.name,score:analysis.score,convinced_pct:pct});}catch(e){}
 }
 
-function advance(){if(_advancing)return;_advancing=true;const ev=events[curE];if(ev?.type==='spin')turnQ[ev.pi]++;advanceEvent();setTimeout(()=>_advancing=false,300);}
+// ===== SECRET MISSIONS =====
+function showSecretMission(pi,mission){
+const p=P[pi];
+const wasTTS=ttsOn;
+ttsOn=false;
+SND.play('pop');vib(30);
+gc(`<div class="rc bg-hotseat"><div class="rc-bar" style="background:var(--gold)"></div><div class="rc-glow" style="background:var(--gold)"></div>
+<div style="margin:8px 0">${ic('target',42,'var(--gold)')}</div>
+<div style="font-size:.9rem;font-weight:900;color:var(--gold);margin:4px 0">משימה סודית</div>
+<div style="font-size:.75rem;color:var(--coral);font-weight:700;margin:6px 0">שששש. קרא בשקט. אל תקריא בקול.</div>
+<div style="background:rgba(255,199,58,.08);border:1px solid rgba(255,199,58,.2);border-radius:10px;padding:12px;margin:10px 0">
+<div class="cq" style="color:var(--gold);font-size:.85rem">${mission.q}</div>
+</div>
+<div class="csub">יש לך 3 סיבובים. אף אחד לא יודע.</div>
+<div style="display:flex;gap:8px;margin-top:10px">
+<button class="ab" style="background:var(--gold);flex:2" onclick="secretAccept(${pi})">קראתי</button>
+<button class="ab" style="background:var(--s2);flex:1;font-size:.7rem" onclick="secretSwap(${pi})">קשה. אחרת.</button>
+</div>
+</div>`);
+setTimeout(()=>{ttsOn=wasTTS;},100);
+}
+
+function secretAccept(pi){
+activeSecret={
+pi:pi,
+mission:secretPool[secretIdx],
+roundsLeft:3,
+startRound:gS.rounds
+};
+secretIdx++;
+SND.play('pop');
+gc(`<div class="pass">
+<div style="font-size:.85rem;color:var(--t2);margin:12px 0">תחזירו את הטלפון למרכז.</div>
+<div style="font-size:.65rem;color:var(--t3)">אף אחד לא יודע. תנהגו רגיל.</div>
+<div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">ממשיכים</button></div>
+</div>`);
+}
+
+function secretSwap(pi){
+secretIdx++;
+if(secretIdx<secretPool.length){
+showSecretMission(pi,secretPool[secretIdx]);
+}else{
+gc(`<div class="pass">
+<div style="font-size:.75rem;color:var(--t3);margin:12px 0">אין יותר משימות. ממשיכים.</div>
+<div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">ממשיכים</button></div>
+</div>`);
+}
+}
+
+function showSecretReveal(){
+if(!activeSecret)return advance();
+const pi=activeSecret.pi;
+const mission=activeSecret.mission;
+const p=P[pi];
+SND.play('pop');vib(100);
+gc(`<div class="rc bg-hotseat"><div class="rc-bar" style="background:var(--gold)"></div><div class="rc-glow" style="background:var(--gold)"></div>
+<div style="margin:8px 0">${ic('sparkle',42,'var(--gold)')}</div>
+<div style="font-size:1rem;font-weight:900;color:var(--gold);margin:6px 0">חשיפה!</div>
+<div style="font-size:.78rem;color:var(--t2);margin:6px 0">ל-<b style="color:${p.color}">${p.name}</b> הייתה משימה סודית:</div>
+<div style="background:rgba(255,199,58,.08);border:1px solid rgba(255,199,58,.2);border-radius:10px;padding:12px;margin:10px 0">
+<div style="font-size:.82rem;color:var(--gold);font-weight:700">${mission.reveal}</div>
+</div>
+<div style="font-size:.72rem;color:var(--t2);margin:8px 0">שמתם לב? הצליח?</div>
+<div style="display:flex;gap:8px;justify-content:center;margin:8px 0">
+<button class="ab" style="background:var(--teal);flex:1" onclick="secretVote(true)">הצליח</button>
+<button class="ab" style="background:var(--coral);flex:1" onclick="secretVote(false)">לא הצליח</button>
+</div>
+</div>`);
+}
+
+function secretVote(success){
+if(!activeSecret)return advance();
+const pi=activeSecret.pi;
+const p=P[pi];
+const pts=success?3:0;
+scores[pi]+=pts;
+updateSB();saveState();
+if(success){ptPop(p.color,'+3');SND.play('win');vib(80);scorePop(pi);trackStreak(pi);}
+else{SND.play('buzz');vib(40);}
+window._lastSecretEnd=gS.rounds;
+activeSecret=null;
+const rem=document.getElementById('secretReminder');
+if(rem)rem.remove();
+gc(`<div class="pass">
+<div style="margin:8px 0">${success?ic('crown',42,'var(--teal)'):ic('flame',42,'var(--coral)')}</div>
+<div style="font-size:.9rem;font-weight:800;color:${success?'var(--teal)':'var(--coral)'}">
+${success?p.name+' — הצליח. לא ציפינו.':p.name+' — נתפס. קורה לטובים.'}
+</div>
+<div style="font-size:.65rem;color:var(--t3);margin:6px 0">${success?'+3 נקודות':'בפעם הבאה'}</div>
+<div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">ממשיכים</button></div>
+</div>`);
+}
+
+// ===== RECORD — הקלטת קול 15 שניות =====
+let REC={};
+
+function showRecord(ev,sp,mult){
+const q=ev.recordQ||nx(pools['rec'],idx['rec']++);
+if(!q){advance();return;}
+const qText=typeof q==='string'?q:(q.q||'');
+REC={q:qText,mult,audioBlob:null,audioUrl:null,chunks:[]};
+const firstTime=!seenTypes['record'];seenTypes['record']=true;
+const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('megaphone',16,'var(--mint)')} הקלטה משפחתית</div><div class="explain-text">15 שניות. כולם ביחד. נשמר לסיכום הערב.<br>ההקלטה נשארת בטלפון שלכם. לא נשלחת לשום מקום.</div></div>`:'';
+gc(`<div class="who" style="border-color:var(--mint)"><div class="who-av" style="border-color:var(--mint)">${ic('megaphone',36,'var(--mint)')}</div><div class="who-info"><div class="who-name" style="color:var(--mint)">כולם ביחד</div><div class="who-role">הקלטה משפחתית</div></div></div>
+${sp}${explain}
+<div class="rc bg-famtalk"><div class="rc-bar" style="background:var(--mint)"></div><div class="rc-glow" style="background:var(--mint)"></div>
+<div class="rc-icon">${ic('megaphone',36,'var(--mint)')}</div>
+<div class="cq" style="color:var(--mint);font-size:.85rem">${qText}</div>
+<div class="csub">15 שניות. כולם ביחד. שימו את הטלפון באמצע.</div>
+<div style="font-size:.55rem;color:var(--t3);margin-top:4px">ההקלטה נשארת בטלפון שלכם בלבד.</div>
+<div class="acts"><button class="ab" style="background:var(--mint);width:100%" onclick="startRecord()">התחל הקלטה</button></div>
+</div>`);
+}
+
+function startRecord(){
+let timeLeft=15;
+REC.chunks=[];
+if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+REC.stream=stream;
+try{
+REC.recorder=new MediaRecorder(stream);
+REC.recorder.ondataavailable=e=>{if(e.data.size>0)REC.chunks.push(e.data);};
+REC.recorder.onstop=()=>{
+REC.audioBlob=new Blob(REC.chunks,{type:'audio/webm'});
+REC.audioUrl=URL.createObjectURL(REC.audioBlob);
+stream.getTracks().forEach(t=>t.stop());
+};
+REC.recorder.start();
+}catch(e){REC.recorder=null;stream.getTracks().forEach(t=>t.stop());}
+}).catch(()=>{
+REC.recorder=null;
+showRecordFallback();
+return;
+});
+}else{
+showRecordFallback();
+return;
+}
+SND.play('pop');
+gc(`<div class="rc bg-famtalk"><div class="rc-bar" style="background:var(--mint)"></div>
+<div style="font-size:.75rem;font-weight:700;color:var(--t2);margin-bottom:8px">${REC.q}</div>
+${typeof circleTimer==='function'?circleTimer('rect',timeLeft,15,'var(--mint)'):`<div id="rect" style="font-size:2rem;color:var(--mint);font-weight:900">${timeLeft}</div>`}
+<div class="mic-rec recording" style="background:var(--mint)">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="#fff"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+</div>
+<div style="font-size:.65rem;color:var(--mint);font-weight:700;margin-top:4px">מקליט...</div>
+<div class="mic-vis" id="recVis">${Array(8).fill(0).map((_,i)=>`<div class="mic-bar" style="animation-delay:${i*0.1}s"></div>`).join('')}</div>
+</div>`);
+REC.tmr=setInterval(()=>{
+timeLeft--;
+if(typeof updateCircle==='function')updateCircle('rect',null,timeLeft,15,'var(--mint)');
+else{const el=document.getElementById('rect');if(el)el.textContent=timeLeft;}
+if(timeLeft<=0){
+clearInterval(REC.tmr);
+stopRecord();
+}
+},1000);
+}
+
+function showRecordFallback(){
+gc(`<div class="rc bg-famtalk"><div class="rc-bar" style="background:var(--mint)"></div>
+<div style="margin:12px 0">${ic('megaphone',36,'var(--mint)')}</div>
+<div style="font-size:.85rem;color:var(--mint);font-weight:700;margin:8px 0">אין גישה למיקרופון</div>
+<div style="font-size:.72rem;color:var(--t2);margin:6px 0">אין בעיה. תעשו את זה בלי הקלטה. פשוט בקול רם:</div>
+<div class="cq" style="color:var(--mint);font-size:.85rem">${REC.q}</div>
+<div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="recordSkipPoints()">עשינו. ממשיכים.</button></div>
+</div>`);
+}
+
+function stopRecord(){
+if(REC.recorder&&REC.recorder.state==='recording'){
+REC.recorder.stop();
+}else if(REC.stream){REC.stream.getTracks().forEach(t=>t.stop());}
+SND.play('buzz');vib(200);
+if(!gS.recordings)gS.recordings=[];
+setTimeout(()=>{
+if(REC.audioUrl){
+gS.recordings.push({url:REC.audioUrl,q:REC.q,round:gS.rounds});
+}
+gc(`<div class="rc bg-famtalk"><div class="rc-bar" style="background:var(--mint)"></div>
+<div style="margin:8px 0">${ic('check',36,'var(--mint)')}</div>
+<div style="font-size:.85rem;font-weight:800;color:var(--mint);margin:8px 0">הוקלט!</div>
+${REC.audioUrl?`<audio controls src="${REC.audioUrl}" style="width:100%;max-width:280px;margin:8px auto;display:block"></audio>`
+:`<div style="font-size:.7rem;color:var(--t3)">ההקלטה לא הצליחה. קורה. ממשיכים.</div>`}
+<div style="font-size:.55rem;color:var(--t3);margin:6px 0">ההקלטה נשמרת לסיכום הערב. נשארת בטלפון שלכם בלבד.</div>
+<div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="recordSkipPoints()">ממשיכים</button></div>
+</div>`);
+},500);
+}
+
+function recordSkipPoints(){
+P.forEach((_,i)=>{scores[i]+=1;});
+updateSB();saveState();
+SND.play('pop');
+advance();
+}
+
+function advance(){if(_advancing)return;_advancing=true;const ev=events[curE];if(ev?.type==='spin')turnQ[ev.pi]++;
+// SECRET: show secret mission after regular round
+if(!activeSecret&&secretPool.length>0&&secretIdx<secretPool.length){
+const roundsSinceLast=window._lastSecretEnd||0;
+if(gS.rounds-roundsSinceLast>=4&&gS.rounds>=3){
+const prevEv=events[curE-1]||events[curE];
+if(prevEv&&prevEv.type==='spin'&&prevEv.pi!==undefined&&prevEv.roundType!=='record'){
+_advancing=false;
+showSecretMission(prevEv.pi,secretPool[secretIdx]);
+return;
+}
+}
+}
+// SECRET: count down rounds
+if(activeSecret){
+if(events[curE]&&events[curE].type==='spin'){
+activeSecret.roundsLeft--;
+if(activeSecret.roundsLeft<=0){
+_advancing=false;
+showSecretReveal();
+return;
+}
+}
+}
+advanceEvent();setTimeout(()=>_advancing=false,300);}
 function advanceEvent(){prevState={curE,scores:{...scores},voteLog:[...voteLog],turnQ:{...turnQ}};document.getElementById('undoB').disabled=false;
 // Track round analytics
 const prevEv=events[curE];
