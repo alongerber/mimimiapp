@@ -471,10 +471,10 @@ body.light-body{background:#f8f6f1}
 /* === AVATAR CAROUSEL === */
 .av-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;animation:fadeIn .3s ease}
 .av-title{font-size:1.1rem;font-weight:900;margin-bottom:12px;text-align:center}
-.av-carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:20px 30%;width:100%;max-width:420px;scrollbar-width:none}
+.av-carousel{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:24px calc(50% - 50px);width:100%;scrollbar-width:none;scroll-behavior:smooth}
 .av-carousel::-webkit-scrollbar{display:none}
-.av-item{flex:0 0 80px;height:80px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.1);cursor:pointer;scroll-snap-align:center;transition:all .3s cubic-bezier(.34,1.2,.64,1);opacity:.6;filter:saturate(.7)}
-.av-item.active{flex:0 0 110px;height:110px;border-color:var(--gold);box-shadow:0 0 30px rgba(255,199,58,.4),0 0 60px rgba(255,199,58,.1);opacity:1;filter:saturate(1);transform:translateY(-8px)}
+.av-item{flex:0 0 72px;height:72px;border-radius:50%;overflow:hidden;border:3px solid var(--s3);cursor:pointer;scroll-snap-align:center;transition:all .35s cubic-bezier(.34,1.2,.64,1);opacity:.75;transform:scale(.9)}
+.av-item.active{flex:0 0 100px;height:100px;border-width:4px;opacity:1;transform:scale(1);z-index:2}
 .av-item.taken{opacity:.15;pointer-events:none;filter:grayscale(1)}
 .av-item img{width:100%;height:100%;object-fit:cover}
 .av-label{font-size:.75rem;color:var(--t2);text-align:center;margin-top:8px;min-height:20px}
@@ -494,20 +494,29 @@ body.light-body{background:#f8f6f1}
 .pick-av img{width:100%;height:100%;object-fit:cover}
 .pick-name{font-size:.65rem;text-align:center;margin-top:2px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:56px}
 
-/* Intro screen */
-.intro-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:24px 16px;text-align:center;gap:18px;position:relative}
-.intro-skip{position:absolute;top:12px;left:12px;background:none;border:none;color:var(--t3);font-size:.7rem;font-family:inherit;cursor:pointer;padding:6px 10px}
-.intro-avatar{width:90px;height:90px;border-radius:50%;overflow:hidden;border:3px solid var(--gold);box-shadow:0 0 30px rgba(255,199,58,.25)}
-.intro-avatar img{width:100%;height:100%;object-fit:cover}
-.intro-text{font-size:.82rem;color:var(--t2);min-height:6em;line-height:1.7;direction:rtl;max-width:320px;text-align:center}
-.intro-text .intro-line{opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s}
-.intro-text .intro-line.vis{opacity:1;transform:translateY(0)}
-.intro-text .intro-line.bright{color:var(--text);font-weight:700}
-.intro-text .intro-line.gold{color:var(--gold);font-weight:800}
-.intro-cta{opacity:0;transition:opacity .5s;margin-top:12px}
+/* === INTRO SCREEN === */
+.intro-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;background:var(--bg);position:relative;overflow:hidden}
+.intro-bg-glow{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,199,58,.06) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-60%);animation:glowPulse 4s ease infinite;pointer-events:none}
+@keyframes glowPulse{0%,100%{opacity:.4;transform:translate(-50%,-60%) scale(1)}50%{opacity:.7;transform:translate(-50%,-60%) scale(1.15)}}
+.intro-brand{font-size:.55rem;color:var(--t3);font-weight:600;letter-spacing:3px;margin-bottom:16px;opacity:0;animation:fadeUp .6s ease .2s forwards}
+.intro-avatar{width:200px;height:200px;overflow:hidden;margin-bottom:20px;opacity:0;transform:translateY(20px);animation:heroIn 1s cubic-bezier(.34,1.2,.64,1) .4s forwards;position:relative;flex-shrink:0;border-radius:50%}
+.intro-avatar video{width:100%;height:100%;object-fit:cover}
+@keyframes heroIn{to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.intro-text{max-width:320px;text-align:center;direction:rtl;min-height:120px}
+.intro-line{font-size:.82rem;color:var(--t2);margin:3px 0;font-weight:500;line-height:1.7}
+.intro-line.bright{color:var(--text);font-weight:700;font-size:.88rem}
+.intro-line.gold{color:var(--gold);font-weight:800;font-size:.92rem}
+.intro-cursor{display:inline-block;width:2px;height:14px;background:var(--gold);margin-right:2px;vertical-align:middle;animation:blink .5s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.intro-cta{margin-top:28px;opacity:0;transition:opacity .6s ease}
 .intro-cta.vis{opacity:1}
-.intro-cta button{background:var(--gold);color:#1a1a2e;border:none;border-radius:16px;padding:14px 32px;font-size:.9rem;font-weight:800;font-family:inherit;cursor:pointer;min-width:200px}
-@keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+.intro-cta button{padding:16px 44px;border:none;border-radius:14px;font-size:.95rem;font-weight:800;font-family:inherit;cursor:pointer;background:var(--gold);color:var(--bg);box-shadow:0 6px 30px rgba(255,199,58,.25);transition:all .2s}
+.intro-cta button:active{transform:scale(.95)}
+.intro-skip{position:absolute;top:16px;left:16px;background:none;border:none;color:var(--t3);font-size:.6rem;cursor:pointer;font-family:inherit;padding:8px;opacity:.5}
+.intro-tap{margin-top:24px;opacity:0;animation:fadeUp .6s ease 1s forwards}
+.intro-tap button{background:none;border:1.5px solid rgba(255,199,58,.3);color:var(--gold);padding:14px 36px;border-radius:14px;font-size:.85rem;font-weight:700;font-family:inherit;cursor:pointer;animation:tapPulse 2.5s ease infinite}
+@keyframes tapPulse{0%,100%{border-color:rgba(255,199,58,.2);box-shadow:none}50%{border-color:rgba(255,199,58,.5);box-shadow:0 0 20px rgba(255,199,58,.1)}}
 
 /* Magic moment / paywall */
 .magic-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:24px 16px;text-align:center;gap:14px}
@@ -527,6 +536,7 @@ body.light-body{background:#f8f6f1}
 <div class="app">
 <div class="hdr">
   <div class="logo"><b>מ</b><b>י</b> <b>מ</b><b>י</b> <b>מ</b><b>י</b><b>?</b></div>
+  <div style="font-size:.45rem;color:var(--t3);font-weight:600;letter-spacing:2px;margin-top:-4px">חצינורמלי</div>
   <button class="hb l" onclick="toggleHelp()" aria-label="עזרה">?</button>
   <button class="theme-toggle" onclick="toggleTheme()" aria-label="מצב תצוגה" id="themeB">☀</button>
   <button class="hb r" id="sndB" onclick="SND.toggle()" aria-label="שמע"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="1.8" style="vertical-align:middle"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" stroke-linecap="round"/></svg></button>
@@ -535,13 +545,15 @@ body.light-body{background:#f8f6f1}
 <div class="scr on" id="scrIntro">
   <div class="intro-wrap">
     <button class="intro-skip" onclick="skipIntro()">דלג ▸</button>
-    <div class="intro-avatar"><img src="avatars/intro.webp" alt=""></div>
+    <div class="intro-bg-glow"></div>
+    <div class="intro-brand">חצינורמלי מציג</div>
+    <div class="intro-avatar"><video id="introVideo" src="avatars/intro_video.mp4" playsinline muted preload="auto" style="pointer-events:none"></video></div>
     <div class="intro-text" id="introText"></div>
     <div class="intro-cta" id="introCta">
-      <button onclick="skipIntro()">מתחילים</button>
+      <button onclick="skipIntro()">אני לא מוכן. אבל יאללה.</button>
     </div>
-    <div id="introTap" style="margin-top:20px">
-      <button onclick="startIntroAnim()" style="background:none;border:2px solid var(--gold);color:var(--gold);padding:12px 32px;border-radius:12px;font-size:.85rem;font-weight:700;font-family:inherit;cursor:pointer;animation:pulse 2s ease infinite">לחצו להתחיל</button>
+    <div class="intro-tap" id="introTap">
+      <button onclick="startIntroAnim()">שימו את הטלפון באמצע ולחצו</button>
     </div>
   </div>
 </div>
@@ -576,8 +588,8 @@ body.light-body{background:#f8f6f1}
     </div>
     <div class="st">כמה אתם היום?</div>
     <div class="cgrid" id="cntR"></div>
-    <div class="st" style="margin-top:8px">כמה זמן יש לכם?</div>
-    <div class="cgrid"><button class="cb" id="mShort" onclick="setMode('short')" style="width:auto;padding:0 14px;font-size:.75rem">קצר</button><button class="cb on" id="mFull" onclick="setMode('full')" style="width:auto;padding:0 14px;font-size:.75rem">מלא</button></div>
+    <div class="st" style="margin-top:8px;display:none">כמה זמן יש לכם?</div>
+    <div class="cgrid" style="display:none"><button class="cb" id="mShort" onclick="setMode('short')" style="width:auto;padding:0 14px;font-size:.75rem">קצר</button><button class="cb on" id="mFull" onclick="setMode('full')" style="width:auto;padding:0 14px;font-size:.75rem">מלא</button></div>
     <div class="st" style="margin-top:8px">מעבירים טלפון או מצביעים ביחד?</div>
     <div class="cgrid"><button class="cb" id="vmPass" onclick="setVM('pass')" style="width:auto;padding:0 12px;font-size:.7rem">מעבירים טלפון</button><button class="cb on" id="vmOpen" onclick="setVM('open')" style="width:auto;padding:0 12px;font-size:.7rem">מצביעים בגלוי</button></div>
     <div class="ss" id="vmDesc">כל אחד מצביע בסתר בטלפון</div>
@@ -598,7 +610,7 @@ body.light-body{background:#f8f6f1}
   <div id="ss3" style="display:none">
     <div style="text-align:right;margin-bottom:8px"><button class="gb" onclick="document.getElementById('ss3').style.display='none';document.getElementById('ss2').style.display=''" style="font-size:.65rem;padding:5px 10px">← חזרה</button></div>
     <div class="st">כולם פה?</div><div id="pSum"></div>
-    <button class="gobtn" onclick="launch()">יאללה, מתחילים!</button>
+    <button class="gobtn" onclick="launch()">שנתחיל לפני שמישהו מתחרט</button>
     <button class="gobtn" style="background:var(--s2);margin-top:6px;border:1px solid var(--s3)" onclick="ss1Show()">↩ חזרה</button>
   </div>
 </div></div>
@@ -729,7 +741,7 @@ function pickTarget(pi){const isChild=P[pi].role==='child';let cands=P.map((_,j)
 function vib(ms){try{navigator.vibrate(ms);}catch(e){}}
 
 // ===== SOUND =====
-const SND={ctx:null,on:true,init(){try{this.ctx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}},resume(){if(this.ctx?.state==='suspended')this.ctx.resume();},toggle(){this.on=!this.on;document.getElementById('sndB').innerHTML=this.on?ic('megaphone',14,'var(--t2)'):ic('x',14,'var(--t3)');try{gtag('event','sound_toggle',{sound_on:this.on});}catch(e){}},
+const SND={ctx:null,on:true,init(){try{this.ctx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}},resume(){if(this.ctx?.state==='suspended')this.ctx.resume();},toggle(){this.on=!this.on;document.getElementById('sndB').innerHTML=this.on?ic('megaphone',14,'var(--t2)'):ic('x',14,'var(--t3)');try{gtag('event','sound_toggle',{sound_on:this.on});}catch(e){}if(!this.on&&window._introVideo){try{window._introVideo.muted=true;}catch(e){}}if(this.on&&window._introVideo){try{window._introVideo.muted=false;}catch(e){}}},
 n(f,t,v,s,d){if(!this.ctx)return;const c=this.ctx,o=c.createOscillator(),g=c.createGain();o.type=t;o.connect(g);g.connect(c.destination);o.frequency.setValueAtTime(f,s);g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(v,s+.01);g.gain.exponentialRampToValueAtTime(.001,s+d);o.start(s);o.stop(s+d+.05);},
 play(t){if(!this.on)return;if(!this.ctx)this.init();if(!this.ctx)return;this.resume();const c=this.ctx,now=c.currentTime;try{
 if(t==='spin'){const o=c.createOscillator(),g=c.createGain(),f=c.createBiquadFilter();o.type='sawtooth';o.connect(f);f.connect(g);g.connect(c.destination);f.type='lowpass';f.frequency.setValueAtTime(3000,now);f.frequency.exponentialRampToValueAtTime(200,now+1.2);o.frequency.setValueAtTime(500,now);o.frequency.exponentialRampToValueAtTime(80,now+1.2);g.gain.setValueAtTime(.07,now);g.gain.exponentialRampToValueAtTime(.001,now+1.2);o.start(now);o.stop(now+1.3);}
@@ -820,6 +832,8 @@ let activeSecret=null;
 let secretPool=[];
 let secretIdx=0;
 const SPIN_CTA=["גורלות!","מי יהיה?","הגלגל מחליט","בואו נראה","מי נבחר?","רגע האמת"];
+const CONT_CTA=["הלאה","עוד אחד","נו","ממשיכים. אין ברירה.","הבא"];
+function contCTA(){return CONT_CTA[Math.floor(Math.random()*CONT_CTA.length)];}
 const HOST_PROMPTS={
 vote:["מישהו הופתע. או סתם לא שם לב.","למה דווקא הוא. מישהו מוכן להסביר.","הצבעה מעניינת. או סתם רגילה.","מי שהצביע אחרת — מה ראה שאחרים לא.","יש פה סיפור. או אין. קשה לדעת."],
 blind:["חשבתם על אותו דבר. או לא. נראה.","מה זה אומר עליכם. כנראה כלום. או הכל.","חיבור שלא ציפיתם לו. או שכן."],
@@ -850,13 +864,13 @@ function filterByAge(arr){return arr;}
 function ss1Show(){document.getElementById('ss1').style.display='';document.getElementById('ss2').style.display='none';document.getElementById('ss3').style.display='none';try{const sh=document.getElementById('setupHist');if(sh){const hist=getHistory();if(hist.length>0){let hh='<div style="font-size:.65rem;font-weight:700;text-align:center;color:var(--t3);margin:12px 0 4px">משחקים אחרונים</div>';hist.slice(0,3).forEach(g=>{hh+=`<div class="hist-item"><div style="flex:1;text-align:right"><div style="font-size:.72rem;font-weight:700;color:${g.winnerColor||'var(--gold)'}">${g.winner} ניצח/ה</div><div style="font-size:.58rem;color:var(--t2)">${g.players.length} שחקנים</div></div><div style="font-size:.55rem;color:var(--t3)">${g.date}</div></div>`;});sh.innerHTML=hh;}}}catch(e){}}
 function startPS(){try{gtag('event','setup_step',{step:'player_names',player_count:pCnt});}catch(e){}PD=[];for(let i=0;i<pCnt;i++)PD.push({name:'',gender:'m',avId:null,role:'adult'});curSP=0;document.getElementById('ss1').style.display='none';document.getElementById('ss2').style.display='';showAllPlayers();}
 function showAllPlayers(){
-// Assign random avatars to anyone without one
-const used=PD.map(p=>p.avId).filter(Boolean);
-PD.forEach((p,i)=>{if(!p.avId){const avail=AVATARS.filter(a=>!used.includes(a.id));if(avail.length){const pick=avail[Math.floor(Math.random()*avail.length)];p.avId=pick.id;used.push(pick.id);}}});
 let h='<div style="text-align:center;margin-bottom:8px"><div class="st">הכניסו שמות</div><div class="csub">אפשר גם ללחוץ על האווטאר כדי להחליף</div></div>';
-for(let i=0;i<pCnt;i++){const av=AVATARS.find(a=>a.id===PD[i].avId);
+for(let i=0;i<pCnt;i++){const d=PD[i];
+const avHtml=d.avId
+  ? `<img src="${AVATARS.find(a=>a.id===d.avId)?.img||''}" style="width:100%;height:100%;object-fit:cover">`
+  : `<span style="font-size:1.4rem;color:${COL[i]};font-weight:300">+</span>`;
 h+=`<div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:var(--s1);border-radius:14px;padding:8px 12px;border:1.5px solid ${COL[i]}22">
-<div style="width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2.5px solid ${COL[i]};cursor:pointer" onclick="pickAvFor(${i})">${av?'<img src="'+av.img+'" style="width:100%;height:100%;object-fit:cover">':'?'}</div>
+<div style="width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2.5px solid ${COL[i]};cursor:pointer;display:flex;align-items:center;justify-content:center" onclick="pickAvFor(${i})">${avHtml}</div>
 <input class="sni" style="margin:0;text-align:right;border-color:${COL[i]}33" placeholder="שחקן/ית ${i+1}" maxlength="10" value="${PD[i].name}" oninput="PD[${i}].name=this.value.trim();chkAll()">
 <div style="display:flex;gap:4px;align-items:center">
 <button class="gb ${PD[i].gender==='m'?'on':''}" onclick="PD[${i}].gender='m';showAllPlayers()" style="padding:6px 8px;font-size:.65rem">♂</button>
@@ -864,7 +878,7 @@ h+=`<div style="display:flex;align-items:center;gap:10px;margin:6px 0;background
 </div></div>`;}
 document.getElementById('s2b').innerHTML=h;
 document.getElementById('s2h').innerHTML='';
-document.getElementById('npb').textContent='מתחילים!';
+document.getElementById('npb').textContent='שנתחיל לפני שמישהו מתחרט';
 chkAll();}
 function chkAll(){const ok=PD.every(p=>p.name&&p.avId);document.getElementById('npb').disabled=!ok;}
 function pickAvFor(idx){curSP=idx;showAvPicker();}
@@ -891,7 +905,7 @@ function showAvPicker(){
     });
     h+=`</div>`;
 
-    h+=`<div class="av-label">${selAv?selAv.label:''}</div>`;
+    h+=`<div class="av-label">${selAv?selAv.cat:''}</div>`;
 
     h+=`<div class="av-cats">`;
     cats.forEach(c=>{
@@ -923,7 +937,29 @@ function showAvPicker(){
     if(taken.includes(id))return;
     selId=id;
     SND.play('pop');vib(20);
-    render();
+
+    // Update without full re-render
+    document.querySelectorAll('.av-item').forEach(el=>{
+      const isActive=el.dataset.id===id;
+      el.classList.toggle('active',isActive);
+      if(isActive){
+        el.style.borderColor=color;
+        el.style.boxShadow='0 0 24px '+color+'44';
+        el.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+      }else{
+        el.style.borderColor='';
+        el.style.boxShadow='';
+      }
+    });
+
+    // Update label to category
+    const labelEl=document.querySelector('.av-label');
+    const av=AVATARS.find(a=>a.id===id);
+    if(labelEl)labelEl.textContent=av?av.cat:'';
+
+    // Enable confirm
+    const btn=document.querySelector('.av-confirm');
+    if(btn){btn.disabled=false;btn.style.background=color;btn.style.color='#fff';}
   };
 
   window.avFilter=function(cat){
@@ -1268,9 +1304,11 @@ function nextCTA(){return CTA_NEXT[Math.floor(Math.random()*CTA_NEXT.length)];}
 function startVote(pi,sp,mult,ev){
 const q=nx(pools['vt_'+pk()],idx['vt_'+pk()]++);
 VS={q,hostPi:pi,voters:P.map((_,i)=>i),cur:0,picks:{},mult,prediction:-1};
+const firstTime=!seenTypes['vote'];seenTypes['vote']=true;
+const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('vote',16,'var(--lav)')} הצבעה</div><div class="explain-text">כל אחד בתורו מקבל את הטלפון ולוחץ על מי שהוא חושב.</div></div>`:'';
 // Show question — reader reads aloud
 gc(`<div class="who" style="border-color:${P[pi].color}"><div class="who-av" style="border-color:${P[pi].color}">${gAv(pi,56)}</div><div class="who-info"><div class="who-name" style="color:${P[pi].color}">${P[pi].name}</div><div class="who-role">${g(pi,'קורא','קוראת')} בקול</div></div></div>
-${sp}
+${sp}${explain}
 <div class="rc bg-vote"><div class="rc-bar" style="background:var(--lav)"></div><div class="rc-glow" style="background:var(--lav)"></div>
 <div class="rc-icon">${ic('vote',36,'var(--lav)')}</div>
 <div class="cq">${VS.q.q}</div>
@@ -1520,7 +1558,7 @@ function showPrize(pi){
       <div style="font-size:.82rem;color:var(--gold);font-weight:700">${prize}</div>
     </div>
     <div style="font-size:.6rem;color:var(--t3);margin:6px 0">פרס אמיתי. אפשר לממש. מחר.</div>
-    <div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">ממשיכים</button></div>
+    <div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">${contCTA()}</button></div>
   </div>`);
 }
 
@@ -2159,7 +2197,7 @@ SND.play('pop');
 gc(`<div class="pass">
 <div style="font-size:.85rem;color:var(--t2);margin:12px 0">תחזירו את הטלפון למרכז.</div>
 <div style="font-size:.65rem;color:var(--t3)">אף אחד לא יודע. תנהגו רגיל.</div>
-<div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">ממשיכים</button></div>
+<div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">${contCTA()}</button></div>
 </div>`);
 }
 
@@ -2170,7 +2208,7 @@ showSecretMission(pi,secretPool[secretIdx]);
 }else{
 gc(`<div class="pass">
 <div style="font-size:.75rem;color:var(--t3);margin:12px 0">אין יותר משימות. ממשיכים.</div>
-<div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">ממשיכים</button></div>
+<div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">${contCTA()}</button></div>
 </div>`);
 }
 }
@@ -2215,7 +2253,7 @@ gc(`<div class="pass">
 ${success?p.name+' — הצליח. לא ציפינו.':p.name+' — נתפס. קורה לטובים.'}
 </div>
 <div style="font-size:.65rem;color:var(--t3);margin:6px 0">${success?'+3 נקודות':'בפעם הבאה'}</div>
-<div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">ממשיכים</button></div>
+<div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">${contCTA()}</button></div>
 </div>`);
 }
 
@@ -2312,7 +2350,7 @@ gc(`<div class="rc bg-famtalk"><div class="rc-bar" style="background:var(--mint)
 ${REC.audioUrl?`<audio controls src="${REC.audioUrl}" style="width:100%;max-width:280px;margin:8px auto;display:block"></audio>`
 :`<div style="font-size:.7rem;color:var(--t3)">ההקלטה לא הצליחה. קורה. ממשיכים.</div>`}
 <div style="font-size:.55rem;color:var(--t3);margin:6px 0">ההקלטה נשמרת לסיכום הערב. נשארת בטלפון שלכם בלבד.</div>
-<div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="recordSkipPoints()">ממשיכים</button></div>
+<div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="recordSkipPoints()">${contCTA()}</button></div>
 </div>`);
 },500);
 }
@@ -2853,64 +2891,83 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
 
 // ===== INTRO — tap to start, then animate + audio =====
 function startIntroAnim(){
-// Hide tap button
 const tap=document.getElementById('introTap');
 if(tap)tap.style.display='none';
 
-// Start audio
-try{
-window._introAudio=new Audio('avatars/intro_voice.mp3');
-window._introAudio.volume=0.85;
-window._introAudio.play().catch(()=>{});
-}catch(e){}
-try{gtag('event','intro_start');}catch(e){}
+// Play video (has audio built in)
+const vid=document.getElementById('introVideo');
+if(vid){
+vid.muted=!SND.on; // respect mute setting
+vid.play().catch(()=>{});
+window._introVideo=vid;
+}
 
-// Lines synced to audio
-const lines=[
-{text:'שלום שלום, יש פה משחק.',cls:'bright',delay:0},
-{text:'אין הוראות כי אני לא יודע לכתוב הוראות.',cls:'',delay:2500},
-{text:'',cls:'',delay:5000},
-{text:'פשוט שימו חטיפים על השולחן,',cls:'',delay:5500},
-{text:'שימו את הטלפון באמצע,',cls:'bright',delay:7000},
-{text:'תגידו מי פה ותבחרו דמות.',cls:'',delay:8500},
-{text:'תלחצו.',cls:'bright',delay:10000},
-{text:'',cls:'',delay:11500},
-{text:'אחרי זה אני מטפל בשאר',cls:'',delay:12000},
-{text:'כי אתם כנראה לא תצליחו לבד',cls:'',delay:13500},
-{text:'ואני גם לא הצלחתי, אבל ביחד נסתדר.',cls:'',delay:15000},
-{text:'',cls:'',delay:17000},
-{text:'הילדים יצחקו,',cls:'gold',delay:17500},
-{text:'ההורים יגידו דברים שלא תכננו להגיד.',cls:'bright',delay:19000},
-{text:'סבתא תתקשר מחר לשאול מתי עוד פעם.',cls:'',delay:21000},
-{text:'',cls:'',delay:23000},
-{text:'אני לא מבטיח כלום',cls:'',delay:23500},
-{text:'כי בפעם האחרונה שהבטחתי משהו',cls:'',delay:25000},
-{text:'אני עדיין משלם עליו לעורך דין.',cls:'',delay:27000},
+const fullText=[
+{text:'שלום שלום, יש פה משחק.',pause:800,cls:'bright'},
+{text:'אין הוראות כי אני לא יודע לכתוב הוראות.',pause:600,cls:''},
+{text:'',pause:800},
+{text:'פשוט שימו חטיפים על השולחן,',pause:500,cls:''},
+{text:'שימו את הטלפון באמצע,',pause:500,cls:'bright'},
+{text:'תגידו מי פה ותבחרו דמות.',pause:500,cls:''},
+{text:'תלחצו.',pause:800,cls:'bright'},
+{text:'',pause:600},
+{text:'אחרי זה אני מטפל בשאר',pause:400,cls:''},
+{text:'כי אתם כנראה לא תצליחו לבד',pause:400,cls:''},
+{text:'ואני גם לא הצלחתי, אבל ביחד נסתדר.',pause:700,cls:''},
+{text:'',pause:600},
+{text:'הילדים יצחקו,',pause:400,cls:'gold'},
+{text:'ההורים יגידו דברים שלא תכננו להגיד.',pause:500,cls:'bright'},
+{text:'סבתא תתקשר מחר לשאול מתי עוד פעם.',pause:700,cls:''},
+{text:'',pause:600},
+{text:'אני לא מבטיח כלום',pause:400,cls:''},
+{text:'כי בפעם האחרונה שהבטחתי משהו',pause:500,cls:''},
+{text:'אני עדיין משלם עליו לעורך דין.',pause:0,cls:''},
 ];
 
 const container=document.getElementById('introText');
+container.innerHTML='';
+let totalDelay=0;
 
-lines.forEach(line=>{
+fullText.forEach((line)=>{
+if(line.text===''){totalDelay+=line.pause;return;}
+
+const lineDelay=totalDelay;
+const words=line.text.split(' ');
+
 setTimeout(()=>{
-if(line.text==='')return; // gap
-const el=document.createElement('div');
-el.className='intro-line'+(line.cls?' '+line.cls:'');
-el.textContent=line.text;
-container.appendChild(el);
-requestAnimationFrame(()=>el.classList.add('vis'));
-},line.delay);
+const lineEl=document.createElement('div');
+lineEl.className='intro-line'+(line.cls?' '+line.cls:'');
+container.appendChild(lineEl);
+
+// Cursor element
+const cursor=document.createElement('span');
+cursor.className='intro-cursor';
+lineEl.appendChild(cursor);
+
+words.forEach((word,wi)=>{
+setTimeout(()=>{
+// Insert word before cursor
+cursor.before(document.createTextNode((wi>0?' ':'')+word));
+},wi*110);
 });
 
-// Show CTA after last line
+// Remove cursor after all words shown
+setTimeout(()=>{if(cursor.parentNode)cursor.remove();},words.length*110+200);
+
+},lineDelay);
+
+totalDelay+=words.length*110+line.pause;
+});
+
 setTimeout(()=>{
 const cta=document.getElementById('introCta');
 if(cta)cta.classList.add('vis');
 try{gtag('event','intro_complete');}catch(e){}
-},29000);
+},totalDelay+1000);
 }
 
 function skipIntro(){
-if(window._introAudio){try{window._introAudio.pause();}catch(e){}}
+if(window._introVideo){try{window._introVideo.pause();}catch(e){}}
 show('scrSetup');ss1Show();
 try{gtag('event','intro_complete');}catch(e){}
 try{gtag('event','setup_start');}catch(e){}
