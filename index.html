@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta property="og:title" content="מי מי מי? 🎲">
-<meta property="og:description" content="משחק משפחתי מלא צחוק והפתעות! 3-8 שחקנים, טלפון אחד.">
+<meta property="og:title" content="מי מי מי? — חצינורמלי">
+<meta property="og:description" content="משחק שגורם למשפחות לדבר. טלפון אחד. ערב אחד. מישהו בנה את זה בשלוש בלילה.">
 <meta property="og:image" content="https://mimimiapp.vercel.app/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -495,28 +495,29 @@ body.light-body{background:#f8f6f1}
 .pick-name{font-size:.65rem;text-align:center;margin-top:2px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:56px}
 
 /* === INTRO SCREEN === */
-.intro-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;background:var(--bg);position:relative;overflow:hidden}
-.intro-bg-glow{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,199,58,.06) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-60%);animation:glowPulse 4s ease infinite;pointer-events:none}
-@keyframes glowPulse{0%,100%{opacity:.4;transform:translate(-50%,-60%) scale(1)}50%{opacity:.7;transform:translate(-50%,-60%) scale(1.15)}}
-.intro-brand{font-size:.55rem;color:var(--t3);font-weight:600;letter-spacing:3px;margin-bottom:16px;opacity:0;animation:fadeUp .6s ease .2s forwards}
-.intro-avatar{width:200px;height:200px;overflow:hidden;margin-bottom:20px;opacity:0;transform:translateY(20px);animation:heroIn 1s cubic-bezier(.34,1.2,.64,1) .4s forwards;position:relative;flex-shrink:0}
-.intro-avatar video{width:100%;height:100%;object-fit:cover}
-@keyframes heroIn{to{opacity:1;transform:translateY(0)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.intro-text{max-width:320px;text-align:center;direction:rtl;min-height:120px}
-.intro-line{font-size:.82rem;color:var(--t2);margin:3px 0;font-weight:500;line-height:1.7}
-.intro-line.bright{color:var(--text);font-weight:700;font-size:.88rem}
-.intro-line.gold{color:var(--gold);font-weight:800;font-size:.92rem}
-.intro-cursor{display:inline-block;width:2px;height:14px;background:var(--gold);margin-right:2px;vertical-align:middle;animation:blink .5s step-end infinite}
-@keyframes blink{50%{opacity:0}}
-.intro-cta{margin-top:28px;opacity:0;transition:opacity .6s ease}
-.intro-cta.vis{opacity:1}
-.intro-cta button{padding:16px 44px;border:none;border-radius:14px;font-size:.95rem;font-weight:800;font-family:inherit;cursor:pointer;background:var(--gold);color:var(--bg);box-shadow:0 6px 30px rgba(255,199,58,.25);transition:all .2s}
+.intro-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;background:#000;position:relative;overflow:hidden}
+.intro-bg-glow{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,199,58,.05) 0%,transparent 70%);top:45%;left:50%;transform:translate(-50%,-50%);animation:glowP 4s ease infinite;pointer-events:none;opacity:0;transition:opacity 1s}
+.intro-bg-glow.vis{opacity:1}
+@keyframes glowP{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.3}50%{transform:translate(-50%,-50%) scale(1.2);opacity:.6}}
+.intro-brand{font-size:.55rem;color:rgba(255,255,255,.3);font-weight:600;letter-spacing:3px;margin-bottom:20px}
+.intro-avatar{width:240px;max-width:60vw;overflow:hidden;opacity:0;transform:translateY(30px) scale(.95);transition:all 1.2s cubic-bezier(.16,1,.3,1);position:relative;flex-shrink:0}
+.intro-avatar.vis{opacity:1;transform:translateY(0) scale(1)}
+.intro-avatar video{width:100%;height:auto;display:block}
+.intro-text{max-width:300px;text-align:center;direction:rtl;min-height:100px;margin-top:16px}
+.intro-line{font-size:.8rem;color:rgba(255,255,255,.7);margin:3px 0;font-weight:500;line-height:1.7}
+.intro-line.bright{color:#fff;font-weight:700;font-size:.85rem}
+.intro-line.gold{color:var(--gold);font-weight:800;font-size:.9rem}
+.intro-cursor{display:inline-block;width:2px;height:13px;background:var(--gold);margin-right:2px;vertical-align:middle;animation:blinkC .5s step-end infinite}
+@keyframes blinkC{50%{opacity:0}}
+.intro-cta{margin-top:24px;opacity:0;transform:translateY(10px);transition:all .8s ease}
+.intro-cta.vis{opacity:1;transform:translateY(0)}
+.intro-cta button{padding:15px 40px;border:none;border-radius:14px;font-size:.9rem;font-weight:800;font-family:inherit;cursor:pointer;background:var(--gold);color:#000;box-shadow:0 4px 30px rgba(255,199,58,.2)}
 .intro-cta button:active{transform:scale(.95)}
-.intro-skip{position:absolute;top:16px;left:16px;background:none;border:none;color:var(--t3);font-size:.6rem;cursor:pointer;font-family:inherit;padding:8px;opacity:.5}
-.intro-tap{margin-top:24px;opacity:0;animation:fadeUp .6s ease 1s forwards}
-.intro-tap button{background:none;border:1.5px solid rgba(255,199,58,.3);color:var(--gold);padding:14px 36px;border-radius:14px;font-size:.85rem;font-weight:700;font-family:inherit;cursor:pointer;animation:tapPulse 2.5s ease infinite}
-@keyframes tapPulse{0%,100%{border-color:rgba(255,199,58,.2);box-shadow:none}50%{border-color:rgba(255,199,58,.5);box-shadow:0 0 20px rgba(255,199,58,.1)}}
+.intro-skip{position:absolute;top:16px;left:16px;background:none;border:none;color:rgba(255,255,255,.25);font-size:.55rem;cursor:pointer;font-family:inherit;padding:8px}
+.intro-start{opacity:0;animation:fadeUp .8s ease .5s forwards}
+.intro-start button{background:none;border:1.5px solid rgba(255,199,58,.25);color:var(--gold);padding:15px 40px;border-radius:14px;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;animation:tapPulse 3s ease infinite}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes tapPulse{0%,100%{border-color:rgba(255,199,58,.15);box-shadow:none}50%{border-color:rgba(255,199,58,.4);box-shadow:0 0 30px rgba(255,199,58,.08)}}
 
 /* Magic moment / paywall */
 .magic-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:24px 16px;text-align:center;gap:14px}
@@ -536,7 +537,7 @@ body.light-body{background:#f8f6f1}
 <div class="app">
 <div class="hdr">
   <div class="logo"><b>מ</b><b>י</b> <b>מ</b><b>י</b> <b>מ</b><b>י</b><b>?</b></div>
-  <div style="font-size:.45rem;color:var(--t3);font-weight:600;letter-spacing:2px;margin-top:-4px">חצינורמלי</div>
+  <div style="font-size:.65rem;font-weight:800;letter-spacing:4px;background:linear-gradient(90deg,var(--coral),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-top:-2px">חצינורמלי</div>
   <button class="hb l" onclick="toggleHelp()" aria-label="עזרה">?</button>
   <button class="theme-toggle" onclick="toggleTheme()" aria-label="מצב תצוגה" id="themeB">☀</button>
   <button class="hb r" id="sndB" onclick="SND.toggle()" aria-label="שמע"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="1.8" style="vertical-align:middle"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" stroke-linecap="round"/></svg></button>
@@ -545,14 +546,17 @@ body.light-body{background:#f8f6f1}
 <div class="scr on" id="scrIntro">
   <div class="intro-wrap">
     <button class="intro-skip" onclick="skipIntro()">דלג ▸</button>
-    <div class="intro-bg-glow"></div>
-    <div class="intro-brand">חצינורמלי מציג</div>
-    <div class="intro-avatar"><video id="introVideo" src="avatars/intro_video.mp4" playsinline muted preload="auto" style="pointer-events:none"></video></div>
+    <div class="intro-bg-glow" id="introGlow"></div>
+    <div class="intro-brand" id="introBrand" style="display:none">חצינורמלי מציג</div>
+    <div class="intro-avatar" id="introAvatar" style="display:none">
+      <video id="introVideo" src="avatars/FINAL_INTRO.mp3.mp4" playsinline muted preload="auto" style="pointer-events:none"></video>
+    </div>
     <div class="intro-text" id="introText"></div>
     <div class="intro-cta" id="introCta">
       <button onclick="skipIntro()">אני לא מוכן. אבל יאללה.</button>
     </div>
-    <div class="intro-tap" id="introTap">
+    <div class="intro-start" id="introStart">
+      <div class="intro-brand" style="margin-bottom:30px">חצינורמלי מציג</div>
       <button onclick="startIntroAnim()">שימו את הטלפון באמצע ולחצו</button>
     </div>
   </div>
@@ -593,14 +597,13 @@ body.light-body{background:#f8f6f1}
     <div class="st" style="margin-top:8px">מעבירים טלפון או מצביעים ביחד?</div>
     <div class="cgrid"><button class="cb" id="vmPass" onclick="setVM('pass')" style="width:auto;padding:0 12px;font-size:.7rem">מעבירים טלפון</button><button class="cb on" id="vmOpen" onclick="setVM('open')" style="width:auto;padding:0 12px;font-size:.7rem">מצביעים בגלוי</button></div>
     <div class="ss" id="vmDesc">כל אחד מצביע בסתר בטלפון</div>
-    <div id="nightToggle" style="text-align:center;margin:12px 0">
-      <div style="font-size:.75rem;color:var(--t2);margin-bottom:6px">מצב מבוגרים</div>
-      <button class="gb" id="nightBtn" onclick="toggleNight()" style="font-size:.75rem">
-        אחרי שהילדים נרדמו
-      </button>
-      <div style="font-size:.55rem;color:var(--t3);margin-top:4px">שאלות שילדים לא שואלים כי הם לא יודעים שהשאלה קיימת</div>
+    <div id="nightToggle" style="background:linear-gradient(135deg,rgba(255,107,107,.08),rgba(177,151,252,.08));border:1px solid rgba(255,107,107,.15);border-radius:14px;padding:14px;margin:12px 0;text-align:center">
+      <div style="font-size:.85rem;font-weight:800;color:var(--coral)">מצב מבוגרים</div>
+      <div style="font-size:.65rem;color:var(--t2);margin:4px 0">אחרי שהילדים נרדמו</div>
+      <div style="font-size:.7rem;color:var(--lav);margin:8px 0;font-weight:600">שאלות שילדים לא שואלים כי הם לא יודעים שהשאלה קיימת</div>
+      <button class="gb" id="nightBtn" onclick="toggleNight()" style="font-size:.75rem">הפעלה</button>
     </div>
-    <button class="gobtn" onclick="startPS()">בואו נכיר את השחקנים</button>
+    <button class="gobtn" onclick="startPS()">מי פה. ומי ישרוד.</button>
     <button class="gobtn" id="a2hsBtn" style="background:var(--s2);border:1px solid var(--lav);color:var(--lav);margin-top:8px" onclick="installApp()">📲 הוספה למסך הבית</button>
     <div id="setupHist"></div>
   </div>
@@ -741,7 +744,7 @@ function pickTarget(pi){const isChild=P[pi].role==='child';let cands=P.map((_,j)
 function vib(ms){try{navigator.vibrate(ms);}catch(e){}}
 
 // ===== SOUND =====
-const SND={ctx:null,on:true,init(){try{this.ctx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}},resume(){if(this.ctx?.state==='suspended')this.ctx.resume();},toggle(){this.on=!this.on;document.getElementById('sndB').innerHTML=this.on?ic('megaphone',14,'var(--t2)'):ic('x',14,'var(--t3)');try{gtag('event','sound_toggle',{sound_on:this.on});}catch(e){}if(!this.on&&window._introVideo){try{window._introVideo.muted=true;}catch(e){}}if(this.on&&window._introVideo){try{window._introVideo.muted=false;}catch(e){}}},
+const SND={ctx:null,on:true,init(){try{this.ctx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}},resume(){if(this.ctx?.state==='suspended')this.ctx.resume();},toggle(){this.on=!this.on;document.getElementById('sndB').innerHTML=this.on?ic('megaphone',14,'var(--t2)'):ic('x',14,'var(--t3)');try{gtag('event','sound_toggle',{sound_on:this.on});}catch(e){}if(!this.on){if(window._introAudio)try{window._introAudio.pause();}catch(e){}var vid=document.getElementById('introVideo');if(vid)try{vid.muted=true;}catch(e){}}},
 n(f,t,v,s,d){if(!this.ctx)return;const c=this.ctx,o=c.createOscillator(),g=c.createGain();o.type=t;o.connect(g);g.connect(c.destination);o.frequency.setValueAtTime(f,s);g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(v,s+.01);g.gain.exponentialRampToValueAtTime(.001,s+d);o.start(s);o.stop(s+d+.05);},
 play(t){if(!this.on)return;if(!this.ctx)this.init();if(!this.ctx)return;this.resume();const c=this.ctx,now=c.currentTime;try{
 if(t==='spin'){const o=c.createOscillator(),g=c.createGain(),f=c.createBiquadFilter();o.type='sawtooth';o.connect(f);f.connect(g);g.connect(c.destination);f.type='lowpass';f.frequency.setValueAtTime(3000,now);f.frequency.exponentialRampToValueAtTime(200,now+1.2);o.frequency.setValueAtTime(500,now);o.frequency.exponentialRampToValueAtTime(80,now+1.2);g.gain.setValueAtTime(.07,now);g.gain.exponentialRampToValueAtTime(.001,now+1.2);o.start(now);o.stop(now+1.3);}
@@ -864,7 +867,7 @@ function filterByAge(arr){return arr;}
 function ss1Show(){document.getElementById('ss1').style.display='';document.getElementById('ss2').style.display='none';document.getElementById('ss3').style.display='none';try{const sh=document.getElementById('setupHist');if(sh){const hist=getHistory();if(hist.length>0){let hh='<div style="font-size:.65rem;font-weight:700;text-align:center;color:var(--t3);margin:12px 0 4px">משחקים אחרונים</div>';hist.slice(0,3).forEach(g=>{hh+=`<div class="hist-item"><div style="flex:1;text-align:right"><div style="font-size:.72rem;font-weight:700;color:${g.winnerColor||'var(--gold)'}">${g.winner} ניצח/ה</div><div style="font-size:.58rem;color:var(--t2)">${g.players.length} שחקנים</div></div><div style="font-size:.55rem;color:var(--t3)">${g.date}</div></div>`;});sh.innerHTML=hh;}}}catch(e){}}
 function startPS(){try{gtag('event','setup_step',{step:'player_names',player_count:pCnt});}catch(e){}PD=[];for(let i=0;i<pCnt;i++)PD.push({name:'',gender:'m',avId:null,role:'adult'});curSP=0;document.getElementById('ss1').style.display='none';document.getElementById('ss2').style.display='';showAllPlayers();}
 function showAllPlayers(){
-let h='<div style="text-align:center;margin-bottom:8px"><div class="st">הכניסו שמות</div><div class="csub">אפשר גם ללחוץ על האווטאר כדי להחליף</div></div>';
+let h='<div style="text-align:center;margin-bottom:8px"><div class="st">מי פה?</div><div class="csub">לחצו על ה-+ לבחירת דמות</div></div>';
 for(let i=0;i<pCnt;i++){const d=PD[i];
 const avHtml=d.avId
   ? `<img src="${AVATARS.find(a=>a.id===d.avId)?.img||''}" style="width:100%;height:100%;object-fit:cover">`
@@ -873,8 +876,12 @@ h+=`<div style="display:flex;align-items:center;gap:10px;margin:6px 0;background
 <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2.5px solid ${COL[i]};cursor:pointer;display:flex;align-items:center;justify-content:center" onclick="pickAvFor(${i})">${avHtml}</div>
 <input class="sni" style="margin:0;text-align:right;border-color:${COL[i]}33" placeholder="שחקן/ית ${i+1}" maxlength="10" value="${PD[i].name}" oninput="PD[${i}].name=this.value.trim();chkAll()">
 <div style="display:flex;gap:4px;align-items:center">
-<button class="gb ${PD[i].gender==='m'?'on':''}" onclick="PD[${i}].gender='m';showAllPlayers()" style="padding:6px 8px;font-size:.65rem">♂</button>
-<button class="gb ${PD[i].gender==='f'?'on':''}" onclick="PD[${i}].gender='f';showAllPlayers()" style="padding:6px 8px;font-size:.65rem">♀</button>
+<button class="gb ${d.gender==='m'?'on':''}" onclick="PD[${i}].gender='m';showAllPlayers()" style="padding:3px;border-radius:50%;width:34px;height:34px;overflow:hidden;opacity:${d.gender==='m'?'1':'.4'};border-color:${d.gender==='m'?COL[i]:'var(--s3)'}">
+<img src="avatars/gender_m.webp" style="width:26px;height:26px;object-fit:cover;border-radius:50%">
+</button>
+<button class="gb ${d.gender==='f'?'on':''}" onclick="PD[${i}].gender='f';showAllPlayers()" style="padding:3px;border-radius:50%;width:34px;height:34px;overflow:hidden;opacity:${d.gender==='f'?'1':'.4'};border-color:${d.gender==='f'?COL[i]:'var(--s3)'}">
+<img src="avatars/gender_f.webp" style="width:26px;height:26px;object-fit:cover;border-radius:50%">
+</button>
 </div></div>`;}
 document.getElementById('s2b').innerHTML=h;
 document.getElementById('s2h').innerHTML='';
@@ -904,8 +911,6 @@ function showAvPicker(){
       h+=`<div class="av-item ${cls} ${tk}" data-id="${av.id}" onclick="avSelect('${av.id}')"><img src="${av.img}" alt="${av.label}"></div>`;
     });
     h+=`</div>`;
-
-    h+=`<div class="av-label">${selAv?selAv.cat:''}</div>`;
 
     h+=`<div class="av-cats">`;
     cats.forEach(c=>{
@@ -937,10 +942,8 @@ function showAvPicker(){
     if(taken.includes(id))return;
     selId=id;
     SND.play('pop');vib(20);
-
-    // Update without full re-render
-    document.querySelectorAll('.av-item').forEach(el=>{
-      const isActive=el.dataset.id===id;
+    document.querySelectorAll('.av-item').forEach(function(el){
+      var isActive=el.dataset.id===id;
       el.classList.toggle('active',isActive);
       if(isActive){
         el.style.borderColor=color;
@@ -951,14 +954,7 @@ function showAvPicker(){
         el.style.boxShadow='';
       }
     });
-
-    // Update label to category
-    const labelEl=document.querySelector('.av-label');
-    const av=AVATARS.find(a=>a.id===id);
-    if(labelEl)labelEl.textContent=av?av.cat:'';
-
-    // Enable confirm
-    const btn=document.querySelector('.av-confirm');
+    var btn=document.querySelector('.av-confirm');
     if(btn){btn.disabled=false;btn.style.background=color;btn.style.color='#fff';}
   };
 
@@ -2891,21 +2887,36 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
 
 // ===== INTRO — tap to start, then animate + audio =====
 function startIntroAnim(){
-const tap=document.getElementById('introTap');
-if(tap)tap.style.display='none';
+var start=document.getElementById('introStart');
+if(start)start.style.display='none';
 
-// Play video (has audio built in)
-const vid=document.getElementById('introVideo');
-if(vid){
-vid.muted=true; // must start muted per browser policy
-vid.play().then(()=>{
-// User interaction allows unmute now
-if(SND.on)vid.muted=false;
-}).catch(()=>{});
-window._introVideo=vid;
+var glow=document.getElementById('introGlow');
+if(glow)glow.classList.add('vis');
+
+var brand=document.getElementById('introBrand');
+if(brand){brand.style.display='';brand.style.animation='fadeUp .6s ease forwards';}
+
+var avatar=document.getElementById('introAvatar');
+var vid=document.getElementById('introVideo');
+if(avatar){avatar.style.display='';setTimeout(function(){avatar.classList.add('vis');},50);}
+if(vid){vid.muted=true;vid.play().catch(function(){});}
+
+// Play separate audio
+if(SND.on){
+try{
+var audioSrc='avatars/FINAL_INTRO.mp3';
+window._introAudio=new Audio(audioSrc);
+window._introAudio.volume=0.9;
+window._introAudio.play().catch(function(){
+// Try alternate filename
+window._introAudio=new Audio('avatars/FINAL_INTRO.mp3.mp4');
+window._introAudio.volume=0.9;
+window._introAudio.play().catch(function(){});
+});
+}catch(e){}
 }
 
-const fullText=[
+var fullText=[
 {text:'שלום שלום, יש פה משחק.',pause:800,cls:'bright'},
 {text:'אין הוראות כי אני לא יודע לכתוב הוראות.',pause:600,cls:''},
 {text:'',pause:800},
@@ -2927,50 +2938,42 @@ const fullText=[
 {text:'אני עדיין משלם עליו לעורך דין.',pause:0,cls:''},
 ];
 
-const container=document.getElementById('introText');
+var container=document.getElementById('introText');
 container.innerHTML='';
-let totalDelay=0;
+var totalDelay=0;
 
-fullText.forEach((line)=>{
+fullText.forEach(function(line){
 if(line.text===''){totalDelay+=line.pause;return;}
+var lineDelay=totalDelay;
+var words=line.text.split(' ');
 
-const lineDelay=totalDelay;
-const words=line.text.split(' ');
-
-setTimeout(()=>{
-const lineEl=document.createElement('div');
+setTimeout(function(){
+var lineEl=document.createElement('div');
 lineEl.className='intro-line'+(line.cls?' '+line.cls:'');
 container.appendChild(lineEl);
-
-// Cursor element
-const cursor=document.createElement('span');
+var cursor=document.createElement('span');
 cursor.className='intro-cursor';
 lineEl.appendChild(cursor);
-
-words.forEach((word,wi)=>{
-setTimeout(()=>{
-// Insert word before cursor
-cursor.before(document.createTextNode((wi>0?' ':'')+word));
-},wi*110);
+words.forEach(function(word,wi){
+setTimeout(function(){cursor.before(document.createTextNode((wi>0?' ':'')+word));},wi*110);
 });
-
-// Remove cursor after all words shown
-setTimeout(()=>{if(cursor.parentNode)cursor.remove();},words.length*110+200);
-
+setTimeout(function(){if(cursor.parentNode)cursor.remove();},words.length*110+200);
 },lineDelay);
 
 totalDelay+=words.length*110+line.pause;
 });
 
-setTimeout(()=>{
-const cta=document.getElementById('introCta');
+setTimeout(function(){
+var cta=document.getElementById('introCta');
 if(cta)cta.classList.add('vis');
 try{gtag('event','intro_complete');}catch(e){}
 },totalDelay+1000);
 }
 
 function skipIntro(){
-if(window._introVideo){try{window._introVideo.pause();}catch(e){}}
+if(window._introAudio){try{window._introAudio.pause();}catch(e){}}
+var vid=document.getElementById('introVideo');
+if(vid){try{vid.pause();}catch(e){}}
 show('scrSetup');ss1Show();
 try{gtag('event','intro_complete');}catch(e){}
 try{gtag('event','setup_start');}catch(e){}
