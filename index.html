@@ -507,7 +507,7 @@ body.light-body{background:#f8f6f1}
 .intro-av-wrap{position:relative;width:80vw;max-width:360px;opacity:0;transform:translateY(40px);transition:all 1.2s cubic-bezier(.16,1,.3,1);flex-shrink:0}
 .intro-av-wrap.vis{opacity:1;transform:translateY(0)}
 .intro-av-wrap.blurred img,.intro-av-wrap.blurred video{filter:blur(18px);transition:filter 1s ease}
-.intro-av-wrap img,.intro-av-wrap video{width:100%;height:auto;display:block;mix-blend-mode:lighten;transition:filter 1s ease}
+.intro-av-wrap img,.intro-av-wrap video{width:100%;height:auto;display:block;transition:filter 1s ease}
 .intro-av-wrap.clear img,.intro-av-wrap.clear video{filter:blur(0)}
 .intro-text-box{width:100%;max-width:320px;height:72px;overflow:hidden;position:relative;margin-top:14px;text-align:center;direction:rtl}
 .intro-line{font-size:.82rem;color:rgba(255,255,255,.7);margin:3px 0;font-weight:500;line-height:1.6;opacity:0;transform:translateY(8px);animation:lineIn .35s ease forwards}
@@ -929,13 +929,9 @@ h+=`<div style="display:flex;align-items:center;gap:10px;margin:6px 0;background
 <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2.5px solid ${COL[i]};cursor:pointer;display:flex;align-items:center;justify-content:center" onclick="pickAvFor(${i})">${avHtml}</div>
 <input class="sni" style="margin:0;text-align:right;border-color:${COL[i]}33" placeholder="שחקן/ית ${i+1}" maxlength="10" value="${PD[i].name}" oninput="PD[${i}].name=this.value.trim();chkAll()">
 <div style="display:flex;gap:6px;align-items:center">
-<button class="gb ${d.gender==='m'?'on':''}" onclick="PD[${i}].gender='m';showAllPlayers()" style="padding:2px;border-radius:50%;width:40px;height:40px;overflow:hidden;display:flex;align-items:center;justify-content:center;opacity:${d.gender==='m'?'1':'.35'}">
-<img src="avatars/gender_m.webp" style="width:32px;height:32px;object-fit:cover;border-radius:50%">
-</button>
-<button class="gb ${d.gender==='f'?'on':''}" onclick="PD[${i}].gender='f';showAllPlayers()" style="padding:2px;border-radius:50%;width:40px;height:40px;overflow:hidden;display:flex;align-items:center;justify-content:center;opacity:${d.gender==='f'?'1':'.35'}">
-<img src="avatars/gender_f.webp" style="width:32px;height:32px;object-fit:cover;border-radius:50%">
-</button>
-${PD.length>(nightMode?2:3)?`<button onclick="PD.splice(${i},1);pCnt=PD.length;showAllPlayers()" style="background:none;border:none;color:var(--coral);font-size:.7rem;cursor:pointer;padding:4px;opacity:.4">✕</button>`:''}</div></div>`;}
+<button class="gb ${d.gender==='m'?'on':''}" onclick="PD[${i}].gender='m';showAllPlayers()" style="padding:6px 14px;border-radius:20px;font-size:.7rem;font-weight:700;font-family:inherit;cursor:pointer;color:#3899ec;border:1.5px solid #3899ec;background:${d.gender==='m'?'rgba(56,153,236,.15)':'transparent'};opacity:${d.gender==='m'?'1':'.4'}">בן</button>
+<button class="gb ${d.gender==='f'?'on':''}" onclick="PD[${i}].gender='f';showAllPlayers()" style="padding:6px 14px;border-radius:20px;font-size:.7rem;font-weight:700;font-family:inherit;cursor:pointer;color:#ff6b9d;border:1.5px solid #ff6b9d;background:${d.gender==='f'?'rgba(255,107,157,.15)':'transparent'};opacity:${d.gender==='f'?'1':'.4'}">בת</button>
+${PD.length>(nightMode?2:3)?`<button onclick="PD.splice(${i},1);pCnt=PD.length;showAllPlayers()" style="background:none;border:none;color:var(--coral);font-size:.7rem;cursor:pointer;padding:4px;opacity:.4">✕</button>`:''}</div></div>${i===0?'<div style="font-size:.55rem;color:var(--t3);text-align:center;margin:-4px 0 6px">בשביל שנדבר אליכם נכון</div>':''}`;}
 document.getElementById('s2b').innerHTML=h;
 document.getElementById('s2h').innerHTML='';
 document.getElementById('npb').textContent='שנתחיל לפני שמישהו מתחרט';
@@ -3038,8 +3034,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
   // Set video src (weird filename)
   var vid=document.getElementById('introVideo');
   if(vid){
-    vid.src='avatars/FINAL_INTRO.mp3.mp4';
-    vid.onerror=function(){vid.src='avatars/intro_video.mp4';};
+    vid.src='avatars/Avatarvid.mp4';
   }
 
   // Countdown
