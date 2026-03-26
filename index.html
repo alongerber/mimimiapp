@@ -659,18 +659,18 @@ body.light-body{background:#f8f6f1}
   <h2 style="font-size:1.1rem;color:var(--gold);margin-bottom:4px">איך משחקים?</h2>
   
   <div class="help-flow">
-    <div class="hf-s"><div class="hf-n" style="background:var(--sky)">1</div><div class="hf-t">סובבין<br>את הגלגל</div></div>
+    <div class="hf-s"><div class="hf-n" style="background:var(--sky)">1</div><div class="hf-t">הטלפון בוחר<br>מי בתור</div></div>
     <div class="hf-a">→</div>
-    <div class="hf-s"><div class="hf-n" style="background:var(--coral)">2</div><div class="hf-t">מי שנבחר<br>משחק</div></div>
+    <div class="hf-s"><div class="hf-n" style="background:var(--coral)">2</div><div class="hf-t">שאלות ומשימות<br>עונים. עושים. צוחקים.</div></div>
     <div class="hf-a">→</div>
-    <div class="hf-s"><div class="hf-n" style="background:var(--gold)">3</div><div class="hf-t">צוברים<br>נקודות!</div></div>
+    <div class="hf-s"><div class="hf-n" style="background:var(--gold)">3</div><div class="hf-t">פרסים<br>מי שמנצח מקבל פרס אמיתי</div></div>
   </div>
 
   <div class="help-section">3 שלבים</div>
   <div class="help-phases">
-    <div class="hphase"><div class="hphase-n" style="color:var(--sky)">חימום</div><div class="hphase-d">צחוקים קלים</div></div>
-    <div class="hphase"><div class="hphase-n" style="color:var(--coral)">להבות</div><div class="hphase-d">שאלות חצופות!</div></div>
-    <div class="hphase"><div class="hphase-n" style="color:var(--gold)">גמר</div><div class="hphase-d">הכל על הכל</div></div>
+    <div class="hphase"><div class="hphase-n" style="color:var(--sky)">חימום</div><div class="hphase-d">צחוקים. היכרות. חימום.</div></div>
+    <div class="hphase"><div class="hphase-n" style="color:var(--coral)">להבות</div><div class="hphase-d">שאלות חדות. משימות. אתגרים.</div></div>
+    <div class="hphase"><div class="hphase-n" style="color:var(--gold)">גמר</div><div class="hphase-d">רגעים אמיתיים. שאלות שנשארות.</div></div>
   </div>
 
   <div class="help-section">סוגי סיבובים</div>
@@ -686,9 +686,8 @@ body.light-body{background:#f8f6f1}
 <img src="icon-512.png" alt="מי מי מי?" style="width:140px;height:140px;border-radius:50%;margin-bottom:12px">
 <div style="font-size:2rem;font-weight:900;color:var(--gold)">מי מי מי?</div>
 <div style="font-size:.85rem;color:var(--t2);line-height:1.8;margin:12px 0">
-סובבין את הגלגל → מי שנבחר משחק →<br>
-שאלות, אתגרים, ציורים והצבעות!<br>
-<b style="color:var(--text)">הטלפון עובר ביניכם.</b>
+שימו חטיפים. שימו טלפון. שימו ילדים.<br>
+תלחצו. מה שיקרה — לא באחריותי.
 </div>
 <button class="gobtn" style="max-width:260px" onclick="closeOnb()">הבנתי, יאללה!</button>
 </div>
@@ -812,7 +811,7 @@ mic:[(n)=>`${n}. 15 שניות. תשכנע.`,(n)=>`${n} על הדוכן.`]
 function nar(type,n1,n2){let key=type;if(type==='hotseat'){const p=pk();key='hotseat_'+p;}const a=NAR[key]||NAR[type];if(!a)return '';return a[Math.floor(Math.random()*a.length)](n1,n2);}
 
 
-const PH_N=["חימום","עכשיו זה נהיה מעניין","הכל על הכל"],PH_C=["var(--sky)","var(--coral)","var(--gold)"],PH_E=["<span style='font-size:3.5rem'>"+ic('star',56,'var(--sky)')+"</span>","<span style='font-size:3.5rem'>"+ic('flame',56,'var(--coral)')+"</span>","<span style='font-size:3.5rem'>"+ic('crown',56,'var(--gold)')+"</span>"],PH_D=["צחוקים קלילים, מתחממים","שאלות חצופות, עקיצות","רגעים אמיתיים, שאלות שנשארות"],PH_TEASER=["בשלב הבא: שאלות חדות יותר...","הכל נהיה אישי. מוכנים?",""],PH_K=['warm','fire','final',
+const PH_N=["חימום","עכשיו זה נהיה מעניין","הכל על הכל"],PH_C=["var(--sky)","var(--coral)","var(--gold)"],PH_E=["<span style='font-size:3.5rem'>"+ic('star',56,'var(--sky)')+"</span>","<span style='font-size:3.5rem'>"+ic('flame',56,'var(--coral)')+"</span>","<span style='font-size:3.5rem'>"+ic('crown',56,'var(--gold)')+"</span>"],PH_D=["צחוקים. היכרות. חימום.","שאלות חדות. משימות. אתגרים.","רגעים אמיתיים. שאלות שנשארות."],PH_TEASER=["בשלב הבא: שאלות חדות יותר...","הכל נהיה אישי. מוכנים?",""],PH_K=['warm','fire','final',
 {q:"לדעת תמיד מה חושבים עליך, או אף פעם?",a:"לדעת",b:"לא לדעת"},
 {q:"להצליח בלי שאף אחד ידע, או להיכשל ושכולם יראו?",a:"הצלחה בסתר",b:"כישלון בגלוי"},
 {q:"לחיות בלי שקרים, או בלי סודות?",a:"בלי שקרים",b:"בלי סודות"},
