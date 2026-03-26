@@ -539,6 +539,23 @@ body.light-body{background:#f8f6f1}
 .magic-btn:active{transform:scale(.96)}
 .magic-free{font-size:.68rem;color:var(--t3);text-decoration:underline;cursor:pointer;margin-top:4px}
 
+/* Portrait lock warning */
+@media (orientation:landscape){
+  body::after{
+    content:'סובבו את הטלפון';
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    background:#000;color:var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.2rem;font-weight:800;z-index:99999;
+    font-family:'Heebo',sans-serif;
+  }
+}
+/* Tablet / large screens */
+@media (min-width:600px){
+  .scr{max-width:480px;margin:0 auto}
+  body{background:#000}
+}
+
 </style>
 </head>
 <body>
@@ -627,6 +644,7 @@ body.light-body{background:#f8f6f1}
 </div></div>
 
 <div class="scr" id="scrGame" role="main" aria-label="משחק">
+  <button onclick="togglePauseMenu()" style="position:absolute;top:8px;right:8px;background:none;border:none;cursor:pointer;padding:6px;z-index:20" id="pauseBtn"></button>
   <div class="sbar" id="scoreBar" role="status" aria-label="ניקוד"></div>
   <div style="display:flex;align-items:center;gap:6px;padding:0 16px"><div class="fprog" id="fprog" style="flex:1"></div><div id="fprogN" style="font-size:.6rem;color:var(--t2);font-weight:700;white-space:nowrap"></div></div>
   <div id="pickArea"></div>
@@ -708,6 +726,7 @@ x:'<path d="M18 6L6 18M6 6l12 12" fill="none" stroke="cC" stroke-width="2" strok
 phone:'<rect x="5" y="2" width="14" height="20" rx="2" fill="none" stroke="cC" stroke-width="1.8"/><path d="M12 18h.01" stroke="cC" stroke-width="2" stroke-linecap="round"/>',
 gift:'<path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 110-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 100-5C13 2 12 7 12 7z" fill="none" stroke="cC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
 clock:'<circle cx="12" cy="12" r="10" fill="none" stroke="cC" stroke-width="1.8"/><path d="M12 6v6l4 2" fill="none" stroke="cC" stroke-width="1.8" stroke-linecap="round"/>',
+settings:'<circle cx="12" cy="12" r="3" fill="none" stroke="cC" stroke-width="1.8"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" fill="none" stroke="cC" stroke-width="1.8"/>',
 };
 const _fill=['crown','star','flame','bolt','heart','play'];
 function ic(n,s=14,c='currentColor'){const svg=I[n]||'';const isFill=_fill.includes(n);return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="${isFill?c:'none'}" stroke="${isFill?'none':c}" style="vertical-align:middle;flex-shrink:0">${svg.replace(/cC/g,c)}</svg>`;}
@@ -840,7 +859,7 @@ let events=[],curE=0,spinning=false,tmrId=null,_advancing=false;
 let pools={},idx={};
 let prevState=null;
 let gS={aliasW:{},drawW:{},rounds:0,t0:0,drawings:[],quotes:[],micResults:[]};
-let PD=[],curSP=0,seenTypes={},phasesSeen=0,streaks={},lastScorer=-1,comebackUsed={},gameLen='full',voteMode='open';
+let PD=[],curSP=0,seenTypes={},phasesSeen=0,streaks={},lastScorer=-1,comebackUsed={},gameLen='full',voteMode='open',swapCount=0;
 let nightMode=false;
 let hasPaid=false;
 let activeSecret=null;
@@ -916,7 +935,7 @@ h+=`<div style="display:flex;align-items:center;gap:10px;margin:6px 0;background
 <button class="gb ${d.gender==='f'?'on':''}" onclick="PD[${i}].gender='f';showAllPlayers()" style="padding:2px;border-radius:50%;width:40px;height:40px;overflow:hidden;display:flex;align-items:center;justify-content:center;opacity:${d.gender==='f'?'1':'.35'}">
 <img src="avatars/gender_f.webp" style="width:32px;height:32px;object-fit:cover;border-radius:50%">
 </button>
-</div></div>`;}
+${PD.length>(nightMode?2:3)?`<button onclick="PD.splice(${i},1);pCnt=PD.length;showAllPlayers()" style="background:none;border:none;color:var(--coral);font-size:.7rem;cursor:pointer;padding:4px;opacity:.4">✕</button>`:''}</div></div>`;}
 document.getElementById('s2b').innerHTML=h;
 document.getElementById('s2h').innerHTML='';
 document.getElementById('npb').textContent='שנתחיל לפני שמישהו מתחרט';
@@ -1016,7 +1035,16 @@ function showAvPicker(){
 /* spG removed */
 /* spAv removed */
 /* spChk removed */
-function nextPS(){showSum();}
+function nextPS(){
+  var emptyNames=PD.filter(function(d){return !d.name||d.name.trim()===''||d.name.trim()==='שחקן/ית';});
+  if(emptyNames.length>0){toast('חסר שם. גם בדוי מתקבל.');return;}
+  var names=PD.map(function(d){return d.name.trim();});
+  var dupes=names.filter(function(n,i){return names.indexOf(n)!==i;});
+  if(dupes.length>0){toast('יש פה שני '+dupes[0]+'. מספיק אחד.');return;}
+  var missingAv=PD.filter(function(d){return !d.avId;});
+  if(missingAv.length>0){toast('בחרו דמות לכל שחקן');return;}
+  showSum();
+}
 function showSum(){document.getElementById('ss2').style.display='none';document.getElementById('ss3').style.display='';
 let h='';PD.forEach((d,i)=>{const av=AVATARS.find(a=>a.id===d.avId);h+=`<div class="scard" style="animation-delay:${i*.1}s"><div class="scard-av" style="border-color:${COL[i]}">${av?`<img src="${av.img}">`:'?'}</div><div style="flex:1;text-align:right"><div style="font-size:.9rem;font-weight:800;color:${COL[i]}">${esc(d.name)}</div><div style="font-size:.55rem;color:var(--t2)">${d.gender==='m'?'♂ בן':'♀ בת'} · <span style="color:${d.role==='child'?'var(--peach)':'var(--lav)'}">${d.role==='child'?'ילד/ה':'מבוגר/ת'}</span></div></div></div>`;});
 document.getElementById('pSum').innerHTML=h;}
@@ -1275,7 +1303,7 @@ document.getElementById('pickArea').style.display='none';
 document.getElementById('spinB').parentElement.style.display='none';
 setTimeout(()=>{el.innerHTML=h;
 // Add skip button to every round
-el.innerHTML+='<div style="text-align:center;margin-top:10px"><button onclick="advance()" style="background:none;border:none;color:var(--t3);font-size:.6rem;cursor:pointer;font-family:inherit;padding:4px 12px">דלג ▸</button></div>';
+el.innerHTML+='<div style="text-align:center;margin-top:10px"><button onclick="swapQuestion()" style="background:none;border:none;color:var(--t3);font-size:.55rem;cursor:pointer;font-family:inherit;padding:4px 10px">'+(swapCount<2?'שאלה אחרת':'')+'</button><button onclick="advance()" style="background:none;border:none;color:var(--t3);font-size:.6rem;cursor:pointer;font-family:inherit;padding:4px 12px">דלג ▸</button></div>';
 el.style.opacity='1';el.style.transform='translateY(0)';
 // Secret reminder
 if(activeSecret){
@@ -2442,6 +2470,15 @@ return;
 }
 }
 advanceEvent();setTimeout(()=>_advancing=false,300);}
+function swapQuestion(){
+  if(swapCount>=2){toast('כבר החלפתם פעמיים. זה מה שיש.');return;}
+  swapCount++;
+  var ev=events[curE];
+  if(ev&&ev.type==='spin'){
+    _clearTimers();
+    processEvent();
+  }
+}
 function advanceEvent(){prevState={curE,scores:{...scores},voteLog:[...voteLog],turnQ:{...turnQ}};document.getElementById('undoB').disabled=false;
 // Track round analytics
 const prevEv=events[curE];
@@ -2815,24 +2852,70 @@ for(let i=0;i<30;i++)setTimeout(()=>confetti(COL[Math.floor(Math.random()*COL.le
 // ===== NAV =====
 function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
 function goSetup(){clearSave();show('scrSetup');ss1Show();}
-function saveState(){try{localStorage.setItem('mimi',JSON.stringify({P,pCnt,scores,voteLog,turnQ,events,curE,pools,idx,gS,PD}));}catch(e){}}
+function saveState(){try{localStorage.setItem('mimi',JSON.stringify({P,pCnt,scores,voteLog,turnQ,events,curE,pools,idx,gS,PD,nightMode,voteMode}));}catch(e){}}
 function loadState(){try{const s=localStorage.getItem('mimi');return s?JSON.parse(s):null;}catch(e){return null;}}
 function clearSave(){try{localStorage.removeItem('mimi');}catch(e){}}
-function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;pools=st.pools;idx=st.idx;const dg={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};gS=st.gS?{...dg,...st.gS}:dg;if(!gS.t0)gS.t0=Date.now();PD=st.PD||[];show('scrGame');drawWheel();updateSB();updateFP();document.getElementById('pickArea').style.display='';processEvent();}
+function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;pools=st.pools;idx=st.idx;const dg={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};gS=st.gS?{...dg,...st.gS}:dg;if(!gS.t0)gS.t0=Date.now();PD=st.PD||[];if(st.nightMode!==undefined)nightMode=st.nightMode;if(st.voteMode)voteMode=st.voteMode;show('scrGame');drawWheel();updateSB();updateFP();document.getElementById('pickArea').style.display='';processEvent();}
 (function(){const s=loadState();if(s?.P?.length>0&&s.curE<s.events.length){const ov=document.getElementById('overlay');ov.innerHTML=`<div style="font-size:3rem">${ic('dice',40,'var(--gold)')}</div><div class="ov-t" style="color:var(--gold)">יש משחק שמור!</div><div class="ov-s">${s.P.map(p=>esc(p.name)).join(', ')}</div><div style="display:flex;gap:8px;margin-top:12px"><button class="ov-b" style="background:var(--teal)" onclick="closeOv();resumeG(loadState())">המשיכו! ▶</button><button class="ov-b" style="background:var(--coral)" onclick="clearSave();closeOv()">חדש 🆕</button></div>`;ov.classList.add('on');}})();
 window.addEventListener('beforeunload',function(e){if(document.getElementById('scrGame')?.classList.contains('on')){e.preventDefault();e.returnValue='';}});
 
 function closeOnb(){document.getElementById('onb').style.display='none';try{localStorage.setItem('mimi_onb','1');}catch(e){}}
 function checkOnb(){try{if(!localStorage.getItem('mimi_onb')){document.getElementById('onb').style.display='flex';}}catch(e){}}
 checkOnb();
-history.pushState(null,null,location.href);window.addEventListener('popstate',()=>{
-history.pushState(null,null,location.href);});
+// Populate pause button icon
+(function(){var pb=document.getElementById('pauseBtn');if(pb)pb.innerHTML=ic('settings',20,'var(--t3)');})();
+
+// Back button — prevent leaving, show pause in game
+history.pushState(null,null,location.href);window.addEventListener('popstate',function(){
+history.pushState(null,null,location.href);
+if(document.getElementById('scrGame').classList.contains('on'))togglePauseMenu();
+});
+
+// Pause when app goes to background
+document.addEventListener('visibilitychange',function(){
+  if(document.hidden){
+    if(tmrId){clearInterval(tmrId);window._pausedTmr=true;}
+    if(window._introAudio)try{window._introAudio.pause();}catch(e){}
+    var vid=document.getElementById('introVideo');
+    if(vid)try{vid.pause();}catch(e){}
+  }else{
+    if(window._pausedTmr){
+      toast('חזרתם? לחצו להמשיך');
+      window._pausedTmr=false;
+    }
+  }
+});
+
+// Pause menu
+function togglePauseMenu(){
+  var existing=document.getElementById('pauseMenu');
+  if(existing){existing.remove();return;}
+  if(tmrId){clearInterval(tmrId);window._pausedTmr=true;}
+  var menu=document.createElement('div');
+  menu.id='pauseMenu';
+  menu.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px';
+  menu.innerHTML='<div style="font-size:1rem;font-weight:800;color:var(--text);margin-bottom:12px">הפסקה</div>'+
+    '<button onclick="document.getElementById(\'pauseMenu\').remove()" style="padding:14px 40px;border:none;border-radius:12px;font-size:.85rem;font-weight:700;font-family:inherit;cursor:pointer;background:var(--gold);color:#000;width:220px">חזרה למשחק</button>'+
+    '<button onclick="toggleVoteModeInGame()" style="padding:12px 40px;border:none;border-radius:12px;font-size:.75rem;font-weight:700;font-family:inherit;cursor:pointer;background:var(--s2);color:var(--text);width:220px" id="voteModeBtn">הצבעה: '+(voteMode==='open'?'בקול':'בטלפון')+'</button>'+
+    '<button onclick="SND.toggle();document.getElementById(\'muteBtnPause\').textContent=SND.on?\'השתק צלילים\':\'הפעל צלילים\'" id="muteBtnPause" style="padding:12px 40px;border:none;border-radius:12px;font-size:.75rem;font-weight:700;font-family:inherit;cursor:pointer;background:var(--s2);color:var(--text);width:220px">'+(SND.on?'השתק צלילים':'הפעל צלילים')+'</button>'+
+    '<button onclick="if(confirm(\'בטוח? כל ההתקדמות תימחק.\')){clearSave();location.reload();}" style="padding:12px 40px;border:none;border-radius:12px;font-size:.75rem;font-weight:700;font-family:inherit;cursor:pointer;background:rgba(255,107,107,.15);color:var(--coral);width:220px">התחילו מחדש</button>';
+  document.body.appendChild(menu);
+}
+function toggleVoteModeInGame(){
+  voteMode=voteMode==='open'?'pass':'open';
+  var btn=document.getElementById('voteModeBtn');
+  if(btn)btn.textContent='הצבעה: '+(voteMode==='open'?'בקול':'בטלפון');
+  saveState();
+}
 
 function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2000);}
 function shuf(a){for(let i=a.length-1;i>0;i--){const j=0|Math.random()*(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
 function nx(a,i){return a[i%a.length];}
 function confetti(mc){const cs=[mc,'#ffc73a','#ff6b6b','#74c0fc','#63e6be','#b197fc'];const sh=['','cf-c','cf-s','cf-t'];
 for(let i=0;i<16;i++){const p=document.createElement('div');const s=sh[Math.floor(Math.random()*sh.length)];p.className='cf '+s;const sz=4+Math.random()*7;const wind=(Math.random()-.5)*40;p.style.cssText=`left:${15+Math.random()*70}%;top:-8px;width:${sz}px;height:${sz*(s==='cf-c'?1:1.4)}px;background:${cs[0|Math.random()*cs.length]};--d:${1.4+Math.random()*1.8}s;--r:${Math.random()*720-360}deg;--wx:${wind}px;animation-delay:${Math.random()*.4}s`;document.body.appendChild(p);setTimeout(()=>p.remove(),4000);}}
+
+// Lock to portrait
+try{screen.orientation.lock('portrait').catch(function(){});}catch(e){}
 
 // ===== ANALYTICS TRACKING =====
 (function(){try{const vc=parseInt(localStorage.getItem('mimi_visits')||'0')+1;localStorage.setItem('mimi_visits',String(vc));const isPWA=window.matchMedia('(display-mode:standalone)').matches||navigator.standalone;gtag('event','session_start_custom',{is_return_visit:vc>1,visit_count:vc,is_pwa:!!isPWA});}catch(e){}})();
@@ -2963,6 +3046,9 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
   var countEl=document.getElementById('introCount');
   var avWrap=document.getElementById('introAvWrap');
   if(!countEl||!avWrap)return;
+  var seenIntro=false;
+  try{seenIntro=localStorage.getItem('mimi_seen_intro')==='true';}catch(e){}
+
   var nums=[3,2,1];
   var ci=0;
   function showNum(){
@@ -2975,7 +3061,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
       setTimeout(function(){
         var tap=document.getElementById('introTap');
         if(tap)tap.classList.add('vis');
-      },800);
+      },seenIntro?300:800);
       return;
     }
     countEl.textContent=nums[ci];
@@ -2985,7 +3071,21 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
     ci++;
     setTimeout(showNum,1000);
   }
-  setTimeout(showNum,500);
+
+  if(seenIntro){
+    // Skip countdown, show blurred avatar immediately
+    countEl.style.display='none';
+    avWrap.style.display='';
+    setTimeout(function(){avWrap.classList.add('vis');},50);
+    var glow=document.getElementById('introGlow');
+    if(glow)glow.classList.add('vis');
+    setTimeout(function(){
+      var tap=document.getElementById('introTap');
+      if(tap)tap.classList.add('vis');
+    },300);
+  }else{
+    setTimeout(showNum,500);
+  }
 })();
 
 function startIntroReveal(){
@@ -3090,6 +3190,7 @@ function skipIntro(){
   var vid=document.getElementById('introVideo');
   if(vid){try{vid.pause();}catch(e){}}
   show('scrSetup');ss1Show();
+  try{localStorage.setItem('mimi_seen_intro','true');}catch(e){}
   try{gtag('event','intro_complete');}catch(e){}
 }
 
