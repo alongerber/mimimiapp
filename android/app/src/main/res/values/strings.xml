@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">מי מי מי?</string>
+    <string name="title_activity_main">מי מי מי?</string>
+    <string name="package_name">com.hatsinormali.mimimiapp</string>
+    <string name="custom_url_scheme">com.hatsinormali.mimimiapp</string>
+</resources>

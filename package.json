@@ -1,0 +1,27 @@
+{
+  "name": "mimimiapp",
+  "version": "1.0.0",
+  "description": "משחק משפחתי על טלפון אחד. שאלות, אתגרים, הצבעות, וגילויים.",
+  "main": "content.js",
+  "dependencies": {
+    "@capacitor/android": "^8.3.0",
+    "@capacitor/cli": "^8.3.0",
+    "@capacitor/core": "^8.3.0",
+    "acorn": "^8.16.0"
+  },
+  "scripts": {
+    "build:www": "rm -rf www && mkdir -p www && cp index.html content.js www/ && cp -r avatars www/ && [ -f manifest.json ] && cp manifest.json www/ || true && [ -f icon-192.png ] && cp icon-192.png www/ || true && [ -f icon-512.png ] && cp icon-512.png www/ || true && [ -f sw.js ] && cp sw.js www/ || true && [ -d api ] && cp -r api www/ || true",
+    "cap:sync": "npm run build:www && npx cap sync android",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://local_proxy@127.0.0.1:40907/git/alongerber/mimimiapp"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^6.0.2"
+  }
+}
