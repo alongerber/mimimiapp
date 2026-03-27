@@ -38,10 +38,12 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 .gl{position:fixed;border-radius:50%;filter:blur(120px);opacity:.07;pointer-events:none;transition:background .6s}
 .gl1{width:300px;height:300px;background:var(--lav);top:-100px;right:-120px}
 .gl2{width:250px;height:250px;background:var(--teal);bottom:-80px;left:-100px}
-.scr{display:none;flex:1;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:0 18px 32px;position:relative;z-index:1}.scr.on{display:flex}.scr::-webkit-scrollbar{display:none}
+.scr{display:none;flex:1;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:48px 18px 32px;position:relative;z-index:1}.scr.on{display:flex}.scr::-webkit-scrollbar{display:none}
+#scrIntro{padding:0}
 
 /* Header */
-.hdr{padding:8px 16px 4px;text-align:center;flex-shrink:0;position:relative;z-index:2}
+.hdr{padding:8px 16px 4px;text-align:center;flex-shrink:0;position:fixed;top:0;left:0;width:100%;z-index:40;background:transparent;pointer-events:none}
+.hdr button,.hdr .hb{pointer-events:auto}
 .logo{font-weight:900;font-size:1.4rem;letter-spacing:-1px}
 .logo b{display:inline-block;animation:bob 2.5s ease infinite}
 .logo b:nth-child(1){color:var(--coral)}.logo b:nth-child(2){color:var(--gold)}.logo b:nth-child(3){color:var(--sky)}.logo b:nth-child(4){color:var(--teal)}.logo b:nth-child(5){color:var(--lav)}
@@ -495,8 +497,8 @@ body.light-body{background:#f8f6f1}
 .pick-name{font-size:.65rem;text-align:center;margin-top:2px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:56px}
 
 /* === INTRO === */
-.intro-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;background:#000;position:relative;overflow:hidden}
-.intro-particles{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden}
+.intro-wrap{min-height:100vh;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000;position:relative;overflow:hidden;padding:0}
+.intro-particles{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0}
 .intro-particle{position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(255,199,58,.3);animation:particleFloat linear infinite}
 @keyframes particleFloat{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-10vh) scale(1);opacity:0}}
 .intro-glow{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(255,199,58,.04) 0%,transparent 70%);top:40%;left:50%;transform:translate(-50%,-50%);animation:glowP 4s ease infinite;pointer-events:none;opacity:0;transition:opacity 1s}
@@ -504,24 +506,23 @@ body.light-body{background:#f8f6f1}
 @keyframes glowP{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.3}50%{transform:translate(-50%,-50%) scale(1.2);opacity:.6}}
 .intro-countdown{font-size:4.5rem;font-weight:900;color:var(--gold);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0;text-shadow:0 0 60px rgba(255,199,58,.3)}
 @keyframes countIn{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}25%{opacity:1;transform:translate(-50%,-50%) scale(1)}75%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.4)}}
-.intro-av-wrap{position:relative;width:80vw;max-width:360px;opacity:0;transform:translateY(40px);transition:all 1.2s cubic-bezier(.16,1,.3,1);flex-shrink:0}
+.intro-av-wrap{position:relative;width:100vw;max-width:100%;height:100vh;overflow:hidden;opacity:0;transform:translateY(30px);transition:all 1.2s cubic-bezier(.16,1,.3,1);flex-shrink:0}
 .intro-av-wrap.vis{opacity:1;transform:translateY(0)}
 .intro-av-wrap.blurred img,.intro-av-wrap.blurred video{filter:blur(18px);transition:filter 1s ease}
-.intro-av-wrap img,.intro-av-wrap video{width:100%;height:auto;display:block;transition:filter 1s ease}
+.intro-av-wrap img,.intro-av-wrap video{width:100%;height:100%;object-fit:cover;transition:filter 1s ease}
 .intro-av-wrap.clear img,.intro-av-wrap.clear video{filter:blur(0)}
-.intro-text-box{width:100%;max-width:320px;height:72px;overflow:hidden;position:relative;margin-top:14px;text-align:center;direction:rtl}
-.intro-line{font-size:.82rem;color:rgba(255,255,255,.7);margin:3px 0;font-weight:500;line-height:1.6;opacity:0;transform:translateY(8px);animation:lineIn .35s ease forwards}
-.intro-line.bright{color:#fff;font-weight:700;font-size:.87rem}
-.intro-line.gold{color:var(--gold);font-weight:800;font-size:.92rem}
-@keyframes lineIn{to{opacity:1;transform:translateY(0)}}
-@keyframes lineOut{to{opacity:0;transform:translateY(-8px);height:0;margin:0;padding:0}}
-.intro-cursor{display:inline-block;width:2px;height:13px;background:var(--gold);margin-right:2px;vertical-align:middle;animation:blinkC .5s step-end infinite}
-@keyframes blinkC{50%{opacity:0}}
-.intro-cta{margin-top:20px;opacity:0;transform:translateY(10px);transition:all .8s ease}
-.intro-cta.vis{opacity:1;transform:translateY(0)}
-.intro-cta button{padding:15px 40px;border:none;border-radius:14px;font-size:.9rem;font-weight:800;font-family:inherit;cursor:pointer;background:var(--gold);color:#000;box-shadow:0 4px 30px rgba(255,199,58,.2)}
+.intro-av-wrap::before{content:'';position:absolute;bottom:0;left:0;width:100%;height:80px;background:linear-gradient(transparent,rgba(0,0,0,.95));pointer-events:none;z-index:2}
+.intro-text-box{position:absolute;bottom:80px;left:0;width:100%;text-align:center;direction:rtl;z-index:5;padding:0 20px}
+.intro-line{font-size:.9rem;color:#fff;font-weight:600;line-height:1.5;text-shadow:0 2px 8px rgba(0,0,0,.8),0 0 20px rgba(0,0,0,.6);opacity:0;animation:subIn .4s ease forwards;padding:2px 0}
+.intro-line.bright{font-weight:800;font-size:.95rem}
+.intro-line.gold{color:var(--gold);font-weight:800;font-size:1rem;text-shadow:0 2px 8px rgba(0,0,0,.9),0 0 30px rgba(255,199,58,.15)}
+@keyframes subIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes subOut{to{opacity:0;transform:translateY(-6px);height:0;margin:0;padding:0}}
+.intro-cta{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:10;opacity:0;transition:all .8s ease}
+.intro-cta.vis{opacity:1}
+.intro-cta button{padding:15px 40px;border:none;border-radius:14px;font-size:.9rem;font-weight:800;font-family:inherit;cursor:pointer;background:var(--gold);color:#000;box-shadow:0 4px 30px rgba(255,199,58,.3)}
 .intro-cta button:active{transform:scale(.95)}
-.intro-skip{position:absolute;top:16px;left:16px;background:none;border:none;color:rgba(255,255,255,.2);font-size:.55rem;cursor:pointer;font-family:inherit;padding:8px;z-index:10}
+.intro-skip{position:fixed;top:16px;left:16px;background:none;border:none;color:rgba(255,255,255,.25);font-size:.6rem;cursor:pointer;font-family:inherit;padding:8px;z-index:50}
 .intro-tap{margin-top:20px;opacity:0;transition:opacity .6s ease}
 .intro-tap.vis{opacity:1}
 .intro-tap button{background:none;border:1.5px solid rgba(255,199,58,.25);color:var(--gold);padding:14px 36px;border-radius:14px;font-size:.85rem;font-weight:700;font-family:inherit;cursor:pointer;animation:tapP 3s ease infinite}
@@ -577,11 +578,11 @@ body.light-body{background:#f8f6f1}
     <div class="intro-countdown" id="introCount"></div>
     <div class="intro-av-wrap blurred" id="introAvWrap" style="display:none">
       <img id="introImg" src="avatars/intro.webp" alt="">
-      <video id="introVideo" playsinline muted preload="auto" style="display:none;pointer-events:none"></video>
-    </div>
-    <div class="intro-text-box" id="introText" style="display:none"></div>
-    <div class="intro-cta" id="introCta">
-      <button onclick="skipIntro()">אני לא מוכן. אבל יאללה.</button>
+      <video id="introVideo" src="avatars/Avatarvid.mp4" playsinline muted preload="auto" style="display:none;pointer-events:none"></video>
+      <div class="intro-text-box" id="introText" style="display:none"></div>
+      <div class="intro-cta" id="introCta">
+        <button onclick="skipIntro()">אני לא מוכן. אבל יאללה.</button>
+      </div>
     </div>
     <div class="intro-tap" id="introTap">
       <button onclick="startIntroReveal()">שימו את הטלפון באמצע ולחצו</button>
@@ -617,14 +618,14 @@ body.light-body{background:#f8f6f1}
           </button>
         </div>
       </div>
-      <!-- Card 3: Adults mode — RED/ORANGE -->
-      <div style="background:linear-gradient(135deg,rgba(255,107,107,.08),rgba(177,151,252,.05));border:1px solid rgba(255,107,107,.15);border-radius:14px;padding:14px;margin:8px 0;animation:cardIn .5s ease .5s both">
-        <div style="font-size:.8rem;font-weight:800;color:var(--coral);text-align:center">מצב מבוגרים</div>
-        <div style="font-size:.6rem;color:var(--t2);margin:3px 0;text-align:center">אחרי שהילדים נרדמו</div>
-        <div style="font-size:.65rem;color:var(--lav);margin:6px 0;font-weight:600;text-align:center">שאלות שילדים לא שואלים כי הם לא יודעים שהשאלה קיימת</div>
-        <div style="display:flex;justify-content:center;margin-top:8px">
-          <button class="gb" id="nightBtn" onclick="toggleNight()" style="font-size:.75rem">הפעלה</button>
+      <!-- Card 3: Adults mode — COMING SOON -->
+      <div style="background:linear-gradient(135deg,rgba(255,107,107,.06),rgba(177,151,252,.03));border:1px solid rgba(255,107,107,.1);border-radius:14px;padding:16px;margin:8px 0;text-align:center;opacity:.7;animation:cardIn .5s ease .5s both">
+        <div id="adultIcon" style="margin-bottom:8px"></div>
+        <div style="font-size:.8rem;font-weight:800;color:var(--coral)">מצב מבוגרים</div>
+        <div style="font-size:.7rem;color:var(--t2);margin:8px 0;line-height:1.6;font-weight:500">
+          בניתי מצב למבוגרים. הפסיכולוג שלי ביקש לבדוק את זה לפני שאני משחרר. חוזר אליכם.
         </div>
+        <div style="font-size:.55rem;color:var(--t3);font-weight:700;letter-spacing:1px">בקרוב</div>
       </div>
       <!-- Continue button -->
       <button class="gobtn" style="margin-top:16px;width:100%" onclick="goToNames()">הלאה. מי פה?</button>
@@ -648,7 +649,7 @@ body.light-body{background:#f8f6f1}
   <div class="sbar" id="scoreBar" role="status" aria-label="ניקוד"></div>
   <div style="display:flex;align-items:center;gap:6px;padding:0 16px"><div class="fprog" id="fprog" style="flex:1"></div><div id="fprogN" style="font-size:.6rem;color:var(--t2);font-weight:700;white-space:nowrap"></div></div>
   <div id="pickArea"></div>
-  <div class="gbtns"><button class="spinb" id="spinB" onclick="doSpin()" aria-label="סובבו את הגלגל">גורלות!</button><button class="undo-b" id="undoB" disabled onclick="undoStep()" aria-label="שלב אחורה">↩</button></div>
+  <div class="gbtns"><button class="spinb" id="spinB" onclick="doSpin()" aria-label="התחלת סיבוב">יאללה!</button><button class="undo-b" id="undoB" disabled onclick="undoStep()" aria-label="שלב אחורה">↩</button></div>
   <div id="gc"></div>
 </div>
 
@@ -725,6 +726,7 @@ x:'<path d="M18 6L6 18M6 6l12 12" fill="none" stroke="cC" stroke-width="2" strok
 phone:'<rect x="5" y="2" width="14" height="20" rx="2" fill="none" stroke="cC" stroke-width="1.8"/><path d="M12 18h.01" stroke="cC" stroke-width="2" stroke-linecap="round"/>',
 gift:'<path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 110-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 100-5C13 2 12 7 12 7z" fill="none" stroke="cC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
 clock:'<circle cx="12" cy="12" r="10" fill="none" stroke="cC" stroke-width="1.8"/><path d="M12 6v6l4 2" fill="none" stroke="cC" stroke-width="1.8" stroke-linecap="round"/>',
+'18plus':'<circle cx="12" cy="12" r="11" fill="cC" opacity=".15" stroke="cC" stroke-width="1.5"/><text x="50%" y="56%" text-anchor="middle" dominant-baseline="middle" fill="cC" font-size="9" font-weight="800" font-family="inherit">18+</text>',
 settings:'<circle cx="12" cy="12" r="3" fill="none" stroke="cC" stroke-width="1.8"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" fill="none" stroke="cC" stroke-width="1.8"/>',
 };
 const _fill=['crown','star','flame','bolt','heart','play'];
@@ -811,7 +813,7 @@ mic:[(n)=>`${n}. 15 שניות. תשכנע.`,(n)=>`${n} על הדוכן.`]
 function nar(type,n1,n2){let key=type;if(type==='hotseat'){const p=pk();key='hotseat_'+p;}const a=NAR[key]||NAR[type];if(!a)return '';return a[Math.floor(Math.random()*a.length)](n1,n2);}
 
 
-const PH_N=["חימום","עכשיו זה נהיה מעניין","הכל על הכל"],PH_C=["var(--sky)","var(--coral)","var(--gold)"],PH_E=["<span style='font-size:3.5rem'>"+ic('star',56,'var(--sky)')+"</span>","<span style='font-size:3.5rem'>"+ic('flame',56,'var(--coral)')+"</span>","<span style='font-size:3.5rem'>"+ic('crown',56,'var(--gold)')+"</span>"],PH_D=["צחוקים. היכרות. חימום.","שאלות חדות. משימות. אתגרים.","רגעים אמיתיים. שאלות שנשארות."],PH_TEASER=["בשלב הבא: שאלות חדות יותר...","הכל נהיה אישי. מוכנים?",""],PH_K=['warm','fire','final',
+const PH_N=["חימום","עכשיו זה נהיה מעניין","רגעים אמיתיים. שאלות שנשארות."],PH_C=["var(--sky)","var(--coral)","var(--gold)"],PH_E=["<span style='font-size:3.5rem'>"+ic('star',56,'var(--sky)')+"</span>","<span style='font-size:3.5rem'>"+ic('flame',56,'var(--coral)')+"</span>","<span style='font-size:3.5rem'>"+ic('crown',56,'var(--gold)')+"</span>"],PH_D=["צחוקים. היכרות. חימום.","שאלות חדות. משימות. אתגרים.","רגעים אמיתיים. שאלות שנשארות."],PH_TEASER=["בשלב הבא: שאלות חדות יותר...","הכל נהיה אישי. מוכנים?",""],PH_K=['warm','fire','final',
 {q:"לדעת תמיד מה חושבים עליך, או אף פעם?",a:"לדעת",b:"לא לדעת"},
 {q:"להצליח בלי שאף אחד ידע, או להיכשל ושכולם יראו?",a:"הצלחה בסתר",b:"כישלון בגלוי"},
 {q:"לחיות בלי שקרים, או בלי סודות?",a:"בלי שקרים",b:"בלי סודות"},
@@ -864,7 +866,7 @@ let hasPaid=false;
 let activeSecret=null;
 let secretPool=[];
 let secretIdx=0;
-const SPIN_CTA=["גורלות!","מי יהיה?","הגלגל מחליט","בואו נראה","מי נבחר?","רגע האמת"];
+const SPIN_CTA=["יאללה!","מי יהיה?","הטלפון מחליט","בואו נראה","מי נבחר?","רגע האמת"];
 const CONT_CTA=["הלאה","עוד אחד","נו","ממשיכים. אין ברירה.","הבא"];
 function contCTA(){return CONT_CTA[Math.floor(Math.random()*CONT_CTA.length)];}
 const HOST_PROMPTS={
@@ -903,7 +905,7 @@ function setVoteMode(mode){
     }
   }
 }
-function toggleNight(){nightMode=!nightMode;const btn=document.getElementById('nightBtn');if(btn)btn.classList.toggle('on',nightMode);}
+function toggleNight(){/* Night mode disabled for launch */nightMode=false;}
 function filterByAge(arr){return arr;}
 
 // ===== SETUP =====
@@ -914,6 +916,7 @@ function filterByAge(arr){return arr;}
   // Populate vote mode icons
   var oi=document.getElementById('voteOpenIcon');if(oi)oi.innerHTML=ic('people',24,'var(--lav)');
   var si=document.getElementById('voteSecretIcon');if(si)si.innerHTML=ic('phone',24,'var(--lav)');
+  var adultIcon=document.getElementById('adultIcon');if(adultIcon)adultIcon.innerHTML=ic('18plus',36,'var(--coral)');
 })();
 function goToNames(){startPS();}
 function ss1Show(){document.getElementById('ss1').style.display='';document.getElementById('ss2').style.display='none';document.getElementById('ss3').style.display='none';try{const sh=document.getElementById('setupHist');if(sh){const hist=getHistory();if(hist.length>0){let hh='<div style="font-size:.65rem;font-weight:700;text-align:center;color:var(--t3);margin:12px 0 4px">משחקים אחרונים</div>';hist.slice(0,3).forEach(g=>{hh+=`<div class="hist-item"><div style="flex:1;text-align:right"><div style="font-size:.72rem;font-weight:700;color:${g.winnerColor||'var(--gold)'}">${g.winner} ניצח/ה</div><div style="font-size:.58rem;color:var(--t2)">${g.players.length} שחקנים</div></div><div style="font-size:.55rem;color:var(--t3)">${g.date}</div></div>`;});sh.innerHTML=hh;}}}catch(e){}}
@@ -1108,7 +1111,8 @@ ri++;
 // Phase-graded pools — with cross-game memory (no repeats across ~3 games)
 const _pp=(()=>{try{const s=localStorage.getItem('mimi_pp');return s?JSON.parse(s):null;}catch(e){return null;}})();
 const _reuse=!!_pp;
-if(_pp&&_pp.n!==undefined)nightMode=_pp.n;
+// Night mode disabled for launch
+nightMode=false;
 function _gp(key,factory){if(_reuse&&_pp.p[key]&&_pp.p[key].length>0&&_pp.i[key]<_pp.p[key].length)return{p:_pp.p[key],i:_pp.i[key]};return{p:factory(),i:0};}
 ['warm','fire','final'].forEach(k=>{
 [['vt_'+k,()=>shuf(filterByAge([...VOTE[k]]))],['hs_'+k,()=>shuf(filterByAge([...(HOTSEAT[k]||[])]))],['mi_'+k,()=>shuf(filterByAge([...(MISSIONS[k]||[])]))],['ft_'+k,()=>shuf(filterByAge([...(FAMTALK[k]||[])]))],['rv_'+k,()=>shuf(filterByAge([...(REVEAL[k]||[])]))],['al_'+k,()=>shuf([...(ALIAS[k]||[])])],['dr_'+k,()=>shuf([...(DRAW[k]||[])])],['pd_'+k,()=>shuf(filterByAge([...(PDILEMMA[k]||[])]))],['bl_'+k,()=>shuf(filterByAge([...(BLIND[k]||[])]))]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});});
@@ -1240,7 +1244,7 @@ function doSpin(){
 
   animatePick(target,function(){
     const p=P[target];
-    const LAND_PHRASES=["הגורל בחר:","הגלגל החליט:","הפעם —","הזרקור על:","מי במרכז?"];
+    const LAND_PHRASES=["הגורל בחר:","נבחר:","הפעם —","הזרקור על:","מי במרכז?"];
     const phrase=LAND_PHRASES[Math.floor(Math.random()*LAND_PHRASES.length)];
     document.getElementById('gc').innerHTML=`<div style="text-align:center;padding:12px;animation:popIn .4s cubic-bezier(.34,1.3,.64,1)">
       <div style="font-size:.7rem;font-weight:700;color:var(--t2);margin-bottom:8px;letter-spacing:1px">${phrase}</div>
@@ -2850,7 +2854,7 @@ function goSetup(){clearSave();show('scrSetup');ss1Show();}
 function saveState(){try{localStorage.setItem('mimi',JSON.stringify({P,pCnt,scores,voteLog,turnQ,events,curE,pools,idx,gS,PD,nightMode,voteMode}));}catch(e){}}
 function loadState(){try{const s=localStorage.getItem('mimi');return s?JSON.parse(s):null;}catch(e){return null;}}
 function clearSave(){try{localStorage.removeItem('mimi');}catch(e){}}
-function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;pools=st.pools;idx=st.idx;const dg={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};gS=st.gS?{...dg,...st.gS}:dg;if(!gS.t0)gS.t0=Date.now();PD=st.PD||[];if(st.nightMode!==undefined)nightMode=st.nightMode;if(st.voteMode)voteMode=st.voteMode;show('scrGame');drawWheel();updateSB();updateFP();document.getElementById('pickArea').style.display='';processEvent();}
+function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;pools=st.pools;idx=st.idx;const dg={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};gS=st.gS?{...dg,...st.gS}:dg;if(!gS.t0)gS.t0=Date.now();PD=st.PD||[];/* nightMode disabled for launch */nightMode=false;if(st.voteMode)voteMode=st.voteMode;show('scrGame');drawWheel();updateSB();updateFP();document.getElementById('pickArea').style.display='';processEvent();}
 (function(){const s=loadState();if(s?.P?.length>0&&s.curE<s.events.length){const ov=document.getElementById('overlay');ov.innerHTML=`<div style="font-size:3rem">${ic('dice',40,'var(--gold)')}</div><div class="ov-t" style="color:var(--gold)">יש משחק שמור!</div><div class="ov-s">${s.P.map(p=>esc(p.name)).join(', ')}</div><div style="display:flex;gap:8px;margin-top:12px"><button class="ov-b" style="background:var(--teal)" onclick="closeOv();resumeG(loadState())">המשיכו! ▶</button><button class="ov-b" style="background:var(--coral)" onclick="clearSave();closeOv()">חדש 🆕</button></div>`;ov.classList.add('on');}})();
 window.addEventListener('beforeunload',function(e){if(document.getElementById('scrGame')?.classList.contains('on')){e.preventDefault();e.returnValue='';}});
 
@@ -2972,7 +2976,7 @@ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPro
 window.addEventListener('appinstalled',()=>{deferredPrompt=null;const btn=document.getElementById('a2hsBtn');if(btn)btn.style.display='none';});
 if(isStandalone){const btn=document.getElementById('a2hsBtn');if(btn)btn.style.display='none';}
 function installApp(){try{gtag('event','install_prompt',{platform:isIOS?'ios':deferredPrompt?'android':'desktop'});}catch(e){}if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{deferredPrompt=null;if(r.outcome==='accepted'){const btn=document.getElementById('a2hsBtn');if(btn)btn.style.display='none';}});return;}if(isIOS){showA2HSModal('<b>ב-iPhone / iPad:</b><br>1. לחצו על כפתור השיתוף '+ic('share',16,'var(--sky)')+' בתחתית המסך<br>2. גללו ובחרו <b>"הוסף למסך הבית"</b><br>3. לחצו <b>"הוסף"</b>');}else{showA2HSModal('<b>בדפדפן:</b><br>1. לחצו על תפריט ⋮ בפינה העליונה<br>2. בחרו <b>"הוספה למסך הבית"</b> או <b>"התקנת אפליקציה"</b>');}}
-function showA2HSModal(html){const m=document.createElement('div');m.className='mbg on';m.onclick=()=>m.remove();m.innerHTML='<div class="mbox" onclick="event.stopPropagation()" style="max-width:320px"><h2 style="font-size:1rem;color:var(--lav);margin-bottom:10px">📲 הוספה למסך הבית</h2><div style="font-size:.85rem;line-height:1.7;text-align:right">'+html+'</div><button class="gobtn" style="margin-top:14px;font-size:.85rem" onclick="this.closest(\'.mbg\').remove()">הבנתי!</button></div>';document.querySelector('.app').appendChild(m);}
+function showA2HSModal(html){const m=document.createElement('div');m.className='mbg on';m.onclick=()=>m.remove();m.innerHTML='<div class="mbox" onclick="event.stopPropagation()" style="max-width:320px"><h2 style="font-size:1rem;color:var(--lav);margin-bottom:10px">מי מי מי?</h2><div style="font-size:.78rem;color:var(--t2);margin-bottom:10px;line-height:1.5">שימו חטיפים. שימו טלפון. שימו ילדים. תלחצו. מה שיקרה — לא באחריותי.</div><div style="font-size:.85rem;line-height:1.7;text-align:right">'+html+'</div><button class="gobtn" style="margin-top:14px;font-size:.85rem" onclick="this.closest(\'.mbg\').remove()">הבנתי!</button></div>';document.querySelector('.app').appendChild(m);}
 // PWA Service Worker
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
 
@@ -3114,69 +3118,63 @@ function startIntroReveal(){
 }
 
 function startIntroText(){
-  // SYNCED TIMESTAMPS — calibrated from audio
-  var lines=[
-    {text:'שלום שלום, יש פה משחק.',cls:'bright',delay:616},
-    {text:'אין הוראות כי אני לא יודע לכתוב הוראות.',cls:'',delay:2570},
-    {text:'',cls:'',delay:4172},
-    {text:'פשוט שימו חטיפים על השולחן,',cls:'',delay:5674},
-    {text:'שימו את הטלפון באמצע,',cls:'bright',delay:7636},
-    {text:'תגידו מי פה ותבחרו דמות.',cls:'',delay:9273},
-    {text:'תלחצו.',cls:'bright',delay:11262},
-    {text:'',cls:'',delay:12144},
-    {text:'אחרי זה אני מטפל בשאר',cls:'',delay:12702},
-    {text:'כי אתם כנראה לא תצליחו לבד',cls:'',delay:14242},
-    {text:'ואני גם לא הצלחתי, אבל ביחד נסתדר.',cls:'',delay:15987},
-    {text:'',cls:'',delay:17392},
-    {text:'הילדים יצחקו,',cls:'gold',delay:20720},
-    {text:'ההורים יגידו דברים שלא תכננו להגיד.',cls:'bright',delay:22060},
-    {text:'סבתא תתקשר מחר לשאול מתי עוד פעם.',cls:'',delay:24428},
-    {text:'',cls:'',delay:26850},
-    {text:'אני לא מבטיח כלום',cls:'',delay:27911},
-    {text:'כי בפעם האחרונה שהבטחתי משהו',cls:'',delay:29242},
-    {text:'אני עדיין משלם עליו לעורך דין.',cls:'',delay:30384},
+  var introLines=[
+    {text:'שלום שלום. יש פה משחק.',cls:'bright',delay:611},
+    {text:'בניתי אותו במקום ללכת לפסיכולוג.',cls:'',delay:3379},
+    {text:'יותר זול. פחות שאלות על אמא.',cls:'',delay:6083},
+    {text:'',cls:'',delay:8018},
+    {text:'בנאדם שכל מה שהוא יודע על ערבי משפחה מגיע מסדרות טלוויזיה',cls:'',delay:9292},
+    {text:'בנה ערב משפחתי אמיתי.',cls:'bright',delay:14211},
+    {text:'זה כמו לבנות מטוס לפי סרט.',cls:'',delay:16170},
+    {text:'רק שפה אם זה מתרסק אתם רק צוחקים.',cls:'gold',delay:18533},
+    {text:'',cls:'',delay:21211},
+    {text:'שימו חטיפים. שימו טלפון. שימו ילדים.',cls:'bright',delay:22213},
+    {text:'תלחצו.',cls:'bright',delay:26027},
+    {text:'',cls:'',delay:27091},
+    {text:'מה שיקרה אחרי זה גם אני לא יודע.',cls:'',delay:27781},
+    {text:'כל פעם יוצא אחר.',cls:'',delay:30170},
+    {text:'הילדים אומרים דברים שהורסים.',cls:'gold',delay:31587},
+    {text:'ההורים מגלים שהילדים שומעים הכל.',cls:'bright',delay:33802},
+    {text:'ומישהו אומר משהו שכולם חשבו ואף אחד לא אמר.',cls:'',delay:36323},
+    {text:'',cls:'',delay:39733},
+    {text:'ואחרי שלושים דקות תגידו למה לא עשינו את זה קודם.',cls:'',delay:41171},
+    {text:'ואני אגיד כי הייתם צריכים לחכות שמישהו יתגרש',cls:'',delay:45307},
+    {text:'ולא ימצא מה לעשות עם הלילות.',cls:'',delay:48786},
+    {text:'',cls:'',delay:49467},
+    {text:'תשחקו.',cls:'bright',delay:50956},
+    {text:'ואם הילד שלכם ישאל מי עשה את המשחק הזה.',cls:'',delay:52171},
+    {text:'תגידו לו מישהו שצריך ללכת לישון ולא הולך.',cls:'',delay:55996},
   ];
 
   var container=document.getElementById('introText');
   container.innerHTML='';
-  var MAX_LINES=3;
-  var WORD_SPEED=130;
+  var MAX_LINES=2;
 
-  lines.forEach(function(line){
+  introLines.forEach(function(line){
     if(line.text==='')return;
 
     setTimeout(function(){
       var existing=container.querySelectorAll('.intro-line');
-      if(existing.length>=MAX_LINES){
+      while(existing.length>=MAX_LINES){
         var oldest=existing[0];
-        oldest.style.animation='lineOut .3s ease forwards';
-        setTimeout(function(){if(oldest.parentNode)oldest.remove();},300);
+        oldest.style.animation='subOut .3s ease forwards';
+        (function(el){setTimeout(function(){if(el.parentNode)el.remove();},300);})(oldest);
+        existing=container.querySelectorAll('.intro-line');
+        break;
       }
 
       var lineEl=document.createElement('div');
       lineEl.className='intro-line'+(line.cls?' '+line.cls:'');
+      lineEl.textContent=line.text;
       container.appendChild(lineEl);
-
-      var cursor=document.createElement('span');
-      cursor.className='intro-cursor';
-      lineEl.appendChild(cursor);
-
-      var words=line.text.split(' ');
-      words.forEach(function(word,wi){
-        setTimeout(function(){
-          cursor.before(document.createTextNode((wi>0?' ':'')+word));
-        },wi*WORD_SPEED);
-      });
-
-      setTimeout(function(){if(cursor.parentNode)cursor.remove();},words.length*WORD_SPEED+200);
     },line.delay);
   });
 
-  // Show CTA after last line + reading time
+  // Show CTA at 59 seconds (end of audio)
   setTimeout(function(){
     var cta=document.getElementById('introCta');
     if(cta)cta.classList.add('vis');
-  },33000);
+  },59000);
 }
 
 function skipIntro(){
