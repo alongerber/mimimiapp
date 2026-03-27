@@ -83,7 +83,7 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 .sdot{width:10px;height:10px;border-radius:50%;background:var(--s3);transition:.3s}.sdot.done{background:var(--teal)}.sdot.cur{background:var(--lav);box-shadow:0 0 8px var(--lav)}
 .scard{display:flex;align-items:center;gap:12px;padding:12px 14px;background:linear-gradient(135deg,var(--s1),var(--s2));border-radius:16px;border:1.5px solid var(--s3);margin:5px 0;animation:sIn .3s ease both}
 @keyframes sIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
-.scard-av{width:48px;height:48px;border-radius:14px;overflow:hidden;flex-shrink:0;border:2.5px solid}.scard-av img{width:100%;height:100%;object-fit:cover}
+.scard-av{width:52px;height:52px;border-radius:14px;overflow:hidden;flex-shrink:0;border:2.5px solid}.scard-av img{width:100%;height:100%;object-fit:cover}
 
 /* ===== GAME ===== */
 /* Full progress bar */
@@ -285,6 +285,36 @@ body.light-body{background:#f8f6f1}
 .tc-av{width:28px;height:28px;border-radius:8px;overflow:hidden;flex-shrink:0}.tc-av img{width:100%;height:100%;object-fit:cover}
 .fin-btns{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;justify-content:center}
 .fin-b{padding:10px 16px;border:none;border-radius:12px;font-family:inherit;font-size:.78rem;font-weight:700;cursor:pointer;color:#fff}
+/* Receipt */
+.receipt{background:#fafaf5;color:#1a1a1a;border-radius:4px;padding:20px 16px;max-width:300px;margin:12px auto;font-family:'Courier New',monospace;font-size:.7rem;direction:rtl;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.receipt-header{font-size:.8rem;font-weight:800;text-align:center;margin-bottom:4px}
+.receipt-date{font-size:.55rem;text-align:center;color:#666;margin-bottom:8px}
+.receipt-line{border-top:1px dashed #ccc;margin:8px 0}
+.receipt-row{display:flex;justify-content:space-between;padding:3px 0;font-size:.65rem}
+.receipt-total{display:flex;justify-content:space-between;font-size:.85rem;font-weight:900;padding:6px 0}
+.receipt-footer{text-align:center;font-size:.55rem;color:#888;margin-top:8px;font-style:italic;font-family:inherit}
+/* Tip section */
+.tip-section{max-width:380px;margin:0 auto;padding:16px 0;text-align:center}
+.tip-text{font-size:.7rem;color:var(--t2);line-height:1.8;text-align:right;direction:rtl;margin-bottom:20px;font-weight:500}
+.tip-tiers{display:flex;flex-direction:column;gap:12px;margin:16px 0}
+.tip-tier{background:linear-gradient(135deg,var(--s1),var(--s2));border:1.5px solid var(--s3);border-radius:16px;padding:16px;cursor:pointer;transition:all .3s ease;text-align:center}
+.tip-tier:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 6px 24px rgba(255,199,58,.12)}
+.tip-tier:active{transform:scale(.97)}
+.tip-tier-icon{margin:0 auto 8px;width:64px;height:64px}
+.tip-tier-icon img{width:100%;height:100%;object-fit:contain}
+.tip-tier-price{font-size:1.2rem;font-weight:900;color:var(--gold);margin:6px 0}
+.tip-tier-name{font-size:.7rem;color:var(--text);font-weight:600;line-height:1.6;margin:8px 0;direction:rtl}
+.tip-tier-desc{font-size:.6rem;color:var(--t2);line-height:1.6;margin:6px 0;direction:rtl;font-weight:500}
+.tip-tier-extra{font-size:.55rem;color:var(--gold);font-weight:700;margin-top:6px}
+.tip-closing{font-size:.65rem;color:var(--t3);line-height:1.8;margin:16px 0;direction:rtl;font-style:italic}
+.tip-wall-link{background:none;border:none;color:var(--t3);font-size:.6rem;cursor:pointer;font-family:inherit;padding:8px;text-decoration:underline;text-underline-offset:3px}
+/* Wall */
+.wall-note{background:rgba(255,248,220,.92);border-radius:2px;padding:14px 12px 12px;margin:10px auto;max-width:300px;width:90%;box-shadow:2px 3px 10px rgba(0,0,0,.35);position:relative;direction:rtl}
+.wall-pin{width:10px;height:10px;border-radius:50%;position:absolute;top:-4px;left:50%;transform:translateX(-50%);box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.wall-name{font-size:.75rem;font-weight:800;color:#1a1a1a}
+.wall-city{font-size:.5rem;color:#888;margin-top:1px}
+.wall-quote{font-size:.62rem;color:#333;margin-top:6px;line-height:1.65;font-style:italic}
+@keyframes noteIn{from{opacity:0;transform:rotate(0deg) translateY(12px)}to{opacity:1}}
 /* Drawing gallery */
 .draw-gal{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;max-width:360px;margin:6px 0}
 .draw-gal-item{border-radius:10px;overflow:hidden;border:1px solid var(--s3);aspect-ratio:1}
@@ -475,8 +505,8 @@ body.light-body{background:#f8f6f1}
 .av-title{font-size:1.1rem;font-weight:900;margin-bottom:12px;text-align:center}
 .av-carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:20px calc(50% - 45px);width:100%;scrollbar-width:none;scroll-behavior:smooth}
 .av-carousel::-webkit-scrollbar{display:none}
-.av-item{flex:0 0 70px;height:70px;border-radius:50%;overflow:hidden;border:3px solid var(--s3);cursor:pointer;scroll-snap-align:center;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease,opacity .3s ease;opacity:.6}
-.av-item.active{transform:scale(1.35);border-width:3px;opacity:1;z-index:2}
+.av-item{flex:0 0 90px;height:90px;border-radius:50%;overflow:hidden;border:3px solid var(--s3);cursor:pointer;scroll-snap-align:center;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease,opacity .3s ease;opacity:.6}
+.av-item.active{transform:scale(1.3);opacity:1;z-index:2}
 .av-item.taken{opacity:.15;pointer-events:none;filter:grayscale(1)}
 .av-item img{width:100%;height:100%;object-fit:cover}
 .av-label{font-size:.75rem;color:var(--t2);text-align:center;margin-top:8px;min-height:20px}
@@ -655,6 +685,7 @@ body.light-body{background:#f8f6f1}
 
 <div class="scr" id="scrFin" role="main" aria-label="תוצאות"><div class="finw" id="finW"></div></div>
 <div class="scr" id="scrFB" role="main" aria-label="פידבק"><div class="finw" id="fbW"></div></div>
+<div class="scr" id="scrWall" role="main" aria-label="קיר הסלון"><div class="finw" id="wallContent"></div></div>
 <div class="ov" id="overlay"></div>
 <div class="mbg" id="helpM" onclick="toggleHelp()"><div class="mbox" onclick="event.stopPropagation()">
   <h2 style="font-size:1.1rem;color:var(--gold);margin-bottom:4px">איך משחקים?</h2>
@@ -1224,7 +1255,7 @@ function showPassPhone(ev){
   const p=P[pi];
   gc(`<div style="text-align:center;padding:20px">
     <div style="font-size:.7rem;color:var(--t2);margin-bottom:10px">תעבירו את הטלפון ל-</div>
-    <div style="width:72px;height:72px;border-radius:50%;overflow:hidden;border:3px solid ${p.color};margin:0 auto 8px;box-shadow:0 0 24px ${p.color}44">${gAv(pi,72)}</div>
+    <div style="width:80px;height:80px;border-radius:50%;overflow:hidden;border:3px solid ${p.color};margin:0 auto 8px;box-shadow:0 0 24px ${p.color}44">${gAv(pi,80)}</div>
     <div style="font-size:1.2rem;font-weight:900;color:${p.color};margin:6px 0">${p.name}</div>
     <div class="acts" style="margin-top:16px"><button class="ab" style="background:${p.color};color:#fff;width:100%;max-width:220px;padding:14px" onclick="showRound(events[curE])">הטלפון אצלי</button></div>
   </div>`);
@@ -2645,8 +2676,10 @@ h+=`<div class="ai-summary" id="aiSummaryCard">
 // Trigger AI summary
 generateAISummary(sorted);
 
-h+=buildDonateHTML();
-h+=`<div class="fin-btns"><button class="fin-b" style="background:var(--gold)" onclick="genWC()">כרטיס מנצח</button><button class="fin-b" style="background:var(--lav)" onclick="share()">שתף תוצאות</button><button class="fin-b" style="background:var(--coral)" onclick="launch()">עוד סיבוב</button><button class="fin-b" style="background:var(--teal)" onclick="showFB()">פידבק</button><button class="fin-b" style="background:var(--s3)" onclick="goSetup()">חדש</button></div>`;
+h+=buildReceipt(sorted,dur);
+h+=`<div style="text-align:center;margin:8px 0"><button class="gb" style="font-size:.6rem;color:var(--t3)" onclick="shareReceipt()">שתף קבלה</button></div>`;
+h+=`<div class="fin-btns"><button class="fin-b" style="background:var(--coral)" onclick="launch()">עוד סיבוב</button><button class="fin-b" style="background:var(--gold)" onclick="genWC()">כרטיס מנצח</button><button class="fin-b" style="background:var(--lav)" onclick="share()">שתף תוצאות</button><button class="fin-b" style="background:var(--teal)" onclick="showFB()">פידבק</button><button class="fin-b" style="background:var(--s3)" onclick="goSetup()">חדש</button></div>`;
+h+=buildTipSection();
 h+=buildHistoryHTML();
 document.getElementById('finW').innerHTML=h;
 saveHistory();
@@ -2967,6 +3000,117 @@ return `<div class="donate-card">
 <div class="donate-social" style="margin-top:10px">100% מגיע ישר לפיתוח. בלי פרסומות. בלי מנויים. רק משחק טוב יותר.</div>
 </div>`;}
 function openDonate(tier){try{gtag('event','donate_click',{tier});}catch(e){}const url='https://buymeacoffee.com/mimimigame';try{window.open(url,'_blank');}catch(e){navigator.clipboard.writeText(url).then(()=>toast('הלינק הועתק!')).catch(()=>{});}}
+
+// ===== RECEIPT =====
+function buildReceipt(sorted,dur){
+const mins=Math.floor(dur/60),secs=dur%60;
+const d=new Date();
+const dateStr=d.toLocaleDateString('he-IL');
+const timeStr=d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});
+let r='<div class="receipt">';
+r+='<div class="receipt-header">מי מי מי?</div>';
+r+=`<div class="receipt-date">${dateStr} ${timeStr}</div>`;
+r+='<div class="receipt-line"></div>';
+sorted.forEach((p,i)=>{
+r+=`<div class="receipt-row"><span>${i+1}. ${p.name}</span><span>${p.s} נק׳</span></div>`;
+});
+r+='<div class="receipt-line"></div>';
+r+=`<div class="receipt-row"><span>סיבובים</span><span>${gS.rounds}</span></div>`;
+r+=`<div class="receipt-row"><span>זמן</span><span>${mins}:${secs.toString().padStart(2,'0')}</span></div>`;
+r+='<div class="receipt-line"></div>';
+r+=`<div class="receipt-total"><span>מנצח/ת</span><span>${sorted[0].name} 🏆</span></div>`;
+r+='<div class="receipt-footer">השיחה ממשיכה לבד.</div>';
+r+='</div>';
+return r;
+}
+
+// ===== TIP SECTION =====
+const TIP_TEXTS=[
+'בניתי את המשחק הזה לבד. בין עבודה, ילדים, וקפה שלישי. כל שקל שנכנס — הולך ישר לפיצ\'ר הבא.',
+'אני לא חברת הייטק. אני אבא שרצה לבנות משהו טוב למשפחה. אם נהניתם — זה הרגע.',
+'אפס פרסומות. אפס מנויים. אפס מעקב. רק אתם, הטלפון, וערב טוב. עזרו לי להמשיך ככה.'
+];
+function buildTipSection(){
+const txt=TIP_TEXTS[Math.floor(Math.random()*TIP_TEXTS.length)];
+let h='<div class="tip-section">';
+h+=`<div class="tip-text">${txt}</div>`;
+h+='<div class="tip-tiers">';
+h+=`<div class="tip-tier" onclick="openTip(10)">
+<div class="tip-tier-price">10₪</div>
+<div class="tip-tier-name">קפה למפתח</div>
+<div class="tip-tier-desc">תודה קטנה שאומרת הרבה</div>
+</div>`;
+h+=`<div class="tip-tier" onclick="openTip(30)">
+<div class="tip-tier-price">30₪</div>
+<div class="tip-tier-name">ערב משפחתי</div>
+<div class="tip-tier-desc">עוזרים לבנות את הפיצ׳ר הבא</div>
+<div class="tip-tier-extra">+ השם שלכם על הקיר</div>
+</div>`;
+h+=`<div class="tip-tier" onclick="openTip(50)">
+<div class="tip-tier-price">50₪</div>
+<div class="tip-tier-name">שותפים לדרך</div>
+<div class="tip-tier-desc">תמיכה אמיתית בפיתוח המשחק</div>
+<div class="tip-tier-extra">+ השם שלכם על הקיר + הפתעה</div>
+</div>`;
+h+='</div>';
+h+='<div class="tip-closing">100% מגיע ישר לפיתוח. בלי פרסומות. בלי מנויים.</div>';
+h+='<button class="tip-wall-link" onclick="showWall()">לקיר הסלון →</button>';
+h+='</div>';
+return h;
+}
+function openTip(amount){try{gtag('event','tip_click',{amount});}catch(e){}const url='https://buymeacoffee.com/mimimigame';try{window.open(url,'_blank');}catch(e){navigator.clipboard.writeText(url).then(()=>toast('הלינק הועתק!')).catch(()=>{});}}
+
+// ===== SHARE RECEIPT =====
+function shareReceipt(){
+try{gtag('event','share_receipt');}catch(e){}
+const sorted=P.map((p,i)=>({...p,s:scores[i]||0})).sort((a,b)=>b.s-a.s);
+const dur=Math.round((Date.now()-gS.t0)/1000);
+const mins=Math.floor(dur/60),secs=dur%60;
+let txt='🧾 קבלה מערב משפחתי\n';
+txt+='מי מי מי?\n';
+txt+='─────────────\n';
+sorted.forEach((p,i)=>{txt+=`${i+1}. ${p.name} — ${p.s} נק׳\n`;});
+txt+='─────────────\n';
+txt+=`סיבובים: ${gS.rounds} | זמן: ${mins}:${secs.toString().padStart(2,'0')}\n`;
+txt+=`מנצח/ת: ${sorted[0].name} 🏆\n`;
+txt+='─────────────\n';
+txt+='השיחה ממשיכה לבד.';
+if(navigator.share){navigator.share({text:txt}).catch(()=>{});}
+else{navigator.clipboard.writeText(txt).then(()=>toast('הועתק!')).catch(()=>{});}
+}
+
+// ===== WALL OF THE SOFA =====
+const WALL_FAMILIES=[
+{name:'משפחת כהן',city:'תל אביב',pin:'#e74c3c'},
+{name:'משפחת לוי',city:'ירושלים',pin:'#3498db'},
+{name:'משפחת מזרחי',city:'חיפה',pin:'#2ecc71'},
+{name:'משפחת אברהם',city:'באר שבע',pin:'#f39c12'},
+{name:'משפחת פרידמן',city:'רעננה',pin:'#9b59b6'},
+{name:'משפחת גולדברג',city:'הרצליה',pin:'#1abc9c'},
+{name:'משפחת ביטון',city:'אשדוד',pin:'#e67e22'},
+{name:'משפחת שפירא',city:'רמת גן',pin:'#e74c3c'},
+{name:'משפחת רוזנברג',city:'כפר סבא',pin:'#3498db'},
+{name:'משפחת דהן',city:'נתניה',pin:'#2ecc71'},
+{name:'משפחת אזולאי',city:'פתח תקווה',pin:'#f39c12'},
+{name:'משפחת נחמני',city:'ראשון לציון',pin:'#9b59b6'},
+{name:'משפחת ברקוביץ׳',city:'גבעתיים',pin:'#1abc9c'},
+{name:'משפחת עמרם',city:'מודיעין',pin:'#e67e22'}
+];
+function showWall(){
+try{gtag('event','view_wall');}catch(e){}
+show('scrWall');
+const el=document.getElementById('wallContent');
+if(!el)return;
+let h='<div style="text-align:center;margin-bottom:16px"><div style="font-size:1.1rem;font-weight:900;color:var(--gold);margin-bottom:4px">קיר הסלון</div><div style="font-size:.65rem;color:var(--t2);line-height:1.6">המשפחות שהפכו את המשחק הזה לאפשרי</div></div>';
+WALL_FAMILIES.forEach(f=>{
+h+=`<div class="wall-note"><div class="wall-pin" style="background:${f.pin}"></div><div class="wall-name">${f.name}</div><div class="wall-city">${f.city}</div></div>`;
+});
+h+='<div style="text-align:center;margin-top:20px"><div style="font-size:.6rem;color:var(--t3);margin-bottom:8px">רוצים להופיע פה? תתרמו 30₪+ ותשלחו את השם.</div>';
+h+='<button class="gobtn" style="max-width:200px" onclick="openTip(30)">הצטרפו לקיר</button>';
+h+='<div style="margin-top:12px"><button class="gb" style="font-size:.6rem" onclick="show(\'scrFin\')">← חזרה לתוצאות</button></div>';
+h+='</div>';
+el.innerHTML=h;
+}
 
 // PWA Install
 let deferredPrompt=null;
