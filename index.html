@@ -83,7 +83,7 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 .sdot{width:10px;height:10px;border-radius:50%;background:var(--s3);transition:.3s}.sdot.done{background:var(--teal)}.sdot.cur{background:var(--lav);box-shadow:0 0 8px var(--lav)}
 .scard{display:flex;align-items:center;gap:12px;padding:12px 14px;background:linear-gradient(135deg,var(--s1),var(--s2));border-radius:16px;border:1.5px solid var(--s3);margin:5px 0;animation:sIn .3s ease both}
 @keyframes sIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
-.scard-av{width:52px;height:52px;border-radius:14px;overflow:hidden;flex-shrink:0;border:2.5px solid}.scard-av img{width:100%;height:100%;object-fit:cover}
+.scard-av{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2.5px solid}.scard-av img{width:100%;height:100%;object-fit:cover}
 
 /* ===== GAME ===== */
 /* Full progress bar */
@@ -95,7 +95,7 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 .sb{flex:0 0 auto;min-width:56px;padding:5px 8px;border-radius:10px;background:var(--s1);text-align:center;border:2px solid transparent;transition:.3s;display:flex;flex-direction:column;align-items:center;gap:1px}
 .sb.hot{border-color:var(--gold);background:var(--s2);animation:sbPop .5s ease}
 @keyframes sbPop{50%{transform:scale(1.12)}}
-.sb-av{width:40px;height:40px;border-radius:10px;overflow:hidden}.sb-av img{width:100%;height:100%;object-fit:cover}
+.sb-av{width:40px;height:40px;border-radius:50%;overflow:hidden}.sb-av img{width:100%;height:100%;object-fit:cover}
 .sb-n{font-size:.55rem;font-weight:700;white-space:nowrap;max-width:50px;overflow:hidden;text-overflow:ellipsis}
 .sb-p{font-size:.95rem;font-weight:900}
 .sb-p.bump{animation:sBump .5s ease}
@@ -141,7 +141,7 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 .qvgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
 .qvitem{background:var(--s2);border-radius:14px;padding:10px 6px;text-align:center;border:2px solid var(--s3);transition:.2s}
 .qvitem.has{border-color:var(--gold)}
-.qv-av{width:36px;height:36px;border-radius:10px;overflow:hidden;margin:0 auto 4px}.qv-av img{width:100%;height:100%;object-fit:cover}
+.qv-av{width:52px;height:52px;border-radius:50%;overflow:hidden;margin:0 auto 4px}.qv-av img{width:100%;height:100%;object-fit:cover}
 .qv-name{font-size:.65rem;font-weight:700;margin-bottom:4px}
 .qv-count{font-size:1.3rem;font-weight:900;color:var(--gold)}
 .qv-btns{display:flex;gap:4px;justify-content:center;margin-top:4px}
@@ -151,12 +151,12 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 /* Vote buttons (secret mode) */
 .vgrid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
 .vb{padding:14px 18px;border-radius:18px;font-size:.92rem;font-weight:700;cursor:pointer;border:2.5px solid;background:var(--s2);transition:.2s;display:flex;align-items:center;gap:6px}.vb:active{transform:scale(.92)}
-.vb-av{width:48px;height:48px;border-radius:50%;overflow:hidden}.vb-av img{width:100%;height:100%;object-fit:cover}
+.vb-av{width:52px;height:52px;border-radius:50%;overflow:hidden}.vb-av img{width:100%;height:100%;object-fit:cover}
 
 /* Pass screen */
 .pass{padding:16px 0;animation:fu .3s ease both;text-align:center}
 @keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.pass-av{width:68px;height:68px;border-radius:18px;overflow:hidden;margin:0 auto 8px;border:3px solid;box-shadow:0 4px 24px rgba(0,0,0,.4)}.pass-av img{width:100%;height:100%;object-fit:cover}
+.pass-av{width:64px;height:64px;border-radius:50%;overflow:hidden;margin:0 auto 8px;border:3px solid;box-shadow:0 4px 24px rgba(0,0,0,.4)}.pass-av img{width:100%;height:100%;object-fit:cover}
 .pass-name{font-size:1.6rem;font-weight:900;margin-bottom:4px}
 .pass-av.pulse{animation:avPulse .6s ease 3}
 @keyframes avPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
@@ -263,7 +263,7 @@ body.light-body{background:#f8f6f1}
 .podium{display:flex;align-items:flex-end;gap:8px;margin:8px 0}
 .pod{display:flex;flex-direction:column;align-items:center}
 .pod-m{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:.72rem;margin-bottom:3px}
-.pod-av{width:42px;height:42px;border-radius:12px;overflow:hidden;margin-bottom:2px;border:2px solid}.pod-av img{width:100%;height:100%;object-fit:cover}
+.pod-av{width:52px;height:52px;border-radius:50%;overflow:hidden;margin-bottom:2px;border:2px solid}.pod-av img{width:100%;height:100%;object-fit:cover}
 .pod-bar{width:64px;border-radius:12px 12px 0 0;display:flex;align-items:flex-end;justify-content:center;padding:8px 4px;font-weight:900;font-size:.9rem;transition:height 1.2s cubic-bezier(.34,1.4,.64,1)}
 .fin-section{width:100%;max-width:360px;margin:4px 0;padding:14px;background:var(--s1);border-radius:16px;border:1.5px solid var(--s3);animation:sIn .3s ease both}
 .fin-section-t{font-size:.72rem;font-weight:700;text-align:center;color:var(--t2);margin-bottom:8px}
@@ -272,7 +272,7 @@ body.light-body{background:#f8f6f1}
 .sc{background:var(--s1);border-radius:12px;padding:10px;border:1px solid var(--s3);text-align:center}
 .sc-v{font-size:.9rem;font-weight:900}.sc-l{font-size:.5rem;color:var(--t2);margin-top:1px}
 .tc{background:var(--s1);border-radius:var(--r);padding:10px 12px;margin-bottom:4px;display:flex;align-items:center;gap:8px;border:1.5px solid var(--s3);width:100%;max-width:360px;animation:sIn .3s ease both}
-.tc-av{width:28px;height:28px;border-radius:8px;overflow:hidden;flex-shrink:0}.tc-av img{width:100%;height:100%;object-fit:cover}
+.tc-av{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0}.tc-av img{width:100%;height:100%;object-fit:cover}
 .fin-btns{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;justify-content:center}
 .fin-b{padding:10px 16px;border:none;border-radius:12px;font-family:inherit;font-size:.78rem;font-weight:700;cursor:pointer;color:#fff}
 /* Receipt */
@@ -376,7 +376,7 @@ body.light-body{background:#f8f6f1}
 
 /* Player banner - shows WHO is playing now */
 .who{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--s1);border-radius:16px;border:1.5px solid var(--s3);margin:6px 0;animation:narIn .4s ease both}
-.who-av{width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;border:3px solid;box-shadow:0 2px 16px rgba(0,0,0,.3)}.who-av img{width:100%;height:100%;object-fit:cover}
+.who-av{width:64px;height:64px;border-radius:50%;overflow:hidden;flex-shrink:0;border:3px solid;box-shadow:0 2px 16px rgba(0,0,0,.3)}.who-av img{width:100%;height:100%;object-fit:cover}
 .who-info{flex:1;text-align:right}
 .who-name{font-size:1.2rem;font-weight:900}.who-role{font-size:.68rem;color:var(--t2);margin-top:1px}
 
@@ -505,7 +505,7 @@ body.light-body{background:#f8f6f1}
 
 /* === RANDOM PICK ANIMATION === */
 .pick-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:8px 0;min-height:60px}
-.pick-av{width:48px;height:48px;border-radius:50%;overflow:hidden;border:2.5px solid var(--s3);transition:all .15s;opacity:.4;transform:scale(.85)}
+.pick-av{width:52px;height:52px;border-radius:50%;overflow:hidden;border:2.5px solid var(--s3);transition:all .15s;opacity:.4;transform:scale(.85)}
 .pick-av.lit{opacity:1;transform:scale(1);border-color:var(--gold);box-shadow:0 0 12px rgba(255,199,58,.3)}
 .pick-av.chosen{opacity:1;transform:scale(1.3);border-width:3px;box-shadow:0 0 24px var(--glow,rgba(255,199,58,.5));z-index:2}
 .pick-av img{width:100%;height:100%;object-fit:cover}
@@ -1397,7 +1397,7 @@ if(q.id)playTTS(q.id);}
 function showPrediction(pi){
 window._isPrediction=true;
 // Player in focus guesses who the family will pick
-let chips='<div class="vgrid">';P.forEach((p,i)=>{chips+=`<div class="vb" style="color:${p.color};border-color:${p.color}40" onclick="setPrediction(${pi},${i})"><div class="vb-av">${gAv(i,48)}</div>${p.name}</div>`;});chips+='</div>';
+let chips='<div class="vgrid">';P.forEach((p,i)=>{chips+=`<div class="vb" style="color:${p.color};border-color:${p.color}40" onclick="setPrediction(${pi},${i})"><div class="vb-av">${gAv(i,52)}</div>${p.name}</div>`;});chips+='</div>';
 gc(`<div class="handoff"><div class="handoff-av" style="border-color:${P[pi].color}">${gAv(pi,90)}</div>
 <div class="handoff-name" style="color:${P[pi].color}">${P[pi].name}</div>
 <div style="font-size:.85rem;font-weight:700;margin:8px 0">"${VS.q.q}"</div>
@@ -1425,8 +1425,8 @@ const total=Object.values(counts).reduce((a,b)=>a+b,0);
 voteResult(winners,maxC,total);}
 
 function vNext(){if(VS.cur>=VS.voters.length){vReveal();return;}const vi=VS.voters[VS.cur],v=P[vi];
-let chips='<div class="vgrid">';P.forEach((p,i)=>{chips+=`<div class="vb" style="color:${p.color};border-color:${p.color}40" onclick="svPick(${vi},${i})"><div class="vb-av">${gAv(i,48)}</div>${p.name}</div>`;});chips+='</div>';
-gc(`<div class="pass"><div class="pass-av pulse" style="border-color:${v.color}">${gAv(vi,56)}</div><div class="pass-name" style="color:${v.color}">${v.name}, תורך!</div>
+let chips='<div class="vgrid">';P.forEach((p,i)=>{chips+=`<div class="vb" style="color:${p.color};border-color:${p.color}40" onclick="svPick(${vi},${i})"><div class="vb-av">${gAv(i,52)}</div>${p.name}</div>`;});chips+='</div>';
+gc(`<div class="pass"><div class="pass-av pulse" style="border-color:${v.color}">${gAv(vi,64)}</div><div class="pass-name" style="color:${v.color}">${v.name}, תורך!</div>
 <div class="csub">${VS.cur}/${VS.voters.length} הצביעו</div>
 <div style="font-size:.88rem;font-weight:700;margin:6px 0">"${VS.q.q}"</div>${chips}</div>`);}
 function svPick(vi,picked){SND.play('vote');vib(30);VS.picks[vi]=picked;VS.cur++;VS.lastVi=vi;VS.lastPick=picked;
@@ -1484,7 +1484,7 @@ gc(`<div class="pass" onclick="this.querySelector('.verdict-full').style.display
 <div class="verdict-full" style="display:none"><div class="photo-frame">
 <div style="font-size:1.1rem;font-weight:900;color:var(--gold);margin-bottom:6px">${v.header}</div>
 <div class="crown">${ic('crown',44,'var(--gold)')}</div>
-<div class="pass-av" style="border-color:${P[w].color};box-shadow:0 0 30px ${P[w].color}44">${gAv(w,56)}</div>
+<div class="pass-av" style="border-color:${P[w].color};box-shadow:0 0 30px ${P[w].color}44">${gAv(w,64)}</div>
 <div style="font-size:1rem;font-weight:900;color:${P[w].color};margin:6px 0">${P[w].name}</div>
 <div style="font-size:.88rem;font-weight:800;color:var(--gold)">${title}</div>
 <div style="font-size:.72rem;color:var(--t2);margin:6px 0">${v.explain}</div>
