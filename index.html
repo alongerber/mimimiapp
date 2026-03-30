@@ -3297,6 +3297,7 @@ window.open(waUrl,'_blank');
   var lastScreen='';
   var clickCount=0;
   var MAX_CLICKS=200;
+  var setupPlayerIdx=0;
 
   function getScreen(){
     var s=document.querySelector('.scr.on');
@@ -3304,11 +3305,83 @@ window.open(waUrl,'_blank');
   }
 
   function getClickables(){
-    var btns=document.querySelectorAll('.scr.on button:not([disabled]):not([style*="display:none"]),.scr.on .gb:not(.on),.scr.on .fb-chip,.scr.on .av-grid-item:not(.taken),.scr.on .tip-tier,.scr.on .donate-tier');
+    var btns=document.querySelectorAll('.scr.on button:not([disabled]):not([style*="display:none"]),.scr.on .gb:not(.on),.scr.on .fb-chip,.scr.on .tip-tier');
     return Array.from(btns).filter(function(b){
       var r=b.getBoundingClientRect();
       return r.width>0&&r.height>0;
     });
+  }
+
+  function logScreen(screen){
+    if(screen!==lastScreen){
+      log.push(screen);
+      lastScreen=screen;
+      console.log('AUTOTEST screen:',screen);
+    }
+  }
+
+  // Handle avatar overlay: pick first available, confirm
+  function handleAvOverlay(){
+    var overlay=document.getElementById('avOverlay');
+    if(!overlay)return false;
+    var available=overlay.querySelectorAll('.av-grid-item:not(.taken):not(.selected)');
+    if(available.length>0){
+      available[0].click();
+      clickCount++;
+      setTimeout(function(){
+        var confirmBtn=overlay.querySelector('.av-confirm:not([disabled])');
+        if(confirmBtn){confirmBtn.click();clickCount++;}
+        setTimeout(autoClick,500);
+      },400);
+      return true;
+    }
+    // Already selected — just confirm
+    var confirmBtn=overlay.querySelector('.av-confirm:not([disabled])');
+    if(confirmBtn){confirmBtn.click();clickCount++;setTimeout(autoClick,500);return true;}
+    return false;
+  }
+
+  // Handle player setup (ss2): fill names, open avatar pickers, then proceed
+  function handleSetupPlayers(){
+    var ss2=document.getElementById('ss2');
+    if(!ss2||ss2.style.display==='none')return false;
+
+    // Fill all empty name inputs
+    var inputs=ss2.querySelectorAll('input.sni');
+    inputs.forEach(function(inp,i){
+      if(!inp.value||inp.value.trim()===''){
+        inp.value='שחקן'+(i+1);
+        inp.dispatchEvent(new Event('input',{bubbles:true}));
+      }
+    });
+
+    // Check if any player still needs an avatar
+    if(typeof PD!=='undefined'){
+      for(var i=0;i<PD.length;i++){
+        if(!PD[i].avId){
+          // Open avatar picker for this player
+          console.log('AUTOTEST: opening avatar picker for player '+i);
+          if(typeof pickAvFor==='function')pickAvFor(i);
+          clickCount++;
+          setTimeout(function(){
+            handleAvOverlay();
+          },600);
+          return true;
+        }
+      }
+    }
+
+    // All players have names and avatars — click the proceed button
+    var npb=document.getElementById('npb');
+    if(npb&&!npb.disabled){
+      console.log('AUTOTEST: all players ready, clicking proceed');
+      npb.click();
+      clickCount++;
+      setTimeout(autoClick,500);
+      return true;
+    }
+
+    return false;
   }
 
   function autoClick(){
@@ -3319,15 +3392,34 @@ window.open(waUrl,'_blank');
     }
 
     var screen=getScreen();
-    if(screen!==lastScreen){
-      log.push(screen);
-      lastScreen=screen;
-      console.log('AUTOTEST screen:',screen);
+    logScreen(screen);
+
+    // Check for avatar overlay first (it floats above everything)
+    if(document.getElementById('avOverlay')){
+      if(handleAvOverlay())return;
+    }
+
+    // Check for modal
+    var modalBtns=document.querySelectorAll('.mbg.on button,.mbox button');
+    if(modalBtns.length>0){
+      modalBtns[0].click();
+      clickCount++;
+      setTimeout(autoClick,800);
+      return;
+    }
+
+    // Special handling for setup screen player flow
+    if(screen==='scrSetup'){
+      var ss2=document.getElementById('ss2');
+      if(ss2&&ss2.style.display!=='none'){
+        if(handleSetupPlayers())return;
+      }
     }
 
     var btns=getClickables();
 
     if(btns.length===0){
+      // Try filling inputs
       var inputs=document.querySelectorAll('.scr.on input[type="text"]:not([disabled])');
       if(inputs.length>0){
         inputs.forEach(function(inp,i){
@@ -3337,31 +3429,28 @@ window.open(waUrl,'_blank');
         return;
       }
 
-      var modalBtns=document.querySelectorAll('.mbg.on button,.mbox button');
-      if(modalBtns.length>0){
-        modalBtns[0].click();
-        clickCount++;
-        setTimeout(autoClick,800);
-        return;
-      }
-
       console.error('AUTOTEST STUCK at screen:',screen,'after',clickCount,'clicks');
       console.log('Log:',log.join(' → '));
       return;
     }
 
     var target=null;
-    btns.forEach(function(b){
-      if(b.classList.contains('gobtn')&&!target)target=b;
-    });
-    if(!target)target=btns[Math.floor(Math.random()*btns.length)];
 
-    if(target.textContent.trim()==='3'&&screen==='scrSetup'){
-      target.click();
-      clickCount++;
-      setTimeout(autoClick,300);
-      return;
+    // In setup ss1: prefer clicking "3" for player count, then gobtn
+    if(screen==='scrSetup'){
+      btns.forEach(function(b){
+        if(b.textContent.trim()==='3'&&!target)target=b;
+      });
     }
+
+    // Prefer gobtn
+    if(!target){
+      btns.forEach(function(b){
+        if(b.classList.contains('gobtn')&&!b.disabled&&!target)target=b;
+      });
+    }
+
+    if(!target)target=btns[Math.floor(Math.random()*btns.length)];
 
     target.click();
     clickCount++;
