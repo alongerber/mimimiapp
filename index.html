@@ -127,7 +127,7 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 .rc-emoji{font-size:2.2rem;margin-bottom:6px}.rc-icon{width:52px;height:52px;border-radius:16px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.03)}
 
 /* Type backgrounds */
-.bg-vote{background:linear-gradient(180deg,#110e22,var(--s1))}.bg-hotseat{background:linear-gradient(180deg,#1f1010,var(--s1))}.bg-mission{background:linear-gradient(180deg,#1f1808,var(--s1))}.bg-alias{background:linear-gradient(180deg,#0e1f18,var(--s1))}.bg-draw{background:linear-gradient(180deg,#0e1820,var(--s1))}.bg-rapid{background:linear-gradient(180deg,#1f1f08,var(--s1))}.bg-dilemma{background:linear-gradient(180deg,#0e0e1f,var(--s1))}.bg-famtalk{background:linear-gradient(180deg,#0e1f12,var(--s1))}.bg-reveal{background:linear-gradient(180deg,#1f0e1a,var(--s1))}
+.bg-vote{background:linear-gradient(180deg,#110e22,var(--s1))}.bg-hotseat{background:linear-gradient(180deg,#1f1010,var(--s1))}.bg-mission{background:linear-gradient(180deg,#1f1808,var(--s1))}.bg-rapid{background:linear-gradient(180deg,#1f1f08,var(--s1))}.bg-dilemma{background:linear-gradient(180deg,#0e0e1f,var(--s1))}.bg-famtalk{background:linear-gradient(180deg,#0e1f12,var(--s1))}.bg-reveal{background:linear-gradient(180deg,#1f0e1a,var(--s1))}
 
 .cq{font-size:1.45rem;font-weight:800;line-height:1.55;margin:8px 0}
 .csub{font-size:.82rem;color:var(--t2);margin:4px 0;font-weight:600}
@@ -174,8 +174,6 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 .abtns{display:flex;gap:8px;margin-top:12px}
 .abtns button{flex:1;padding:14px;border:none;border-radius:14px;font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;color:#fff;transition:.15s}.abtns button:active{transform:scale(.94)}
 
-/* Draw */
-.draww{position:relative;width:100%;max-width:260px;margin:6px auto;aspect-ratio:1;background:#fff;border-radius:14px;overflow:hidden;touch-action:none;box-shadow:0 4px 20px rgba(0,0,0,.3)}.draww canvas{width:100%;height:100%;display:block}
 
 /* Mission */
 .mopts{display:flex;flex-direction:column;gap:6px;margin-top:10px}
@@ -302,11 +300,6 @@ body.light-body{background:#f8f6f1}
 @keyframes noteIn{from{opacity:0;transform:rotate(0deg) translateY(12px)}to{opacity:1}}
 .wall-quote{font-size:.62rem;color:#333;margin-top:6px;line-height:1.65;font-style:italic}
 @keyframes noteIn{from{opacity:0;transform:rotate(0deg) translateY(12px)}to{opacity:1}}
-/* Drawing gallery */
-.draw-gal{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;max-width:360px;margin:6px 0}
-.draw-gal-item{border-radius:10px;overflow:hidden;border:1px solid var(--s3);aspect-ratio:1}
-.draw-gal-item img{width:100%;height:100%;object-fit:cover}
-
 /* Feedback */
 .fb-stars{display:flex;gap:6px;justify-content:center;margin:8px 0}
 .fb-star{width:36px;height:36px;cursor:pointer;color:var(--s3);transition:.2s}.fb-star.on{color:var(--gold);transform:scale(1.1)}
@@ -398,8 +391,6 @@ body.light-body{background:#f8f6f1}
 .sb.active .sb-av{box-shadow:0 0 8px currentColor}
 
 
-.draw-colors{display:flex;gap:6px;justify-content:center;margin:6px 0}
-.dc{width:32px;height:32px;border-radius:50%;border:3px solid var(--s3);cursor:pointer;transition:.2s}.dc.on{border-color:#fff;transform:scale(1.15);box-shadow:0 0 8px rgba(255,255,255,.3)}
 #gc{transition:opacity .15s ease,transform .15s ease}
 
 .onb{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
@@ -441,8 +432,6 @@ body.light-body{background:#f8f6f1}
 .pod-bar{box-shadow:0 -4px 16px rgba(0,0,0,.2) inset}.pod-av{box-shadow:0 2px 12px rgba(0,0,0,.3)}
 /* Timer danger glow */
 .tnum.low{text-shadow:0 0 20px var(--coral)}
-/* Draw shadow */
-.draww{box-shadow:0 4px 24px rgba(0,0,0,.3),0 0 0 1px rgba(255,255,255,.05)}
 /* Crown glow */
 .crown svg{filter:drop-shadow(0 2px 12px rgba(255,199,58,.4))}
 
@@ -712,13 +701,12 @@ body.light-body{background:#f8f6f1}
 <div class="onb-dots"></div>
 </div>
 </div>
-<canvas id="wcv" width="600" height="800" style="display:none"></canvas>
 
 <script src="content.js"></script>
 <script>
 const COL=['#ff6b6b','#74c0fc','#63e6be','#ffc73a','#b197fc','#ffa94d','#38d9a9','#f783ac'];
 function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
-const TAU=Math.PI*2,ACAP=5;
+const TAU=Math.PI*2;
 const I={
 crown:'<path d="M2 17h20l-3-11-5 5-4-7-4 7-5-5z"/><rect x="2" y="17" width="20" height="3" rx="1"/>',
 star:'<path d="M12 2l3.1 6.3L22 9.3l-5 4.9 1.2 6.9L12 17.8l-6.2 3.2L7 14.1 2 9.3l6.9-1L12 2z"/>',
@@ -880,7 +868,7 @@ let P=[],pCnt=4,scores={},voteLog=[],turnQ={};
 let events=[],curE=0,spinning=false,tmrId=null,_advancing=false;
 let pools={},idx={};
 let prevState=null;
-let gS={aliasW:{},drawW:{},rounds:0,t0:0,drawings:[],quotes:[],micResults:[]};
+let gS={rounds:0,t0:0,drawings:[],quotes:[],micResults:[]};
 let PD=[],curSP=0,seenTypes={},phasesSeen=0,streaks={},lastScorer=-1,comebackUsed={},gameLen='full',voteMode='open',swapCount=0;
 let nightMode=false;
 let hasPaid=false;
@@ -1060,33 +1048,62 @@ if(pCnt<3){toast('צריך לפחות 3 שחקנים');return;}
 clearSave();seenTypes={};P=[];for(let i=0;i<pCnt;i++){const pd=PD[i];const sn=pd.name.replace(/[<>"&]/g,'');P.push({name:sn,color:COL[i],letter:sn[0]||'?',avId:pd.avId,gender:pd.gender,role:pd.role||'adult'});}
 const tpp=gameLen==='short'?Math.max(2,Math.floor(16/P.length)):Math.max(3,Math.floor(30/P.length));const perPhase=Math.floor(tpp*P.length/3);
 // Type distribution with pacing (long-short alternation)
-const longTypes=['vote','dilemma','pdilemma','blind'];
+const CORE_TYPES=['vote','hotseat','reveal','famtalk','mission','dilemma','secret','rapid'];
+const listenTypes=['hotseat','famtalk'];
 function mkTypes(n,phase){
-const all=['vote','vote','alias','hotseat','mission','rapid','dilemma','famtalk','draw','reveal','pdilemma','blind','moral','whatif'];
-if(phase===1&&n>3)all.push('mic');// Add mic round in fire phase
-let t=shuf([...all]).slice(0,n);if(phase===2&&!t.includes('sentence')&&n>3){t[t.length-2]='sentence';}
-// Sort: ensure no two long types adjacent
-const sorted=[];let last='';
-const longs=t.filter(x=>longTypes.includes(x)),shorts=t.filter(x=>!longTypes.includes(x));
-while(longs.length||shorts.length){if(longTypes.includes(last)&&shorts.length)sorted.push(last=shorts.pop());else if(longs.length)sorted.push(last=longs.pop());else sorted.push(last=shorts.pop());}
-return sorted;}
+const all=[...CORE_TYPES];
+if(phase===1&&n>3)all.push('mic');
+let t=shuf([...all]).slice(0,n);
+// Ensure variety per stage
+if(phase===0){if(!t.includes('vote'))t[0]='vote';if(!t.includes('mission')&&n>2)t[Math.min(2,n-1)]='mission';if(!t.includes('famtalk')&&n>3)t[Math.min(3,n-1)]='famtalk';}
+if(phase===1){if(!t.includes('vote'))t[0]='vote';if(!t.includes('hotseat')&&n>1)t[1]='hotseat';if(!t.includes('reveal')&&n>2)t[2]='reveal';if(!t.includes('dilemma')&&n>3)t[Math.min(3,n-1)]='dilemma';}
+if(phase===2){if(!t.includes('vote'))t[0]='vote';if(!t.includes('hotseat')&&n>1)t[1]='hotseat';if(!t.includes('famtalk')&&n>2)t[Math.min(2,n-1)]='famtalk';}
+return t;}
+function enforcePace(rounds){
+for(let i=1;i<rounds.length;i++){
+const r=rounds[i],prev=rounds[i-1];
+// No 2 VOTE in a row
+if(r.roundType==='vote'&&prev.roundType==='vote'){for(let j=i+1;j<rounds.length;j++){if(rounds[j].roundType!=='vote'){const tmp=rounds[i];rounds[i]=rounds[j];rounds[j]=tmp;break;}}}
+// No 2 listen types in a row
+if(listenTypes.includes(r.roundType)&&listenTypes.includes(prev.roundType)){for(let j=i+1;j<rounds.length;j++){if(!listenTypes.includes(rounds[j].roundType)){const tmp=rounds[i];rounds[i]=rounds[j];rounds[j]=tmp;break;}}}
+}return rounds;}
 function mkRounds(n,phase){const types=mkTypes(n,phase);const tc=Array(P.length).fill(0);const out=[];
 let specialIdx=-1;if(phase===1&&n>2)specialIdx=1+Math.floor(Math.random()*(n-2));
 let goldIdx=-1;if(phase===2&&n>2)goldIdx=n-2;
 for(let i=0;i<n;i++){const mn=Math.min(...tc);const c=tc.map((v,j)=>v===mn?j:-1).filter(x=>x>=0);const pi=c[0|Math.random()*c.length];tc[pi]++;
 const ev={type:'spin',pi,roundType:types[i],phase};
-// Assign second player for reveal/pair missions
 if(types[i]==='reveal'){ev.pi2=pickTarget(pi);}
 if(i===specialIdx)ev.special='double';if(i===goldIdx)ev.special='gold';
 out.push(ev);
-// Social validation moment every 5 rounds
-if(i>0&&i%5===4&&phase<2)out.push({type:'social_moment',phase});}return out;}
+if(i>0&&i%5===4&&phase<2)out.push({type:'social_moment',phase});}
+enforcePace(out.filter(e=>e.type==='spin'));
+return out;}
 events=[];
-events.push({type:'phase_intro',phase:0});events.push(...mkRounds(perPhase,0));events.push({type:'family_challenge',ci:0});
-events.push({type:'phase_intro',phase:1});events.push(...mkRounds(perPhase,1));events.push({type:'family_challenge',ci:1});
-events.push({type:'phase_intro',phase:2});events.push(...mkRounds(perPhase,2));events.push({type:'big_question'});
-scores={};turnQ={};voteLog=[];streaks={};lastScorer=-1;comebackUsed={};phasesSeen=0;prevState=null;gS={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};
-P.forEach((_,i)=>{scores[i]=0;turnQ[i]=0;gS.aliasW[i]=0;gS.drawW[i]=0;});
+// Phase 0 (warm): opener VOTE + rounds + FAM_CH
+events.push({type:'phase_intro',phase:0});
+const warmRounds=mkRounds(perPhase,0);
+// Force opener: VOTE warm
+if(warmRounds.length>0)warmRounds[0].roundType='vote';
+events.push(...warmRounds);
+// Insert FAM_CH after ~3 rounds in warm
+if(typeof FAM_CH!=='undefined'&&FAM_CH.length){events.splice(Math.min(4,events.length),0,{type:'spin',pi:0,roundType:'fam_ch',phase:0});}
+// Phase 1 (fire): rounds + GUESS
+events.push({type:'phase_intro',phase:1});
+const fireRounds=mkRounds(perPhase,1);
+events.push(...fireRounds);
+// Insert 1 GUESS in fire
+if(typeof GUESS!=='undefined'){const guessPos=events.length-Math.floor(fireRounds.length/2);events.splice(guessPos,0,{type:'spin',pi:0,roundType:'guess',phase:1});}
+// Phase 2 (final): rounds + FAM_CH before closer + closer FAMTALK
+events.push({type:'phase_intro',phase:2});
+const finalRounds=mkRounds(perPhase,2);
+events.push(...finalRounds);
+// Insert FAM_CH before last round in final
+if(typeof FAM_CH!=='undefined'&&FAM_CH.length>1){events.splice(events.length-1,0,{type:'spin',pi:0,roundType:'fam_ch',phase:2});}
+// Force closer: FAMTALK final
+events.push({type:'spin',pi:0,roundType:'famtalk',phase:2});
+events.push({type:'big_question'});
+scores={};turnQ={};voteLog=[];streaks={};lastScorer=-1;comebackUsed={};phasesSeen=0;prevState=null;gS={rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};
+P.forEach((_,i)=>{scores[i]=0;turnQ[i]=0;});
 if(typeof SECRET!=='undefined'&&SECRET.length){
 secretPool=shuf([...SECRET]);
 // Prize pool
@@ -1099,22 +1116,6 @@ secretIdx=0;
 secretPool=[];
 }
 if(!window._lastSecretEnd)window._lastSecretEnd=0;
-// Insert RECORD rounds — max 1 per phase
-if(typeof RECORD!=='undefined'&&RECORD.length){
-const recPool=shuf([...RECORD]);
-let ri=0;
-for(let phase=0;phase<3&&ri<recPool.length;phase++){
-const phaseSpins=[];
-events.forEach((ev,idx)=>{
-if(ev.type==='spin'&&ev.phase===phase)phaseSpins.push(idx);
-});
-if(phaseSpins.length>=3){
-const insertAt=phaseSpins[Math.floor(phaseSpins.length/2)];
-events.splice(insertAt,0,{type:'spin',pi:0,roundType:'record',phase:phase,recordQ:recPool[ri]});
-ri++;
-}
-}
-}
 // Phase-graded pools — with cross-game memory (no repeats across ~3 games)
 const _pp=(()=>{try{const s=localStorage.getItem('mimi_pp');return s?JSON.parse(s):null;}catch(e){return null;}})();
 const _reuse=!!_pp;
@@ -1122,8 +1123,8 @@ const _reuse=!!_pp;
 nightMode=false;
 function _gp(key,factory){if(_reuse&&_pp.p[key]&&_pp.p[key].length>0&&_pp.i[key]<_pp.p[key].length)return{p:_pp.p[key],i:_pp.i[key]};return{p:factory(),i:0};}
 ['warm','fire','final'].forEach(k=>{
-[['vt_'+k,()=>shuf(filterByAge([...VOTE[k]]))],['hs_'+k,()=>shuf(filterByAge([...(HOTSEAT[k]||[])]))],['mi_'+k,()=>shuf(filterByAge([...(MISSIONS[k]||[])]))],['ft_'+k,()=>shuf(filterByAge([...(FAMTALK[k]||[])]))],['rv_'+k,()=>shuf(filterByAge([...(REVEAL[k]||[])]))],['al_'+k,()=>shuf([...(ALIAS[k]||[])])],['dr_'+k,()=>shuf([...(DRAW[k]||[])])],['pd_'+k,()=>shuf(filterByAge([...(PDILEMMA[k]||[])]))],['bl_'+k,()=>shuf(filterByAge([...(BLIND[k]||[])]))]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});});
-[['sent',()=>shuf([...SENTENCE.final])],['ra',()=>shuf([...RAPIDS])],['di',()=>shuf([...DILEMMAS])],['fc',()=>shuf([...FAM_CH])],['rec',()=>shuf([...(typeof RECORD!=='undefined'?RECORD:[])])],['moral',()=>shuf([...(typeof MORAL!=='undefined'?MORAL:[])])],['whatif',()=>shuf([...(typeof WHATIF!=='undefined'?WHATIF:[])])]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});
+[['vt_'+k,()=>shuf(filterByAge([...VOTE[k]]))],['hs_'+k,()=>shuf(filterByAge([...(HOTSEAT[k]||[])]))],['mi_'+k,()=>shuf(filterByAge([...(MISSIONS[k]||[])]))],['ft_'+k,()=>shuf(filterByAge([...(FAMTALK[k]||[])]))],['rv_'+k,()=>shuf(filterByAge([...(REVEAL[k]||[])]))]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});});
+[['ra',()=>shuf([...RAPIDS])],['di',()=>shuf([...DILEMMAS])],['fc',()=>shuf([...FAM_CH])],['rec',()=>shuf([...(typeof RECORD!=='undefined'?RECORD:[])])],['gu',()=>shuf([...(typeof GUESS!=='undefined'?GUESS.fire:[])])]].forEach(([key,fn])=>{const r=_gp(key,fn);pools[key]=r.p;idx[key]=r.i;});
 // Night mode — mix in adult content
 if(nightMode){
 ['warm','fire','final'].forEach(k=>{
@@ -1258,8 +1259,8 @@ function doSpin(){
 }
 
 // ===== SHOW ROUND =====
-const RT_NAMES={vote:'הצבעה',hotseat:'כיסא חם',mission:'משימה',alias:'מילים',draw:'ציור',rapid:'בזק',dilemma:'דילמה',famtalk:'שיחה',reveal:'זה על זה',pdilemma:'בחירה',blind:'ניחוש',sentence:'השלם משפט',mic:'שכנע',secret:'סודי',record:'הקלטה',moral:'דילמה מוסרית',whatif:'מה היית עושה'};
-const RT={vote:{ic:'vote',c:'var(--lav)',bg:'vote'},hotseat:{ic:'flame',c:'var(--coral)',bg:'hotseat'},mission:{ic:'target',c:'var(--peach)',bg:'mission'},alias:{ic:'chat',c:'var(--teal)',bg:'alias'},draw:{ic:'brush',c:'var(--sky)',bg:'draw'},rapid:{ic:'bolt',c:'var(--gold)',bg:'rapid'},dilemma:{ic:'scale',c:'var(--sky)',bg:'dilemma'},famtalk:{ic:'people',c:'var(--mint)',bg:'famtalk'},reveal:{ic:'heart',c:'var(--rose)',bg:'reveal'},pdilemma:{ic:'scale',c:'var(--peach)',bg:'hotseat'},blind:{ic:'heart',c:'var(--rose)',bg:'reveal'},sentence:{ic:'chat',c:'var(--mint)',bg:'reveal'},mic:{ic:'star',c:'var(--coral)',bg:'hotseat'},secret:{ic:'target',c:'var(--gold)',bg:'hotseat'},record:{ic:'megaphone',c:'var(--mint)',bg:'famtalk'},moral:{ic:'scale',c:'var(--coral)',bg:'dilemma'},whatif:{ic:'sparkle',c:'var(--sky)',bg:'famtalk'}};
+const RT_NAMES={vote:'הצבעה',hotseat:'כיסא חם',mission:'משימה',rapid:'בזק',dilemma:'דילמה',famtalk:'שיחה',reveal:'זה על זה',mic:'שכנע',secret:'סודי',record:'הקלטה',guess:'ניחוש',fam_ch:'אתגר משפחתי'};
+const RT={vote:{ic:'vote',c:'var(--lav)',bg:'vote'},hotseat:{ic:'flame',c:'var(--coral)',bg:'hotseat'},mission:{ic:'target',c:'var(--peach)',bg:'mission'},rapid:{ic:'bolt',c:'var(--gold)',bg:'rapid'},dilemma:{ic:'scale',c:'var(--sky)',bg:'dilemma'},famtalk:{ic:'people',c:'var(--mint)',bg:'famtalk'},reveal:{ic:'heart',c:'var(--rose)',bg:'reveal'},mic:{ic:'star',c:'var(--coral)',bg:'hotseat'},secret:{ic:'target',c:'var(--gold)',bg:'hotseat'},record:{ic:'megaphone',c:'var(--mint)',bg:'famtalk'},guess:{ic:'vote',c:'var(--lav)',bg:'vote'},fam_ch:{ic:'people',c:'var(--mint)',bg:'famtalk'}};
 
 function showRound(ev){
 const pi=ev.pi,p=P[pi],rt=ev.roundType,ri=RT[rt];
@@ -1283,19 +1284,15 @@ const sp=ev.special&&spColors[ev.special]?`<div class="special" style="color:${s
 if(rt==='vote')startVote(pi,sp,mult,ev);
 else if(rt==='hotseat')showHS(pi,sp,mult);
 else if(rt==='mission')showMSN(pi,sp,mult,ev);
-else if(rt==='alias')startAlias(pi,sp,mult);
-else if(rt==='draw')startDraw(pi,sp,mult);
 else if(rt==='rapid')showRapid(pi,sp,mult);
 else if(rt==='dilemma')showDil(pi,sp,mult);
 else if(rt==='famtalk')showFT(pi,sp,mult);
 else if(rt==='reveal')showReveal(pi,ev.pi2,sp,mult);
-else if(rt==='pdilemma')showPDilemma(pi,sp,mult);
-else if(rt==='blind')showBlind(pi,ev.pi2,sp,mult);
-else if(rt==='sentence')showSentence(pi,sp,mult);
 else if(rt==='mic')showMicRound(pi,sp,mult);
 else if(rt==='record')showRecord(ev,sp,mult);
-else if(rt==='moral')showMoral(pi,sp,mult);
-else if(rt==='whatif')showWhatIf(pi,sp,mult);
+else if(rt==='secret')showSecretMission(ev,sp,mult);
+else if(rt==='guess')showGuess(ev,sp,mult);
+else if(rt==='fam_ch')showFamChallenge(ev,sp,mult);
 }
 function gc(h){const el=document.getElementById('gc');
 el.style.opacity='0';el.style.transform='translateY(8px)';
@@ -1520,9 +1517,11 @@ gc(`<div class="nar" style="background:${RT.hotseat.c}11;border-color:${RT.hotse
 <div class="acts"><button class="ab ab-g" onclick="hsAnswer(${pi},${pts})">${g(pi,'שיתפתי','שיתפתי')}.</button><button class="ab ab-m" onclick="advance()">דלג</button></div></div>`);}
 
 // ===== REVEAL (new type!) =====
+let BL={};
 function showReveal(pi,pi2,sp,mult){
 if(pi2===undefined){pi2=pickTarget(pi);}
 const q=nx(pools['rv_'+pk()],idx['rv_'+pk()]++);
+if(q.type==='blind'){showBlindReveal(pi,pi2,q,sp,mult);return;}
 const qText=q.q.replace(/%1/g,P[pi].name).replace(/%2/g,P[pi2].name);
 const isHeart=q.type==='heart'||q.type==='deep';
 const firstTime=!seenTypes['reveal'];seenTypes['reveal']=true;
@@ -1538,6 +1537,56 @@ gc(`${explain}${sp}
 <button class="quote-btn" onclick="openQuote()">${ic('chat',12,'var(--gold)')} נפל פה משפט.</button>
 <div class="acts"><button class="ab ab-g" style="width:100%" onclick="scores[${pi}]++;ptPop(P[${pi}].color,'+1');updateSB();${isHeart?`showBreathe(${pi})`:`advance()`}">${isHeart?'היה רגע':'עשינו'} (+1)</button></div></div>`);}
 
+// Blind sub-type of REVEAL
+function showBlindReveal(pi,pi2,q,sp,mult){
+const q1=q.q.replace(/%1/g,P[pi].name).replace(/%2/g,P[pi2].name);
+const q2=(q.q2||q.q).replace(/%1/g,P[pi].name).replace(/%2/g,P[pi2].name);
+BL={pi,pi2,q,q1,q2,opts:q.opts||[],a1:null,a2:null,mult};
+const opts=BL.opts;
+if(opts.length>0){let optHTML='<div class="vgrid">';
+opts.forEach((o,i)=>{optHTML+=`<div class="vb" style="color:var(--rose);border-color:var(--rose)40;padding:12px 16px" onclick="blPick(1,${i},'${o.replace(/'/g,"\\'")}')"><b>${o}</b></div>`;});optHTML+='</div>';
+gc(`<div class="handoff"><div class="handoff-av" style="border-color:${P[pi].color}">${gAv(pi,80)}</div>
+<div class="handoff-name" style="color:${P[pi].color}">${P[pi].name}</div>
+<div style="font-size:.88rem;font-weight:700;margin:8px 0">${q1}</div>
+<div class="csub">אל ${g(pi,'תראה','תראי')} ל-${P[pi2].name}.</div>
+${optHTML}</div>`);}
+else{gc(`<div class="handoff"><div class="handoff-av" style="border-color:${P[pi].color}">${gAv(pi,80)}</div>
+<div class="handoff-name" style="color:${P[pi].color}">${P[pi].name}</div>
+<div class="cq">${q1}</div>
+<div class="csub">${g(pi,'תענה','תעני')} בקול — רק ל-${P[pi2].name}.</div>
+<div class="acts"><button class="ab ab-g" onclick="blPick(1,-1,'')">${g(pi,'עניתי','עניתי')}.</button></div></div>`);}}
+function blPick(step,i,val){SND.play('pop');
+if(step===1){BL.a1={idx:i,val};
+gc(`<div class="handoff"><div style="margin-bottom:8px">${ic('check',32,'var(--teal)')}</div>
+<div style="font-weight:700;margin-bottom:12px">תעבירו ל-${P[BL.pi2].name}.</div>
+<div class="handoff-av" style="border-color:${P[BL.pi2].color}">${gAv(BL.pi2,80)}</div>
+<div class="handoff-name" style="color:${P[BL.pi2].color}">${P[BL.pi2].name}</div>
+<div class="acts"><button class="ab" style="background:${P[BL.pi2].color}" onclick="blShowQ2()">${g(BL.pi2,'מוכן','מוכנה')}.</button></div></div>`);}
+else{BL.a2={idx:i,val};blReveal();}}
+function blShowQ2(){const opts=BL.opts;
+if(opts.length>0){let optHTML='<div class="vgrid">';
+opts.forEach((o,i)=>{optHTML+=`<div class="vb" style="color:var(--sky);border-color:var(--sky)40;padding:12px 16px" onclick="blPick(2,${i},'${o.replace(/'/g,"\\'")}')"><b>${o}</b></div>`;});optHTML+='</div>';
+gc(`<div class="handoff"><div class="handoff-av" style="border-color:${P[BL.pi2].color}">${gAv(BL.pi2,80)}</div>
+<div class="handoff-name" style="color:${P[BL.pi2].color}">${P[BL.pi2].name}</div>
+<div style="font-size:.88rem;font-weight:700;margin:8px 0">${BL.q2}</div>
+${optHTML}</div>`);}
+else{gc(`<div class="handoff"><div class="handoff-av" style="border-color:${P[BL.pi2].color}">${gAv(BL.pi2,80)}</div>
+<div class="handoff-name" style="color:${P[BL.pi2].color}">${P[BL.pi2].name}</div>
+<div class="cq">${BL.q2}</div>
+<div class="acts"><button class="ab ab-g" onclick="blPick(2,-1,'')">${g(BL.pi2,'עניתי','עניתי')}.</button></div></div>`);}}
+function blReveal(){const match=BL.a1.idx>=0&&BL.a1.idx===BL.a2.idx;
+SND.play(match?'win':'reveal');vib(match?[50,50,100,100]:[50,50]);
+gc(`<div class="pass">
+<div style="font-size:1rem;font-weight:900;color:${match?'var(--teal)':'var(--coral)'};margin:8px 0">${match?'חשבתם אותו דבר.':'חשבתם שונה.'}</div>
+<div style="display:flex;gap:16px;justify-content:center;margin:10px 0">
+<div style="text-align:center"><div class="who-av" style="border-color:${P[BL.pi].color};width:64px;height:64px">${gAv(BL.pi,64)}</div><div style="font-size:.72rem;font-weight:700;color:${P[BL.pi].color};margin-top:4px">${P[BL.pi].name}</div><div style="font-size:.8rem;font-weight:800;color:var(--gold)">${BL.a1.val||'(בקול)'}</div></div>
+<div style="align-self:center;font-size:1.2rem">${match?'=':'≠'}</div>
+<div style="text-align:center"><div class="who-av" style="border-color:${P[BL.pi2].color};width:64px;height:64px">${gAv(BL.pi2,64)}</div><div style="font-size:.72rem;font-weight:700;color:${P[BL.pi2].color};margin-top:4px">${P[BL.pi2].name}</div><div style="font-size:.8rem;font-weight:800;color:var(--gold)">${BL.a2.val||'(בקול)'}</div></div>
+</div>
+${match?'<div style="font-size:.65rem;color:var(--teal)">+1 לשניכם.</div>':''}
+<div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);
+if(match){scores[BL.pi]=(scores[BL.pi]||0)+1;scores[BL.pi2]=(scores[BL.pi2]||0)+1;updateSB();}}
+
 // Breathe moment
 function showBreathe(pi){
 gc(`<div class="breathe"><div class="breathe-heart">${ic('heart',48,'var(--rose)')}</div>
@@ -1547,68 +1596,26 @@ gc(`<div class="breathe"><div class="breathe-heart">${ic('heart',48,'var(--rose)
 
 // ===== MISSION =====
 let MS={};
-function showMSN(pi,sp,mult,ev){const m=nx(pools['mi_'+pk()],idx['mi_'+pk()]++);MS={pi,d:0,mult};
+function showMSN(pi,sp,mult,ev){const m=nx(pools['mi_'+pk()],idx['mi_'+pk()]++);
+if(!m||!m.o||!m.o.length){advance();return;}
 const p=P[pi];
-const firstTime=!seenTypes['mission'];seenTypes['mission']=true;
-const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('target',16,'var(--peach)')} משימה</div><div class="explain-text">שלוש רמות. בחרו חכם.<br>${p.name} ${g(pi,'מבצע','מבצעת')}, כולם שופטים.</div></div>`:'';
 const _mt=ev.pi2!==undefined?ev.pi2:pickTarget(pi);
-let opts='<div class="mopts">';m.o.forEach((o,i)=>{const t=o.t.replace(/%2/g,P[_mt].name);opts+=`<div class="mopt" onclick="mPick(this,${o.d})"><span class="mopt-s">${ic('star',12,'var(--gold)').repeat(o.d)} +${o.d*mult}</span><span>${t}</span></div>`;});opts+='</div>';
+// Pick one mission randomly instead of showing all 3
+const picked=m.o[Math.floor(Math.random()*m.o.length)];
+const pts=picked.d*mult;
+const missionText=picked.t.replace(/%2/g,P[_mt].name);
+MS={pi,pts,mult};
 gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,64)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">משימה.</div></div></div>
-${sp}${explain}
+${sp}
 <div class="rc bg-mission"><div class="rc-bar" style="background:var(--peach)"></div><div class="rc-glow" style="background:var(--peach)"></div>
 <div class="rc-icon">${ic('target',36,'var(--peach)')}</div>
-<div class="csub">בחרו אתגר:</div>
-${opts}
-<div class="acts"><button class="ab ab-g" id="mGo" disabled onclick="mDo()" style="width:100%">בצעו.</button></div></div>`);}
-function mPick(el,d){el.parentElement.querySelectorAll('.mopt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');MS.d=d;document.getElementById('mGo').disabled=false;SND.play('pop');}
-function mDo(){const pi=MS.pi,pts=MS.d*MS.mult,p=P[pi];
+<div style="font-size:.7rem;color:var(--t3);margin-bottom:8px">המשימה שלך.</div>
+<div style="font-size:.9rem;color:var(--text);font-weight:700;line-height:1.7;direction:rtl;margin:16px 0">${missionText}</div>
+<div class="acts"><button class="ab ab-g" onclick="mDo()" style="width:100%">עשיתי.</button></div></div>`);}
+function mDo(){const pi=MS.pi,pts=MS.pts,p=P[pi];
 gc(`<div class="pass"><div>${ic('sparkle',40,'var(--peach)')}</div><div class="pass-name" style="color:${p.color}">${p.name} ${g(pi,'מבצע','מבצעת')}.</div><div class="csub">עבר/ה?</div>
-<div class="acts"><button class="ab ab-g" onclick="scores[${pi}]+=${pts};ptPop('${p.color}','+${pts}');updateSB();trackStreak(${pi});advance()">עבר! (+${pts})</button><button class="ab" style="background:var(--coral)" onclick="advance()">לא עבר</button></div></div>`);}
+<div class="acts"><button class="ab ab-g" onclick="scores[${pi}]+=${pts};ptPop('${p.color}','+${pts}');updateSB();trackStreak(${pi});advance()">עבר. (+${pts})</button><button class="ab" style="background:var(--coral)" onclick="advance()">לא עבר.</button></div></div>`);}
 
-// ===== MORAL DILEMMA =====
-function showMoral(pi,sp,mult){
-  const q=nx(pools['moral'],idx['moral']++);
-  if(!q){advance();return;}
-  const p=P[pi];
-  const rtName=RT_NAMES['moral']||'דילמה';
-
-  let optsHtml='';
-  if(q.opts&&q.opts.length){
-    optsHtml='<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0">';
-    q.opts.forEach((o,i)=>{
-      const colors=['var(--coral)','var(--teal)','var(--sky)'];
-      optsHtml+=`<button class="ab" style="background:${colors[i%3]};flex:1;min-width:80px;font-size:.75rem" onclick="SND.play('pop');advance()">${o}</button>`;
-    });
-    optsHtml+='</div>';
-  }
-
-  gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,64)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">${rtName}</div></div></div>
-  ${sp}
-  <div class="rc bg-dilemma"><div class="rc-bar" style="background:var(--coral)"></div><div class="rc-glow" style="background:var(--coral)"></div>
-  <div class="rc-icon">${ic('scale',36,'var(--coral)')}</div>
-  <div class="cq" style="color:var(--coral)">${q.q}</div>
-  <div class="csub">כל אחד אומר מה היה עושה. בלי לשפוט.</div>
-  ${optsHtml}
-  <div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">דיברנו. הלאה.</button></div>
-  </div>`);
-}
-
-// ===== WHAT IF =====
-function showWhatIf(pi,sp,mult){
-  const q=nx(pools['whatif'],idx['whatif']++);
-  if(!q){advance();return;}
-  const p=P[pi];
-  const rtName=RT_NAMES['whatif']||'מה היית עושה';
-
-  gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,64)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">${rtName}</div></div></div>
-  ${sp}
-  <div class="rc bg-famtalk"><div class="rc-bar" style="background:var(--sky)"></div><div class="rc-glow" style="background:var(--sky)"></div>
-  <div class="rc-icon">${ic('sparkle',36,'var(--sky)')}</div>
-  <div class="cq" style="color:var(--sky)">${q.q}</div>
-  <div class="csub">${p.name} עונה ראשון. אחר כך כולם.</div>
-  <div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">ענינו. הלאה.</button></div>
-  </div>`);
-}
 
 // ===== PRIZES =====
 function showPrize(pi){
@@ -1656,69 +1663,7 @@ function showPrize(pi){
   spin();
 }
 
-// ===== ALIAS =====
-let AS={};
-function startAlias(pi,sp,mult){const p=P[pi];AS={pi,mult};
-const firstTime=!seenTypes['alias'];seenTypes['alias']=true;
-const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('chat',16,'var(--teal)')} אליאס</div><div class="explain-text">מילה על המסך. תסביר בלי להגיד אותה.<br>השאר מנחשים. 30 שניות — מי שמהיר, מרוויח.</div></div>`:'';
-gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,64)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">${g(pi,'מסביר','מסבירה')} מילים.</div></div></div>
-${sp}${explain}
-<div class="rc bg-alias"><div class="rc-bar" style="background:var(--teal)"></div><div class="rc-glow" style="background:var(--teal)"></div>
-<div class="rc-icon">${ic('chat',36,'var(--teal)')}</div>
-<div class="csub">${phaseTimer()} שניות • עד ${ACAP} נקודות${mult>1?' (×'+mult+')':''}</div>
-<div class="acts"><button class="ab" style="background:var(--teal);width:100%" onclick="aGo(${pi})">${g(pi,'מוכן','מוכנה')}! מתחילים</button></div></div>`);}
-function aGo(pi){const pt=phaseTimer();AS={...AS,score:0,time:pt,total:pt,words:[]};showAW(pi);AS.tmr=setInterval(()=>{AS.time--;SND.play('tick');updateCircle('at','ab',AS.time,AS.total,'var(--teal)');if(AS.time<=0){clearInterval(AS.tmr);vib(300);SND.play('buzz');aEnd();}},1000);}
-function showAW(pi){if(AS.score>=ACAP){clearInterval(AS.tmr);aEnd();return;}const w=nx(pools['al_'+pk()],idx['al_'+pk()]++);AS.cw=w;
-gc(`<div class="rc bg-alias"><div class="rc-bar" style="background:var(--teal)"></div>
-${circleTimer('at',AS.time,AS.total,'var(--teal)')}
-<div class="aword" style="color:${P[pi].color}">${w}</div>
-<div style="font-size:.75rem;color:var(--gold);font-weight:700">${AS.score}/${ACAP}</div>
-<div class="abtns"><button style="background:var(--teal)" onclick="aOk()">ניחשו.</button><button style="background:var(--s3)" onclick="aSkip()">דלג</button></div></div>`);}
-function aOk(){SND.play('pop');vib(30);AS.score++;AS.words.push(AS.cw);showAW(AS.pi);}
-function aSkip(){showAW(AS.pi);}
-function aEnd(){if(AS.tmr)clearInterval(AS.tmr);const pi=AS.pi,p=P[pi],pts=Math.min(AS.score,ACAP)*AS.mult;scores[pi]+=pts;gS.aliasW[pi]=(gS.aliasW[pi]||0)+AS.score;updateSB();saveState();if(pts>0){ptPop(p.color,'+'+pts);SND.play('win');vib(80);scorePop(pi);trackStreak(pi);showPrize(pi);return;}
-gc(`<div class="pass"><div style="font-size:2.5rem;font-weight:900;color:var(--gold)">${AS.score} מילים.</div><div class="csub">${AS.words.join(' • ')}</div></div><div class="ptag">+${pts} ל${p.name}</div><div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);}
 
-// ===== DRAW =====
-let DS={};
-function startDraw(pi,sp,mult){const p=P[pi];const w=nx(pools['dr_'+pk()],idx['dr_'+pk()]++);const pt=phaseTimer();DS={pi,word:w,time:pt,total:pt,mult};
-const firstTime=!seenTypes['draw'];seenTypes['draw']=true;
-const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('brush',16,'var(--sky)')} ציור</div><div class="explain-text">קיבלת מילה. תצייר — בלי מילים, בלי רמזים.<br>השאר מנחשים. 30 שניות.</div></div>`:'';
-gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,64)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">${g(pi,'מצייר','מציירת')}.</div></div></div>
-${sp}${explain}
-<div class="rc bg-draw"><div class="rc-bar" style="background:var(--sky)"></div>
-<div class="rc-icon">${ic('brush',36,'var(--sky)')}</div>
-<div class="aword" style="color:${p.color}">${w}</div>
-<div class="csub">${g(pi,'אל תראה','אל תראי')} לאף אחד.</div>
-<div class="acts"><button class="ab" style="background:var(--sky);width:100%" onclick="dGo(${pi})">${g(pi,'מוכן','מוכנה')}! מתחילים</button></div></div>`);}
-function dGo(pi){gc(`<div class="rc bg-draw"><div class="rc-bar" style="background:var(--sky)"></div>
-${circleTimer('dt',DS.time,DS.total,'var(--sky)')}
-<div class="draww"><canvas id="dcv" width="260" height="260"></canvas></div>
-<div class="draw-colors">
-<div class="dc on" style="background:#333" onclick="dColor('#333',this)"></div>
-<div class="dc" style="background:#e74c3c" onclick="dColor('#e74c3c',this)"></div>
-<div class="dc" style="background:#3498db" onclick="dColor('#3498db',this)"></div>
-<div class="dc" style="background:#2ecc71" onclick="dColor('#2ecc71',this)"></div>
-<div class="dc" style="background:#f39c12" onclick="dColor('#f39c12',this)"></div>
-</div>
-<div style="text-align:center;margin:4px 0"><button onclick="dClr()" style="background:none;border:1px solid var(--s3);border-radius:8px;padding:3px 10px;color:var(--t2);font-family:inherit;font-size:.65rem;cursor:pointer">נקה</button></div>
-<div class="abtns"><button style="background:var(--teal)" onclick="dRes(true)">ניחשו.</button><button style="background:var(--coral)" onclick="dRes(false)">לא ניחשו</button></div></div>`);
-initDC();DS.tmr=setInterval(()=>{DS.time--;SND.play('tick');updateCircle('dt','db',DS.time,DS.total,'var(--sky)');if(DS.time<=0){clearInterval(DS.tmr);dRes(false);}},1000);}
-function initDC(){const cv=document.getElementById('dcv');if(!cv)return;const dpr=window.devicePixelRatio||1;cv.width=260*dpr;cv.height=260*dpr;const c=cv.getContext('2d');c.scale(dpr,dpr);cv.style.width='260px';cv.style.height='260px';c.fillStyle='#fff';c.fillRect(0,0,260,260);c.strokeStyle='#333';c.lineWidth=3;c.lineCap='round';c.lineJoin='round';let d=false,curColor='#333';
-function pos(e){const r=cv.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:(t.clientX-r.left)*(260/r.width),y:(t.clientY-r.top)*(260/r.height)};}
-function down(e){e.preventDefault();d=true;c.strokeStyle=curColor;const p=pos(e);c.beginPath();c.moveTo(p.x,p.y);}
-function move(e){e.preventDefault();if(!d)return;const p=pos(e);c.lineTo(p.x,p.y);c.stroke();}
-function up(){d=false;}
-cv.addEventListener('pointerdown',down,{passive:false});cv.addEventListener('pointermove',move,{passive:false});cv.addEventListener('pointerup',up);cv.addEventListener('pointerleave',up);cv.addEventListener('pointercancel',up);
-// Store color setter on canvas for dColor
-cv._setColor=function(col){curColor=col;c.strokeStyle=col;};}
-function dColor(col,el){const cv=document.getElementById('dcv');if(cv&&cv._setColor)cv._setColor(col);document.querySelectorAll('.dc').forEach(d=>d.classList.remove('on'));if(el)el.classList.add('on');}
-function dClr(){const cv=document.getElementById('dcv');if(cv){const c=cv.getContext('2d');const col=c.strokeStyle;c.fillStyle='#fff';c.fillRect(0,0,260,260);c.strokeStyle=col;}}
-function dRes(ok){if(DS.tmr)clearInterval(DS.tmr);const pi=DS.pi,p=P[pi],pts=ok?3*DS.mult:0;
-// Save drawing
-try{const cv=document.getElementById('dcv');if(cv)gS.drawings.push({img:cv.toDataURL('image/jpeg',.6),word:DS.word,player:pi});}catch(e){}
-if(ok){scores[pi]+=pts;gS.drawW[pi]=(gS.drawW[pi]||0)+1;ptPop(p.color,'+'+pts);SND.play('win');vib(80);updateSB();scorePop(pi);trackStreak(pi);showPrize(pi);return;}else SND.play('buzz');
-gc(`<div class="pass"><div>${ok?ic('star',40,'var(--teal)'):ic('x',40,'var(--coral)')}</div><div style="font-size:1.1rem;font-weight:700;color:${ok?'var(--teal)':'var(--coral)'}">${ok?'ניחשו.':'לא ניחשו.'}</div><div class="csub">המילה: <b>${DS.word}</b></div>${ok?`</div><div class="ptag">+${pts} ל${p.name}</div>`:''}<div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);}
 
 // ===== RAPID =====
 function showRapid(pi,sp,mult){const q=nx(pools.ra,idx.ra++);const p=P[pi];let tl=q.t;const pts=3*mult;
@@ -1749,10 +1694,14 @@ ${sp}${explain}
 <div class="acts"><button class="ab ab-g" style="width:100%" onclick="dlNext()">יאללה, מצביעים</button></div></div>`);
 if(q.id)playTTS(q.id);}
 function dlNext(){const ds=DL;if(ds.cur>=ds.voters.length){dlReveal();return;}const vi=ds.voters[ds.cur],v=P[vi];
+const hasOpts=ds.q.opts&&ds.q.opts.length>0;
+let btnsHTML='';
+if(hasOpts){const colors=['var(--coral)','var(--sky)','var(--teal)','var(--peach)','var(--rose)','var(--gold)'];btnsHTML='<div class="vgrid">';ds.q.opts.forEach((o,i)=>{btnsHTML+=`<div class="vb" style="color:${colors[i%colors.length]};border-color:${colors[i%colors.length]};padding:14px 22px;font-size:.9rem" onclick="dlPick(${vi},${i})">${o}</div>`;});btnsHTML+='</div>';}
+else{btnsHTML=`<div class="vgrid"><div class="vb" style="color:var(--coral);border-color:var(--coral);padding:14px 22px;font-size:.9rem" onclick="dlPick(${vi},'a')">${ds.q.a}</div><div class="vb" style="color:var(--sky);border-color:var(--sky);padding:14px 22px;font-size:.9rem" onclick="dlPick(${vi},'b')">${ds.q.b}</div></div>`;}
 gc(`<div class="handoff"><div class="handoff-av" style="border-color:${v.color}">${gAv(vi,80)}</div>
 <div class="handoff-name" style="color:${v.color}">${v.name}, תורך.</div>
 <div style="font-size:.92rem;font-weight:700;margin:10px 0">${ds.q.q}</div>
-<div class="vgrid"><div class="vb" style="color:var(--coral);border-color:var(--coral);padding:14px 22px;font-size:.9rem" onclick="dlPick(${vi},'a')">${ds.q.a}</div><div class="vb" style="color:var(--sky);border-color:var(--sky);padding:14px 22px;font-size:.9rem" onclick="dlPick(${vi},'b')">${ds.q.b}</div></div></div>`);}
+${btnsHTML}</div>`);}
 function dlPick(vi,ch){SND.play('vote');vib(30);DL.picks[vi]=ch;DL.cur++;
 if(DL.cur<DL.voters.length){const nvi=DL.voters[DL.cur];
 gc(`<div class="handoff"><div style="margin-bottom:8px">${ic('check',32,'var(--teal)')}</div>
@@ -1762,10 +1711,13 @@ gc(`<div class="handoff"><div style="margin-bottom:8px">${ic('check',32,'var(--t
 <div class="acts"><button class="ab" style="background:${P[nvi].color};width:100%;max-width:250px" onclick="dlNext()">${g(nvi,'מוכן','מוכנה')}.</button></div>
 <div style="margin-top:8px"><button onclick="undoDilVote()" style="background:none;border:none;color:var(--t3);font-size:.6rem;cursor:pointer;font-family:inherit">טעות? חזרה</button></div></div>`);}
 else dlReveal();}
-function dlReveal(){const ds=DL;let cA=0,cB=0;for(const k in ds.picks)ds.picks[k]==='a'?cA++:cB++;const tot=cA+cB;const pA=tot?Math.round(cA/tot*100):50;const pts=1*ds.mult;scores[ds.pi]+=pts;ptPop(P[ds.pi].color,'+'+pts);updateSB();SND.play('pop');
+function dlReveal(){const ds=DL;const hasOpts=ds.q.opts&&ds.q.opts.length>0;const pts=1*ds.mult;scores[ds.pi]+=pts;ptPop(P[ds.pi].color,'+'+pts);updateSB();SND.play('pop');
+let resultsHTML='';
+if(hasOpts){const counts={};ds.q.opts.forEach((_,i)=>counts[i]=0);for(const k in ds.picks)counts[ds.picks[k]]=(counts[ds.picks[k]]||0)+1;const tot=Object.values(counts).reduce((a,b)=>a+b,0);const colors=['var(--coral)','var(--sky)','var(--teal)','var(--peach)','var(--rose)','var(--gold)'];resultsHTML='<div style="margin:8px 0">';ds.q.opts.forEach((o,i)=>{const pct=tot?Math.round(counts[i]/tot*100):0;resultsHTML+=`<div style="display:flex;align-items:center;gap:6px;margin:4px 0"><div style="flex:1;text-align:right;font-size:.75rem;font-weight:700;color:${colors[i%colors.length]}">${o}</div><div style="width:${Math.max(pct,8)}%;background:${colors[i%colors.length]}30;border-radius:6px;padding:3px 8px;font-size:.65rem;font-weight:700;color:${colors[i%colors.length]}">${pct}%</div></div>`;});resultsHTML+='</div>';}
+else{let cA=0,cB=0;for(const k in ds.picks)ds.picks[k]==='a'?cA++:cB++;const tot=cA+cB;const pA=tot?Math.round(cA/tot*100):50;resultsHTML=`<div class="dilbar"><div class="dil-a" style="width:${pA}%">${ds.q.a} ${dilLabel(cA,tot)}</div><div class="dil-b" style="width:${100-pA}%">${ds.q.b} ${dilLabel(cB,tot)}</div></div>`;}
 gc(`<div class="rc bg-dilemma"><div class="rc-bar" style="background:var(--sky)"></div>
 <div style="font-size:.88rem;font-weight:800;margin-bottom:8px">${ic('sparkle',16,'var(--sky)')} תוצאות.</div><div class="csub">${ds.q.q}</div>
-<div class="dilbar"><div class="dil-a" style="width:${pA}%">${ds.q.a} ${dilLabel(cA,tot)}</div><div class="dil-b" style="width:${100-pA}%">${ds.q.b} ${dilLabel(cB,tot)}</div></div>
+${resultsHTML}
 <div style="font-size:.72rem;font-weight:700;color:var(--t2);margin:6px 0">${dilVerdict(cA,cB,tot)}</div>
 <div style="font-size:.68rem;color:var(--t2);margin:4px 0;font-style:italic">${hostPrompt('dilemma')}</div>
 </div><div class="ptag">+${pts} ל${P[ds.pi].name}</div>
@@ -1861,155 +1813,6 @@ txt+='\nחושבים שאתם יותר טובים? \nהורידו ושחקו.';
 if(navigator.share)navigator.share({title:'אתגר מי מי מי.',text:txt}).catch(()=>{});
 else{navigator.clipboard.writeText(txt).then(()=>toast('הועתק.')).catch(()=>{});}}
 
-// === D3: Personal Dilemma ===
-function showPDilemma(pi,sp,mult){
-const pool=PDILEMMA[pk()]||PDILEMMA.fire;
-const q=pool[Math.floor(Math.random()*pool.length)];
-const p=P[pi];
-// If opts empty, use player names as options
-const opts=q.opts.length>0?q.opts:P.map(pp=>pp.name);
-let optHTML='<div class="vgrid">';
-opts.forEach((o,i)=>{optHTML+=`<div class="vb" style="color:var(--peach);border-color:var(--peach)40;padding:14px 18px" onclick="pdSelect(${pi},${i},'${o.replace(/'/g,"\\'")}')"><b>${o}</b></div>`;});
-optHTML+='</div>';
-gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,64)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">שאלה אישית</div></div></div>
-${sp}
-<div class="rc bg-hotseat"><div class="rc-bar" style="background:var(--peach)"></div>
-<div class="cq">${q.q}</div>
-<div class="csub">${p.name}, ${g(pi,'בחר','בחרי')} — אל ${g(pi,'תראה','תראי')} לאף אחד.</div>
-${optHTML}</div>`);
-window._pdQ=q;window._pdPi=pi;window._pdMult=mult;}
-function pdSelect(pi,idx,val){SND.play('pop');vib(20);window._pdChoice={idx,val};
-// Now others guess
-window._pdGuessIdx=0;pdNextGuess();}
-function pdNextGuess(){const guessers=P.map((_,i)=>i).filter(i=>i!==window._pdPi);
-if(window._pdGuessIdx>=guessers.length){pdReveal();return;}
-const gi=guessers[window._pdGuessIdx];const q=window._pdQ;
-const opts=q.opts.length>0?q.opts:P.map(pp=>pp.name);
-let optHTML='<div class="vgrid">';
-opts.forEach((o,i)=>{optHTML+=`<div class="vb" style="color:var(--sky);border-color:var(--sky)40;padding:12px 16px" onclick="pdGuess(${gi},${i})"><b>${o}</b></div>`;});
-optHTML+='</div>';
-gc(`<div class="handoff"><div class="handoff-av" style="border-color:${P[gi].color}">${gAv(gi,80)}</div>
-<div class="handoff-name" style="color:${P[gi].color}">${P[gi].name}</div>
-<div style="font-size:.85rem;font-weight:700;margin:8px 0">מה לדעתך ${P[window._pdPi].name} ${g(window._pdPi,'בחר','בחרה')}?</div>
-${optHTML}</div>`);}
-function pdGuess(gi,idx){SND.play('vote');vib(20);
-if(!window._pdGuesses)window._pdGuesses={};
-window._pdGuesses[gi]=idx;window._pdGuessIdx++;
-if(window._pdGuessIdx>=P.length-1){pdReveal();}
-else{const guessers=P.map((_,i)=>i).filter(i=>i!==window._pdPi);
-const ngi=guessers[window._pdGuessIdx];
-gc(`<div class="handoff"><div style="margin-bottom:8px">${ic('check',32,'var(--teal)')}</div>
-<div style="font-weight:700;margin-bottom:16px">תעבירו את הטלפון:</div>
-<div class="handoff-av" style="border-color:${P[ngi].color}">${gAv(ngi,80)}</div>
-<div class="handoff-name" style="color:${P[ngi].color}">${P[ngi].name}</div>
-<div class="acts"><button class="ab" style="background:${P[ngi].color}" onclick="pdNextGuess()">${g(ngi,'מוכן','מוכנה')}.</button></div></div>`);}}
-function pdReveal(){const choice=window._pdChoice;if(!choice||choice.idx===undefined){advance();return;}const pi=window._pdPi;const guesses=window._pdGuesses||{};
-let correctHTML='';let correctCount=0;
-for(const gi in guesses){if(guesses[gi]===choice.idx){scores[gi]=(scores[gi]||0)+1;correctCount++;
-correctHTML+=`<div style="font-size:.65rem;color:var(--teal)">${P[gi].name} ${g(parseInt(gi),'ניחש','ניחשה')} נכון! +1</div>`;}}
-SND.play('reveal');vib([50,50,100]);
-gc(`<div class="pass">
-<div style="font-size:1rem;font-weight:900;color:var(--gold);margin:8px 0">התשובה של ${P[pi].name}:</div>
-<div class="pass-av" style="border-color:${P[pi].color}">${gAv(pi,64)}</div>
-<div style="font-size:1.2rem;font-weight:900;color:${P[pi].color};margin:8px 0">${choice.val}</div>
-<div style="font-size:.72rem;color:var(--t2);margin:4px 0">${correctCount>0?correctCount+' מתוך '+(P.length-1)+' ניחשו נכון.':'אף אחד לא ניחש.'}</div>
-${correctHTML}
-<div style="font-size:.68rem;color:var(--t2);margin:8px 0;font-style:italic">${hostPrompt('general')}</div>
-<div class="acts" style="margin-top:10px"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);
-updateSB();}
-
-// === D4: Blind Reaction ===
-function showBlind(pi,pi2,sp,mult){
-if(pi2===undefined){pi2=pickTarget(pi);}
-const pool=BLIND[pk()]||BLIND.fire;
-const q=pool[Math.floor(Math.random()*pool.length)];
-const q1=q.q1.replace(/%1/g,P[pi].name).replace(/%2/g,P[pi2].name);
-const q2=q.q2.replace(/%1/g,P[pi].name).replace(/%2/g,P[pi2].name);
-window._blind={pi,pi2,q,q1,q2,opts:q.opts,a1:null,a2:null};
-// Step 1: pi answers
-const opts=q.opts;
-if(opts.length>0){
-let optHTML='<div class="vgrid">';
-opts.forEach((o,i)=>{optHTML+=`<div class="vb" style="color:var(--rose);border-color:var(--rose)40;padding:12px 16px" onclick="blindPick(1,${i},'${o.replace(/'/g,"\\'")}')"><b>${o}</b></div>`;});
-optHTML+='</div>';
-gc(`<div class="handoff"><div class="handoff-av" style="border-color:${P[pi].color}">${gAv(pi,80)}</div>
-<div class="handoff-name" style="color:${P[pi].color}">${P[pi].name}</div>
-<div style="font-size:.88rem;font-weight:700;margin:8px 0">${q1}</div>
-<div class="csub">אל ${g(pi,'תראה','תראי')} ל-${P[pi2].name}.</div>
-${optHTML}</div>`);}
-else{
-// Free text — just show prompt and button
-gc(`<div class="handoff"><div class="handoff-av" style="border-color:${P[pi].color}">${gAv(pi,80)}</div>
-<div class="handoff-name" style="color:${P[pi].color}">${P[pi].name}</div>
-<div class="cq">${q1}</div>
-<div class="csub">${g(pi,'תענה','תעני')} בקול — רק ל-${P[pi2].name}.</div>
-<div class="acts"><button class="ab ab-g" onclick="blindPick(1,-1,'')">${g(pi,'עניתי','עניתי')}.</button></div></div>`);}
-}
-function blindPick(step,idx,val){SND.play('pop');const b=window._blind;
-if(step===1){b.a1={idx,val};
-// Now pi2 answers
-const opts=b.opts;
-if(opts.length>0){
-let optHTML='<div class="vgrid">';
-opts.forEach((o,i)=>{optHTML+=`<div class="vb" style="color:var(--sky);border-color:var(--sky)40;padding:12px 16px" onclick="blindPick(2,${i},'${o.replace(/'/g,"\\'")}')"><b>${o}</b></div>`;});
-optHTML+='</div>';
-gc(`<div class="handoff"><div style="margin-bottom:8px">${ic('check',32,'var(--teal)')}</div>
-<div style="font-weight:700;margin-bottom:12px">תעבירו ל-${P[b.pi2].name}.</div>
-<div class="handoff-av" style="border-color:${P[b.pi2].color}">${gAv(b.pi2,80)}</div>
-<div class="handoff-name" style="color:${P[b.pi2].color}">${P[b.pi2].name}</div>
-<div class="acts"><button class="ab" style="background:${P[b.pi2].color}" onclick="showBlindQ2()">${g(b.pi2,'מוכן','מוכנה')}.</button></div></div>`);}
-else{gc(`<div class="handoff"><div style="margin-bottom:8px">${ic('check',32,'var(--teal)')}</div>
-<div style="font-weight:700;margin-bottom:12px">תעבירו ל-${P[b.pi2].name}.</div>
-<div class="handoff-av" style="border-color:${P[b.pi2].color}">${gAv(b.pi2,80)}</div>
-<div class="handoff-name" style="color:${P[b.pi2].color}">${P[b.pi2].name}</div>
-<div class="acts"><button class="ab" style="background:${P[b.pi2].color}" onclick="showBlindQ2()">${g(b.pi2,'מוכן','מוכנה')}.</button></div></div>`);}}
-else{b.a2={idx,val};blindReveal();}}
-function showBlindQ2(){const b=window._blind;const q2=b.q2;const opts=b.opts;
-if(opts.length>0){let optHTML='<div class="vgrid">';
-opts.forEach((o,i)=>{optHTML+=`<div class="vb" style="color:var(--sky);border-color:var(--sky)40;padding:12px 16px" onclick="blindPick(2,${i},'${o.replace(/'/g,"\\'")}')"><b>${o}</b></div>`;});
-optHTML+='</div>';
-gc(`<div class="handoff"><div class="handoff-av" style="border-color:${P[b.pi2].color}">${gAv(b.pi2,80)}</div>
-<div class="handoff-name" style="color:${P[b.pi2].color}">${P[b.pi2].name}</div>
-<div style="font-size:.88rem;font-weight:700;margin:8px 0">${q2}</div>
-${optHTML}</div>`);}
-else{gc(`<div class="handoff"><div class="handoff-av" style="border-color:${P[b.pi2].color}">${gAv(b.pi2,80)}</div>
-<div class="handoff-name" style="color:${P[b.pi2].color}">${P[b.pi2].name}</div>
-<div class="cq">${q2}</div>
-<div class="acts"><button class="ab ab-g" onclick="blindPick(2,-1,'')">${g(b.pi2,'עניתי','עניתי')}.</button></div></div>`);}}
-function blindReveal(){const b=window._blind;const match=b.a1.idx>=0&&b.a1.idx===b.a2.idx;
-SND.play(match?'win':'reveal');vib(match?[50,50,100,100]:[50,50]);
-const matchText=match?'חשבתם אותו דבר.':'חשבתם שונה.';
-gc(`<div class="pass">
-<div style="font-size:1rem;font-weight:900;color:${match?'var(--teal)':'var(--coral)'};margin:8px 0">${matchText}</div>
-<div style="display:flex;gap:16px;justify-content:center;margin:10px 0">
-<div style="text-align:center"><div class="who-av" style="border-color:${P[b.pi].color};width:64px;height:64px">${gAv(b.pi,64)}</div><div style="font-size:.72rem;font-weight:700;color:${P[b.pi].color};margin-top:4px">${P[b.pi].name}</div><div style="font-size:.8rem;font-weight:800;color:var(--gold)">${b.a1.val||'(בקול)'}</div></div>
-<div style="align-self:center;font-size:1.2rem">${match?'=':'≠'}</div>
-<div style="text-align:center"><div class="who-av" style="border-color:${P[b.pi2].color};width:64px;height:64px">${gAv(b.pi2,64)}</div><div style="font-size:.72rem;font-weight:700;color:${P[b.pi2].color};margin-top:4px">${P[b.pi2].name}</div><div style="font-size:.8rem;font-weight:800;color:var(--gold)">${b.a2.val||'(בקול)'}</div></div>
-</div>
-${match?'<div style="font-size:.65rem;color:var(--teal)">+1 לשניכם.</div>':''}
-<div style="font-size:.68rem;color:var(--t2);margin:8px 0;font-style:italic">${hostPrompt('blind')}</div>
-<div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);
-if(match){scores[b.pi]=(scores[b.pi]||0)+1;scores[b.pi2]=(scores[b.pi2]||0)+1;updateSB();}}
-
-// === D5: Sentence Completion ===
-function showSentence(pi,sp,mult){
-const pool=SENTENCE.final;
-const s=pool[Math.floor(Math.random()*pool.length)];
-const p=P[pi];
-gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,64)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">${g(pi,'משלים','משלימה')} משפט</div></div></div>
-${sp}
-<div class="rc bg-reveal"><div class="rc-bar" style="background:var(--rose)"></div>
-<div class="cq" style="font-size:1.3rem">"${s}"</div>
-<div class="csub">${p.name}, ${g(pi,'תשלים','תשלימי')} בקול.</div>
-<div class="acts"><button class="ab ab-g" style="width:100%" onclick="sentenceFlip(${pi},'${s.replace(/'/g,"\\'")}')">${g(pi,'סיימתי','סיימתי')}.</button></div></div>`);}
-function sentenceFlip(pi,sentence){
-gc(`<div class="pass">
-<div style="font-size:.88rem;font-weight:700;color:var(--gold);margin:8px 0">עכשיו כולם.</div>
-<div class="cq" style="font-size:1.1rem">מה לדעתכם ${P[pi].name} ${g(pi,'היה משלים','הייתה משלימה')}?</div>
-<div style="font-size:.82rem;color:var(--t2);margin:6px 0">"${sentence}"</div>
-<div class="csub">כל אחד אומר בקול — ${g(pi,'הוא','היא')} שומע.</div>
-<div style="font-size:.68rem;color:var(--t2);margin:12px 0;font-style:italic">${hostPrompt('sentence')}</div>
-<div class="acts"><button class="ab ab-g" onclick="scores[${pi}]++;ptPop(P[${pi}].color,'+1');updateSB();advance()">המשך (+1)</button></div></div>`);}
 
 // ===== MIC ROUND — "האמת יוצאת לאור" =====
 const MIC_CLAIMS={
@@ -2259,6 +2062,71 @@ ptPop(p.color,'+'+pts);updateSB();scorePop(pi);trackStreak(pi);
 try{gtag('event','mic_round_complete',{player:p.name,score:analysis.score,convinced_pct:pct});}catch(e){}
 }
 
+// ===== GUESS — vote→target guesses majority =====
+let GU={};
+function showGuess(ev,sp,mult){
+const pi=ev.pi;const target=ev.pi2!==undefined?ev.pi2:pickTarget(pi);
+const q=nx(pools.gu,idx.gu++);if(!q){advance();return;}
+GU={pi,target,q,voters:P.map((_,i)=>i).filter(i=>i!==target),cur:0,picks:{},mult};
+const qText=q.q.replace(/%t/g,P[target].name);
+gc(`<div class="who" style="border-color:${P[target].color}"><div class="who-av" style="border-color:${P[target].color}">${gAv(target,64)}</div><div class="who-info"><div class="who-name" style="color:${P[target].color}">${P[target].name}</div><div class="who-role">ניחוש</div></div></div>
+${sp}
+<div class="rc bg-vote"><div class="rc-bar" style="background:var(--lav)"></div>
+<div class="rc-icon">${ic('vote',36,'var(--lav)')}</div>
+<div class="cq">${qText}</div>
+<div class="csub">כולם מצביעים (חוץ מ-${P[target].name}). אחר כך ${g(target,'הוא','היא')} מנחש.</div>
+<div class="acts"><button class="ab ab-g" style="width:100%" onclick="guNext()">יאללה, מצביעים</button></div></div>`);}
+function guNext(){if(GU.cur>=GU.voters.length){guTargetTurn();return;}const vi=GU.voters[GU.cur],v=P[vi];
+gc(`<div class="handoff"><div class="handoff-av" style="border-color:${v.color}">${gAv(vi,80)}</div>
+<div class="handoff-name" style="color:${v.color}">${v.name}, תורך.</div>
+<div style="font-size:.85rem;font-weight:700;margin:8px 0">${GU.q.q.replace(/%t/g,P[GU.target].name)}</div>
+<div class="csub">${g(vi,'תענה','תעני')} בסתר.</div>
+<div class="acts"><input id="guInput" type="text" placeholder="התשובה שלך..." style="width:100%;padding:10px;border-radius:10px;border:1.5px solid var(--s3);background:var(--s1);color:var(--text);font-family:inherit;font-size:.82rem;text-align:center;direction:rtl" />
+<button class="ab ab-g" style="width:100%;margin-top:8px" onclick="guPick(${vi})">שלח</button></div></div>`);}
+function guPick(vi){const inp=document.getElementById('guInput');const val=inp?inp.value.trim():'';if(!val)return;SND.play('vote');vib(30);GU.picks[vi]=val;GU.cur++;
+if(GU.cur<GU.voters.length){const nvi=GU.voters[GU.cur];
+gc(`<div class="handoff"><div style="margin-bottom:8px">${ic('check',32,'var(--teal)')}</div>
+<div style="font-weight:700;margin-bottom:16px">תעבירו את הטלפון:</div>
+<div class="handoff-av" style="border-color:${P[nvi].color}">${gAv(nvi,80)}</div>
+<div class="handoff-name" style="color:${P[nvi].color}">${P[nvi].name}</div>
+<div class="acts"><button class="ab" style="background:${P[nvi].color}" onclick="guNext()">${g(nvi,'מוכן','מוכנה')}.</button></div></div>`);}
+else guTargetTurn();}
+function guTargetTurn(){const t=GU.target;const guessQ=GU.q.guessQ.replace(/%t/g,P[t].name);
+// Find majority answer
+const freq={};for(const k in GU.picks){const v=GU.picks[k].toLowerCase();freq[v]=(freq[v]||0)+1;}
+let best='',bestC=0;for(const k in freq)if(freq[k]>bestC){bestC=freq[k];best=k;}
+GU._majority=best;GU._majorityCount=bestC;
+gc(`<div class="handoff"><div class="handoff-av" style="border-color:${P[t].color}">${gAv(t,80)}</div>
+<div class="handoff-name" style="color:${P[t].color}">${P[t].name}, תורך לנחש.</div>
+<div style="font-size:.88rem;font-weight:700;margin:8px 0">${guessQ}</div>
+<div class="csub">מה הרוב ענה?</div>
+<div class="acts"><input id="guGuess" type="text" placeholder="הניחוש שלך..." style="width:100%;padding:10px;border-radius:10px;border:1.5px solid var(--s3);background:var(--s1);color:var(--text);font-family:inherit;font-size:.82rem;text-align:center;direction:rtl" />
+<button class="ab ab-g" style="width:100%;margin-top:8px" onclick="guReveal()">זה הניחוש שלי</button></div></div>`);}
+function guReveal(){const inp=document.getElementById('guGuess');const guess=(inp?inp.value.trim():'').toLowerCase();
+const match=guess===GU._majority;const pts=match?3*GU.mult:0;
+if(match){scores[GU.target]+=pts;ptPop(P[GU.target].color,'+'+pts);SND.play('win');vib(80);updateSB();}else SND.play('buzz');
+let answersHTML='<div style="margin:8px 0">';for(const k in GU.picks){answersHTML+=`<div style="font-size:.65rem;color:var(--t2)">${P[k].name}: ${GU.picks[k]}</div>`;}answersHTML+='</div>';
+gc(`<div class="pass">
+<div style="font-size:1rem;font-weight:900;color:${match?'var(--teal)':'var(--coral)'};margin:8px 0">${match?P[GU.target].name+' ניחש נכון!':P[GU.target].name+' לא ניחש.'}</div>
+<div style="font-size:.82rem;color:var(--gold);font-weight:700;margin:4px 0">התשובה הנפוצה: ${GU._majority}</div>
+${answersHTML}
+${match?`<div class="ptag">+${pts} ל${P[GU.target].name}</div>`:''}
+<div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);}
+
+// ===== FAM CHALLENGE =====
+function showFamChallenge(ev,sp,mult){
+const pi=ev.pi;const p=P[pi];
+const q=nx(pools.fc,idx.fc++);
+if(!q){advance();return;}
+const pts=2*mult;
+gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,64)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">אתגר משפחתי</div></div></div>
+${sp}
+<div class="rc bg-famtalk"><div class="rc-bar" style="background:var(--mint)"></div><div class="rc-glow" style="background:var(--mint)"></div>
+<div class="rc-icon">${ic('people',36,'var(--mint)')}</div>
+<div class="cq">${q.q||q}</div>
+<div class="csub">כל המשפחה ביחד.</div>
+<div class="acts"><button class="ab ab-g" onclick="scores[${pi}]+=${pts};ptPop('${p.color}','+${pts}');updateSB();advance()">עשינו! (+${pts})</button><button class="ab" style="background:var(--coral)" onclick="advance()">דילגנו</button></div></div>`);}
+
 // ===== SECRET MISSIONS =====
 function showSecretMission(pi,mission){
 const p=P[pi];
@@ -2272,7 +2140,7 @@ gc(`<div class="rc bg-hotseat"><div class="rc-bar" style="background:var(--gold)
 <div style="background:rgba(255,199,58,.08);border:1px solid rgba(255,199,58,.2);border-radius:10px;padding:12px;margin:10px 0">
 <div class="cq" style="color:var(--gold);font-size:.85rem">${mission.q}</div>
 </div>
-<div class="csub">יש לך 3 סיבובים. אף אחד לא יודע.</div>
+<div class="csub">בצע עכשיו — אף אחד לא יודע.</div>
 <div style="display:flex;gap:8px;margin-top:10px">
 <button class="ab" style="background:var(--gold);flex:2" onclick="secretAccept(${pi})">קראתי</button>
 <button class="ab" style="background:var(--s2);flex:1;font-size:.7rem" onclick="secretSwap(${pi})">קשה. אחרת.</button>
@@ -2285,14 +2153,14 @@ function secretAccept(pi){
 activeSecret={
 pi:pi,
 mission:secretPool[secretIdx],
-roundsLeft:3,
+roundsLeft:1,
 startRound:gS.rounds
 };
 secretIdx++;
 SND.play('pop');
 gc(`<div class="pass">
 <div style="font-size:.85rem;color:var(--t2);margin:12px 0">תחזירו את הטלפון למרכז.</div>
-<div style="font-size:.65rem;color:var(--t3)">אף אחד לא יודע. תנהגו רגיל.</div>
+<div style="font-size:.65rem;color:var(--t3)">בצע את המשימה עכשיו. אף אחד לא יודע.</div>
 <div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">${contCTA()}</button></div>
 </div>`);
 }
@@ -2458,6 +2326,19 @@ SND.play('pop');
 advance();
 }
 
+function startFinRecord(){
+const prompts=['רגע אחרון ביחד. כל אחד אומר מילה אחת על הערב.','מה לקחתם מהערב הזה? 15 שניות.','תגידו תודה למישהו פה. 15 שניות.'];
+REC={q:prompts[Math.floor(Math.random()*prompts.length)],mult:1,audioBlob:null,audioUrl:null,chunks:[]};
+const finW=document.getElementById('finW');
+const origHTML=finW.innerHTML;
+gc(`<div class="rc bg-famtalk"><div class="rc-bar" style="background:var(--mint)"></div><div class="rc-glow" style="background:var(--mint)"></div>
+<div class="rc-icon">${ic('megaphone',36,'var(--mint)')}</div>
+<div class="cq" style="color:var(--mint);font-size:.85rem">${REC.q}</div>
+<div class="csub">15 שניות. כולם ביחד.</div>
+<div class="acts"><button class="ab" style="background:var(--mint);width:100%" onclick="startRecord()">התחל הקלטה</button></div></div>`);
+window._finRecordOrig=origHTML;
+}
+
 function advance(){stopTTS();if(_advancing)return;_advancing=true;const ev=events[curE];if(ev?.type==='spin')turnQ[ev.pi]++;
 // SECRET: show secret mission after regular round
 if(!activeSecret&&secretPool.length>0&&secretIdx<secretPool.length){
@@ -2606,8 +2487,6 @@ sendToSheet({type:'game_complete',players:P.length,duration:dur,rounds:gS.rounds
 let h=`<div class="crown">${ic('crown',56,'var(--gold)')}</div><div class="fin-t">מי רוצה לדעת מי ניצח?</div><div class="podium">`;
 order.forEach((p,di)=>{const rank=sorted.indexOf(p);h+=`<div class="pod"><div class="pod-m" style="background:${mc[rank]||'#666'}">${rank+1}</div><div class="pod-av" style="border-color:${p.color}">${gAv(p.i,52)}</div><div class="pod-bar" id="pb${di}" style="background:${p.color}12;border:2px solid ${p.color};height:0;color:${p.color}">${p.s}</div><div class="pod-n" style="color:${p.color}">${p.name}</div><div class="pod-p">${p.s} נק׳</div></div>`;});h+='</div>';
 h+='<div class="sgrid">';h+=`<div class="sc"><div class="sc-v" style="color:var(--gold)">${gS.rounds}</div><div class="sc-l">סיבובים</div></div>`;h+=`<div class="sc"><div class="sc-v" style="color:var(--teal)">${mins}:${secs.toString().padStart(2,'0')}</div><div class="sc-l">זמן משחק</div></div>`;
-let ba=-1,bn=0;P.forEach((_,i)=>{if((gS.aliasW[i]||0)>bn){bn=gS.aliasW[i];ba=i;}});
-if(ba>=0)h+=`<div class="sc"><div class="sc-v" style="color:${P[ba].color}">${P[ba].name}</div><div class="sc-l">אלוף אליאס (${bn})</div></div>`;
 const vc={};voteLog.forEach(v=>{vc[v.winner]=(vc[v.winner]||0)+1;});let mv=-1,mvn=0;for(const k in vc)if(vc[k]>mvn){mvn=vc[k];mv=parseInt(k);}
 if(mv>=0)h+=`<div class="sc"><div class="sc-v" style="color:${P[mv].color}">${P[mv].name}</div><div class="sc-l">מלך/ת ההצבעות (${mvn})</div></div>`;h+='</div>';
 // Titles
@@ -2620,9 +2499,6 @@ h+='</div>';// close fin-section titles
 // Quotes
 if(gS.quotes&&gS.quotes.length>0){h+='<div class="fin-section"><div class="fin-section-t">ציטוטים מהערב</div>';
 gS.quotes.forEach(q=>{h+=`<div class="tc"><div style="font-size:.62rem;color:var(--gold);flex:1;text-align:right">"${q.text}" <span style="color:var(--t3)">— ${q.player}</span></div></div>`;});h+='</div>';}
-// Drawings gallery
-if(gS.drawings.length>0){h+='<div class="fin-section"><div class="fin-section-t">הציורים שלנו</div><div class="draw-gal">';
-gS.drawings.forEach(d=>{h+=`<div class="draw-gal-item"><img src="${d.img}"></div>`;});h+='</div></div>';}
 // Mic round results
 if(gS.micResults&&gS.micResults.length>0){
 h+='<div class="fin-section"><div class="fin-section-t">על דוכן העדים</div>';
@@ -2659,6 +2535,7 @@ h+=`<div class="ai-summary" id="aiSummaryCard">
 // Trigger AI summary
 generateAISummary(sorted);
 
+h+='<div style="text-align:center;margin:16px 0"><button class="ab" style="background:var(--coral);width:100%;max-width:300px;font-size:.85rem" onclick="startFinRecord()">'+ic('megaphone',16,'#fff')+' רגע אחרון ביחד</button></div>';
 h+='<div class="fin-btns" style="margin-top:16px">';
 h+='<button class="fin-b" style="background:var(--gold);color:#000" onclick="shareSummary()">שתפו</button>';
 h+='<button class="fin-b" style="background:var(--lav)" onclick="launch()">עוד אחד.</button>';
@@ -2683,40 +2560,6 @@ document.querySelectorAll('.pod').forEach(p=>{p.style.opacity='0';p.style.transf
 document.querySelectorAll('.pod-bar').forEach(b=>{b.style.opacity='0';b.style.transition='height 1.2s cubic-bezier(.34,1.4,.64,1),opacity .4s ease';});
 }
 
-
-function genWC(noDL){const sorted=P.map((p,i)=>({...p,i,s:scores[i]||0})).sort((a,b)=>b.s-a.s);const w=sorted[0];
-const cv=document.getElementById('wcv');cv.width=720;cv.height=1280;const c=cv.getContext('2d');
-// Background gradient
-const bg=c.createLinearGradient(0,0,0,1280);bg.addColorStop(0,'#0a0a1a');bg.addColorStop(1,'#111128');c.fillStyle=bg;c.fillRect(0,0,720,1280);
-// Top/bottom accent bars
-const gr=c.createLinearGradient(0,0,720,0);gr.addColorStop(0,w.color);gr.addColorStop(1,'#ffc73a');c.fillStyle=gr;c.fillRect(0,0,720,8);c.fillRect(0,1272,720,8);
-// Draw avatar
-const av=AVATARS.find(a=>a.id===P[w.i].avId);
-if(av){const img=new Image();img.onload=function(){c.save();c.beginPath();c.arc(360,250,75,0,TAU);c.clip();c.drawImage(img,285,175,150,150);c.restore();c.beginPath();c.arc(360,250,78,0,TAU);c.strokeStyle=w.color;c.lineWidth=4;c.stroke();finishWC(c,w,sorted,noDL);};img.src=av.img;}
-else finishWC(c,w,sorted,noDL);}
-function finishWC(c,w,sorted,noDL){
-c.font='900 48px Heebo';c.textAlign='center';c.fillStyle='#ffc73a';c.fillText('מי מי מי?',360,120);
-// Crown
-c.font='60px serif';c.fillStyle='#ffc73a';c.fillText('★',360,200);
-// Winner name
-c.font='900 52px Heebo';c.fillStyle=w.color;c.fillText(w.name,360,380);
-// Score
-c.font='800 36px Heebo';c.fillStyle='#eef';c.fillText(w.s+' נקודות',360,430);
-// Titles
-const t=[];voteLog.forEach(v=>{if(v.winner===w.i)t.push(v.title);});
-if(t.length>0){c.font='700 24px Heebo';c.fillStyle='#ffc73a';t.slice(0,3).forEach((x,i)=>{c.fillText('\u2605 '+x,360,500+i*36);});}
-// Quotes
-let qy=640;
-if(gS.quotes&&gS.quotes.length>0){c.font='600 20px Heebo';c.fillStyle='#8888aa';c.fillText('ציטוטים מהערב',360,qy);
-c.font='italic 22px Heebo';c.fillStyle='#ddd';gS.quotes.slice(0,2).forEach((q,i)=>{c.fillText('"'+q.text+'"',360,qy+32+i*30);});qy+=100;}
-// All players
-const py=Math.max(qy+20,760);c.font='600 20px Heebo';c.fillStyle='#8888aa';c.fillText('כל השחקנים:',360,py);
-sorted.forEach((p,i)=>{c.font='700 24px Heebo';c.fillStyle=p.color;c.fillText(`${['1.','2.','3.'][i]||' '} ${p.name} — ${p.s}`,360,py+35+i*32);});
-// Date + logo
-c.font='400 18px Heebo';c.fillStyle='#555577';c.fillText(new Date().toLocaleDateString('he-IL'),360,1220);
-c.font='700 16px Heebo';c.fillStyle='#8888aa';c.fillText('מי מי מי?',360,1250);
-// Download
-if(!noDL){const link=document.createElement('a');link.download='mimi-winner.png';link.href=document.getElementById('wcv').toDataURL('image/png');link.click();}}
 
 let fbR=0;
 function showFB(){show('scrFB');fbData={peakMoment:'',energyDip:'',missingFeature:'',nextTime:'',recommend:0,groupType:'',freeText:''};
@@ -2848,7 +2691,7 @@ function goSetup(){clearSave();show('scrSetup');ss1Show();}
 function saveState(){try{localStorage.setItem('mimi',JSON.stringify({P,pCnt,scores,voteLog,turnQ,events,curE,pools,idx,gS,PD,nightMode,voteMode}));}catch(e){}}
 function loadState(){try{const s=localStorage.getItem('mimi');return s?JSON.parse(s):null;}catch(e){return null;}}
 function clearSave(){try{localStorage.removeItem('mimi');}catch(e){}}
-function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;pools=st.pools;idx=st.idx;const dg={aliasW:{},drawW:{},rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};gS=st.gS?{...dg,...st.gS}:dg;if(!gS.t0)gS.t0=Date.now();PD=st.PD||[];/* nightMode disabled for launch */nightMode=false;if(st.voteMode)voteMode=st.voteMode;show('scrGame');drawWheel();updateSB();updateFP();document.getElementById('pickArea').style.display='';processEvent();}
+function resumeG(st){P=st.P;pCnt=st.pCnt;scores=st.scores;voteLog=st.voteLog;turnQ=st.turnQ;events=st.events;curE=st.curE;pools=st.pools;idx=st.idx;const dg={rounds:0,t0:Date.now(),drawings:[],quotes:[],micResults:[]};gS=st.gS?{...dg,...st.gS}:dg;if(!gS.t0)gS.t0=Date.now();PD=st.PD||[];/* nightMode disabled for launch */nightMode=false;if(st.voteMode)voteMode=st.voteMode;show('scrGame');drawWheel();updateSB();updateFP();document.getElementById('pickArea').style.display='';processEvent();}
 (function(){const s=loadState();if(s?.P?.length>0&&s.curE<s.events.length){const ov=document.getElementById('overlay');ov.innerHTML=`<div style="font-size:3rem">${ic('dice',40,'var(--gold)')}</div><div class="ov-t" style="color:var(--gold)">יש משחק שמור.</div><div class="ov-s">${s.P.map(p=>esc(p.name)).join(', ')}</div><div style="display:flex;gap:8px;margin-top:12px"><button class="ov-b" style="background:var(--teal)" onclick="closeOv();resumeG(loadState())">המשיכו. ▶</button><button class="ov-b" style="background:var(--coral)" onclick="clearSave();closeOv()">חדש</button></div>`;ov.classList.add('on');}})();
 window.addEventListener('beforeunload',function(e){if(document.getElementById('scrGame')?.classList.contains('on')){e.preventDefault();e.returnValue='';}});
 
@@ -3302,7 +3145,7 @@ window.open(waUrl,'_blank');
     else if(typeof QS!=='undefined')allQ=QS;
 
     // Try to get from content.js globals
-    ['VOTE','HOTSEAT','RAPID','DILEMMA','FAMTALK','SENTENCE','SECRET','MISSION','DRAW','FAM_CHALLENGE','MIC_CLAIMS','HOST_PROMPTS'].forEach(function(key){
+    ['VOTE','HOTSEAT','RAPID','DILEMMA','FAMTALK','REVEAL','SECRET','MISSION','GUESS','FAM_CHALLENGE','MIC_CLAIMS','HOST_PROMPTS','ALIAS'].forEach(function(key){
       if(typeof window[key]!=='undefined'){
         var arr=window[key];
         if(Array.isArray(arr))allQ=allQ.concat(arr.map(function(q,i){return {q:typeof q==='string'?q:(q.q||q.text||''),type:key,idx:i};}));
