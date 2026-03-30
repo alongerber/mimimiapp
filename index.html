@@ -3522,14 +3522,26 @@ window.open(waUrl,'_blank');
     return false;
   }
 
+  var modalRetries=0;
+  var lastModalHtml='';
+
   function handleModal(){
     var modalBtns=document.querySelectorAll('.mbg.on button,.mbox button');
-    if(modalBtns.length>0){
-      modalBtns[0].click();
-      logMsg('INFO','Closed modal');
-      return true;
+    if(modalBtns.length===0){modalRetries=0;lastModalHtml='';return false;}
+    var curHtml=modalBtns[0].outerHTML;
+    if(curHtml===lastModalHtml){
+      modalRetries++;
+      if(modalRetries>=3){
+        logMsg('WARNING','Modal stuck after 3 retries, skipping');
+        modalRetries=0;lastModalHtml='';
+        return false;
+      }
+    }else{
+      modalRetries=1;lastModalHtml=curHtml;
     }
-    return false;
+    modalBtns[0].click();
+    logMsg('INFO','Closed modal (attempt '+modalRetries+')');
+    return true;
   }
 
   function resetStuckTimer(){
