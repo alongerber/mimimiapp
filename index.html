@@ -42,7 +42,7 @@ body{font-family:'Heebo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 #scrIntro{padding:0}
 
 /* Header */
-.hdr{padding:8px 16px 4px;text-align:center;flex-shrink:0;position:fixed;top:0;left:0;width:100%;z-index:40;background:transparent;pointer-events:none}
+.hdr{padding:8px 16px 4px;text-align:center;flex-shrink:0;position:fixed;top:0;left:0;width:100%;z-index:100;background:var(--bg);pointer-events:none}
 .hdr button,.hdr .hb{pointer-events:auto}
 .logo{font-weight:900;font-size:1.4rem;letter-spacing:-1px}
 .logo b{display:inline-block;animation:bob 2.5s ease infinite}
@@ -670,12 +670,12 @@ body.light-body{background:#f8f6f1}
     <div class="hf-a">→</div>
     <div class="hf-s"><div class="hf-n" style="background:var(--coral)">2</div><div class="hf-t">שאלות ומשימות<br>עונים. עושים. צוחקים.</div></div>
     <div class="hf-a">→</div>
-    <div class="hf-s"><div class="hf-n" style="background:var(--gold)">3</div><div class="hf-t">פרסים<br>מי שמנצח מקבל פרס אמיתי</div></div>
+    <div class="hf-s"><div class="hf-n" style="background:var(--gold)">3</div><div class="hf-t">סיכום<br>רגע לפני שחוזרים לשגרה</div></div>
   </div>
 
   <div class="help-section">3 שלבים</div>
   <div class="help-phases">
-    <div class="hphase"><div class="hphase-n" style="color:var(--sky)">התחלה</div><div class="hphase-d">צחוקים. היכרות. חימום.</div></div>
+    <div class="hphase"><div class="hphase-n" style="color:var(--sky)">התחלה</div><div class="hphase-d">צחוקים. היכרות. תחילת דרך.</div></div>
     <div class="hphase"><div class="hphase-n" style="color:var(--coral)">עכשיו ברצינות</div><div class="hphase-d">שאלות חדות. משימות. אתגרים.</div></div>
     <div class="hphase"><div class="hphase-n" style="color:var(--gold)">סוף. כמעט.</div><div class="hphase-d">רגעים אמיתיים. שאלות שנשארות.</div></div>
   </div>
@@ -802,7 +802,7 @@ else if(t==='reveal'){for(let i=0;i<6;i++){this.n(300-i*25,'square',.04,now+i*.0
 
 // ===== NARRATOR =====
 const NAR={
-vote:[(n,n2,pi)=>`${n}. ${g(pi,'תקרא','תקראי')}.`,(n)=>`כולם מצביעים. בלי לחשוב יותר מדי.`,(n)=>`${n} שואל. אין תשובה לא נכונה. כנראה.`,(n)=>`הצביעו. מי שלא מצביע אוכל ערב מעל הכיור.`,(n)=>`רגע של אמת. או סתם רגע.`],
+vote:[(n,n2,pi)=>`${n}. ${g(pi,'תקרא','תקראי')}.`,(n)=>`כולם מצביעים. בלי לחשוב יותר מדי.`,(n,n2,pi)=>`${n} ${g(pi,'שואל','שואלת')}. אין תשובה לא נכונה. כנראה.`,(n)=>`הצביעו. מי שלא מצביע אוכל ערב מעל הכיור.`,(n)=>`רגע של אמת. או סתם רגע.`],
 vote_qv:[(n)=>`מצביעים.`,(n)=>`כולם. עכשיו.`,(n)=>`מהבטן. בלי לחשוב.`,(n)=>`תבחרו. ואל תתחרטו. או תתחרטו. לא משנה.`],
 hotseat_warm:[(n)=>`${n}. שאלה.`,(n,n2,pi)=>`${n}. פשוט ${g(pi,'תענה','תעני')}.`,(n)=>`${n}. לא כואב. כנראה.`],
 hotseat_fire:[(n,n2,pi)=>`${n}. ${g(pi,'תתכונן','תתכונני')}.`,(n)=>`${n}. הפעם זה אישי. יותר מהרגיל.`,(n,n2,pi)=>`${n}. ${g(pi,'אל תשקר','אל תשקרי')}. אנחנו נדע.`,(n,n2,pi)=>`${n}. ${g(pi,'תענה','תעני')} ונמשיך.`],
@@ -822,7 +822,7 @@ mic:[(n,n2,pi)=>`${n}. 15 שניות. ${g(pi,'תשכנע','תשכנעי')}.`,(n)
 function nar(type,n1,n2,pi){let key=type;if(type==='hotseat'){const p=pk();key='hotseat_'+p;}const a=NAR[key]||NAR[type];if(!a)return '';return a[Math.floor(Math.random()*a.length)](n1,n2,pi);}
 
 
-const PH_N=["התחלה","עכשיו ברצינות","סוף. כמעט."],PH_C=["var(--sky)","var(--coral)","var(--gold)"],PH_E=["<span style='font-size:3.5rem'>"+ic('star',56,'var(--sky)')+"</span>","<span style='font-size:3.5rem'>"+ic('flame',56,'var(--coral)')+"</span>","<span style='font-size:3.5rem'>"+ic('crown',56,'var(--gold)')+"</span>"],PH_D=["צחוקים. היכרות. חימום.","שאלות חדות. משימות. אתגרים.","רגעים אמיתיים. שאלות שנשארות."],PH_TEASER=["בשלב הבא: שאלות חדות יותר...","הכל נהיה אישי. יאללה.",""],PH_K=['warm','fire','final',
+const PH_N=["התחלה","עכשיו ברצינות","סוף. כמעט."],PH_C=["var(--sky)","var(--coral)","var(--gold)"],PH_E=["<span style='font-size:3.5rem'>"+ic('star',56,'var(--sky)')+"</span>","<span style='font-size:3.5rem'>"+ic('flame',56,'var(--coral)')+"</span>","<span style='font-size:3.5rem'>"+ic('crown',56,'var(--gold)')+"</span>"],PH_D=["צחוקים. היכרות. תחילת דרך.","שאלות חדות. משימות. אתגרים.","רגעים אמיתיים. שאלות שנשארות."],PH_TEASER=["בשלב הבא: שאלות חדות יותר...","הכל נהיה אישי. יאללה.",""],PH_K=['warm','fire','final',
 {q:"לדעת תמיד מה חושבים עליך, או אף פעם?",a:"לדעת",b:"לא לדעת"},
 {q:"להצליח בלי שאף אחד ידע, או להיכשל ושכולם יראו?",a:"הצלחה בסתר",b:"כישלון בגלוי"},
 {q:"לחיות בלי שקרים, או בלי סודות?",a:"בלי שקרים",b:"בלי סודות"},
@@ -835,16 +835,16 @@ const PH_N=["התחלה","עכשיו ברצינות","סוף. כמעט."],PH_C=[
 {q:"תמיד להגיד אמת, או תמיד לדעת מתי משקרים לך?",a:"להגיד אמת",b:"לזהות שקר"},
 {q:"לקבל את המתנה המושלמת, או לתת אחת?",a:"לקבל",b:"לתת"},
 {q:"לגור ליד הים, או ליד ההרים?",a:"הים",b:"ההרים"},
-{q:"3 דברים שאמא אומרת כל יום!",t:8},
-{q:"4 מקומות שטיילנו כמשפחה!",t:10},
-{q:"3 אוכלים שאבא מכין!",t:7},
-{q:"5 דברים שתמיד שוכחים בבית!",t:10},
-{q:"3 שירים שכולנו יודעים!",t:8},
-{q:"4 דברים שמריבים עליהם בבית!",t:8},
-{q:"5 מילים שרק המשפחה שלנו אומרת!",t:12},
-{q:"3 דברים שעושים בשבת!",t:7},
-{q:"4 חיות שהיינו רוצים לגדל!",t:8},
-{q:"3 דברים שמצחיקים רק אותנו!",t:8}];
+{q:"3 דברים שאמא אומרת כל יום.",t:8},
+{q:"4 מקומות שטיילנו כמשפחה.",t:10},
+{q:"3 אוכלים שאבא מכין.",t:7},
+{q:"5 דברים שתמיד שוכחים בבית.",t:10},
+{q:"3 שירים שכולנו יודעים.",t:8},
+{q:"4 דברים שמריבים עליהם בבית.",t:8},
+{q:"5 מילים שרק המשפחה שלנו אומרת.",t:12},
+{q:"3 דברים שעושים בשבת.",t:7},
+{q:"4 חיות שהיינו רוצים לגדל.",t:8},
+{q:"3 דברים שמצחיקים רק אותנו.",t:8}];
 
 // Help
 function buildHelp(){const cats=[
@@ -869,7 +869,7 @@ let events=[],curE=0,spinning=false,tmrId=null,_advancing=false;
 let pools={},idx={};
 let prevState=null;
 let gS={rounds:0,t0:0,drawings:[],quotes:[],micResults:[]};
-let PD=[],curSP=0,seenTypes={},phasesSeen=0,streaks={},lastScorer=-1,comebackUsed={},gameLen='full',voteMode='open',swapCount=0;
+let PD=[],curSP=0,seenTypes={},phasesSeen=0,streaks={},lastScorer=-1,comebackUsed={},gameLen='full',voteMode='open',swapCount=0,questionLocked=false;
 let nightMode=false;
 let hasPaid=false;
 let activeSecret=null;
@@ -1299,8 +1299,8 @@ el.style.opacity='0';el.style.transform='translateY(8px)';
 document.getElementById('pickArea').style.display='none';
 document.getElementById('spinB').parentElement.style.display='none';
 setTimeout(()=>{el.innerHTML=h;
-// Add skip button to every round (hide during prediction)
-if(!window._isPrediction){el.innerHTML+='<div style="text-align:center;margin-top:10px"><button onclick="swapQuestion()" style="background:none;border:none;color:var(--t3);font-size:.65rem;cursor:pointer;font-family:inherit;padding:4px 10px">'+(swapCount<2?'שאלה אחרת':'')+'</button><button onclick="advance()" style="background:none;border:none;color:var(--t3);font-size:.6rem;cursor:pointer;font-family:inherit;padding:4px 12px">דלג ▸</button></div>';}
+// Reset question lock for new round
+questionLocked=false;
 el.style.opacity='1';el.style.transform='translateY(0)';
 // Secret reminder
 if(activeSecret){
@@ -1376,7 +1376,8 @@ ${sp}${explain}
 <div class="rc-icon">${ic('vote',36,'var(--lav)')}</div>
 <div class="cq">${VS.q.q}</div>
 <div class="csub">${P[pi].name}, ${g(pi,'תקרא','תקראי')} בקול.</div>
-<div class="acts"><button class="ab ab-g" style="width:100%" onclick="showPrediction(${pi})">קראתי.</button></div></div>`);
+${showChangeBtn('vote')}
+<div class="acts"><button class="ab ab-g" style="width:100%" onclick="lockQuestion();showPrediction(${pi})">קראתי.</button></div></div>`);
 if(q.id)playTTS(q.id);}
 
 // Quick Vote
@@ -1448,7 +1449,7 @@ SND.play('buzz');
 const v=verdict('','',(maxC||0),total);
 gc(`<div class="pass">
 <div style="font-size:1.2rem;font-weight:900;color:var(--gold);margin:8px 0">${v.header}</div>
-<div class="csub">${winners.map(w=>P[w].name).join(' ו-')} — ${maxC} קולות</div>
+<div class="csub">${winners.map(w=>P[w].name).join(' ו-')}</div>
 <div style="font-size:.72rem;color:var(--t2);margin:6px 0;font-style:italic">${v.quip}</div>
 <div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);
 }else{
@@ -1457,18 +1458,14 @@ const title=g(w,VS.q.tm,VS.q.tf);
 const v=verdict(P[w].name,title,maxC,total);
 voteLog.push({q:VS.q.q,title,winner:w,votes:maxC,total});
 
-// Scoring: prediction + majority
+// Scoring: prediction + majority (hidden from UI)
 let scoringHTML='';
 // 1. Did the focus player predict correctly?
-if(VS.prediction===w){scores[VS.hostPi]=(scores[VS.hostPi]||0)+2;
-scoringHTML+=`<div style="font-size:.65rem;color:var(--teal);margin:2px 0">${P[VS.hostPi].name} ${g(VS.hostPi,'ניחש','ניחשה')} נכון! +2</div>`;}
-else if(VS.prediction>=0){
-scoringHTML+=`<div style="font-size:.65rem;color:var(--t3);margin:2px 0">${P[VS.hostPi].name} ${g(VS.hostPi,'ניחש','ניחשה')}: ${P[VS.prediction].name} — לא קלע</div>`;}
+if(VS.prediction===w){scores[VS.hostPi]=(scores[VS.hostPi]||0)+2;}
 // 2. Everyone who voted for the winner gets +1 (pass mode)
 if(VS.mode==='secret'&&VS.picks){
 const correct=[];for(const vi in VS.picks){if(parseInt(VS.picks[vi])===w)correct.push(parseInt(vi));}
-if(correct.length>0){correct.forEach(ci=>{scores[ci]=(scores[ci]||0)+1;});
-scoringHTML+=`<div style="font-size:.65rem;color:var(--lav);margin:2px 0">${correct.map(ci=>P[ci].name).join(', ')} — עם הרוב! +1</div>`;}}
+if(correct.length>0){correct.forEach(ci=>{scores[ci]=(scores[ci]||0)+1;});}}
 // 3. Winner gets title point
 scores[w]=(scores[w]||0)+1*VS.mult;
 
@@ -1487,8 +1484,7 @@ gc(`<div class="pass" onclick="this.querySelector('.verdict-full').style.display
 <div style="font-size:.72rem;color:var(--t2);margin:6px 0">${v.explain}</div>
 <div style="font-size:.68rem;color:var(--t3);font-style:italic;margin:4px 0">${v.quip}</div>
 </div>
-${scoringHTML}
-<div style="font-size:.68rem;color:var(--t2);margin:8px 0;font-style:italic">${hostPrompt('vote')}</div><div class="ptag">+${1*VS.mult} ל${P[w].name}</div>
+<div style="font-size:.68rem;color:var(--t2);margin:8px 0;font-style:italic">${hostPrompt('vote')}</div>
 <div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);
 ptPop(P[w].color,'+'+(1*VS.mult));updateSB();scorePop(w);trackStreak(w);SND.play('reveal');
 },400);
@@ -1497,24 +1493,17 @@ ptPop(P[w].color,'+'+(1*VS.mult));updateSB();scorePop(w);trackStreak(w);SND.play
 // ===== HOTSEAT =====
 function showHS(pi,sp,mult){const q=nx(pools['hs_'+pk()],idx['hs_'+pk()]++);const p=P[pi],pts=2*mult;
 const firstTime=!seenTypes['hotseat'];seenTypes['hotseat']=true;
-const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('flame',16,'var(--coral)')} כיסא חם</div><div class="explain-text">שאלה ישירה. ענה בכנות — או החלף.<br>הבית שומע. ${pts} נקודות למי שמשתף.</div></div>`:'';
+const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('flame',16,'var(--coral)')} כיסא חם</div><div class="explain-text">שאלה ישירה. ${g(pi,'ענה','עני')} בכנות.<br>הבית שומע.</div></div>`:'';
 gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,64)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">עכשיו עליך.</div></div></div>
 ${sp}${explain}
 <div class="rc bg-hotseat"><div class="rc-bar" style="background:var(--coral)"></div><div class="rc-glow" style="background:var(--coral)"></div>
 <div class="rc-icon">${ic('flame',36,'var(--coral)')}</div>
 <div class="cq">${q.q}</div>
 <button class="quote-btn" onclick="openQuote()">${ic('chat',12,'var(--gold)')} נפל פה משפט.</button>
-<div class="acts"><button class="ab ab-g" style="width:100%" onclick="hsAnswer(${pi},${pts})">שיתפתי. הלאה. (+${pts})</button>
-<div style="display:flex;gap:8px;margin-top:6px;justify-content:center"><button class="ab ab-m" style="font-size:.72rem" onclick="hsSwap(${pi},${mult})">לא? תנו אחרת</button><button class="ab ab-m" style="font-size:.72rem" onclick="try{gtag('event','round_skip',{round_type:'hotseat',round_number:gS.rounds});}catch(e){}advance()">עוברים</button></div></div></div>`);
+${showChangeBtn('hotseat')}
+<div class="acts"><button class="ab ab-g" style="width:100%" onclick="lockQuestion();hsAnswer(${pi},${pts})">הלאה.</button></div></div>`);
 if(q.id)playTTS(q.id);}
-function hsAnswer(pi,pts){scores[pi]+=pts;ptPop(P[pi].color,'+'+pts);updateSB();scorePop(pi);trackStreak(pi);advance();}
-function hsSwap(pi,mult){// Get another question
-const q=nx(pools['hs_'+pk()],idx['hs_'+pk()]++);const p=P[pi],pts=2*mult;
-gc(`<div class="nar" style="background:${RT.hotseat.c}11;border-color:${RT.hotseat.c}44;color:${RT.hotseat.c}">שאלה חדשה.</div>
-<div class="rc bg-hotseat"><div class="rc-bar" style="background:var(--coral)"></div><div class="rc-glow" style="background:var(--coral)"></div>
-<div class="rc-icon">${ic('flame',36,'var(--coral)')}</div><div class="cq">${q.q}</div>
-<div class="ptag">שיתוף = +${pts}</div>
-<div class="acts"><button class="ab ab-g" onclick="hsAnswer(${pi},${pts})">${g(pi,'שיתפתי','שיתפתי')}.</button><button class="ab ab-m" onclick="advance()">דלג</button></div></div>`);}
+function hsAnswer(pi,pts){scores[pi]+=pts;updateSB();trackStreak(pi);advance();}
 
 // ===== REVEAL (new type!) =====
 let BL={};
@@ -1535,7 +1524,8 @@ gc(`${explain}${sp}
 </div>
 <div class="cq">${qText}</div>
 <button class="quote-btn" onclick="openQuote()">${ic('chat',12,'var(--gold)')} נפל פה משפט.</button>
-<div class="acts"><button class="ab ab-g" style="width:100%" onclick="scores[${pi}]++;ptPop(P[${pi}].color,'+1');updateSB();${isHeart?`showBreathe(${pi})`:`advance()`}">${isHeart?'היה רגע':'עשינו'} (+1)</button></div></div>`);}
+${showChangeBtn('reveal')}
+<div class="acts"><button class="ab ab-g" style="width:100%" onclick="lockQuestion();scores[${pi}]++;updateSB();${isHeart?`showBreathe(${pi})`:`advance()`}">${isHeart?'היה רגע.':'הלאה.'}</button></div></div>`);}
 
 // Blind sub-type of REVEAL
 function showBlindReveal(pi,pi2,q,sp,mult){
@@ -1592,7 +1582,7 @@ function showBreathe(pi){
 gc(`<div class="breathe"><div class="breathe-heart">${ic('heart',48,'var(--rose)')}</div>
 <div style="font-size:.95rem;font-weight:700;margin:12px 0">רגע...</div>
 <div style="font-size:.78rem;color:var(--t2)">${hostPrompt('reveal')}</div>
-<div class="acts" style="margin-top:20px"><button class="ab ab-g" style="width:100%;max-width:250px" onclick="scores[${pi}]++;ptPop(P[${pi}].color,'+1');updateSB();advance()">יאללה →</button></div></div>`);}
+<div class="acts" style="margin-top:20px"><button class="ab ab-g" style="width:100%;max-width:250px" onclick="scores[${pi}]++;updateSB();advance()">הלאה.</button></div></div>`);}
 
 // ===== MISSION =====
 let MS={};
@@ -1613,8 +1603,8 @@ ${sp}
 <div style="font-size:.9rem;color:var(--text);font-weight:700;line-height:1.7;direction:rtl;margin:16px 0">${missionText}</div>
 <div class="acts"><button class="ab ab-g" onclick="mDo()" style="width:100%">עשיתי.</button></div></div>`);}
 function mDo(){const pi=MS.pi,pts=MS.pts,p=P[pi];
-gc(`<div class="pass"><div>${ic('sparkle',40,'var(--peach)')}</div><div class="pass-name" style="color:${p.color}">${p.name} ${g(pi,'מבצע','מבצעת')}.</div><div class="csub">עבר/ה?</div>
-<div class="acts"><button class="ab ab-g" onclick="scores[${pi}]+=${pts};ptPop('${p.color}','+${pts}');updateSB();trackStreak(${pi});advance()">עבר. (+${pts})</button><button class="ab" style="background:var(--coral)" onclick="advance()">לא עבר.</button></div></div>`);}
+gc(`<div class="pass"><div>${ic('sparkle',40,'var(--peach)')}</div><div class="pass-name" style="color:${p.color}">${p.name} ${g(pi,'מבצע','מבצעת')}.</div><div class="csub">${g(pi,'עבר','עברה')}?</div>
+<div class="acts"><button class="ab ab-g" onclick="scores[${pi}]+=${pts};updateSB();trackStreak(${pi});advance()">${g(pi,'עבר','עברה')}.</button><button class="ab" style="background:var(--coral)" onclick="advance()">לא ${g(pi,'עבר','עברה')}.</button></div></div>`);}
 
 
 // ===== PRIZES =====
@@ -1691,7 +1681,8 @@ ${sp}${explain}
 <div class="rc-icon">${ic('scale',36,'var(--sky)')}</div>
 <div class="cq">${q.q}</div>
 <div class="csub">${P[pi].name} — ${g(pi,'תקרא','תקראי')} בקול, ואז כל אחד מצביע.</div>
-<div class="acts"><button class="ab ab-g" style="width:100%" onclick="dlNext()">יאללה, מצביעים</button></div></div>`);
+${showChangeBtn('dilemma')}
+<div class="acts"><button class="ab ab-g" style="width:100%" onclick="lockQuestion();dlNext()">יאללה, מצביעים</button></div></div>`);
 if(q.id)playTTS(q.id);}
 function dlNext(){const ds=DL;if(ds.cur>=ds.voters.length){dlReveal();return;}const vi=ds.voters[ds.cur],v=P[vi];
 const hasOpts=ds.q.opts&&ds.q.opts.length>0;
@@ -1718,13 +1709,12 @@ else{let cA=0,cB=0;for(const k in ds.picks)ds.picks[k]==='a'?cA++:cB++;const tot
 gc(`<div class="rc bg-dilemma"><div class="rc-bar" style="background:var(--sky)"></div>
 <div style="font-size:.88rem;font-weight:800;margin-bottom:8px">${ic('sparkle',16,'var(--sky)')} תוצאות.</div><div class="csub">${ds.q.q}</div>
 ${resultsHTML}
-<div style="font-size:.72rem;font-weight:700;color:var(--t2);margin:6px 0">${dilVerdict(cA,cB,tot)}</div>
 <div style="font-size:.68rem;color:var(--t2);margin:4px 0;font-style:italic">${hostPrompt('dilemma')}</div>
-</div><div class="ptag">+${pts} ל${P[ds.pi].name}</div>
-<div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);}
+</div>
+<div class="acts"><button class="ab ab-g" onclick="advance()">הלאה.</button></div></div>`);}
 
 function dilLabel(count,total){if(total<=2)return count>0?'✓':'';if(count===total)return 'כולם.';if(count===0)return '—';if(count===1)return 'יחיד';return count+' מתוך '+total;}
-function dilVerdict(cA,cB,total){if(cA===cB){const s=["המשפחה חלוקה בדיוק.","תיקו מושלם. מי ישבור?","חצי כאן, חצי שם. אין מנצח."];return s[Math.floor(Math.random()*s.length)];}
+function dilVerdict(cA,cB,total){if(cA===cB){const s=["המשפחה חלוקה בדיוק.","תיקו. מי ישבור.","חצי כאן, חצי שם. אין מנצח."];return s[Math.floor(Math.random()*s.length)];}
 const winner=cA>cB?cA:cB;const r=winner/total;
 if(r>=0.8){const s=["כמעט פה אחד.","הרוב המוחלט דיבר.","בלי ויכוח."];return s[Math.floor(Math.random()*s.length)];}
 if(r>=0.6){const s=["רוב קטן, אבל רוב.","היו חילוקי דעות — אבל הכריעו.","לא כולם מסכימים, וזה בסדר."];return s[Math.floor(Math.random()*s.length)];}
@@ -1732,13 +1722,14 @@ const s=["כמעט שווה. הויכוח רק מתחיל.","הפער קטן —
 // ===== FAMTALK =====
 function showFT(pi,sp,mult){const q=nx(pools['ft_'+pk()],idx['ft_'+pk()]++);const p=P[pi],pts=1*mult;
 const firstTime=!seenTypes['famtalk'];seenTypes['famtalk']=true;
-const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('people',16,'var(--mint)')} שיחת משפחה</div><div class="explain-text">שיחה שצריכה לקרות.<br>${p.name} פותח, כולם מצטרפים. דברו מהלב.</div></div>`:'';
+const explain=firstTime?`<div class="explain"><div class="explain-title">${ic('people',16,'var(--mint)')} שיחת משפחה</div><div class="explain-text">שיחה שצריכה לקרות.<br>${p.name} ${g(pi,'פותח','פותחת')}, כולם מצטרפים.</div></div>`:'';
 gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,64)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">${g(pi,'פותח','פותחת')} שיחה.</div></div></div>
 ${sp}${explain}
 <div class="rc bg-famtalk"><div class="rc-bar" style="background:var(--mint)"></div><div class="rc-glow" style="background:var(--mint)"></div>
 <div class="rc-icon">${ic('people',36,'var(--mint)')}</div>
 <div class="cq">${q.q}</div>
-<div class="acts"><button class="ab ab-g" style="width:100%" onclick="scores[${pi}]+=${pts};ptPop('${p.color}','+${pts}');updateSB();advance()">סגרנו נושא (+${pts})</button></div></div>`);
+${showChangeBtn('famtalk')}
+<div class="acts"><button class="ab ab-g" style="width:100%" onclick="scores[${pi}]+=${pts};updateSB();advance()">דיברנו מספיק.</button></div></div>`);
 if(q.id)playTTS(q.id);}
 
 // ===== PHASE INTRO — dramatic =====
@@ -1806,10 +1797,9 @@ function undoDilVote(){if(DL.cur>0){DL.cur--;const lastVi=DL.voters[DL.cur];dele
 function challengeShare(){const sorted=P.map((p,i)=>({...p,s:scores[i]||0})).sort((a,b)=>b.s-a.s);
 const titles=[];voteLog.forEach(v=>{titles.push(P[v.winner].name+' = "'+v.title+'"');});
 let txt='אתגר משפחתי.\n\n';
-txt+='שיחקנו ב-"מי מי מי?" ומתנו מצחוק!\n';
-txt+=sorted[0].name+' '+(sorted[0].gender==='f'?'ניצחה':'ניצח')+' עם '+sorted[0].s+' נקודות\n';
+txt+='שיחקנו ב-"מי מי מי?" ויצאנו מזה חיים.\n';
 if(titles.length>0)txt+=titles.slice(0,2).join('\n')+'\n';
-txt+='\nחושבים שאתם יותר טובים? \nהורידו ושחקו.';
+txt+='\nחושבים שאתם יותר טובים?\nmimimiapp.vercel.app';
 if(navigator.share)navigator.share({title:'אתגר מי מי מי.',text:txt}).catch(()=>{});
 else{navigator.clipboard.writeText(txt).then(()=>toast('הועתק.')).catch(()=>{});}}
 
@@ -1865,7 +1855,7 @@ ${sp}${explain}
 <div style="font-size:.72rem;color:var(--t2);margin-bottom:4px">${g(pi,'שכנע','שכנעי')} את המשפחה:</div>
 <div class="cq" style="color:var(--coral)">"${claim}"</div>
 <div class="csub">15 שניות. ${g(pi,'דבר','דברי')} בקול, ${g(pi,'שכנע','שכנעי')}, ${g(pi,'הצדק','הצדיקי')}.</div>
-<div class="acts"><button class="ab" style="background:var(--coral);width:100%" onclick="startMicRecording(${pi})">${g(pi,'מוכן','מוכנה')}! הקלטה</button></div></div>`);
+<div class="acts"><button class="ab" style="background:var(--coral);width:100%" onclick="startMicRecording(${pi})">${g(pi,'מוכן','מוכנה')}. הקלטה</button></div></div>`);
 try{gtag('event','mic_round_start',{player:p.name});}catch(e){}
 }
 
@@ -2107,11 +2097,10 @@ const match=guess===GU._majority;const pts=match?3*GU.mult:0;
 if(match){scores[GU.target]+=pts;ptPop(P[GU.target].color,'+'+pts);SND.play('win');vib(80);updateSB();}else SND.play('buzz');
 let answersHTML='<div style="margin:8px 0">';for(const k in GU.picks){answersHTML+=`<div style="font-size:.65rem;color:var(--t2)">${P[k].name}: ${GU.picks[k]}</div>`;}answersHTML+='</div>';
 gc(`<div class="pass">
-<div style="font-size:1rem;font-weight:900;color:${match?'var(--teal)':'var(--coral)'};margin:8px 0">${match?P[GU.target].name+' ניחש נכון!':P[GU.target].name+' לא ניחש.'}</div>
+<div style="font-size:1rem;font-weight:900;color:${match?'var(--teal)':'var(--coral)'};margin:8px 0">${match?P[GU.target].name+' '+g(GU.target,'ניחש','ניחשה')+' נכון.':P[GU.target].name+' לא '+g(GU.target,'ניחש','ניחשה')+'.'}</div>
 <div style="font-size:.82rem;color:var(--gold);font-weight:700;margin:4px 0">התשובה הנפוצה: ${GU._majority}</div>
 ${answersHTML}
-${match?`<div class="ptag">+${pts} ל${P[GU.target].name}</div>`:''}
-<div class="acts"><button class="ab ab-g" onclick="advance()">${nextCTA()}</button></div></div>`);}
+<div class="acts"><button class="ab ab-g" onclick="advance()">הלאה.</button></div></div>`);}
 
 // ===== FAM CHALLENGE =====
 function showFamChallenge(ev,sp,mult){
@@ -2125,7 +2114,7 @@ ${sp}
 <div class="rc-icon">${ic('people',36,'var(--mint)')}</div>
 <div class="cq">${q.q||q}</div>
 <div class="csub">כל המשפחה ביחד.</div>
-<div class="acts"><button class="ab ab-g" onclick="scores[${pi}]+=${pts};ptPop('${p.color}','+${pts}');updateSB();advance()">עשינו! (+${pts})</button><button class="ab" style="background:var(--coral)" onclick="advance()">דילגנו</button></div></div>`);}
+<div class="acts"><button class="ab ab-g" style="width:100%" onclick="scores[${pi}]+=${pts};updateSB();advance()">עשינו.</button></div></div>`);}
 
 // ===== SECRET MISSIONS =====
 function showSecretMission(pi,mission){
@@ -2214,9 +2203,8 @@ if(rem)rem.remove();
 gc(`<div class="pass">
 <div style="margin:8px 0">${success?ic('crown',42,'var(--teal)'):ic('flame',42,'var(--coral)')}</div>
 <div style="font-size:.9rem;font-weight:800;color:${success?'var(--teal)':'var(--coral)'}">
-${success?p.name+' — הצליח. לא ציפינו.':p.name+' — נתפס. קורה לטובים.'}
+${success?p.name+' — '+g(pi,'הצליח','הצליחה')+'. לא ציפינו.':p.name+' — '+g(pi,'נתפס','נתפסה')+'. קורה לטובים.'}
 </div>
-<div style="font-size:.65rem;color:var(--t3);margin:6px 0">${success?'+3 נקודות':'בפעם הבאה'}</div>
 <div class="acts"><button class="ab" style="background:var(--s2);width:100%" onclick="advance()">${contCTA()}</button></div>
 </div>`);
 }
@@ -2364,14 +2352,26 @@ return;
 }
 }
 advanceEvent();setTimeout(()=>_advancing=false,300);}
-function swapQuestion(){
-  if(swapCount>=2){toast('כבר החלפתם פעמיים. זה מה שיש.');return;}
+function showChangeBtn(type){
+  var allowed=['vote','hotseat','reveal','famtalk','dilemma'];
+  if(allowed.indexOf(type)===-1) return '';
+  var always=type==='famtalk';
+  return '<button id="changeQBtn" '+(always?'data-always="1" ':'')+' class="change-q-btn" onclick="changeQuestion()" style="font-size:.55rem;color:var(--t3);background:none;border:none;cursor:pointer;font-family:inherit;padding:6px;margin-top:8px;text-decoration:underline;text-underline-offset:3px">שאלה אחרת</button>';
+}
+function lockQuestion(){
+  questionLocked=true;
+  var btn=document.getElementById('changeQBtn');
+  if(btn&&!btn.dataset.always) btn.style.display='none';
+}
+function changeQuestion(){
+  if(questionLocked) return;
   swapCount++;
   var ev=events[curE];
   if(ev&&ev.type==='spin'){
     _clearTimers();
     processEvent();
   }
+  toast('בסדר. יש עוד.');
 }
 function advanceEvent(){prevState={curE,scores:{...scores},voteLog:[...voteLog],turnQ:{...turnQ}};document.getElementById('undoB').disabled=false;
 // Track round analytics
@@ -2383,21 +2383,15 @@ function closeOv(){document.getElementById('overlay').classList.remove('on');}
 
 // ===== UI =====
 function updateSB(){const s=document.getElementById('scoreBar');s.innerHTML='';
-const maxSc=Math.max(...P.map((_,i)=>scores[i]||0));
-P.forEach((p,i)=>{const sc=scores[i]||0;const isLead=sc>0&&sc===maxSc;
-var prizeCount=(gS.prizes||[]).filter(function(pr){return pr.player===i;}).length;
-var prizeHtml='';for(var pi=0;pi<Math.min(prizeCount,5);pi++){prizeHtml+=ic('star',12,'var(--gold)');}
-const d=document.createElement('div');d.className='sb';d.innerHTML=`<div class="sb-av">${gAv(i,40)}</div><div class="sb-n" style="color:${p.color}">${esc(p.name)}</div><div class="sb-p" id="sbp${i}" style="color:${p.color}">${prizeHtml}${isLead?ic('crown',10,'var(--gold)'):''}</div>`;s.appendChild(d);});}
-function scorePop(pi){// Announce leader
-const sorted=P.map((p,i)=>({n:p.name,s:scores[i]||0,c:p.color,g:p.gender})).sort((a,b)=>b.s-a.s);
-if(sorted[0].s>0){const d=document.createElement('div');d.className='score-pop';d.innerHTML=`${esc(sorted[0].n)} ${sorted[0].g==='f'?'מובילה':'מוביל'} עם ${sorted[0].s}.`;d.style.color=sorted[0].c;d.style.borderColor=sorted[0].c+'66';document.body.appendChild(d);setTimeout(()=>d.remove(),3500);}}
+P.forEach((p,i)=>{const d=document.createElement('div');d.className='sb';d.innerHTML=`<div class="sb-av">${gAv(i,32)}</div><div class="sb-n" style="color:${p.color}">${esc(p.name)}</div>`;s.appendChild(d);});}
+function scorePop(pi){/* hidden — scores not shown in UI */}
 function updateFP(){const strip=document.getElementById('fprog');const spins=events.filter(e=>e.type==='spin');const done=events.slice(0,curE).filter(e=>e.type==='spin').length;
 if(spins.length===0){strip.innerHTML='';return;}
 let html='';const perPhase=Math.ceil(spins.length/3);
 [0,1,2].forEach(phase=>{const pSpins=spins.filter(s=>s.phase===phase).length;const pDone=events.slice(0,curE).filter(e=>e.type==='spin'&&e.phase===phase).length;const pct=pSpins>0?Math.round(pDone/pSpins*100):0;const cp=cPhase();
 html+=`<div class="fprog-s" style="width:${pSpins/spins.length*100}%;background:${cp>phase?PH_C[phase]:cp===phase?PH_C[phase]+'88':'var(--s3)'}"><div style="height:100%;width:${cp>phase?100:pct}%;background:${PH_C[phase]};border-radius:3px;transition:width .5s"></div></div>`;});
 strip.innerHTML=html;const fpN=document.getElementById('fprogN');if(fpN)fpN.textContent=PH_N[cPhase()]+' '+done+'/'+spins.length;}
-function ptPop(col,txt){const d=document.createElement('div');d.className='pp';d.style.color=col;d.textContent=txt;document.body.appendChild(d);setTimeout(()=>d.remove(),1200);}
+function ptPop(col,txt){/* hidden — scores not shown in UI */}
 
 // ===== AI COMMENTATOR =====
 async function generateAISummary(sorted){
@@ -2450,7 +2444,7 @@ if(!summaryHTML){
 const winner=sorted[0];
 const fallback={
 title:'ערב שלא ישכח במהרה',
-star:{name:winner.name,why:'הכי הרבה נקודות. מפתיע? לא ממש.'},
+star:{name:winner.name,why:'היה פה הכי הרבה זמן. או שסתם בלט.'},
 highlight:`${gS.rounds} סיבובים ב-${mins} דקות. הזמן עף.`,
 lawyer:micData.length>0?{name:micData[0]?.player||winner.name,why:'ניסה. לא תמיד הצליח.'}:null,
 quote:'ערב שכזה לא קונים בכסף. אבל אפשר לתרום.',
@@ -2484,8 +2478,8 @@ const sorted=P.map((p,i)=>({...p,i,s:scores[i]||0})).sort((a,b)=>b.s-a.s);const 
 const dur=Math.round((Date.now()-gS.t0)/1000);const mins=Math.floor(dur/60),secs=dur%60;
 try{gtag('event','game_complete',{player_count:P.length,total_rounds:gS.rounds,duration_seconds:dur,winner_score:Math.max(...P.map((_,i)=>scores[i]||0))});}catch(e){}
 sendToSheet({type:'game_complete',players:P.length,duration:dur,rounds:gS.rounds,winner_score:Math.max(...P.map((_,i)=>scores[i]||0))});
-let h=`<div class="crown">${ic('crown',56,'var(--gold)')}</div><div class="fin-t">מי רוצה לדעת מי ניצח?</div><div class="podium">`;
-order.forEach((p,di)=>{const rank=sorted.indexOf(p);h+=`<div class="pod"><div class="pod-m" style="background:${mc[rank]||'#666'}">${rank+1}</div><div class="pod-av" style="border-color:${p.color}">${gAv(p.i,52)}</div><div class="pod-bar" id="pb${di}" style="background:${p.color}12;border:2px solid ${p.color};height:0;color:${p.color}">${p.s}</div><div class="pod-n" style="color:${p.color}">${p.name}</div><div class="pod-p">${p.s} נק׳</div></div>`;});h+='</div>';
+let h=`<div class="crown">${ic('crown',56,'var(--gold)')}</div><div class="fin-t">סיימנו. יצאתם מזה חיים.</div><div class="podium">`;
+order.forEach((p,di)=>{const rank=sorted.indexOf(p);h+=`<div class="pod"><div class="pod-av" style="border-color:${p.color}">${gAv(p.i,52)}</div><div class="pod-bar" id="pb${di}" style="background:${p.color}12;border:2px solid ${p.color};height:0;color:${p.color}"></div><div class="pod-n" style="color:${p.color}">${p.name}</div></div>`;});h+='</div>';
 h+='<div class="sgrid">';h+=`<div class="sc"><div class="sc-v" style="color:var(--gold)">${gS.rounds}</div><div class="sc-l">סיבובים</div></div>`;h+=`<div class="sc"><div class="sc-v" style="color:var(--teal)">${mins}:${secs.toString().padStart(2,'0')}</div><div class="sc-l">זמן משחק</div></div>`;
 const vc={};voteLog.forEach(v=>{vc[v.winner]=(vc[v.winner]||0)+1;});let mv=-1,mvn=0;for(const k in vc)if(vc[k]>mvn){mvn=vc[k];mv=parseInt(k);}
 if(mv>=0)h+=`<div class="sc"><div class="sc-v" style="color:${P[mv].color}">${P[mv].name}</div><div class="sc-l">מלך/ת ההצבעות (${mvn})</div></div>`;h+='</div>';
@@ -2521,7 +2515,7 @@ h+='<div style="background:var(--s1);border:1.5px solid rgba(255,199,58,.2);bord
 h+='<div style="font-size:.58rem;color:var(--t3);letter-spacing:1px">תעודת ערב משפחתי</div>';
 h+='<div style="font-size:.9rem;font-weight:900;color:var(--gold);margin:6px 0">'+new Date().toLocaleDateString('he-IL')+'</div>';
 sorted.forEach((p,i)=>{const myTitles=aw[p.i]||[];const t=myTitles.length>0?myTitles[0]:defaultTitles[i%defaultTitles.length];
-h+=`<div style="display:flex;align-items:center;gap:8px;margin:4px 0"><div style="width:40px;height:40px;border-radius:50%;overflow:hidden;border:2px solid ${p.color};flex-shrink:0">${gAv(p.i,40)}</div><div style="flex:1;text-align:right"><span style="font-weight:700;color:${p.color};font-size:.78rem">${p.name}</span> <span style="font-size:.6rem;color:var(--gold)">${t}</span></div><div style="font-size:.72rem;font-weight:800;color:var(--t2)">${p.s}</div></div>`;});
+h+=`<div style="display:flex;align-items:center;gap:8px;margin:4px 0"><div style="width:40px;height:40px;border-radius:50%;overflow:hidden;border:2px solid ${p.color};flex-shrink:0">${gAv(p.i,40)}</div><div style="flex:1;text-align:right"><span style="font-weight:700;color:${p.color};font-size:.78rem">${p.name}</span> <span style="font-size:.6rem;color:var(--gold)">${t}</span></div></div>`;});
 if(topQuote)h+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.05);font-size:.68rem;color:var(--t2);font-style:italic">\"'+topQuote+'\"</div>';
 h+='<div style="font-size:.65rem;color:var(--t3);margin-top:8px">השיחה ממשיכה לבד.</div>';
 h+='</div>';
@@ -3020,31 +3014,22 @@ function startIntroReveal(){
 
 function startIntroText(){
   var introLines=[
-    {text:'שלום שלום. יש פה משחק.',cls:'bright',delay:611},
-    {text:'בניתי אותו במקום ללכת לפסיכולוג.',cls:'',delay:3379},
-    {text:'יותר זול. פחות שאלות על אמא.',cls:'',delay:6083},
-    {text:'',cls:'',delay:8018},
-    {text:'בנאדם שכל מה שהוא יודע על ערבי משפחה מגיע מסדרות טלוויזיה',cls:'',delay:9292},
-    {text:'בנה ערב משפחתי אמיתי.',cls:'bright',delay:14211},
-    {text:'זה כמו לבנות מטוס לפי סרט.',cls:'',delay:16170},
-    {text:'רק שפה אם זה מתרסק אתם רק צוחקים.',cls:'gold',delay:18533},
-    {text:'',cls:'',delay:21211},
-    {text:'שימו חטיפים. שימו טלפון. שימו ילדים.',cls:'bright',delay:22213},
-    {text:'תלחצו.',cls:'bright',delay:26027},
-    {text:'',cls:'',delay:27091},
-    {text:'מה שיקרה אחרי זה גם אני לא יודע.',cls:'',delay:27781},
-    {text:'כל פעם יוצא אחר.',cls:'',delay:30170},
-    {text:'הילדים אומרים דברים שהורסים.',cls:'gold',delay:31587},
-    {text:'ההורים מגלים שהילדים שומעים הכל.',cls:'bright',delay:33802},
-    {text:'ומישהו אומר משהו שכולם חשבו ואף אחד לא אמר.',cls:'',delay:36323},
-    {text:'',cls:'',delay:39733},
-    {text:'ואחרי שלושים דקות תגידו למה לא עשינו את זה קודם.',cls:'',delay:41171},
-    {text:'ואני אגיד כי הייתם צריכים לחכות שמישהו יתגרש',cls:'',delay:45307},
-    {text:'ולא ימצא מה לעשות עם הלילות.',cls:'',delay:48786},
-    {text:'',cls:'',delay:49467},
-    {text:'תשחקו.',cls:'bright',delay:50956},
-    {text:'ואם הילד שלכם ישאל מי עשה את המשחק הזה.',cls:'',delay:52171},
-    {text:'תגידו לו מישהו שצריך ללכת לישון ולא הולך.',cls:'',delay:55996},
+    {text:'ביקשו ממני לתאר את המשחק.',cls:'',delay:500},
+    {text:'אמרתי שזה כמו טיפול משפחתי.',cls:'',delay:2500},
+    {text:'רק שהמטפל גרוש.',cls:'bright',delay:5000},
+    {text:'כמו מציל שלא יודע לשחות. ככה.',cls:'',delay:6500},
+    {text:'',cls:'',delay:9000},
+    {text:'ילד בן חמש יחשוף שאבא מסיים גלידה בלילה',cls:'',delay:10000},
+    {text:'ומחזיר אותה למקפיא ריקה',cls:'',delay:12500},
+    {text:'כי אם אין ראיות אין פשע.',cls:'gold',delay:14500},
+    {text:'',cls:'',delay:16500},
+    {text:'אמא תגלה שהילד סיפר בכיתה',cls:'',delay:17500},
+    {text:'שאמא אומרת עוד דקה כבר חצי שעה.',cls:'bright',delay:19500},
+    {text:'',cls:'',delay:22000},
+    {text:'וסבא ייכנס לאפליקציה ויסרב לצאת.',cls:'',delay:23000},
+    {text:'',cls:'',delay:26000},
+    {text:'שימו חטיפים.',cls:'bright',delay:27000},
+    {text:'מכאן אין דרך חזרה.',cls:'gold',delay:28500},
   ];
 
   var container=document.getElementById('introText');
@@ -3064,7 +3049,7 @@ function startIntroText(){
   setTimeout(function(){
     var cta=document.getElementById('introCta');
     if(cta)cta.classList.add('vis');
-  },58000);
+  },31000);
 }
 
 function skipIntro(){
