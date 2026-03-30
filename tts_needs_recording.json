@@ -1,0 +1,1192 @@
+[
+  {
+    "id": "new_001",
+    "type": "VOTE",
+    "stage": "warm",
+    "text": "מי משאיר כוסות בכל חדר כאילו הוא מסמן שטח.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_002",
+    "type": "VOTE",
+    "stage": "warm",
+    "text": "מי מגיב לג'וק כאילו נכנס אריה לסלון.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_003",
+    "type": "VOTE",
+    "stage": "warm",
+    "text": "מי אומר עוד דקה ומתכוון לעוד חצי שעה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_004",
+    "type": "VOTE",
+    "stage": "fire",
+    "text": "מי הכי בטוח שהוא צודק. תמיד. גם כשכולם מסתכלים עליו.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_005",
+    "type": "VOTE",
+    "stage": "fire",
+    "text": "מי הכי טוב בלהעלים חטיפים בלי שישימו לב.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_006",
+    "type": "VOTE",
+    "stage": "fire",
+    "text": "מי הכי יודע לעשות פרצוף של מסכן כדי לקבל מה שהוא רוצה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_007",
+    "type": "VOTE",
+    "stage": "final",
+    "text": "מי הכי אמיץ כשצריך. גם אם בפנים הוא מפחד.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_008",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "מה הדבר הכי מוזר שאתה אוהב לאכול. שכולם עושים פרצוף כשאתה אוכל את זה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_009",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "איזה שיר אתה שר כשאף אחד לא שומע. תודה. עכשיו כולם שומעים.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_010",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "מה הדבר הכי ילדותי שאתה עדיין עושה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_011",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "מה המילה שאתה אומר הכי הרבה ביום. אל תגיד לא יודע כי זאת בטח התשובה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_012",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "מה הדבר שמפחיד אותך שכולם ימצאו מגוחך.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_013",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "מה עושה אותך שמח ב-5 שניות.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_014",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "איזה כוח-על היית בוחר. ולמה דווקא את זה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_015",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "מה הדבר הראשון שהיית עושה אם היית בלתי נראה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_016",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "מה ההרגל הכי מוזר שיש לך. שאתה חושב שאף אחד לא שם לב.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_017",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "אם היית יכול לשנות חוק אחד בבית. מה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_018",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "מה המאכל שמזכיר לך בית. לא מסעדה. בית.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_019",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "מה הריח שמחזיר אותך למקום אחר.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_020",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "מי פה אמר לך פעם משהו שנשאר. שלא שכחת.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_021",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "איזה רגע קטן בבית אתה אוהב. לא אירוע. רגע.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_022",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "מה הדבר הכי טעים שמישהו פה מכין.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_023",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "מה הריב הכי מיותר שהיה פה. שהיום כולם צוחקים עליו.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_024",
+    "type": "HOTSEAT",
+    "stage": "warm",
+    "text": "מה הדבר הקטן שמישהו פה עושה ותמיד עושה לך טוב.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_025",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "ספר משהו שאף אחד פה לא יודע.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_026",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "ספר על פעם שצחקת כל כך חזק שלא יכולת לעצור.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_027",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "ספר על פעם שנתפסת בשקר.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_028",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה השקר הכי קטן שאתה אומר כל יום.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_029",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "ספר על פעם שקינאת במישהו פה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_030",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "ספר על פעם שהעמדת פנים שאתה ישן.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_031",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה הדבר שאתה עושה שחושב שאף אחד לא שם לב.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_032",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה הדבר שהכי הפתיע אותך על עצמך.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_033",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "ספר על טעות שלימדה אותך משהו.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_034",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "תגיד למישהו פה למה אתה סומך עליו. בלי לחשוב יותר מדי.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_035",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה למדת ממישהו פה. משהו שנשאר איתך.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_036",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "תגיד למישהו פה מתי הוא גרם לך להרגיש טוב בלי שהוא ידע.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_037",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה הדרך הכי טובה להצחיק אותך. הנוסחה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_038",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה אתה עושה כשקשה לך ולא בא לך להגיד שקשה לך.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_039",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה היית עושה עם מיליון שקל ויום אחד.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_040",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה היית עושה אם היית בלתי נראה ליום.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_041",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה היית עושה אם היית יכול לקרוא מחשבות.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_042",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה היית עושה אם היית מתעורר מחר בגוף של מישהו מהמשפחה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_043",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה היית עושה אם היית חוזר בזמן ליום אחד בחיים.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_044",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה היית עושה אם היית ראש ממשלה ליום.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_045",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה היית עושה אם הייתה לך מכונת זמן.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_046",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה היית עושה אם כל מה שתגיד היום יתגשם.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_047",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה היית עושה אם היית יכול לטוס.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_048",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה היית עושה אם היית נתקע על אי בודד עם בן משפחה אחד. מי ולמה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_049",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה היית עושה אם היית צריך לוותר על דבר אחד לנצח.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_050",
+    "type": "HOTSEAT",
+    "stage": "fire",
+    "text": "מה היית עושה אם היית מגלה שיש לך כוח-על.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_051",
+    "type": "HOTSEAT",
+    "stage": "final",
+    "text": "מה היית אומר לעצמך בגיל 10.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_052",
+    "type": "HOTSEAT",
+    "stage": "final",
+    "text": "מה הדבר הכי יפה שמישהו אמר לך.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_053",
+    "type": "HOTSEAT",
+    "stage": "final",
+    "text": "מה הדבר שתמיד רצית להגיד אבל לא העזת.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_054",
+    "type": "HOTSEAT",
+    "stage": "final",
+    "text": "מה למדת על עצמך השנה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_055",
+    "type": "HOTSEAT",
+    "stage": "final",
+    "text": "מה היית רוצה שיזכרו עליך.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_056",
+    "type": "HOTSEAT",
+    "stage": "final",
+    "text": "אם היית צריך לבחור דבר אחד משפחתי לשמר לדורות. מה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_057",
+    "type": "HOTSEAT",
+    "stage": "final",
+    "text": "תגיד למישהו פה דבר אחד שאתה מעריך בו. באמת.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_058",
+    "type": "HOTSEAT",
+    "stage": "final",
+    "text": "מה הדבר שמישהו פה עושה שאתה רוצה ללמוד ממנו.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_059",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, מה %2 הכי אוהב לאכול ביום שישי.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_060",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1 ו-%2 — תמציאו ביחד שם ללהקה. יש לכם 10 שניות.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_061",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, חקה את %2. שינחשו.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_062",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, מה הדבר הראשון שעולה לך כשחושבים על %2.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_063",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1 ו-%2 — תמציאו סיסמה למשפחה. 10 שניות.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_064",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, מה %2 עושה שמצחיק אותך.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_065",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, איזה חיה %2 מזכיר לך. תסביר.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_066",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1 ו-%2 — 20 שניות ללחיצת יד הכי מורכבת שאפשר.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_067",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, מה %2 עושה הכי טוב בעולם.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_068",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1 ו-%2 — מי יצחק ראשון. הביטו אחד בשני בלי לחייך.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_069",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, מתי %2 הפתיע אותך.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_070",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, מה הכינוי שהיית נותן ל-%2.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_071",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1 ו-%2 — 10 שניות לעמוד על רגל אחת. מי יחזיק.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_072",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, אם %2 היה אוכל. מה.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_073",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, מה %2 עשה שגרם לך לצחוק הכי חזק.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_074",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1 ו-%2 — תשירו ביחד שיר ילדים. כל השאר שופטים.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_075",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, מה הדבר הכי טוב שלמדת מ-%2.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_076",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, איזה סופרהירו %2 היה.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_077",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, תאר את %2 בשלוש מילים.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_078",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1 ו-%2 — מי עושה פרצוף יותר מצחיק. 3 2 1.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_079",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, תסביר למה %2 מיוחד. בלי להגיד את השם שלו. שינחשו על מי.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_080",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, תאר את %2 בתור מודעת דרושים. שכנע אותנו לגייס.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_081",
+    "type": "REVEAL",
+    "stage": "warm",
+    "text": "%1, מכור לנו את %2 כאילו הוא מוצר. פרסומת של 15 שניות.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_082",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, ספר ל-%2 דבר שתמיד רצית להגיד.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_083",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, מה %2 לא יודע שאתה חושב עליו.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_084",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1 ו-%2 — 30 שניות לבנות מגדל מכל מה שיש ליד.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_085",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, תאר את %2 כאילו אתה סוכן נדלן שמוכר אותו.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_086",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, מה הדבר שהכי מפתיע אותך ב-%2.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_087",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, תאר את %2 ב-3 מילים. %2 מנחש.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_088",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, מה %2 עושה שמשגע אותך. בצורה טובה.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_089",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1 ו-%2 — תמציאו פרסומת לגרב. יש 15 שניות.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_090",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, מה לא תשנה ב-%2 אף פעם.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_091",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, אם %2 היה דמות בסרט. מי.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_092",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, מה ההבדל הכי גדול ביניכם.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_093",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1 ו-%2 — חליפת מחמאות. כל אחד 3 מילים.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_094",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, מתי %2 הכי מצחיק.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_095",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, מה היית גונב מ-%2 אם יכולת.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_096",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, מה %2 מלמד אותך בלי לדעת.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_097",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, איזה עצה היית נותן ל-%2.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_098",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1 ו-%2 — תמציאו יחד סוף לסיפור. פעם אחת במשפחה שלנו...",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_099",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, מה %2 אומר תמיד שמצחיק אותך.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_100",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1 ו-%2 — חיבוק של 5 שניות. עכשיו.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_101",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, תאר את %2 כאילו אתה סוכן חשאי שמדווח למפקד. ברצינות.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_102",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, תסביר ל-%2 למה הוא לא רגיל. בלי שזה יישמע כמו מחמאה.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_103",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, אם %2 היה מילה במילון. מה ההגדרה.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_104",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, מה הכי מעצבן ב-%2. באהבה.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_105",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, מה %2 היה עושה עם מיליון שקל.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_106",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, איזו חיה %2 מזכיר לך.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_107",
+    "type": "REVEAL",
+    "stage": "fire",
+    "text": "%1, מה הזיכרון הכי חזק שלך עם %2.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_108",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, אמור ל-%2 דבר אחד שאתה מעריך בו.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_109",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מה למדת מ-%2.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_110",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מה הזיכרון הכי טוב שלך עם %2.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_111",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מה היית שומר מ-%2 אם הכל נמחק.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_112",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מה %2 נותן לך שאף אחד אחר לא.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_113",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1 ו-%2 — חיבוק ארוך עד שמישהו מוותר ועוזב.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_114",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מתי הרגשת הכי קרוב ל-%2.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_115",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מה היית כותב ל-%2 בגלויה.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_116",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, איזה שיר מזכיר לך את %2.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_117",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מה %2 לימד אותך על החיים.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_118",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, אם היית נותן ל-%2 מתנה אחת. מה.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_119",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, ספר ל-%2 למה אתה שמח שיש אותו.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_120",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1 ו-%2 — מה הדבר שהכי אוהבים לעשות ביחד.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_121",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מה %2 עושה שגורם לך להרגיש בטוח.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_122",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מה %2 מביא למשפחה שאף אחד אחר לא.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_123",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1 ו-%2 — תגידו ביחד מילה אחת שמתארת את המשפחה. 3 2 1.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_124",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מה היית אומר ל-%2 אם הייתם נפגשים בפעם הראשונה.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_125",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מה %2 צריך לדעת שאתה חושב.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_126",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, אם היית כותב על %2 שורה אחת. מה.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_127",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מה הדבר שהכי מעריך ב-%2.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_128",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מילה אחת שמתארת את %2.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_129",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מה היית אומר ל-%2 אם רק יום אחד נשאר.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_130",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, מה %2 נותן לך שאף אחד אחר לא.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_131",
+    "type": "REVEAL",
+    "stage": "final",
+    "text": "%1, במה %2 הכי השתנה.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_132",
+    "type": "FAMTALK",
+    "stage": "warm",
+    "text": "מה המשפט שנאמר הכי הרבה בבית הזה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_133",
+    "type": "FAMTALK",
+    "stage": "warm",
+    "text": "מה עושה ערב רגיל שלנו שונה מכל משפחה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_134",
+    "type": "FAMTALK",
+    "stage": "final",
+    "text": "מה עושה את המשפחה שלנו שונה מכל משפחה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_135",
+    "type": "GUESS",
+    "stage": "fire",
+    "text": "מה לדעתכם הכי מעצבן את %t.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_136",
+    "type": "GUESS",
+    "stage": "fire",
+    "text": "מה %t עושה כשאף אחד לא רואה.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_137",
+    "type": "GUESS",
+    "stage": "fire",
+    "text": "על מה %t הכי גאה בסתר.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_138",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "לדעת תמיד מה חושבים עליך או אף פעם.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_139",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "תמיד להגיד אמת או לדעת מתי משקרים לך.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_140",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "מה עדיף. לדעת תמיד מה חושבים עליך או אף פעם.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_141",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "לחזור לגיל 10 עם מה שאתה יודע או להישאר.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_142",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "מה עדיף. תמיד להגיד אמת או תמיד לדעת מתי משקרים לך.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_143",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "חבר סיפר לך סוד על חבר אחר שלך. מה עושים.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_144",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "מצאת ארנק ברחוב עם 500 שקל ותעודת זהות. מה עושים.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_145",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "ראית מישהו מעתיק במבחן. מה עושים.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_146",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "מישהו נתן לך עודף של 50 שקל בטעות. מה עושים.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_147",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "חבר שואל אם השיער החדש שלו יפה ואתה חושב שלא. מה אומרים.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_148",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "ידעת שחבר עומד לעשות טעות גדולה. מה עושים.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_149",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "חבר מבקש ממך לשקר בשבילו להורים שלו. מה עושים.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_150",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "ראית ילד לבד בגן שעשועים בוכה. מה עושים.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_151",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "מישהו לקח לך את המקום בתור. מה עושים.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_152",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "הבטחת לחבר להגיע ואז קיבלת הזמנה יותר כיפית. מה עושים.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_153",
+    "type": "DILEMMAS",
+    "stage": "all",
+    "text": "מצאת שמישהו בכיתה כותב עליך דברים לא יפים. מה עושים.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_154",
+    "type": "NIGHT_VOTE",
+    "stage": "night",
+    "text": "מי פה הכי טוב בלהעמיד פנים שהכל בסדר.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_155",
+    "type": "NIGHT_VOTE",
+    "stage": "night",
+    "text": "מי פה משקר הכי טוב. ובזכות זה שורד.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_156",
+    "type": "NIGHT_VOTE",
+    "stage": "night",
+    "text": "מי פה הכי פוחד להיות לבד. אבל לא יודה בזה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_157",
+    "type": "NIGHT_VOTE",
+    "stage": "night",
+    "text": "מי פה הכי השתנה בשנה האחרונה. ולא בטוח לאיזה כיוון.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_158",
+    "type": "NIGHT_VOTE",
+    "stage": "night",
+    "text": "מי פה הכי צריך חופש מעצמו.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_159",
+    "type": "NIGHT_HOTSEAT",
+    "stage": "night",
+    "text": "מה הדבר שאתה הכי מתחרט עליו. שעדיין חוזר בלילה.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_160",
+    "type": "NIGHT_HOTSEAT",
+    "stage": "night",
+    "text": "מה הדבר שהכי מפחיד אותך לגבי העתיד. לא מפחיד ילדים. מפחיד אותך.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_161",
+    "type": "NIGHT_HOTSEAT",
+    "stage": "night",
+    "text": "מה הדבר שתמיד רצית להגיד למישהו פה ולא אמרת. הנה ההזדמנות.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_162",
+    "type": "NIGHT_HOTSEAT",
+    "stage": "night",
+    "text": "מה הדבר שאתה עושה כשאף אחד לא רואה. שאם היו רואים היו מופתעים.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_163",
+    "type": "NIGHT_HOTSEAT",
+    "stage": "night",
+    "text": "על מה אתה ומישהו פה חלוקים. שאף פעם לא דיברתם על זה. כי עדיף לא.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_164",
+    "type": "NIGHT_REVEAL",
+    "stage": "night",
+    "text": "%1, ספר ל-%2 דבר שתמיד חשבת עליו ולא אמרת. עכשיו או אף פעם.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_165",
+    "type": "NIGHT_REVEAL",
+    "stage": "night",
+    "text": "%1 ו-%2 — מה הוויכוח שתמיד חוזר ואף פעם לא נפתר. תנו לו דקה.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_166",
+    "type": "NIGHT_REVEAL",
+    "stage": "night",
+    "text": "%1, מתי %2 הכי שבר אותך. באהבה. לא בכעס.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_167",
+    "type": "NIGHT_REVEAL",
+    "stage": "night",
+    "text": "%1, אם היית יכול לשנות דבר אחד ביחסים שלך עם %2. מה.",
+    "has_placeholder": true
+  },
+  {
+    "id": "new_168",
+    "type": "NIGHT_DILEMMAS",
+    "stage": "night",
+    "text": "לדעת מה באמת חושבים עליך. או להמשיך בלי לדעת.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_169",
+    "type": "NIGHT_DILEMMAS",
+    "stage": "night",
+    "text": "לחזור 10 שנים אחורה עם מה שאתה יודע היום. או להישאר.",
+    "has_placeholder": false
+  },
+  {
+    "id": "new_170",
+    "type": "NIGHT_DILEMMAS",
+    "stage": "night",
+    "text": "שכולם יאהבו אותך ולא ידעו מי אתה באמת. או שידעו מי אתה ולא כולם יאהבו.",
+    "has_placeholder": false
+  }
+]

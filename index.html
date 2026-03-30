@@ -1330,10 +1330,13 @@ let VS={};
 
 // TTS Engine — plays pre-recorded MP3 files from audio/
 var _ttsAudio=null;
-function playTTS(questionId){
+function playTTS(questionText){
 if(!SND||!SND.on)return;
-if(!questionId)return;
-var src='audio/'+questionId+'.mp3';
+if(!questionText)return;
+if(typeof TTS_MAP==='undefined')return;
+var audioId=TTS_MAP[questionText];
+if(!audioId)return;
+var src='audio/'+audioId+'.mp3';
 if(_ttsAudio){try{_ttsAudio.pause();_ttsAudio.currentTime=0;}catch(e){}}
 _ttsAudio=new Audio(src);
 _ttsAudio.volume=0.8;
@@ -1378,7 +1381,7 @@ ${sp}${explain}
 <div class="csub">${P[pi].name}, ${g(pi,'תקרא','תקראי')} בקול.</div>
 ${showChangeBtn('vote')}
 <div class="acts"><button class="ab ab-g" style="width:100%" onclick="lockQuestion();showPrediction(${pi})">קראתי.</button></div></div>`);
-if(q.id)playTTS(q.id);}
+playTTS(q.q);}
 
 // Quick Vote
 
@@ -1502,7 +1505,7 @@ ${sp}${explain}
 <button class="quote-btn" onclick="openQuote()">${ic('chat',12,'var(--gold)')} נפל פה משפט.</button>
 ${showChangeBtn('hotseat')}
 <div class="acts"><button class="ab ab-g" style="width:100%" onclick="lockQuestion();hsAnswer(${pi},${pts})">הלאה.</button></div></div>`);
-if(q.id)playTTS(q.id);}
+playTTS(q.q);}
 function hsAnswer(pi,pts){scores[pi]+=pts;updateSB();trackStreak(pi);advance();}
 
 // ===== REVEAL (new type!) =====
@@ -1525,7 +1528,8 @@ gc(`${explain}${sp}
 <div class="cq">${qText}</div>
 <button class="quote-btn" onclick="openQuote()">${ic('chat',12,'var(--gold)')} נפל פה משפט.</button>
 ${showChangeBtn('reveal')}
-<div class="acts"><button class="ab ab-g" style="width:100%" onclick="lockQuestion();scores[${pi}]++;updateSB();${isHeart?`showBreathe(${pi})`:`advance()`}">${isHeart?'היה רגע.':'הלאה.'}</button></div></div>`);}
+<div class="acts"><button class="ab ab-g" style="width:100%" onclick="lockQuestion();scores[${pi}]++;updateSB();${isHeart?`showBreathe(${pi})`:`advance()`}">${isHeart?'היה רגע.':'הלאה.'}</button></div></div>`);
+playTTS(q.q);}
 
 // Blind sub-type of REVEAL
 function showBlindReveal(pi,pi2,q,sp,mult){
@@ -1666,7 +1670,7 @@ ${sp}${explain}
 <div class="cq">${q.q}</div>
 ${circleTimer('rt',tl,tl,'var(--gold)')}
 <div class="acts" id="rapidActs"><button class="ab ab-g" onclick="startRapidTimer(${pi},${pts},${tl})">התחל.</button></div></div>`);
-if(q.id)playTTS(q.id);}
+playTTS(q.q);}
 function startRapidTimer(pi,pts,tl){const rapidTotal=tl;document.getElementById('rapidActs').innerHTML=`<button class="ab ab-g" onclick="rEnd(${pi},${pts},true)">הצליח! (+${pts})</button><button class="ab" style="background:var(--coral)" onclick="rEnd(${pi},0,false)">לא הספיק</button>`;tmrId=setInterval(()=>{tl--;SND.play('tick');updateCircle('rt',null,tl,rapidTotal,'var(--gold)');if(tl<=0){clearInterval(tmrId);const el=document.getElementById('rt');if(el)el.innerHTML=ic('clock',20,'var(--gold)');}},1000);}
 function rEnd(pi,pts,ok){if(tmrId){clearInterval(tmrId);tmrId=null;}if(ok){scores[pi]+=pts;ptPop(P[pi].color,'+'+pts);SND.play('win');vib(60);updateSB();scorePop(pi);trackStreak(pi);showPrize(pi);return;}else SND.play('buzz');advance();}
 
@@ -1683,7 +1687,7 @@ ${sp}${explain}
 <div class="csub">${P[pi].name} — ${g(pi,'תקרא','תקראי')} בקול, ואז כל אחד מצביע.</div>
 ${showChangeBtn('dilemma')}
 <div class="acts"><button class="ab ab-g" style="width:100%" onclick="lockQuestion();dlNext()">יאללה, מצביעים</button></div></div>`);
-if(q.id)playTTS(q.id);}
+playTTS(q.q);}
 function dlNext(){const ds=DL;if(ds.cur>=ds.voters.length){dlReveal();return;}const vi=ds.voters[ds.cur],v=P[vi];
 const hasOpts=ds.q.opts&&ds.q.opts.length>0;
 let btnsHTML='';
@@ -1730,7 +1734,7 @@ ${sp}${explain}
 <div class="cq">${q.q}</div>
 ${showChangeBtn('famtalk')}
 <div class="acts"><button class="ab ab-g" style="width:100%" onclick="scores[${pi}]+=${pts};updateSB();advance()">דיברנו מספיק.</button></div></div>`);
-if(q.id)playTTS(q.id);}
+playTTS(q.q);}
 
 // ===== PHASE INTRO — dramatic =====
 function showPI(phase){const ov=document.getElementById('overlay');SND.play('tada');phasesSeen++;
@@ -2065,7 +2069,8 @@ ${sp}
 <div class="rc-icon">${ic('vote',36,'var(--lav)')}</div>
 <div class="cq">${qText}</div>
 <div class="csub">כולם מצביעים (חוץ מ-${P[target].name}). אחר כך ${g(target,'הוא','היא')} מנחש.</div>
-<div class="acts"><button class="ab ab-g" style="width:100%" onclick="guNext()">יאללה, מצביעים</button></div></div>`);}
+<div class="acts"><button class="ab ab-g" style="width:100%" onclick="guNext()">יאללה, מצביעים</button></div></div>`);
+playTTS(q.q);}
 function guNext(){if(GU.cur>=GU.voters.length){guTargetTurn();return;}const vi=GU.voters[GU.cur],v=P[vi];
 gc(`<div class="handoff"><div class="handoff-av" style="border-color:${v.color}">${gAv(vi,80)}</div>
 <div class="handoff-name" style="color:${v.color}">${v.name}, תורך.</div>
@@ -3121,133 +3126,142 @@ window.open(waUrl,'_blank');
 (function(){
   if(!location.search.includes('audit=1'))return;
 
-  // Wait for content to load
   setTimeout(function(){
-    // Try to find questions array
     var allQ=[];
-    if(typeof CONTENT!=='undefined')allQ=CONTENT;
-    else if(typeof questions!=='undefined')allQ=questions;
-    else if(typeof QS!=='undefined')allQ=QS;
 
-    // Try to get from content.js globals
-    ['VOTE','HOTSEAT','RAPID','DILEMMA','FAMTALK','REVEAL','SECRET','MISSION','GUESS','FAM_CHALLENGE','MIC_CLAIMS','HOST_PROMPTS','ALIAS'].forEach(function(key){
-      if(typeof window[key]!=='undefined'){
-        var arr=window[key];
-        if(Array.isArray(arr))allQ=allQ.concat(arr.map(function(q,i){return {q:typeof q==='string'?q:(q.q||q.text||''),type:key,idx:i};}));
+    var types={
+      VOTE:typeof VOTE!=='undefined'?VOTE:null,
+      HOTSEAT:typeof HOTSEAT!=='undefined'?HOTSEAT:null,
+      REVEAL:typeof REVEAL!=='undefined'?REVEAL:null,
+      FAMTALK:typeof FAMTALK!=='undefined'?FAMTALK:null,
+      DILEMMAS:typeof DILEMMAS!=='undefined'?DILEMMAS:null,
+      RAPIDS:typeof RAPIDS!=='undefined'?RAPIDS:null,
+      SECRET:typeof SECRET!=='undefined'?SECRET:null,
+      MISSIONS:typeof MISSIONS!=='undefined'?MISSIONS:null,
+      FAM_CH:typeof FAM_CH!=='undefined'?FAM_CH:null,
+      GUESS:typeof GUESS!=='undefined'?GUESS:null,
+      RECORD:typeof RECORD!=='undefined'?RECORD:null,
+      PRIZES:typeof PRIZES!=='undefined'?PRIZES:null
+    };
+
+    Object.keys(types).forEach(function(key){
+      var v=types[key];
+      if(!v)return;
+      if(Array.isArray(v)){
+        v.forEach(function(q,i){
+          var text=typeof q==='string'?q:(q.q||q.q1||q.text||JSON.stringify(q));
+          allQ.push({q:text,type:key,stage:'all',idx:i});
+        });
+      }else if(typeof v==='object'){
+        ['warm','fire','final'].forEach(function(stage){
+          if(!v[stage])return;
+          v[stage].forEach(function(q,i){
+            var text=typeof q==='string'?q:(q.q||q.q1||q.text||JSON.stringify(q));
+            allQ.push({q:text,type:key,stage:stage,idx:i});
+          });
+        });
       }
     });
 
     if(allQ.length===0){
-      console.error('AUDIT: Could not find questions array. Check content.js variable names.');
+      console.error('AUDIT: Could not find questions. Available globals:',
+        Object.keys(types).filter(function(k){return types[k]!==null;}).join(', '));
       return;
     }
 
     console.log('===== CONTENT AUDIT =====');
     console.log('Total items: '+allQ.length);
 
-    // 1. Type distribution
-    var types={};
-    allQ.forEach(function(q){var t=q.type||'unknown';types[t]=(types[t]||0)+1;});
-    console.log('\nType distribution:');
-    Object.keys(types).sort().forEach(function(t){console.log('  '+t+': '+types[t]);});
+    // 1. Distribution
+    var dist={};
+    allQ.forEach(function(q){var k=q.type+'/'+q.stage;dist[k]=(dist[k]||0)+1;});
+    console.log('\nDistribution:');
+    Object.keys(dist).sort().forEach(function(k){console.log('  '+k+': '+dist[k]);});
 
     // 2. Duplicates
     var seen={};var dupes=[];
     allQ.forEach(function(q,i){
-      var key=(q.q||'').trim().toLowerCase().substring(0,60);
+      var key=q.q.trim().toLowerCase().substring(0,60);
       if(!key)return;
-      if(seen[key]!==undefined)dupes.push('  ['+seen[key]+'] & ['+i+']: "'+key+'"');
+      if(seen[key]!==undefined)dupes.push('['+seen[key]+'] & ['+i+']: "'+key+'"');
       seen[key]=i;
     });
-    if(dupes.length){console.warn('\n⚠️ Duplicates ('+dupes.length+'):');dupes.forEach(function(d){console.warn(d);});}
+    if(dupes.length){console.warn('\n⚠️ Duplicates ('+dupes.length+'):');dupes.forEach(function(d){console.warn('  '+d);});}
+    else console.log('\n✅ No duplicates');
 
-    // 3. Very short questions
-    var short=allQ.filter(function(q){return (q.q||'').length>0&&(q.q||'').length<15;});
+    // 3. Very short
+    var short=allQ.filter(function(q){return q.q.length>0&&q.q.length<15;});
     if(short.length){
-      console.warn('\n⚠️ Very short (<15 chars) ('+short.length+'):');
-      short.forEach(function(q){console.warn('  ['+q.type+'] "'+q.q+'"');});
+      console.warn('\n⚠️ Very short <15 chars ('+short.length+'):');
+      short.forEach(function(q){console.warn('  ['+q.type+'/'+q.stage+'] "'+q.q+'"');});
     }
 
-    // 4. Gender issues — questions that use singular male form
-    var genderIssues=[];
-    var malePatterns=[/\bאתה\b/,/\bעשית\b/,/\bהיית\b/,/\bחשבת\b/,/\bרצית\b/,/\bאמרת\b/,/\bהלכת\b/,/\bראית\b/];
-    allQ.forEach(function(q,i){
-      var text=q.q||'';
-      malePatterns.forEach(function(pat){
-        if(pat.test(text)){
-          genderIssues.push('  ['+i+'] ['+q.type+'] "'+text.substring(0,50)+'..." — has: '+pat.source);
-        }
-      });
-    });
-    if(genderIssues.length){
-      console.warn('\n⚠️ Possible gender issues ('+genderIssues.length+'):');
-      genderIssues.slice(0,20).forEach(function(g){console.warn(g);});
-      if(genderIssues.length>20)console.warn('  ...and '+(genderIssues.length-20)+' more');
-    }
-
-    // 5. Questions with emoji (should use SVG in UI)
-    var emojiQ=[];
-    var emojiRx=/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}]/gu;
-    allQ.forEach(function(q,i){
-      if(emojiRx.test(q.q||''))emojiQ.push('  ['+i+'] ['+q.type+'] "'+q.q.substring(0,40)+'"');
-    });
-    if(emojiQ.length){
-      console.log('\nℹ️ Questions with emoji ('+emojiQ.length+') — OK in content, verify no emoji in UI:');
-      emojiQ.slice(0,10).forEach(function(e){console.log(e);});
-    }
-
-    // 6. "Temperature" classification
-    var temps={cold:0,warm:0,hot:0,fire:0};
+    // 4. Temperature
     var personalWords=['מרגיש','חושב','מעדיף','סוד','מפחד','חולם','מתחרט','אוהב','שונא','נכשל','בוכה','מתבייש'];
-    var deepWords=['כואב','קשה','מפחיד','סוד','לא סיפרת','פחד','חרטה','אשמה','בושה'];
+    var deepWords=['כואב','קשה','מפחיד','סוד','לא סיפרת','פחד','חרטה','אשמה','בושה','מעריך','גאה','אהוב'];
+    var temps={cold:0,warm:0,hot:0,fire:0};
     allQ.forEach(function(q){
-      var text=(q.q||'').toLowerCase();
-      var isPersonal=personalWords.some(function(w){return text.includes(w);});
-      var isDeep=deepWords.some(function(w){return text.includes(w);});
+      var t=q.q.toLowerCase();
+      var isDeep=deepWords.some(function(w){return t.includes(w);});
+      var isPersonal=personalWords.some(function(w){return t.includes(w);});
       if(isDeep)temps.fire++;
       else if(isPersonal)temps.hot++;
-      else if(text.length>30)temps.warm++;
+      else if(t.length>30)temps.warm++;
       else temps.cold++;
     });
-    console.log('\n🌡️ Temperature distribution:');
-    console.log('  🧊 Cold (factual/short): '+temps.cold);
-    console.log('  😊 Warm (descriptive): '+temps.warm);
-    console.log('  🔥 Hot (personal): '+temps.hot);
-    console.log('  💥 Fire (deep/vulnerable): '+temps.fire);
+    console.log('\nTemperature:');
+    console.log('  Cold: '+temps.cold);
+    console.log('  Warm: '+temps.warm);
+    console.log('  Hot: '+temps.hot);
+    console.log('  Fire: '+temps.fire);
 
-    // 7. Stage appropriateness
-    var stageIssues=[];
-    allQ.forEach(function(q,i){
-      var text=(q.q||'').toLowerCase();
-      var stage=q.stage||q.phase||q.round||'';
-      var isDeep=deepWords.some(function(w){return text.includes(w);});
-      if(stage==='1'&&isDeep)stageIssues.push('  ['+i+'] Deep question "'+text.substring(0,40)+'..." in stage 1 (warmup)');
-      if(stage==='3'&&!isDeep&&text.length<20)stageIssues.push('  ['+i+'] Cold question "'+text.substring(0,40)+'..." in stage 3 (finale)');
+    // 5. Stage mismatches
+    var mismatches=[];
+    allQ.forEach(function(q){
+      var t=q.q.toLowerCase();
+      var isDeep=deepWords.some(function(w){return t.includes(w);});
+      if(q.stage==='warm'&&isDeep)mismatches.push('  Deep in warm: ['+q.type+'] "'+q.q.substring(0,50)+'"');
     });
-    if(stageIssues.length){
-      console.warn('\n⚠️ Stage mismatches ('+stageIssues.length+'):');
-      stageIssues.forEach(function(s){console.warn(s);});
+    if(mismatches.length){
+      console.warn('\n⚠️ Stage mismatches ('+mismatches.length+'):');
+      mismatches.slice(0,10).forEach(function(m){console.warn(m);});
     }
 
-    // 8. "Not in character" detection
+    // 6. TTS coverage
+    if(typeof TTS_MAP!=='undefined'){
+      var ttsTypes=['VOTE','HOTSEAT','REVEAL','FAMTALK','DILEMMAS','RAPIDS','GUESS'];
+      var needsTTS=allQ.filter(function(q){return ttsTypes.includes(q.type);});
+      var hasTTS=needsTTS.filter(function(q){return TTS_MAP[q.q];});
+      var missingTTS=needsTTS.filter(function(q){return !TTS_MAP[q.q];});
+      console.log('\nTTS Coverage:');
+      console.log('  Needs TTS: '+needsTTS.length);
+      console.log('  Has recording: '+hasTTS.length);
+      console.log('  Missing recording: '+missingTTS.length);
+      if(missingTTS.length){
+        console.warn('  Missing:');
+        missingTTS.slice(0,10).forEach(function(q){
+          console.warn('    ['+q.type+'/'+q.stage+'] "'+q.q.substring(0,50)+'"');
+        });
+        if(missingTTS.length>10)console.warn('    ...and '+(missingTTS.length-10)+' more');
+      }
+    }
+
+    // 7. Off-character
     var offCharacter=[];
     var tooHappy=['מדהים','מושלם','נפלא','סופר','וואו','אדיר','פנטסטי','מגניב'];
     allQ.forEach(function(q,i){
       var text=(q.q||'');
       tooHappy.forEach(function(word){
-        if(text.includes(word)){
-          offCharacter.push('  ['+i+'] "'+text.substring(0,40)+'..." — too upbeat: "'+word+'"');
-        }
+        if(text.includes(word))offCharacter.push('  ['+i+'] "'+text.substring(0,40)+'..." — "'+word+'"');
       });
     });
     if(offCharacter.length){
-      console.warn('\n⚠️ Possibly off-character (too upbeat) ('+offCharacter.length+'):');
+      console.warn('\n⚠️ Off-character ('+offCharacter.length+'):');
       offCharacter.forEach(function(o){console.warn(o);});
     }
 
     console.log('\n===== END AUDIT =====');
-
-  },3000);// Wait for content.js to load
+  },3000);
 })();
 </script>
 </body>
