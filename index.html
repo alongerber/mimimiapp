@@ -814,22 +814,22 @@ else if(t==='reveal'){for(let i=0;i<6;i++){this.n(300-i*25,'square',.04,now+i*.0
 
 // ===== NARRATOR =====
 const NAR={
-vote:[(n)=>`${n}. תקרא.`,(n)=>`כולם מצביעים. בלי לחשוב יותר מדי.`,(n)=>`${n} שואל. אין תשובה לא נכונה. כנראה.`,(n)=>`הצביעו. מי שלא מצביע אוכל ערב מעל הכיור.`,(n)=>`רגע של אמת. או סתם רגע.`],
+vote:[(n,n2,pi)=>`${n}. ${g(pi,'תקרא','תקראי')}.`,(n)=>`כולם מצביעים. בלי לחשוב יותר מדי.`,(n)=>`${n} שואל. אין תשובה לא נכונה. כנראה.`,(n)=>`הצביעו. מי שלא מצביע אוכל ערב מעל הכיור.`,(n)=>`רגע של אמת. או סתם רגע.`],
 vote_qv:[(n)=>`מצביעים.`,(n)=>`כולם. עכשיו.`,(n)=>`מהבטן. בלי לחשוב.`,(n)=>`תבחרו. ואל תתחרטו. או תתחרטו. לא משנה.`],
-hotseat_warm:[(n)=>`${n}. שאלה.`,(n)=>`${n}. פשוט תענה.`,(n)=>`${n}. לא כואב. כנראה.`],
-hotseat_fire:[(n)=>`${n}. תתכונן.`,(n)=>`${n}. הפעם זה אישי. יותר מהרגיל.`,(n)=>`${n}. אל תשקר. אנחנו נדע.`,(n)=>`${n}. תענה ונמשיך.`],
-hotseat_final:[(n)=>`${n}. רגע אחד של כנות. זה כל מה שמבקשים.`,(n)=>`${n}. השאלה האחרונה. תענה מהמקום השקט.`,(n)=>`${n}. מהלב. אם יש.`],
+hotseat_warm:[(n)=>`${n}. שאלה.`,(n,n2,pi)=>`${n}. פשוט ${g(pi,'תענה','תעני')}.`,(n)=>`${n}. לא כואב. כנראה.`],
+hotseat_fire:[(n,n2,pi)=>`${n}. ${g(pi,'תתכונן','תתכונני')}.`,(n)=>`${n}. הפעם זה אישי. יותר מהרגיל.`,(n,n2,pi)=>`${n}. ${g(pi,'אל תשקר','אל תשקרי')}. אנחנו נדע.`,(n,n2,pi)=>`${n}. ${g(pi,'תענה','תעני')} ונמשיך.`],
+hotseat_final:[(n)=>`${n}. רגע אחד של כנות. זה כל מה שמבקשים.`,(n,n2,pi)=>`${n}. השאלה האחרונה. ${g(pi,'תענה','תעני')} מהמקום השקט.`,(n)=>`${n}. מהלב. אם יש.`],
 alias:[(n,n2,pi)=>`${n}. 30 שניות. ${g(pi,'תסביר','תסבירי')}.`,(n,n2,pi)=>`${n} ${g(pi,'מסביר','מסבירה')}. השאר מנחשים. או לא.`,(n)=>`בלי להגיד את המילה. ${n}. יאללה.`],
 draw:[(n,n2,pi)=>`${n} ${g(pi,'מצייר','מציירת')}. השאר בשקט.`,(n,n2,pi)=>`${n}. עיפרון. נייר. ${g(pi,'תצייר','תציירי')}.`,(n,n2,pi)=>`${n} ${g(pi,'מצייר','מציירת')}. אל תגידו מה זה נראה.`],
 mission:[(n)=>`${n}. יש משימה.`,(n,n2,pi)=>`${n}. ${g(pi,'תבחר ותעשה','תבחרי ותעשי')}.`,(n)=>`${n}. אתגר. אם תצליח טוב. אם לא גם.`],
-rapid:[(n)=>`${n}. מהר.`,(n)=>`${n}. ענה לפני שנגמר הזמן. או אחרי. אבל עדיף לפני.`,(n)=>`${n}. בלי לחשוב. פשוט תגיד.`],
+rapid:[(n)=>`${n}. מהר.`,(n,n2,pi)=>`${n}. ${g(pi,'ענה','עני')} לפני שנגמר הזמן. או אחרי. אבל עדיף לפני.`,(n,n2,pi)=>`${n}. בלי לחשוב. פשוט ${g(pi,'תגיד','תגידי')}.`],
 dilemma:[(n)=>`דילמה. כולם בוחרים.`,(n)=>`אין תשובה נכונה. יש תשובה שלכם.`,(n)=>`תבחרו. ואז תתווכחו. ככה זה עובד.`],
-famtalk:[(n)=>`שאלה לכולם. לא חייבים לענות. אבל עדיף.`,(n)=>`שיחה משפחתית. מי שלא מדבר מפסיד.`,(n)=>`${n} פותח. השאר ממשיכים. או לא. תלוי.`],
+famtalk:[(n)=>`שאלה לכולם. לא חייבים לענות. אבל עדיף.`,(n)=>`שיחה משפחתית. מי שלא מדבר מפסיד.`,(n,n2,pi)=>`${n} ${g(pi,'פותח','פותחת')}. השאר ממשיכים. או לא. תלוי.`],
 reveal:[(n,n2)=>`${n} ו-${n2}. רגע שלכם.`,(n,n2)=>`${n}. יש לך משהו להגיד ל-${n2}. עכשיו או אף פעם.`,(n,n2)=>`שני אנשים. רגע אחד. ממש עכשיו.`],
-win:[(n)=>`${n} ניצח. לא ציפינו.`,(n)=>`${n}. התואר שלך. אל תתרגל.`,(n)=>`${n}. המשפחה בחרה. מה לעשות.`],
+win:[(n,n2,pi)=>`${n} ${g(pi,'ניצח','ניצחה')}. לא ציפינו.`,(n)=>`${n}. התואר שלך. אל תתרגל.`,(n)=>`${n}. המשפחה בחרה. מה לעשות.`],
 tie:[()=>`תיקו. אף אחד לא ניצח. כמו בגירושין.`,()=>`הקולות חלוקים. ממשיכים.`,()=>`אין מנצח. יש שורדים.`],
-sentence:[(n)=>`${n}. תשלים את המשפט.`,(n)=>`${n}. מילים. בקול. עכשיו.`],
-mic:[(n)=>`${n}. 15 שניות. תשכנע.`,(n)=>`${n} על הדוכן.`]
+sentence:[(n,n2,pi)=>`${n}. ${g(pi,'תשלים','תשלימי')} את המשפט.`,(n)=>`${n}. מילים. בקול. עכשיו.`],
+mic:[(n,n2,pi)=>`${n}. 15 שניות. ${g(pi,'תשכנע','תשכנעי')}.`,(n)=>`${n} על הדוכן.`]
 };
 function nar(type,n1,n2,pi){let key=type;if(type==='hotseat'){const p=pk();key='hotseat_'+p;}const a=NAR[key]||NAR[type];if(!a)return '';return a[Math.floor(Math.random()*a.length)](n1,n2,pi);}
 
@@ -1996,7 +1996,7 @@ function showSentence(pi,sp,mult){
 const pool=SENTENCE.final;
 const s=pool[Math.floor(Math.random()*pool.length)];
 const p=P[pi];
-gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,64)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">משלים משפט</div></div></div>
+gc(`<div class="who" style="border-color:${p.color}"><div class="who-av" style="border-color:${p.color}">${gAv(pi,64)}</div><div class="who-info"><div class="who-name" style="color:${p.color}">${p.name}</div><div class="who-role">${g(pi,'משלים','משלימה')} משפט</div></div></div>
 ${sp}
 <div class="rc bg-reveal"><div class="rc-bar" style="background:var(--rose)"></div>
 <div class="cq" style="font-size:1.3rem">"${s}"</div>
@@ -2005,7 +2005,7 @@ ${sp}
 function sentenceFlip(pi,sentence){
 gc(`<div class="pass">
 <div style="font-size:.88rem;font-weight:700;color:var(--gold);margin:8px 0">עכשיו כולם!</div>
-<div class="cq" style="font-size:1.1rem">מה לדעתכם ${P[pi].name} היה משלים?</div>
+<div class="cq" style="font-size:1.1rem">מה לדעתכם ${P[pi].name} ${g(pi,'היה משלים','הייתה משלימה')}?</div>
 <div style="font-size:.82rem;color:var(--t2);margin:6px 0">"${sentence}"</div>
 <div class="csub">כל אחד אומר בקול — ${g(pi,'הוא','היא')} שומע!</div>
 <div style="font-size:.68rem;color:var(--t2);margin:12px 0;font-style:italic">${hostPrompt('sentence')}</div>
@@ -2181,7 +2181,7 @@ if(analysis&&analysis.bestQuote){gS.quotes.push({text:analysis.bestQuote,round:g
 }
 // Fallback: text-only analysis via regular gemini
 if(!analysis){
-const prompt=`אתה מנתח שפה שנון וחד בעברית. שחקן בשם "${p.name}" ניסה לשכנע את המשפחה בטענה: "${claim}".
+const prompt=`אתה מנתח שפה שנון וחד בעברית. שחקן בשם "${p.name}" ${g(pi,'ניסה','ניסתה')} לשכנע את המשפחה בטענה: "${claim}".
 ${convinced} מתוך ${total} השתכנעו (${pct}%).
 צור ניתוח קצר ומצחיק (עברית בלבד, 3-4 משפטים) שכולל:
 1. ציון שכנוע (1-10)
@@ -3289,100 +3289,390 @@ window.open(waUrl,'_blank');
 </script>
 <script src="audio/tts_map.js"></script>
 <script>
-// ===== AUTOTEST =====
+// ===== AUTOTEST v2 — COMPREHENSIVE =====
 (function(){
   if(!location.search.includes('autotest=1'))return;
 
   var log=[];
+  var errors=[];
+  var warnings=[];
   var lastScreen='';
   var clickCount=0;
-  var MAX_CLICKS=200;
+  var MAX_CLICKS=300;
+  var STUCK_TIMEOUT=8000;
+  var stuckTimer=null;
+  var playerNames=['דנה','יוסי','מיכל'];
+  var nameIdx=0;
 
   function getScreen(){
     var s=document.querySelector('.scr.on');
     return s?s.id:'unknown';
   }
 
-  function getClickables(){
-    var btns=document.querySelectorAll('.scr.on button:not([disabled]):not([style*="display:none"]),.scr.on .gb:not(.on),.scr.on .fb-chip,.scr.on .av-grid-item:not(.taken),.scr.on .tip-tier,.scr.on .donate-tier');
-    return Array.from(btns).filter(function(b){
-      var r=b.getBoundingClientRect();
-      return r.width>0&&r.height>0;
+  function logMsg(type,msg){
+    var entry=type+': '+msg+' [screen:'+getScreen()+', click:'+clickCount+']';
+    console.log('AUTOTEST '+entry);
+    if(type==='ERROR')errors.push(entry);
+    if(type==='WARNING')warnings.push(entry);
+    log.push(entry);
+  }
+
+  // ===== UX CHECKS =====
+
+  function checkOverflow(){
+    var screen=document.querySelector('.scr.on');
+    if(!screen)return;
+    var els=screen.querySelectorAll('div,span,button,img,p');
+    els.forEach(function(el){
+      var r=el.getBoundingClientRect();
+      if(r.width===0||r.height===0)return;
+      var parent=el.parentElement;
+      if(!parent)return;
+      var pr=parent.getBoundingClientRect();
+      if(r.right>pr.right+5||r.bottom>pr.bottom+5||r.left<pr.left-5){
+        var text=(el.textContent||'').substring(0,30).trim();
+        if(text)logMsg('WARNING','Overflow: "'+text+'" extends beyond parent');
+      }
     });
   }
 
+  function checkTextSize(){
+    var screen=document.querySelector('.scr.on');
+    if(!screen)return;
+    var texts=screen.querySelectorAll('div,span,button,p');
+    texts.forEach(function(el){
+      var text=(el.textContent||'').trim();
+      if(!text||text.length<2)return;
+      var cs=getComputedStyle(el);
+      var fs=parseFloat(cs.fontSize);
+      if(fs<10&&el.children.length===0){
+        logMsg('WARNING','Tiny text ('+fs+'px): "'+text.substring(0,20)+'"');
+      }
+    });
+  }
+
+  function checkAvatarShape(){
+    var imgs=document.querySelectorAll('.scr.on img[src*="avatar"],.scr.on .sb-av,.scr.on .av-grid-item,.scr.on [style*="border-radius"]');
+    imgs.forEach(function(el){
+      var r=el.getBoundingClientRect();
+      if(r.width>20&&r.height>20){
+        var ratio=r.width/r.height;
+        if(ratio<0.8||ratio>1.2){
+          logMsg('WARNING','Non-square avatar: '+Math.round(r.width)+'x'+Math.round(r.height));
+        }
+      }
+    });
+  }
+
+  function checkGender(){
+    var screen=document.querySelector('.scr.on');
+    if(!screen)return;
+    var html=screen.innerHTML;
+    if(typeof P!=='undefined'){
+      P.forEach(function(p,i){
+        if(p.gender==='f'&&p.name){
+          var maleVerbs=['נבחר ','טוען ','מסביר ','מצייר ','ניצח ','בחר ','ענה ','הצביע ','משלים '];
+          maleVerbs.forEach(function(v){
+            if(html.includes(p.name+' '+v.trim())){
+              logMsg('ERROR','Gender mismatch: female "'+p.name+'" with male verb "'+v.trim()+'"');
+            }
+          });
+        }
+      });
+    }
+  }
+
+  function checkButtonsVisible(){
+    var screen=document.querySelector('.scr.on');
+    if(!screen)return;
+    var btns=screen.querySelectorAll('button:not([disabled])');
+    var visibleCount=0;
+    btns.forEach(function(b){
+      var r=b.getBoundingClientRect();
+      if(r.width>0&&r.height>0&&r.top<window.innerHeight&&r.bottom>0){
+        visibleCount++;
+      }else if(r.width>0&&r.height>0&&r.top>=window.innerHeight){
+        logMsg('WARNING','Button below fold: "'+b.textContent.trim().substring(0,20)+'"');
+      }
+    });
+    if(visibleCount===0&&btns.length>0){
+      logMsg('WARNING','No visible buttons on screen '+getScreen());
+    }
+  }
+
+  function checkEmoji(){
+    var screen=document.querySelector('.scr.on');
+    if(!screen)return;
+    var emojiRegex=/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu;
+    var uiEls=screen.querySelectorAll('.fin-b,.tip-tier,.fb-chip,button,.wall-note');
+    uiEls.forEach(function(el){
+      var t=el.textContent;
+      if(t&&emojiRegex.test(t)){
+        logMsg('WARNING','Emoji in UI element: "'+t.substring(0,30)+'"');
+      }
+    });
+  }
+
+  function runAllChecks(){
+    checkOverflow();
+    checkTextSize();
+    checkAvatarShape();
+    checkGender();
+    checkButtonsVisible();
+    checkEmoji();
+  }
+
+  // ===== NAVIGATION =====
+
+  function getClickables(){
+    var selectors=[
+      '.scr.on button:not([disabled]):not([style*="display:none"]):not([style*="display: none"])',
+      '.scr.on .gb:not(.on)',
+      '.scr.on .fb-chip',
+      '.scr.on .tip-tier',
+      '.scr.on .gobtn'
+    ];
+    var all=[];
+    selectors.forEach(function(sel){
+      document.querySelectorAll(sel).forEach(function(el){
+        var r=el.getBoundingClientRect();
+        if(r.width>0&&r.height>0)all.push(el);
+      });
+    });
+    return all;
+  }
+
+  function fillInputs(){
+    var inputs=document.querySelectorAll('.scr.on input[type="text"]:not([disabled])');
+    var filled=false;
+    inputs.forEach(function(inp){
+      if(!inp.value||inp.value.includes('שחקן')){
+        var name=playerNames[nameIdx%playerNames.length];
+        nameIdx++;
+        inp.value=name;
+        inp.dispatchEvent(new Event('input',{bubbles:true}));
+        inp.dispatchEvent(new Event('change',{bubbles:true}));
+        filled=true;
+        logMsg('INFO','Filled input with "'+name+'"');
+      }
+    });
+    return filled;
+  }
+
+  function handleAvOverlay(){
+    var overlay=document.getElementById('avOverlay');
+    if(!overlay)return false;
+    var available=overlay.querySelectorAll('.av-grid-item:not(.taken):not(.selected)');
+    if(available.length>0){
+      available[Math.floor(Math.random()*available.length)].click();
+      clickCount++;
+      setTimeout(function(){
+        var confirmBtn=overlay.querySelector('.av-confirm:not([disabled])');
+        if(confirmBtn){confirmBtn.click();clickCount++;}
+        setTimeout(autoClick,500);
+      },400);
+      return true;
+    }
+    var confirmBtn=overlay.querySelector('.av-confirm:not([disabled])');
+    if(confirmBtn){confirmBtn.click();clickCount++;setTimeout(autoClick,500);return true;}
+    return false;
+  }
+
+  function handleSetupPlayers(){
+    var ss2=document.getElementById('ss2');
+    if(!ss2||ss2.style.display==='none')return false;
+
+    var inputs=ss2.querySelectorAll('input.sni');
+    inputs.forEach(function(inp,i){
+      if(!inp.value||inp.value.trim()===''){
+        var name=playerNames[i%playerNames.length];
+        inp.value=name;
+        inp.dispatchEvent(new Event('input',{bubbles:true}));
+        logMsg('INFO','Filled player name: '+name);
+      }
+    });
+
+    // Set alternating genders for testing
+    if(typeof PD!=='undefined'){
+      PD.forEach(function(d,i){
+        if(i%2===0)d.gender='f';
+      });
+    }
+
+    if(typeof PD!=='undefined'){
+      for(var i=0;i<PD.length;i++){
+        if(!PD[i].avId){
+          logMsg('INFO','Opening avatar picker for player '+i);
+          if(typeof pickAvFor==='function')pickAvFor(i);
+          clickCount++;
+          setTimeout(function(){handleAvOverlay();},600);
+          return true;
+        }
+      }
+    }
+
+    var npb=document.getElementById('npb');
+    if(npb&&!npb.disabled){
+      logMsg('INFO','All players ready, proceeding');
+      npb.click();
+      clickCount++;
+      setTimeout(autoClick,500);
+      return true;
+    }
+    return false;
+  }
+
+  function handleModal(){
+    var modalBtns=document.querySelectorAll('.mbg.on button,.mbox button');
+    if(modalBtns.length>0){
+      modalBtns[0].click();
+      logMsg('INFO','Closed modal');
+      return true;
+    }
+    return false;
+  }
+
+  function resetStuckTimer(){
+    clearTimeout(stuckTimer);
+    stuckTimer=setTimeout(function(){
+      logMsg('ERROR','STUCK at screen: '+getScreen());
+      printReport();
+    },STUCK_TIMEOUT);
+  }
+
+  // ===== MAIN LOOP =====
+
   function autoClick(){
     if(clickCount>=MAX_CLICKS){
-      console.log('AUTOTEST COMPLETE — '+clickCount+' clicks, last screen: '+getScreen());
-      console.log('Log:',log.join(' → '));
+      logMsg('INFO','Max clicks reached');
+      printReport();
       return;
     }
 
     var screen=getScreen();
     if(screen!==lastScreen){
-      log.push(screen);
+      log.push('--- SCREEN: '+screen+' ---');
       lastScreen=screen;
-      console.log('AUTOTEST screen:',screen);
+      logMsg('INFO','Entered screen: '+screen);
+      setTimeout(runAllChecks,500);
     }
 
+    resetStuckTimer();
+
+    // Priority 1: Avatar overlay
+    if(document.getElementById('avOverlay')){
+      if(handleAvOverlay())return;
+    }
+
+    // Priority 2: Modals
+    if(handleModal()){
+      clickCount++;
+      setTimeout(autoClick,600);
+      return;
+    }
+
+    // Priority 3: Setup player flow
+    if(screen==='scrSetup'){
+      var ss2=document.getElementById('ss2');
+      if(ss2&&ss2.style.display!=='none'){
+        if(handleSetupPlayers())return;
+      }
+    }
+
+    // Priority 4: Fill inputs
+    if(fillInputs()){
+      setTimeout(autoClick,400);
+      return;
+    }
+
+    // Priority 5: Click buttons
     var btns=getClickables();
 
     if(btns.length===0){
-      var inputs=document.querySelectorAll('.scr.on input[type="text"]:not([disabled])');
-      if(inputs.length>0){
-        inputs.forEach(function(inp,i){
-          if(!inp.value){inp.value='שחקן'+(i+1);inp.dispatchEvent(new Event('input',{bubbles:true}));}
-        });
-        setTimeout(autoClick,500);
-        return;
-      }
-
-      var modalBtns=document.querySelectorAll('.mbg.on button,.mbox button');
-      if(modalBtns.length>0){
-        modalBtns[0].click();
-        clickCount++;
-        setTimeout(autoClick,800);
-        return;
-      }
-
-      console.error('AUTOTEST STUCK at screen:',screen,'after',clickCount,'clicks');
-      console.log('Log:',log.join(' → '));
+      logMsg('WARNING','No clickable elements found');
+      setTimeout(autoClick,2000);
       return;
     }
 
     var target=null;
-    btns.forEach(function(b){
-      if(b.classList.contains('gobtn')&&!target)target=b;
-    });
+
+    // In setup ss1: prefer "3" for player count
+    if(screen==='scrSetup'){
+      btns.forEach(function(b){
+        if(b.textContent.trim()==='3'&&!target)target=b;
+      });
+    }
+
+    // Prefer gobtn > av-confirm > any
+    if(!target){
+      btns.forEach(function(b){
+        if(!target&&b.classList.contains('gobtn')&&!b.disabled)target=b;
+      });
+    }
+    if(!target){
+      btns.forEach(function(b){
+        if(!target&&b.classList.contains('av-confirm'))target=b;
+      });
+    }
     if(!target)target=btns[Math.floor(Math.random()*btns.length)];
 
-    if(target.textContent.trim()==='3'&&screen==='scrSetup'){
-      target.click();
-      clickCount++;
-      setTimeout(autoClick,300);
-      return;
-    }
+    var btnText=(target.textContent||'').trim().substring(0,30);
+    logMsg('INFO','Click: "'+btnText+'"');
 
     target.click();
     clickCount++;
-    setTimeout(autoClick,800+Math.random()*500);
+    setTimeout(autoClick,800+Math.random()*400);
   }
 
-  setTimeout(function(){
-    console.log('AUTOTEST STARTING');
-    if(typeof skipIntro==='function')skipIntro();
-    setTimeout(autoClick,1000);
-  },2000);
+  // ===== REPORT =====
+
+  function printReport(){
+    clearTimeout(stuckTimer);
+    console.log('\n========== AUTOTEST REPORT ==========');
+    console.log('Total clicks: '+clickCount);
+    console.log('Screens visited: '+log.filter(function(l){return l.startsWith('---');}).length);
+    console.log('');
+
+    if(errors.length>0){
+      console.log('ERRORS ('+errors.length+'):');
+      errors.forEach(function(e){console.error('  '+e);});
+    }else{
+      console.log('No errors');
+    }
+    console.log('');
+
+    if(warnings.length>0){
+      console.log('WARNINGS ('+warnings.length+'):');
+      warnings.forEach(function(w){console.warn('  '+w);});
+    }else{
+      console.log('No warnings');
+    }
+    console.log('');
+    console.log('Full log:');
+    log.forEach(function(l){console.log('  '+l);});
+    console.log('=====================================\n');
+  }
+
+  // ===== START =====
+
+  window.addEventListener('error',function(e){
+    logMsg('ERROR','JS: '+e.message+' at '+e.filename+':'+e.lineno);
+  });
 
   var origToast=window.toast;
   window.toast=function(msg){
-    console.log('AUTOTEST toast:',msg);
+    logMsg('INFO','Toast: '+msg);
     if(origToast)origToast(msg);
   };
 
-  window.addEventListener('error',function(e){
-    console.error('AUTOTEST ERROR:',e.message,'at',e.filename+':'+e.lineno);
-  });
+  setTimeout(function(){
+    logMsg('INFO','AUTOTEST v2 STARTING');
+    if(typeof skipIntro==='function'){
+      skipIntro();
+      logMsg('INFO','Skipped intro');
+    }
+    setTimeout(autoClick,1000);
+  },2000);
 })();
 </script>
 </body>
